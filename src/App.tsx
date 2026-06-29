@@ -7,6 +7,11 @@ import JobDetail from './pages/JobDetail'
 import Quiz from './pages/Quiz'
 import Results from './pages/Results'
 import Advisor from './pages/Advisor'
+import SalaryComparison from './pages/SalaryComparison'
+import CVReviewer from './pages/CVReviewer'
+import Networking from './pages/Networking'
+import Resources from './pages/Resources'
+import InterviewQuiz from './pages/InterviewQuiz'
 
 function App() {
   return (
@@ -21,6 +26,11 @@ function App() {
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/results" element={<Results />} />
             <Route path="/advisor" element={<Advisor />} />
+            <Route path="/salary-comparison" element={<SalaryComparison />} />
+            <Route path="/cv-reviewer" element={<CVReviewer />} />
+            <Route path="/networking" element={<Networking />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/interview-quiz" element={<InterviewQuiz />} />
           </Routes>
         </main>
         <Footer />

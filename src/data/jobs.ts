@@ -25,6 +25,31 @@ export interface CalculationWalkthrough {
   steps: string[];
 }
 
+export interface InternshipStage {
+  stage: string;
+  description: string;
+  tips: string;
+}
+
+export interface InternshipProcess {
+  timeline: string;
+  stages: InternshipStage[];
+  whatYouNeedToKnow: string[];
+  topInternshipPrograms: string[];
+}
+
+export interface InterviewQAItem {
+  question: string;
+  answer: string;
+  keyPoints: string[];
+}
+
+export interface InterviewQA {
+  technical: InterviewQAItem[];
+  behavioural: InterviewQAItem[];
+  caseStudy?: InterviewQAItem[];
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -48,6 +73,11 @@ export interface Job {
   technicalQuestions: string[];
   behaviouralQuestions: string[];
   calculationWalkthroughs: CalculationWalkthrough[];
+  internshipProcess?: InternshipProcess;
+  interviewQA?: InterviewQA;
+  networkingTips?: string[];
+  booksAndPodcasts?: { books: string[]; podcasts: string[] };
+  salaryNegotiationTips?: string[];
 }
 
 export const jobs: Job[] = [
@@ -1140,6 +1170,1085 @@ export const jobs: Job[] = [
           '7. Adjust for inflation and apply prudence margins per regulatory requirements.',
         ],
       },
+    ],
+  },
+  {
+    id: 'corporate-development',
+    title: 'Corporate Development',
+    category: 'Corporate Finance',
+    shortDescription: 'Lead in-house M&A and strategic partnerships for a corporation. Identify, execute, and integrate acquisitions that drive long-term company growth.',
+    salaryRange: '£60,000 – £300,000+',
+    salaryLadder: [
+      { level: 'Analyst', salary: '£60,000–£80,000 + bonus', description: 'Financial modelling, market research, and target screening for potential acquisitions.' },
+      { level: 'Manager / Senior Manager', salary: '£90,000–£130,000 + bonus', description: 'Leads deal processes end-to-end from initial screening to board approval.' },
+      { level: 'Director', salary: '£130,000–£200,000 + bonus', description: 'Manages strategic partnerships, integration, and board-level reporting.' },
+      { level: 'VP / Head of Corp Dev', salary: '£200,000–£300,000+', description: 'Sets M&A strategy, runs executive conversations, and owns integration outcomes.' },
+    ],
+    subRoles: ['M&A', 'Strategic Partnerships', 'JV & Alliances', 'Divestiture', 'Integration Management', 'Venture Investment'],
+    buySellContext: 'Neither (Corporate). Corporate development sits inside operating companies, deploying the company\'s own capital to acquire targets or form partnerships that advance strategic objectives rather than purely financial returns.',
+    breakInRoadmap: [
+      { step: 1, description: '2–3 years in investment banking (M&A) is the primary pipeline into Corp Dev. Consulting is also a strong feeder.' },
+      { step: 2, description: 'Target companies in industries you understand and are excited by — tech, healthcare, consumer.' },
+      { step: 3, description: 'Highlight deal execution experience: M&A modelling, due diligence, and integration planning in your CV.' },
+      { step: 4, description: 'Network with Corp Dev teams directly via LinkedIn. Many roles are not publicly posted.' },
+      { step: 5, description: 'Prepare to speak about strategic rationale, not just financial mechanics — why should this company buy that company?' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–2', description: 'Screening, modelling, and supporting deal processes.' },
+      { level: 'Manager', years: '2–5', description: 'Running deal tracks and managing external advisors.' },
+      { level: 'Director', years: '5–9', description: 'Deal origination, strategy input, and integration leadership.' },
+      { level: 'VP / Head', years: '9+', description: 'Setting M&A agenda, CEO-level interaction, board presentations.' },
+    ],
+    exitOpportunities: ['Private Equity', 'General Management / COO', 'Venture Capital', 'Investment Banking (return)', 'Startup Founder', 'Strategy Consulting'],
+    prosAndCons: {
+      pros: ['Better work-life balance than banking', 'Strategic impact on the company you work for', 'Exposure to C-suite early', 'Diverse deal types across M&A, JVs, and partnerships', 'Strong equity upside if company goes public or is acquired'],
+      cons: ['Lower comp ceiling vs PE or IB', 'Deal flow depends on company growth stage', 'Slower pace during quiet periods', 'Political dynamics of large organisations', 'Less portable brand name than top investment banks'],
+    },
+    topFirms: ['Apple', 'Google', 'Amazon', 'Meta', 'Microsoft', 'LVMH', 'Diageo', 'BP', 'GSK', 'Unilever', 'Rolls-Royce', 'Vodafone'],
+    dayInTheLife: [
+      { time: '08:30', activity: 'Review industry news for potential acquisition targets or competitor moves.' },
+      { time: '09:30', activity: 'Update acquisition pipeline tracker and prepare weekly update for the CFO.' },
+      { time: '11:00', activity: 'Call with investment bank pitching a new target in the SaaS sector.' },
+      { time: '13:00', activity: 'Lunch with the Head of Strategy to align on next year\'s inorganic priorities.' },
+      { time: '14:00', activity: 'Financial model for target company — DCF, synergy analysis, accretion/dilution.' },
+      { time: '16:30', activity: 'Coordinate with Legal and HR on integration planning for recently closed deal.' },
+      { time: '18:00', activity: 'Prepare board presentation slides on the strategic rationale for a new acquisition.' },
+    ],
+    skillsToMaster: ['M&A Financial Modelling', 'Synergy Analysis', 'Integration Planning', 'Strategic Frameworks', 'Stakeholder Management', 'Due Diligence', 'Excel & PowerPoint', 'Negotiation'],
+    youtubeResources: [
+      { title: 'Corporate Development Explained', channel: 'Kenji Explains' },
+      { title: 'M&A Integration Best Practices', channel: 'CFI Education' },
+      { title: 'Breaking Into Corp Dev from Banking', channel: 'Peak Frameworks' },
+      { title: 'Accretion Dilution Analysis Tutorial', channel: 'Wall Street Prep' },
+    ],
+    aiThreatLevel: 'Medium',
+    aiThreatAnalysis: 'AI can automate target screening, preliminary financial modelling, and due diligence document review. However, strategic judgement, management assessment, board-level communication, and negotiation tactics remain deeply human. Corp Dev professionals who use AI to screen faster and model better will become indispensable.',
+    aiSkillsToLearn: ['AI-powered deal sourcing tools', 'LLM for due diligence document review', 'Python for target screening automation', 'AI market intelligence platforms', 'Prompt engineering for strategic memos'],
+    technicalQuestions: [
+      'Walk me through an accretion/dilution analysis.',
+      'How do you quantify synergies in an M&A deal?',
+      'What is the difference between a stock deal and an asset deal from a tax perspective?',
+      'How would you value an early-stage target with no EBITDA?',
+      'What integration risks would you flag on Day 1 post-close?',
+    ],
+    behaviouralQuestions: [
+      'Why Corp Dev over banking or PE?',
+      'Tell me about a time you drove a cross-functional project to completion.',
+      'How do you manage relationships with investment banks while maintaining independence?',
+      'Describe a situation where you had to influence a senior executive.',
+      'Tell me about a deal in our industry you found interesting.',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Accretion / Dilution Analysis',
+        steps: [
+          '1. Calculate acquirer standalone EPS: Net Income / Shares Outstanding.',
+          '2. Determine deal consideration: cash, stock, or mix.',
+          '3. For stock deals: new shares issued = deal value / acquirer share price.',
+          '4. Combined net income = acquirer NI + target NI + synergies – dis-synergies – financing costs.',
+          '5. Combined shares = acquirer shares + new shares issued.',
+          '6. Pro forma EPS = Combined NI / Combined Shares.',
+          '7. If Pro forma EPS > Standalone EPS → Accretive. If lower → Dilutive.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Applications open September–November for the following summer. Many roles are unadvertised — networking is essential.',
+      stages: [
+        { stage: 'Application & CV Screen', description: 'CV and cover letter filtered for relevant finance or consulting experience.', tips: 'Highlight any deal exposure, modelling work, or M&A coursework prominently.' },
+        { stage: 'First Round Interview', description: 'Fit and motivation questions plus light technical on M&A concepts.', tips: 'Know why you want corp dev specifically — not just "it\'s more balanced than banking".' },
+        { stage: 'Case Study / Modelling Test', description: 'Take-home or live modelling exercise on a hypothetical acquisition.', tips: 'Practice accretion/dilution and synergy models. Speed matters.' },
+        { stage: 'Final Round', description: 'Senior stakeholder panel covering strategy, fit, and a deal recommendation.', tips: 'Prepare a 5-minute pitch on a company in their industry they should acquire.' },
+      ],
+      whatYouNeedToKnow: [
+        'Corp Dev interns are often treated like full-time analysts — expect real deal work from Day 1.',
+        'Understanding the parent company\'s strategy is more important than generic finance knowledge.',
+        'Many placements convert to full-time roles — treat every interaction as an extended interview.',
+        'You may work across Legal, Finance, and Strategy teams simultaneously.',
+      ],
+      topInternshipPrograms: ['Apple Corp Dev', 'Google Corporate Strategy & Development', 'Amazon Corporate Development', 'Diageo M&A', 'Unilever Corporate Finance', 'GSK Business Development'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'Walk me through an accretion/dilution analysis.', answer: 'Start with the acquirer\'s standalone EPS. Determine deal consideration — cash, stock, or mix. For stock deals calculate new shares issued. Build pro forma combined P&L adding target NI plus synergies less financing costs. Divide combined NI by combined shares. If pro forma EPS exceeds standalone EPS the deal is accretive; if lower it is dilutive.', keyPoints: ['Start with standalone EPS', 'Adjust for new shares and financing cost', 'Synergies improve accretion', 'Cash deals avoid dilution from new shares'] },
+        { question: 'How do you quantify synergies?', answer: 'Revenue synergies: cross-selling, expanded geographies, pricing power. Cost synergies: headcount reduction, procurement savings, facility consolidation. Apply a discount for execution risk — typically 50–70% of identified synergies in models. Phase synergies over 2–3 years with a ramp-up period.', keyPoints: ['Revenue vs cost synergies', 'Discount for execution risk', 'Phase realisation over time', 'Be conservative — boards scrutinise synergy assumptions'] },
+      ],
+      behavioural: [
+        { question: 'Why Corp Dev over IB or PE?', answer: 'Corp Dev offers the intellectual rigour of M&A with deeper strategic context. Instead of advising clients on deals, you are building the company you work for. The longer ownership horizon means you see the integration and value creation play out — which is what I find most compelling.', keyPoints: ['Strategic ownership vs advisory', 'Longer time horizon and accountability', 'Integration exposure', 'Genuine connection to the business'] },
+        { question: 'Tell me about a deal you found interesting.', answer: 'Prepare a specific example: identify the acquirer and target, explain the strategic rationale (geographic expansion, technology acquisition, vertical integration), the multiple paid, the synergy thesis, and whether you think it was value-creative. Conclude with your view.', keyPoints: ['Know a recent deal in the company\'s sector', 'Cover strategic rationale not just financial metrics', 'Have a point of view', 'Mention synergies and integration challenges'] },
+      ],
+    },
+    networkingTips: [
+      'Connect with Corp Dev professionals on LinkedIn and lead with curiosity about their deal pipeline, not a job ask.',
+      'Follow the M&A activity of your target companies — mention recent deals in outreach to show genuine interest.',
+      'Alumni from your university who moved from IB to Corp Dev are the warmest referrals.',
+      'Attend M&A conferences and corporate strategy events — many Corp Dev teams send junior staff.',
+      'Cold email the head of Corp Dev with a specific question about how they think about a recent acquisition.',
+    ],
+    booksAndPodcasts: {
+      books: ['Deals from Hell — Robert Bruner', 'The Art of M&A — Stanley Reed', 'Barbarians at the Gate — Bryan Burrough', 'Creating Value Through Corporate Restructuring — Stuart Gilson'],
+      podcasts: ['M&A Science', 'Acquired Podcast', 'The Deal', 'Masters in Business (Bloomberg)'],
+    },
+    salaryNegotiationTips: [
+      'Corp Dev comp is benchmarked against banking — research what IB analysts at equivalent seniority earn.',
+      'Signing bonuses are common when transitioning from banking; always ask.',
+      'Equity (RSUs or options) is often negotiable, especially at tech companies.',
+      'Base salary is less flexible than bonus at most corporates — focus negotiation on variable pay and equity.',
+    ],
+  },
+  {
+    id: 'treasury',
+    title: 'Corporate Treasury',
+    category: 'Corporate Finance',
+    shortDescription: 'Manage a corporation\'s cash, liquidity, debt, and financial risk. Ensure the company has the capital it needs — at the right cost, at the right time.',
+    salaryRange: '£40,000 – £200,000+',
+    salaryLadder: [
+      { level: 'Treasury Analyst', salary: '£40,000–£60,000', description: 'Cash management, bank reconciliations, and FX hedging support.' },
+      { level: 'Treasury Manager', salary: '£65,000–£95,000', description: 'Debt management, liquidity forecasting, and banking relationship management.' },
+      { level: 'Senior Treasury Manager', salary: '£95,000–£140,000', description: 'Leads capital markets transactions, refinancing, and treasury policy.' },
+      { level: 'Head of Treasury / Group Treasurer', salary: '£150,000–£250,000+', description: 'Board-level responsibility for all financial risk, debt strategy, and banking relationships.' },
+    ],
+    subRoles: ['Cash Management', 'FX Risk Management', 'Interest Rate Risk', 'Debt Capital Markets', 'Pension Fund Liaison', 'Treasury Technology (TMS)'],
+    buySellContext: 'Neither (Corporate). Treasury teams operate inside companies, managing internal financial risk and capital. They interact extensively with banks and capital markets but on behalf of the company rather than as a market participant.',
+    breakInRoadmap: [
+      { step: 1, description: 'Graduate schemes at large FTSE 100 companies (BP, Tesco, Vodafone, GSK) are the direct entry route.' },
+      { step: 2, description: 'Consider the ACT (Association of Corporate Treasurers) Certificate as a differentiator before or during your first role.' },
+      { step: 3, description: 'Accounting (ACA/ACCA) or banking backgrounds (transaction banking, DCM) are highly transferable.' },
+      { step: 4, description: 'Build Excel modelling skills and familiarity with treasury management systems (Kyriba, SAP Treasury).' },
+      { step: 5, description: 'Target the ACT Advanced Diploma (AMCT) during your first 3 years for a significant pay and seniority boost.' },
+    ],
+    careerPath: [
+      { level: 'Treasury Analyst', years: '0–3', description: 'Cash positioning, bank reconciliations, basic FX hedging.' },
+      { level: 'Treasury Manager', years: '3–7', description: 'Debt management, forecasting, and banking relationships.' },
+      { level: 'Head of Treasury', years: '7–12', description: 'Capital structure, board reporting, and major financing transactions.' },
+      { level: 'CFO / Group Finance Director', years: '12+', description: 'Many CFOs come from treasury backgrounds given their capital markets expertise.' },
+    ],
+    exitOpportunities: ['CFO (common path)', 'Investment Banking (DCM)', 'Financial Risk Management', 'Pension Fund Management', 'Treasury Consulting', 'FinTech (payments, FX platforms)'],
+    prosAndCons: {
+      pros: ['Excellent work-life balance vs front-office finance', 'Direct path to CFO', 'Highly specialised and marketable skills', 'Exposure to board and C-suite', 'ACT qualification adds significant value'],
+      cons: ['Lower starting salaries than banking', 'Less glamorous than front-office roles', 'Can become narrow if you stay in one company too long', 'Dependent on company size — FTSE 100 treasury is far more interesting than SME', 'Slower promotion timelines'],
+    },
+    topFirms: ['BP', 'Shell', 'GSK', 'Unilever', 'Vodafone', 'HSBC (internal treasury)', 'Tesco', 'BT Group', 'National Grid', 'AstraZeneca'],
+    dayInTheLife: [
+      { time: '08:00', activity: 'Check overnight cash positions across global bank accounts and prepare morning liquidity report.' },
+      { time: '09:00', activity: 'Update FX hedging book — review EUR/GBP exposure from European subsidiary cash flows.' },
+      { time: '10:30', activity: 'Call with HSBC relationship manager to discuss revolving credit facility utilisation.' },
+      { time: '12:30', activity: 'Lunch — most treasury days finish at reasonable hours.' },
+      { time: '13:30', activity: 'Build 13-week cash flow forecast for CFO review on Friday.' },
+      { time: '15:00', activity: 'Review interest rate swap valuations — assess whether to extend hedges given rate outlook.' },
+      { time: '17:00', activity: 'Prepare monthly board treasury report covering liquidity, debt, and risk positions.' },
+    ],
+    skillsToMaster: ['Cash Flow Forecasting', 'FX Hedging (forwards, options)', 'Debt Market Knowledge', 'Treasury Management Systems (Kyriba, SAP)', 'Excel & Financial Modelling', 'Interest Rate Risk', 'Banking Relationships', 'Covenant Compliance'],
+    youtubeResources: [
+      { title: 'Corporate Treasury Explained', channel: 'CFI Education' },
+      { title: 'FX Hedging Strategies for Corporates', channel: 'Patrick Boyle' },
+      { title: 'ACT Treasury Qualification Guide', channel: 'Kaplan Finance' },
+      { title: 'Interest Rate Swaps Tutorial', channel: 'Wall Street Prep' },
+    ],
+    aiThreatLevel: 'High',
+    aiThreatAnalysis: 'Routine treasury tasks — cash positioning, bank reconciliation, FX reporting, and covenant tracking — are highly automatable. AI and treasury technology platforms (Kyriba AI, SAP AI) are already replacing manual work. However, strategic treasury decisions, banking relationship management, and board-level communication require senior human judgement.',
+    aiSkillsToLearn: ['Treasury Management System automation (Kyriba AI)', 'Python for cash flow modelling', 'AI-powered FX forecasting tools', 'RPA (robotic process automation) for reconciliations', 'Machine learning for cash flow prediction'],
+    technicalQuestions: [
+      'How would you hedge a £50m USD receivable due in 6 months?',
+      'Explain the difference between a revolving credit facility and a term loan.',
+      'What is basis risk in FX hedging?',
+      'How do you build a 13-week cash flow forecast?',
+      'What is the difference between cash pooling and notional pooling?',
+    ],
+    behaviouralQuestions: [
+      'Why treasury over a front-office finance role?',
+      'Describe a time you identified a financial risk and took steps to mitigate it.',
+      'Tell me about a complex stakeholder relationship you managed.',
+      'How do you stay current with interest rate and FX market developments?',
+      'Describe a time you improved a process in a previous role.',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'FX Forward Hedge',
+        steps: [
+          '1. UK company expects to receive $1,000,000 in 6 months from a US customer.',
+          '2. Current spot rate: £1 = $1.25. Company will receive £800,000 at spot.',
+          '3. Risk: USD weakens to $1.35 → receipt falls to £741,000 — a £59,000 loss.',
+          '4. Solution: Sell USD forward — lock in a rate today for 6-month delivery.',
+          '5. 6-month forward rate = Spot × (1 + UK rate) / (1 + US rate).',
+          '6. If UK rate = 5%, US rate = 5.5%: Forward ≈ 1.25 × (1.05/1.055) = 1.2441.',
+          '7. Company locks in £803,700 regardless of spot rate at settlement.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Graduate schemes open October–January. Treasury-specific internships are less common than banking — target finance rotational schemes at FTSE 100 companies.',
+      stages: [
+        { stage: 'Online Application', description: 'CV, cover letter, and motivation questions.', tips: 'Mention the ACT qualification and any FX or risk management coursework.' },
+        { stage: 'Online Tests', description: 'Numerical reasoning and situational judgement.', tips: 'Practice SHL and Korn Ferry numerical tests — treasury roles are quantitative.' },
+        { stage: 'Assessment Centre', description: 'Group exercise, written case study, and competency interview.', tips: 'Focus on attention to detail and risk awareness — core treasury traits.' },
+      ],
+      whatYouNeedToKnow: [
+        'Treasury internships often sit within broader finance rotational programmes.',
+        'You will likely spend time in cash management, FX, and possibly debt capital markets.',
+        'The ACT qualification is the gold standard — mention awareness of it in interviews.',
+        'Treasury teams are small, so every intern gets meaningful exposure.',
+      ],
+      topInternshipPrograms: ['BP Finance Graduate Scheme', 'Shell Finance Leadership Programme', 'Unilever Finance Leadership Programme', 'GSK Finance Rotation', 'Vodafone Finance Graduate Scheme'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'How would you hedge a USD receivable?', answer: 'Use a forward contract to sell USD and buy GBP at a rate agreed today for future delivery. This locks in the GBP amount regardless of how the USD/GBP rate moves. Alternatively, use FX options for upside participation at the cost of an option premium.', keyPoints: ['Forward vs option', 'Locks in certainty vs retains upside', 'Basis risk remains', 'Consider natural hedging first'] },
+      ],
+      behavioural: [
+        { question: 'Why treasury?', answer: 'Treasury sits at the intersection of financial markets and corporate strategy. I am drawn to the breadth — FX, interest rate risk, cash management, and capital markets — and the fact that decisions directly protect the company\'s financial health. The path to CFO is also a compelling long-term trajectory.', keyPoints: ['Breadth of financial risk exposure', 'Direct business impact', 'CFO career path', 'Interest in markets within a corporate context'] },
+      ],
+    },
+    networkingTips: [
+      'The ACT (Association of Corporate Treasurers) runs events — attend these to meet treasury professionals at all levels.',
+      'LinkedIn search for "Group Treasurer" or "Head of Treasury" at companies you admire.',
+      'Transaction banking teams at Barclays, HSBC, and Citi work closely with corporate treasurers — they can refer you.',
+      'Ask for 20-minute coffee chats focused on how they structure their hedging programme or cash management.',
+    ],
+    booksAndPodcasts: {
+      books: ['Corporate Treasury and Cash Management — Robert Cooper', 'The Handbook of International Financial Terms — Peter Moles', 'FX Risk Management — Lynda Mahesri'],
+      podcasts: ['The ACT Podcast', 'Treasury Today Podcast', 'FT Markets Podcast'],
+    },
+    salaryNegotiationTips: [
+      'Research ACT salary surveys — they publish annual compensation data by seniority and sector.',
+      'FTSE 100 treasury pays more than mid-market; use this in negotiations if you have competing offers.',
+      'The ACT AMCT qualification can justify a 10–15% salary premium — leverage it.',
+    ],
+  },
+  {
+    id: 'real-estate-finance',
+    title: 'Real Estate Finance & REPE',
+    category: 'Alternative Investments',
+    shortDescription: 'Finance, acquire, develop, and manage real estate assets. From REPE mega-funds to REIT portfolio management — property is the world\'s largest asset class.',
+    salaryRange: '£45,000 – £800,000+',
+    salaryLadder: [
+      { level: 'Analyst', salary: '£45,000–£70,000 + bonus', description: 'Financial modelling, market research, and due diligence on property acquisitions.' },
+      { level: 'Associate', salary: '£80,000–£120,000 + bonus', description: 'Leads deal underwriting, manages due diligence processes, and presents to investment committees.' },
+      { level: 'VP / Senior Associate', salary: '£130,000–£200,000 + carry', description: 'Originates deals, manages asset management, and leads capital raises.' },
+      { level: 'Director / MD', salary: '£200,000–£500,000+ + carry', description: 'Fund management, LP relationships, and portfolio strategy.' },
+    ],
+    subRoles: ['Real Estate Private Equity (REPE)', 'Real Estate Investment Trusts (REITs)', 'Real Estate Debt / Lending', 'Real Estate Development Finance', 'Asset Management', 'Infrastructure & Logistics'],
+    buySellContext: 'Buy-Side. REPE funds acquire property assets using investor capital, add value through active management or development, and sell to generate returns. REITs hold and manage portfolios for income distribution.',
+    breakInRoadmap: [
+      { step: 1, description: 'RICS (Royal Institution of Chartered Surveyors) qualification or real estate finance postgrad is valuable but not mandatory.' },
+      { step: 2, description: 'Internships at REPE funds (Blackstone Real Estate, Brookfield), REITs, or real estate advisory firms (CBRE, JLL, Savills).' },
+      { step: 3, description: 'Build property-specific financial modelling skills: ARGUS Enterprise, development appraisals, waterfall models.' },
+      { step: 4, description: 'Many REPE analysts come from IB (real estate groups), CBRE, or RICS-qualified surveying backgrounds.' },
+      { step: 5, description: 'Understand property fundamentals: yield, cap rate, ERV, vacancy, lease structures, and planning.' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–3', description: 'Underwriting, modelling, and due diligence on acquisitions.' },
+      { level: 'Associate', years: '3–6', description: 'Deal execution and asset management of portfolio properties.' },
+      { level: 'VP / Director', years: '6–10', description: 'Fund origination, LP presentations, and portfolio strategy.' },
+      { level: 'Partner / Fund Manager', years: '10+', description: 'Fundraising, strategic decisions, and overall returns accountability.' },
+    ],
+    exitOpportunities: ['Real Estate Development', 'REIT Management', 'Infrastructure Fund', 'Family Office Real Estate', 'Property Development Startup', 'Sovereign Wealth Fund Real Estate'],
+    prosAndCons: {
+      pros: ['Tangible, physical assets you can see and touch', 'Strong income component from rents alongside capital growth', 'Diverse strategies across sectors (logistics, residential, office, retail)', 'Entrepreneurial culture in smaller REPE funds', 'Carry potential at senior levels'],
+      cons: ['Illiquid investments with long hold periods', 'Highly cyclical — interest rates directly impact valuations', 'Physical due diligence requires site visits and specialist knowledge', 'Smaller industry than mainstream PE or banking', 'ARGUS software steep learning curve'],
+    },
+    topFirms: ['Blackstone Real Estate', 'Brookfield Asset Management', 'Segro', 'British Land', 'Land Securities', 'CBRE Investment Management', 'Savills Investment Management', 'LondonMetric', 'Tritax Big Box REIT'],
+    dayInTheLife: [
+      { time: '08:00', activity: 'Review market data — logistics vacancy rates, comparable transactions, and interest rate moves.' },
+      { time: '09:30', activity: 'Update development appraisal model for a new warehouse acquisition in the Midlands.' },
+      { time: '11:00', activity: 'Site visit to a potential acquisition — assess physical condition, location, and tenant quality.' },
+      { time: '13:30', activity: 'Call with CBRE agent on off-market office opportunity in the City.' },
+      { time: '14:30', activity: 'Investment committee memo preparation — IRR, equity multiple, risk factors, and exit strategy.' },
+      { time: '16:30', activity: 'Asset management review — rent collection, lease renewals, and capex planning for existing portfolio.' },
+      { time: '18:00', activity: 'Investor call for a new fund raise — present portfolio performance and pipeline.' },
+    ],
+    skillsToMaster: ['ARGUS Enterprise', 'Development Appraisals', 'DCF / Waterfall Modelling', 'Cap Rate & Yield Analysis', 'Lease Structuring', 'Debt Finance (senior, mezzanine)', 'Market Research', 'Asset Management'],
+    youtubeResources: [
+      { title: 'Real Estate Private Equity Explained', channel: 'Break Into CRE' },
+      { title: 'ARGUS Enterprise Tutorial', channel: 'ARGUS Software' },
+      { title: 'How to Value Real Estate', channel: 'Real Estate Finance Academy' },
+      { title: 'REPE vs REIT Career Paths', channel: 'CFI Education' },
+    ],
+    aiThreatLevel: 'Medium',
+    aiThreatAnalysis: 'AI is transforming property market analysis, site selection, and lease abstraction. Tools like CoStar AI and MSCI Real Estate Analytics automate market research. However, relationship-driven deal-making, physical due diligence, and creative asset repositioning strategies remain strongly human. Physical assets require local market knowledge that AI struggles to replicate fully.',
+    aiSkillsToLearn: ['AI-powered market analysis (CoStar AI)', 'Automated lease abstraction tools', 'Python for portfolio analytics', 'Machine learning for rent forecasting', 'Digital twin technology for asset management'],
+    technicalQuestions: [
+      'What is a cap rate and how does it relate to interest rates?',
+      'Walk me through a basic development appraisal.',
+      'What is an equity waterfall structure in a REPE deal?',
+      'How do you underwrite a commercial lease?',
+      'What is the difference between a core, core-plus, value-add, and opportunistic strategy?',
+    ],
+    behaviouralQuestions: [
+      'Why real estate over other asset classes?',
+      'Tell me about a property market trend you are following closely.',
+      'Describe a time you had to analyse a large amount of data to reach a recommendation.',
+      'What makes a good real estate investment?',
+      'How do interest rates affect real estate valuations?',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Simple Development Appraisal',
+        steps: [
+          '1. Gross Development Value (GDV): Estimated rent / Cap rate. E.g. £500k rent / 5% = £10m GDV.',
+          '2. Build costs: £1,500/sq ft × 5,000 sq ft = £7.5m.',
+          '3. Professional fees (10% of build): £750,000.',
+          '4. Finance costs (interest on debt): £300,000.',
+          '5. Developer profit target: typically 15–20% of GDV = £1.5–£2m.',
+          '6. Residual Land Value = GDV – Build – Fees – Finance – Profit.',
+          '7. £10m – £7.5m – £750k – £300k – £1.5m = £-50k → site barely viable at these assumptions.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Applications open September–January. REPE is small — networking often matters more than formal applications.',
+      stages: [
+        { stage: 'Networking & Referrals', description: 'Many REPE internships are filled through referrals.', tips: 'Connect with analysts at target funds and ask for 15-minute calls about their deal work.' },
+        { stage: 'Interview Round 1', description: 'Motivation, property market questions, and fit.', tips: 'Know current cap rates in key sectors (office, industrial, residential) and the interest rate environment.' },
+        { stage: 'Modelling Test', description: 'Simple property DCF or development appraisal.', tips: 'Practice ARGUS and Excel waterfall models. Know IRR, equity multiple, and yield on cost.' },
+      ],
+      whatYouNeedToKnow: [
+        'ARGUS Enterprise is the industry standard — learn it before your internship.',
+        'Site visits are common — wear appropriate footwear and ask smart questions about tenants.',
+        'The real estate market is relationship-driven — every conversation is a networking opportunity.',
+        'Know the difference between gross and net initial yield, reversionary yield, and ERV.',
+      ],
+      topInternshipPrograms: ['Blackstone Real Estate Summer Analyst', 'CBRE Investment Management', 'Savills Graduate Programme', 'British Land Property Placement', 'Segro Internship'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'What is a cap rate?', answer: 'A capitalisation rate is Net Operating Income divided by property value, expressed as a percentage. It represents the yield an investor earns before financing. Lower cap rates indicate higher valuations and are found in prime locations with strong tenant covenants. As interest rates rise, cap rates typically expand, compressing property values.', keyPoints: ['NOI / Property Value', 'Lower cap rate = higher valuation', 'Inverse relationship with interest rates', 'Vary by sector and location'] },
+      ],
+      behavioural: [
+        { question: 'Why real estate?', answer: 'I am drawn to real estate because it combines financial rigour with physical assets you can touch and see. Unlike listed equities, real estate allows active value creation through repositioning, development, and active leasing. The interplay between macroeconomic trends — interest rates, demographics, e-commerce — and physical buildings makes it intellectually rich.', keyPoints: ['Tangible assets', 'Active value creation', 'Macro/micro intersection', 'Long-term hold creates depth of understanding'] },
+      ],
+    },
+    networkingTips: [
+      'Attend MIPIM, Expo Real, and ULI events — the real estate industry is highly conference-driven.',
+      'RICS and IPF (Investment Property Forum) events are excellent for meeting mid-career professionals.',
+      'LinkedIn outreach to REPE analysts asking about specific deals in their portfolio is effective.',
+      'Estate agents (CBRE, JLL, Savills) can refer you to investment teams — they know everyone.',
+    ],
+    booksAndPodcasts: {
+      books: ['Real Estate Finance and Investments — Brueggeman & Fisher', 'The Due Diligence Handbook — Brian Coyne', 'Mastering Real Estate Investment — Frank Gallinelli'],
+      podcasts: ['Real Estate Disruptors', 'The REPE Podcast', 'Property Podcast (Rob & Rob)', 'CBRE Real Estate Insights'],
+    },
+    salaryNegotiationTips: [
+      'REPE pay tracks PE more than banking — research carry structures carefully as this is where the real money is.',
+      'Carry allocation at junior levels is becoming more common at mid-market funds — always ask.',
+      'Compare across fund sizes — a £500m AUM fund will pay differently from a £10bn platform.',
+    ],
+  },
+  {
+    id: 'fixed-income',
+    title: 'Fixed Income & Bond Markets',
+    category: 'Capital Markets',
+    shortDescription: 'Trade, research, and structure debt instruments across government bonds, corporate credit, and structured products. The largest financial market in the world.',
+    salaryRange: '£60,000 – £600,000+',
+    salaryLadder: [
+      { level: 'Analyst / Junior Trader', salary: '£60,000–£90,000 + bonus', description: 'Supporting desks, running risk reports, and learning the market microstructure.' },
+      { level: 'Associate / Trader', salary: '£100,000–£180,000 + bonus', description: 'Running a book independently, making markets, and managing client flow.' },
+      { level: 'VP / Senior Trader', salary: '£200,000–£400,000 + bonus', description: 'Larger books, more complex products, and mentoring junior staff.' },
+      { level: 'MD / Head of Desk', salary: '£400,000–£1,000,000+', description: 'P&L ownership for the entire desk, client relationships, and market strategy.' },
+    ],
+    subRoles: ['Government Bonds (Gilts, Treasuries)', 'Investment Grade Credit', 'High Yield / Leveraged Loans', 'Emerging Market Debt', 'Structured Credit (ABS, CLOs, MBS)', 'Rates Trading', 'Credit Research'],
+    buySellContext: 'Both. Fixed income desks at banks are sell-side (market-making, client services). Asset managers, hedge funds, and insurance companies are buy-side (investing in bonds for yield and total return).',
+    breakInRoadmap: [
+      { step: 1, description: 'Strong quantitative degree (Maths, Physics, Economics) preferred. Fixed income is numerically intensive.' },
+      { step: 2, description: 'Spring weeks and summer internships at bank fixed income desks (rates, credit, structured products).' },
+      { step: 3, description: 'CFA is highly valued — many fixed income professionals pursue it during their first 3 years.' },
+      { step: 4, description: 'Develop Bloomberg proficiency and understand yield curves, duration, convexity, and credit spreads.' },
+      { step: 5, description: 'Fixed income quant roles require programming (Python, C++) — build these skills if targeting systematic strategies.' },
+    ],
+    careerPath: [
+      { level: 'Junior Analyst', years: '0–2', description: 'Risk reports, trade support, and market research.' },
+      { level: 'Trader / Analyst', years: '2–5', description: 'Running a small book or credit coverage universe.' },
+      { level: 'Senior Trader / PM', years: '5–10', description: 'Significant P&L responsibility and client relationships.' },
+      { level: 'Head of Desk / CIO', years: '10+', description: 'Strategic direction for the desk or portfolio.' },
+    ],
+    exitOpportunities: ['Fixed Income Hedge Funds', 'Asset Management (bond funds)', 'Insurance (investment arm)', 'Pension Fund Management', 'Central Bank', 'Structured Finance'],
+    prosAndCons: {
+      pros: ['Trading the largest and most liquid market globally', 'Strong quant and macro skills that transfer widely', 'Career stability vs equity trading (bonds are always in demand)', 'Central banks, pension funds, and insurers are major employers', 'CFA adds significant credibility'],
+      cons: ['Less glamorous than equities or PE', 'Electronification is reducing headcount on rates desks', 'Requires very deep technical knowledge of bond maths', 'Bonus driven by desk P&L which can swing dramatically', 'Slower pace than equity markets on quiet days'],
+    },
+    topFirms: ['JP Morgan', 'Goldman Sachs', 'Morgan Stanley', 'Pimco', 'BlackRock Fixed Income', 'BlueBay Asset Management', 'M&G Investments', 'Aviva Investors', 'Legal & General Investment Management'],
+    dayInTheLife: [
+      { time: '07:00', activity: 'Pre-market: read overnight news, review US Treasury moves, and check credit spreads opening.' },
+      { time: '08:00', activity: 'Morning brief — macro strategy team presents key themes. European open preparation.' },
+      { time: '08:30', activity: 'Markets open. Manage client flow and update risk positions.' },
+      { time: '11:00', activity: 'Deep dive on a new corporate bond issuance — assess relative value vs secondary market.' },
+      { time: '13:00', activity: 'Lunch at desk — markets don\'t stop.' },
+      { time: '14:00', activity: 'US markets open — significant volume spike. Active hedging and client execution.' },
+      { time: '16:30', activity: 'End-of-day risk review — flatten any overnight positions and submit risk reports.' },
+      { time: '17:30', activity: 'Call with credit analyst on a high-yield issuer — discuss covenant package and credit risk.' },
+    ],
+    skillsToMaster: ['Bond Maths (duration, convexity, yield)', 'Bloomberg Terminal (deep proficiency)', 'Credit Analysis', 'Yield Curve Analysis', 'Derivatives (CDS, interest rate swaps)', 'Risk Management', 'Python / R for quant strategies', 'Macro Economics'],
+    youtubeResources: [
+      { title: 'Fixed Income Fundamentals', channel: 'Khan Academy Finance' },
+      { title: 'Bond Markets Explained', channel: 'Patrick Boyle' },
+      { title: 'Credit Analysis Deep Dive', channel: 'Mergers & Inquisitions' },
+      { title: 'How Central Banks Move Bond Markets', channel: 'Real Vision Finance' },
+    ],
+    aiThreatLevel: 'High',
+    aiThreatAnalysis: 'Electronic trading and algorithmic execution have already transformed rates and IG credit markets. AI is now automating credit risk scoring, portfolio optimisation, and trade execution. Junior roles focused on manual market-making are declining. Professionals with coding skills who can build and maintain systematic strategies will thrive; those relying purely on manual intuition face structural headwinds.',
+    aiSkillsToLearn: ['Algorithmic trading (Python)', 'Machine learning for credit scoring', 'NLP for bond prospectus analysis', 'Systematic fixed income strategies', 'AI-powered portfolio risk tools'],
+    technicalQuestions: [
+      'If a bond has a duration of 5 years and rates rise by 1%, what happens to its price?',
+      'Explain the difference between yield to maturity and current yield.',
+      'What is a credit default swap and how is it used?',
+      'How does convexity affect a bond portfolio?',
+      'Explain the yield curve and what an inverted yield curve signals.',
+    ],
+    behaviouralQuestions: [
+      'What macro theme is most important to fixed income markets right now?',
+      'Describe a time you managed risk under uncertainty.',
+      'Why fixed income over equities?',
+      'How do you form and update a market view?',
+      'Tell me about a bond or credit situation you followed closely.',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Bond Price Sensitivity (Duration)',
+        steps: [
+          '1. A bond has a modified duration of 5 years and is currently priced at £100.',
+          '2. Interest rates rise by 1% (100 basis points).',
+          '3. Price change ≈ –Duration × Change in yield × Price.',
+          '4. Price change ≈ –5 × 0.01 × £100 = –£5.',
+          '5. New approximate price = £100 – £5 = £95.',
+          '6. Convexity adjustment: actual price decline is slightly less than £5 because of positive convexity.',
+          '7. Higher duration bonds are more sensitive to rate moves — this is the core risk in fixed income portfolios.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Summer analyst applications open August–October. Fixed income desks recruit through the same bank process as equities and M&A.',
+      stages: [
+        { stage: 'Online Application', description: 'CV, motivation, and numerical tests.', tips: 'Demonstrate macro awareness and quantitative strength — mention CFA progress if started.' },
+        { stage: 'HireVue / Video Interview', description: 'Questions on markets, motivation, and a bond/rate scenario.', tips: 'Know current gilt yields, the Bank of England rate, and the credit cycle outlook.' },
+        { stage: 'Superday', description: 'Multiple rounds with traders and desk heads.', tips: 'Show genuine interest in rate dynamics and credit — most candidates know equities, fewer know bonds.' },
+      ],
+      whatYouNeedToKnow: [
+        'Fixed income internships often rotate across rates, credit, and structured products.',
+        'You will run risk reports and shadow traders — absorb everything about how positions are managed.',
+        'Bond maths is tested more rigorously than in equity interviews — know duration and yield calculations.',
+        'Macro awareness is essential — know the central bank cycle and credit spreads.',
+      ],
+      topInternshipPrograms: ['JP Morgan Fixed Income Summer Analyst', 'Goldman Sachs FICC Internship', 'Pimco Investment Management Intern', 'BlackRock Fixed Income Internship', 'BlueBay Asset Management'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'If rates rise by 1%, what happens to a bond with 5 years duration?', answer: 'The bond price falls by approximately 5% (duration × rate change). So a £100 bond falls to roughly £95. The exact change is slightly less due to positive convexity. This is why rising rates hurt bond holders — particularly those with long-duration portfolios like pension funds.', keyPoints: ['Price change ≈ –Duration × ΔYield', 'Inverse relationship between rates and prices', 'Convexity reduces the loss slightly', 'Long duration = more sensitivity'] },
+      ],
+      behavioural: [
+        { question: 'Why fixed income over equities?', answer: 'Fixed income sits at the intersection of macro economics, credit analysis, and quantitative finance. The bond market is ten times the size of equities and directly reflects central bank policy, inflation, and corporate health. I find the precision of bond maths and the complexity of credit structures more intellectually engaging than equity story-telling.', keyPoints: ['Macro and quant overlap', 'Largest financial market', 'Credit analysis depth', 'Precision over narrative'] },
+      ],
+    },
+    networkingTips: [
+      'Follow rates and credit commentary on Bloomberg and the FT — mention specific market views in your outreach.',
+      'The CFA Institute runs fixed income events — attend as a candidate member.',
+      'Reach out to fixed income analysts on LinkedIn with a specific question about a current credit or rate situation.',
+      'Debt capital markets bankers at banks regularly interact with fixed income investors — they can introduce you.',
+    ],
+    booksAndPodcasts: {
+      books: ['Fixed Income Mathematics — Frank Fabozzi', 'The Bond Book — Annette Thau', 'Credit Risk Measurement — Anthony Saunders', 'When Genius Failed — Roger Lowenstein'],
+      podcasts: ['Bloomberg Surveillance', 'Macro Voices', 'Odd Lots (Bloomberg)', 'The Credit Edge (Bloomberg)'],
+    },
+    salaryNegotiationTips: [
+      'Fixed income bonus is desk P&L driven — understand the desk\'s performance before negotiating.',
+      'Rates desks at banks pay differently from buy-side PM roles — research both.',
+      'CFA qualification typically adds 10–20% to base at associate level on buy-side.',
+    ],
+  },
+  {
+    id: 'commodities-trading',
+    title: 'Commodities Trading',
+    category: 'Trading',
+    shortDescription: 'Trade physical and financial commodities — energy, metals, and agriculture. One of the most entrepreneurial and highest-paying careers in finance.',
+    salaryRange: '£50,000 – £5,000,000+',
+    salaryLadder: [
+      { level: 'Junior Trader / Analyst', salary: '£50,000–£90,000 + bonus', description: 'Supporting senior traders, running risk reports, and learning market fundamentals.' },
+      { level: 'Trader', salary: '£100,000–£300,000 + significant bonus', description: 'Running an independent book in a specific commodity (crude, power, metals).' },
+      { level: 'Senior Trader', salary: '£300,000–£1,000,000+ + P&L share', description: 'Managing large books with significant P&L responsibility.' },
+      { level: 'Head of Trading / Partner', salary: '£1,000,000–£5,000,000+', description: 'Strategy, capital allocation, and managing trading teams.' },
+    ],
+    subRoles: ['Energy (Oil, Gas, Power)', 'Metals (Base: Copper, Aluminium; Precious: Gold, Silver)', 'Agriculture (Grain, Soft Commodities)', 'Carbon Credits / Emissions Trading', 'Freight & Shipping', 'LNG (Liquefied Natural Gas)'],
+    buySellContext: 'Both. Commodity trading houses (Vitol, Trafigura, Glencore) trade physical goods. Banks (Goldman, JP Morgan) operate financial commodity desks. Hedge funds take speculative positions.',
+    breakInRoadmap: [
+      { step: 1, description: 'Quantitative degree (Engineering, Maths, Physics) is highly valued. Energy economics or commodity-specific MSc helps.' },
+      { step: 2, description: 'Graduate programmes at commodity trading houses: Vitol, Trafigura, Gunvor, Glencore, Mercuria.' },
+      { step: 3, description: 'Bank commodity desks (Goldman Sachs Commodities, JP Morgan) offer structured analyst programmes.' },
+      { step: 4, description: 'Learn the fundamentals of physical markets — supply chains, shipping, storage, refining — not just financial pricing.' },
+      { step: 5, description: 'Internships in energy companies (Shell, BP Trading) or commodity banks provide direct exposure.' },
+    ],
+    careerPath: [
+      { level: 'Junior Trader / Analyst', years: '0–3', description: 'Support, risk reports, and learning physical and financial market dynamics.' },
+      { level: 'Trader', years: '3–7', description: 'Own book in a specific commodity with direct P&L responsibility.' },
+      { level: 'Senior Trader', years: '7–12', description: 'Larger, more complex strategies across correlated markets.' },
+      { level: 'Partner / CIO', years: '12+', description: 'Capital allocation, team building, and strategic direction.' },
+    ],
+    exitOpportunities: ['Commodity Hedge Fund', 'Energy Company Treasury', 'Physical Commodity Business', 'Family Office', 'Startup (energy trading software)', 'Carbon Markets'],
+    prosAndCons: {
+      pros: ['Highest earning potential outside top PE/HF', 'Entrepreneurial culture — P&L is the only metric', 'Exposure to physical global trade flows', 'Rapid progression for top performers', 'Geneva, Singapore, Houston hubs offer attractive packages'],
+      cons: ['Opaque industry — harder to break in than banking', 'Job security tied directly to P&L performance', 'Volatile bonus cycles', 'High stress and 24/7 market awareness required', 'Physical trading requires understanding logistics, shipping, and storage'],
+    },
+    topFirms: ['Vitol', 'Trafigura', 'Glencore', 'Gunvor', 'Mercuria', 'Shell Trading', 'BP Trading', 'Goldman Sachs Commodities', 'Castleton Commodities International', 'Freepoint Commodities'],
+    dayInTheLife: [
+      { time: '06:30', activity: 'Review overnight market moves: Brent crude, TTF gas, LME copper. OPEC news, weather events.' },
+      { time: '07:30', activity: 'Morning briefing — physical desk discusses cargo positions, logistics, and counterparty exposure.' },
+      { time: '08:00', activity: 'European energy markets open. Execute hedges on open positions and trade paper vs physical spreads.' },
+      { time: '11:00', activity: 'Call with Houston desk on crude arb opportunities between WTI and Brent.' },
+      { time: '13:00', activity: 'Lunch at desk — monitor positions continuously during lunch.' },
+      { time: '14:00', activity: 'US markets open — crude volume spikes. Trade EIA inventory report.' },
+      { time: '17:00', activity: 'End-of-day risk reconciliation — flatten delta hedges and review overnight exposure.' },
+      { time: '18:30', activity: 'Research report on natural gas storage levels ahead of winter — input to next week\'s positioning.' },
+    ],
+    skillsToMaster: ['Physical Market Fundamentals', 'Derivatives (Futures, Options, Swaps)', 'Supply Chain & Logistics Knowledge', 'Risk Management (VaR, Greeks)', 'Bloomberg & Reuters Eikon', 'Python / R for quantitative strategies', 'Macro Geopolitics', 'Shipping & Freight'],
+    youtubeResources: [
+      { title: 'Oil Trading Explained', channel: 'Patrick Boyle' },
+      { title: 'Commodity Trading Career Guide', channel: 'Commodities People' },
+      { title: 'How Trafigura and Vitol Make Money', channel: 'Real Vision Finance' },
+      { title: 'Energy Markets Fundamentals', channel: 'IHS Markit' },
+    ],
+    aiThreatLevel: 'Medium',
+    aiThreatAnalysis: 'Algorithmic and systematic trading is growing in paper commodities markets (futures, options). However, physical commodity trading — involving complex logistics, geopolitical risk, counterparty management, and supply chain knowledge — remains highly resistant to full automation. AI will augment traders\' ability to process satellite data, weather models, and supply chain signals but cannot replace physical market expertise and relationship networks.',
+    aiSkillsToLearn: ['Satellite data analysis for supply monitoring', 'Machine learning for price forecasting', 'Python for systematic commodity strategies', 'NLP for news flow processing (OPEC announcements, sanctions)', 'AI-powered freight and shipping analytics'],
+    technicalQuestions: [
+      'What is the difference between WTI and Brent crude? Why does the spread exist?',
+      'Explain contango and backwardation in commodity futures.',
+      'How would you hedge a physical crude cargo using futures?',
+      'What factors drive the copper price?',
+      'How does weather affect natural gas prices and how do traders position around this?',
+    ],
+    behaviouralQuestions: [
+      'Tell me about a commodity market you follow and your current view.',
+      'How do you manage a loss on a position you believe is fundamentally correct?',
+      'Describe a time you made a quick decision under significant uncertainty.',
+      'Why commodities over financial trading?',
+      'How do geopolitics impact commodity markets?',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Crude Oil Arbitrage (Brent vs WTI)',
+        steps: [
+          '1. Brent crude (North Sea) trades at $85/bbl. WTI (US) trades at $82/bbl. Spread = $3/bbl.',
+          '2. Cost to ship a VLCC (2m barrels) from US Gulf to Rotterdam: $1.50/bbl.',
+          '3. Quality differential (WTI is sweeter — worth slightly more to refiners): –$0.50/bbl adjustment.',
+          '4. Other costs (insurance, port, financing): $0.50/bbl.',
+          '5. Total economics: Brent ($85) vs Cost of WTI shipped ($82 + $1.50 + $0.50) = $84/bbl.',
+          '6. Arb profit = $85 – $84 = $1/bbl × 2m barrels = $2 million profit.',
+          '7. Arb closes as traders buy WTI (pushing it up) and sell Brent (pushing it down).',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Commodity trading houses recruit year-round and through targeted graduate programmes. Applications open September–January.',
+      stages: [
+        { stage: 'Online Application', description: 'CV and motivation letter. Some firms use aptitude tests.', tips: 'Show genuine knowledge of physical commodity markets — not just financial derivatives.' },
+        { stage: 'First Round Interview', description: 'Commodity market questions, brainteasers, and motivation.', tips: 'Know the Brent/WTI spread, current LME copper price, and a recent OPEC decision.' },
+        { stage: 'Trading Test / Assessment', description: 'Numeracy test and sometimes a simulated trading exercise.', tips: 'Practice mental arithmetic and probability questions — speed matters.' },
+        { stage: 'Final Interviews', description: 'Senior trader panel covering your market views and risk appetite.', tips: 'Have a concrete view on where a commodity is heading and why — and defend it under pressure.' },
+      ],
+      whatYouNeedToKnow: [
+        'Commodity trading houses (Vitol, Trafigura) pay significantly more than banks but are harder to break into.',
+        'Physical market knowledge (tankers, pipelines, storage) differentiates you from purely financial candidates.',
+        'Many top commodity traders come from non-finance backgrounds — engineers and scientists are valued.',
+        'Be prepared to defend a market view and explain how you\'d trade around an OPEC announcement.',
+      ],
+      topInternshipPrograms: ['Vitol Graduate Programme', 'Trafigura Internship', 'Shell Trading Graduate', 'BP Trading Analyst Programme', 'Goldman Sachs Commodities Summer Analyst'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'What is contango vs backwardation?', answer: 'Contango: futures price > spot price. The forward curve slopes upward, reflecting storage costs and carry. Common when supply is ample. Backwardation: futures price < spot price. The forward curve slopes downward, indicating near-term supply tightness. Physical buyers pay a premium for immediate delivery. Backwardation signals a bullish fundamental picture.', keyPoints: ['Contango = futures > spot (supply ample)', 'Backwardation = futures < spot (near-term tightness)', 'Storage costs explain contango', 'Backwardation often signals bullish fundamentals'] },
+      ],
+      behavioural: [
+        { question: 'Why commodities?', answer: 'Commodities sit at the intersection of physical global trade, geopolitics, and financial markets. No other asset class requires you to understand supply chains, weather, geopolitical risk, and financial derivatives simultaneously. The physical nature of the markets — tankers, pipelines, mines — makes it genuinely unique. The entrepreneurial P&L culture and meritocracy also appeal strongly.', keyPoints: ['Physical + financial intersection', 'Geopolitical and macro breadth', 'Meritocratic P&L culture', 'Global scope across locations'] },
+      ],
+    },
+    networkingTips: [
+      'Commodity trading is a small world — every contact matters. Be professional and persistent.',
+      'Attend Energy Trading Week and Metal Bulletin events in London.',
+      'LinkedIn outreach to traders at Vitol/Trafigura is effective if you show genuine market knowledge.',
+      'Consider the CQF or an energy economics MSc to differentiate yourself.',
+    ],
+    booksAndPodcasts: {
+      books: ['The World for Sale — Javier Blas & Jack Farchy', 'Oil 101 — Morgan Downey', 'The Prize — Daniel Yergin', 'Commodity Trading Advisors — Greg N. Gregoriou'],
+      podcasts: ['The Oil Market Podcast', 'Commodities Focus (Bloomberg)', 'Energy Gang', 'Macro Voices'],
+    },
+    salaryNegotiationTips: [
+      'Commodity trading compensation is often structured as a percentage of P&L — understand the formula before accepting.',
+      'Base salary at trading houses is lower than banks but P&L splits can be transformative.',
+      'Geneva and Singapore locations offer tax advantages — factor into total package comparison.',
+    ],
+  },
+  {
+    id: 'compliance',
+    title: 'Compliance & Regulatory Affairs',
+    category: 'Risk & Control',
+    shortDescription: 'Ensure financial institutions operate within legal and regulatory boundaries. A growing, well-paid profession as regulatory complexity increases globally.',
+    salaryRange: '£35,000 – £300,000+',
+    salaryLadder: [
+      { level: 'Compliance Analyst', salary: '£35,000–£55,000', description: 'KYC checks, regulatory reporting, and supporting compliance policies.' },
+      { level: 'Compliance Manager', salary: '£60,000–£95,000', description: 'Managing compliance programmes, advising business lines, and liaising with regulators.' },
+      { level: 'Senior Manager / VP', salary: '£100,000–£160,000', description: 'Leading compliance functions for specific business areas or product lines.' },
+      { level: 'Chief Compliance Officer / MD', salary: '£180,000–£400,000+', description: 'Board-level accountability for the firm\'s regulatory posture and culture.' },
+    ],
+    subRoles: ['Financial Crime / AML (Anti-Money Laundering)', 'Market Abuse & Surveillance', 'Regulatory Advisory', 'KYC / Client Onboarding', 'MiFID II / EMIR Reporting', 'Senior Manager Certification Regime (SMCR)'],
+    buySellContext: 'Neither. Compliance is an internal control function within financial institutions. It protects both the firm and clients by ensuring adherence to FCA, PRA, FED, SEC, and other regulatory requirements.',
+    breakInRoadmap: [
+      { step: 1, description: 'Law degrees, finance degrees, or accounting qualifications (ACA/ACCA) all provide strong entry routes.' },
+      { step: 2, description: 'ICA (International Compliance Association) qualifications are the industry standard — pursue while working.' },
+      { step: 3, description: 'Graduate programmes at major banks (Barclays, HSBC, Goldman) include compliance rotations.' },
+      { step: 4, description: 'Regulatory consulting firms (Deloitte Risk Advisory, PwC Regulatory, KPMG) are excellent feeder firms.' },
+      { step: 5, description: 'Regulatory knowledge matters more than financial modelling here — read FCA publications and policy consultations.' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–3', description: 'KYC, AML checks, and regulatory reporting.' },
+      { level: 'Manager', years: '3–7', description: 'Advising trading desks and running compliance programmes.' },
+      { level: 'Senior Manager', years: '7–12', description: 'Regulatory engagement, board reporting, and firm-wide policy.' },
+      { level: 'CCO', years: '12+', description: 'Ultimate accountability for regulatory conduct and culture.' },
+    ],
+    exitOpportunities: ['FCA / PRA (regulator)', 'Legal (financial regulation)', 'Risk Management', 'RegTech Startup', 'Consulting (regulatory advisory)', 'In-House Legal Counsel'],
+    prosAndCons: {
+      pros: ['Growing demand as regulation increases globally', 'Excellent work-life balance vs front office', 'Interesting intellectual work at the intersection of law and finance', 'Senior compliance officers are extremely well paid', 'FCA/PRA experience adds significant market value'],
+      cons: ['Lower entry salaries than front-office roles', 'Can feel reactive rather than value-creating', 'Heavily document-driven and process-oriented', 'Limited P&L connection makes bonus cycles less exciting', 'Stigma within some firms as a \'back office\' function'],
+    },
+    topFirms: ['Goldman Sachs', 'JP Morgan', 'HSBC', 'Barclays', 'Deloitte (Risk Advisory)', 'PwC (Regulatory)', 'KPMG (Regulatory)', 'FCA', 'FTI Consulting', 'Promontory (IBM)'],
+    dayInTheLife: [
+      { time: '08:30', activity: 'Review FCA RegMap updates and morning compliance alerts.' },
+      { time: '09:30', activity: 'Meeting with equities trading desk to advise on a market abuse query related to a block trade.' },
+      { time: '11:00', activity: 'KYC review panel — sign off on a high-risk client onboarding file.' },
+      { time: '13:00', activity: 'Lunch — compliance teams typically have reasonable hours.' },
+      { time: '14:00', activity: 'Draft response to FCA information request related to a transaction surveillance alert.' },
+      { time: '15:30', activity: 'Training session with new joiners on MAR (Market Abuse Regulation) obligations.' },
+      { time: '17:00', activity: 'Update the compliance monitoring schedule and prepare for tomorrow\'s board risk committee.' },
+    ],
+    skillsToMaster: ['FCA / PRA Regulation', 'AML & Financial Crime Frameworks', 'MiFID II / EMIR', 'KYC / CDD Processes', 'Market Abuse Regulation (MAR)', 'Regulatory Reporting', 'ICA Qualifications', 'Policy Writing'],
+    youtubeResources: [
+      { title: 'AML and KYC Explained', channel: 'ACAMS' },
+      { title: 'FCA Regulation for Beginners', channel: 'Kaplan Finance' },
+      { title: 'Market Abuse Regulation Overview', channel: 'LexisNexis Legal' },
+      { title: 'Breaking Into Compliance', channel: 'ICA Compliance Channel' },
+    ],
+    aiThreatLevel: 'High',
+    aiThreatAnalysis: 'RegTech is automating large swathes of compliance work — KYC document review, transaction monitoring, AML screening, and regulatory reporting. AI systems (Napier, ComplyAdvantage, Behavox) are replacing junior compliance analysts for routine screening. Senior compliance roles requiring regulatory judgement, FCA engagement, and board-level risk advice remain very safe and are growing in importance.',
+    aiSkillsToLearn: ['RegTech platform proficiency (Napier, Behavox)', 'Python for compliance data analytics', 'AI-driven transaction monitoring tools', 'Natural language processing for regulatory document review', 'Crypto and digital asset regulatory knowledge'],
+    technicalQuestions: [
+      'What is the difference between the FCA and the PRA?',
+      'Explain the 5 stages of money laundering.',
+      'What is MAR and what obligations does it create for financial firms?',
+      'What is SMCR and why was it introduced?',
+      'What is a Suspicious Activity Report (SAR) and when must you file one?',
+    ],
+    behaviouralQuestions: [
+      'Tell me about a time you identified a regulatory risk and escalated it appropriately.',
+      'Describe a situation where you had to deliver unwelcome compliance news to a business line.',
+      'How do you stay current with regulatory developments?',
+      'Why compliance over a front-office finance role?',
+      'Tell me about a recent FCA enforcement action that you found significant.',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'AML Risk Scoring',
+        steps: [
+          '1. Customer risk factors: country of domicile (high-risk jurisdiction: +3), PEP status (+4), complex ownership structure (+3).',
+          '2. Product risk: cash-intensive business (+2), international wire transfers (+2).',
+          '3. Channel risk: non-face-to-face onboarding (+1).',
+          '4. Total raw score: 3+4+3+2+2+1 = 15.',
+          '5. Risk bands: 0–5 = Low, 6–10 = Medium, 11–15 = High, 16+ = Very High.',
+          '6. Score of 15 = High risk → Enhanced Due Diligence (EDD) required.',
+          '7. Ongoing monitoring frequency: monthly transaction reviews, annual full KYC refresh.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Graduate compliance programmes open October–January. Many firms hire compliance interns within broader risk or operations schemes.',
+      stages: [
+        { stage: 'Application', description: 'CV and motivation — demonstrate regulatory awareness.', tips: 'Read recent FCA press releases and mention a specific enforcement case in your letter.' },
+        { stage: 'Online Assessment', description: 'Situational judgement and verbal reasoning.', tips: 'Compliance is about judgement — situational tests assess ethics and decision-making under uncertainty.' },
+        { stage: 'Interview', description: 'Competency and scenario-based interview.', tips: 'Prepare a STAR answer on a time you identified and flagged a risk or ethical concern.' },
+      ],
+      whatYouNeedToKnow: [
+        'Compliance internships give excellent exposure to how banks actually work — you see everything.',
+        'The ICA qualification is the most valued credential — research it before your interview.',
+        'Relationship-building with business lines is as important as technical regulatory knowledge.',
+        'Financial crime (AML) and market abuse are the fastest-growing, best-paid areas of compliance.',
+      ],
+      topInternshipPrograms: ['Goldman Sachs Legal & Compliance', 'JP Morgan Compliance Graduate', 'HSBC Financial Crime Internship', 'Barclays Compliance Placement', 'Deloitte Risk Advisory Graduate'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'What is the difference between the FCA and the PRA?', answer: 'The FCA (Financial Conduct Authority) regulates how firms treat customers and maintains market integrity. It focuses on conduct risk, consumer protection, and market abuse. The PRA (Prudential Regulation Authority, part of the Bank of England) regulates the financial stability of banks, insurers, and systemically important institutions — focusing on capital adequacy and systemic risk. Most banks are dual-regulated by both.', keyPoints: ['FCA = conduct and consumer protection', 'PRA = prudential stability and capital', 'Most banks dual-regulated', 'FCA regulates 50,000+ firms; PRA around 1,500'] },
+      ],
+      behavioural: [
+        { question: 'Why compliance?', answer: 'Compliance sits at the intersection of law, finance, and ethics. As regulation becomes more complex globally, the function is evolving from tick-box oversight to genuine strategic risk management. I am drawn to the intellectual rigour of understanding regulatory frameworks and the impact of getting it right — protecting firms, clients, and the integrity of financial markets.', keyPoints: ['Intellectual breadth of law + finance', 'Strategic importance growing', 'Ethical dimension meaningful', 'Career growth as regulation expands'] },
+      ],
+    },
+    networkingTips: [
+      'ACAMS (Association of Certified Anti-Money Laundering Specialists) runs excellent networking events.',
+      'ICA training courses put you in the room with compliance professionals — leverage these connections.',
+      'Follow the FCA and PRA on LinkedIn — comment thoughtfully on regulatory announcements to build visibility.',
+      'Compliance is a small community — treat every interaction with absolute professionalism.',
+    ],
+    booksAndPodcasts: {
+      books: ['Compliance and Financial Crime — ICA Textbook', 'The Law of Finance — Alastair Hudson', 'Anti-Money Laundering — Jonathan Benson'],
+      podcasts: ['AML Intelligence Podcast', 'FCA Regulation Roundup', 'Compliance Perspectives (SCCE)', 'RegTech Weekly'],
+    },
+    salaryNegotiationTips: [
+      'Financial crime and AML compliance specialists command a significant premium — research specialist market rates.',
+      'ICA CAMS certification adds 10–20% to market value at manager level.',
+      'CCO roles are extremely well compensated and often include substantial bonus and LTIPs.',
+    ],
+  },
+  {
+    id: 'fintech',
+    title: 'FinTech Finance & Strategy',
+    category: 'Technology & Quant',
+    shortDescription: 'Work at the intersection of finance and technology — building, analysing, and scaling the companies disrupting traditional banking, payments, and investment.',
+    salaryRange: '£40,000 – £400,000+',
+    salaryLadder: [
+      { level: 'Analyst / Associate (FinTech startup)', salary: '£40,000–£70,000 + equity', description: 'Financial analysis, fundraising support, and metrics tracking at a growth-stage company.' },
+      { level: 'Finance Manager / Senior Analyst', salary: '£70,000–£110,000 + equity', description: 'FP&A, investor relations, and unit economics modelling.' },
+      { level: 'Head of Finance / VP Finance', salary: '£110,000–£180,000 + meaningful equity', description: 'CFO-track role managing fundraising, financial operations, and board reporting.' },
+      { level: 'CFO / COO', salary: '£180,000–£400,000 + large equity stake', description: 'Leading the company\'s financial strategy and operations towards IPO or exit.' },
+    ],
+    subRoles: ['FinTech Investment (VC/PE)', 'FinTech Strategy & Corp Dev', 'Finance at a FinTech (FP&A, Treasury)', 'FinTech Consulting', 'Product Finance', 'Payments & Banking Analyst'],
+    buySellContext: 'Varies. FinTech roles span from working inside startups (operating role) to investing in them (VC/PE) to advising them (consulting/banking). The sector is defined by technology enabling financial services rather than a specific buy/sell orientation.',
+    breakInRoadmap: [
+      { step: 1, description: 'Finance, Computer Science, or Economics degree. Some roles value coding skills (Python, SQL) highly.' },
+      { step: 2, description: 'Work at a FinTech startup in a finance, analytics, or strategy role — or join a bank\'s digital/innovation team.' },
+      { step: 3, description: 'Understand unit economics: CAC, LTV, churn, NRR, gross margin — the language of VC-backed companies.' },
+      { step: 4, description: 'VC that invests in FinTech (Balderton, Accel, Northzone) is accessible from banking, consulting, or operator backgrounds.' },
+      { step: 5, description: 'Build a network in the London/Berlin FinTech ecosystem — attend Fintech Nexus, Money2020, and SeedCamp events.' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–3', description: 'Financial analysis, metrics, and supporting fundraising at a startup or in FinTech-focused VC.' },
+      { level: 'Manager / Senior Analyst', years: '3–6', description: 'FP&A ownership, investor decks, and cross-functional finance support.' },
+      { level: 'VP Finance / Head of Finance', years: '6–10', description: 'CFO-track, board reporting, Series C+ fundraising.' },
+      { level: 'CFO / Partner', years: '10+', description: 'Full financial ownership or fund partner in FinTech VC.' },
+    ],
+    exitOpportunities: ['FinTech Founder', 'CFO at scale-up', 'VC Partner', 'Investment Banking (FinTech coverage)', 'Corporate Development at a bank', 'Consulting (Digital Finance)'],
+    prosAndCons: {
+      pros: ['Equity upside at early-stage companies can be life-changing', 'Exciting, fast-paced, and innovative culture', 'Broad exposure across product, strategy, and finance', 'Proximity to founders and senior leadership', 'High-growth sector with global opportunities'],
+      cons: ['Higher career risk — startups fail', 'Lower base salary than banking at junior levels', 'Equity may be worth nothing or restricted for years', 'Less structured training than large banks', 'Work-life balance can be intense at startups in growth phase'],
+    },
+    topFirms: ['Revolut', 'Monzo', 'Wise', 'Checkout.com', 'Starling Bank', 'OakNorth', 'Funding Circle', 'Zilch', 'SumUp', 'Stripe (London office)', 'Klarna', 'Thought Machine'],
+    dayInTheLife: [
+      { time: '09:00', activity: 'Review overnight customer metrics — DAU, transaction volume, revenue vs plan.' },
+      { time: '10:00', activity: 'Weekly finance team standup — review burn rate and runway calculations.' },
+      { time: '11:00', activity: 'Update Series C investor deck with latest unit economics and cohort analysis.' },
+      { time: '13:00', activity: 'Lunch with the Head of Product — align on new feature financial impact modelling.' },
+      { time: '14:00', activity: 'Build a new market expansion model for a potential launch in Germany.' },
+      { time: '16:00', activity: 'Investor update call with a lead VC — present quarterly performance and forecast.' },
+      { time: '18:00', activity: 'Cross-functional meeting on pricing strategy with marketing and product teams.' },
+    ],
+    skillsToMaster: ['Unit Economics (CAC, LTV, Churn)', 'Financial Modelling (SaaS/FinTech specific)', 'SQL & Python basics', 'Fundraising & VC Term Sheets', 'SaaS Metrics (ARR, NRR, Gross Margin)', 'Board Presentations', 'Regulatory Knowledge (EMI, Banking Licence)', 'Pitch Deck Construction'],
+    youtubeResources: [
+      { title: 'FinTech Explained — From Payments to Neobanks', channel: 'CNBC Tech' },
+      { title: 'How to Model SaaS Unit Economics', channel: 'David Cummings' },
+      { title: 'Breaking Into FinTech from Finance', channel: 'The FinTech Times' },
+      { title: 'VC Term Sheets Explained', channel: 'Y Combinator' },
+    ],
+    aiThreatLevel: 'Medium',
+    aiThreatAnalysis: 'AI is core to FinTech products (credit scoring, fraud detection, personalisation) rather than primarily a threat. Finance professionals within FinTech companies who understand AI capabilities will have a significant advantage. Roles building AI-native financial products are growing rapidly. The threat is higher for FinTech analysts doing manual reporting or spreadsheet-heavy work that AI tools will automate.',
+    aiSkillsToLearn: ['SQL and Python for data analysis', 'Understanding of ML in credit/fraud (conceptual)', 'AI product analytics tools (Amplitude + AI)', 'Prompt engineering for financial analysis', 'LLM-powered FP&A tools (Pigment, Mosaic)'],
+    technicalQuestions: [
+      'What is the difference between ARR and MRR?',
+      'How do you calculate LTV:CAC ratio and what does a good ratio look like?',
+      'What is the Rule of 40 for SaaS companies?',
+      'How would you model a new country market entry for a payments company?',
+      'What is a term sheet and what are the key investor-friendly vs founder-friendly provisions?',
+    ],
+    behaviouralQuestions: [
+      'Why FinTech over traditional finance?',
+      'Tell me about a FinTech company you admire and what makes its business model strong.',
+      'Describe a time you had to move fast with incomplete information.',
+      'How do you think about the trade-off between growth and profitability?',
+      'What FinTech trend do you think is most underappreciated?',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'LTV:CAC Analysis',
+        steps: [
+          '1. CAC (Customer Acquisition Cost): Total sales & marketing spend / New customers acquired.',
+          '2. Example: £500k spend, 1,000 new customers → CAC = £500.',
+          '3. LTV (Lifetime Value): ARPU × Gross Margin % × (1 / Churn Rate).',
+          '4. Example: £30/month ARPU, 70% gross margin, 2% monthly churn.',
+          '5. LTV = £30 × 0.70 × (1/0.02) = £30 × 0.70 × 50 = £1,050.',
+          '6. LTV:CAC = £1,050 / £500 = 2.1x.',
+          '7. Rule of thumb: >3x is healthy, >5x is excellent. <1x means you are losing money on each customer.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'FinTech internships are year-round and often found through startup job boards (AngelList, WorkInTech, LinkedIn). Less structured than bank programmes.',
+      stages: [
+        { stage: 'Application', description: 'CV tailored to the startup — emphasise initiative, ownership, and relevant skills.', tips: 'Mention specific products the company offers and how you use or have analysed them.' },
+        { stage: 'Task / Mini Project', description: 'Many FinTechs send a take-home case: model the unit economics, analyse a market, or build a pitch.', tips: 'Quality of thinking and presentation matters more than perfect format — show your reasoning.' },
+        { stage: 'Founder / Team Interview', description: 'Culture fit, intellectual curiosity, and motivation are key.', tips: 'Be genuine about why this specific company excites you. Generic answers fail at startups.' },
+      ],
+      whatYouNeedToKnow: [
+        'FinTech internships are hands-on from Day 1 — small teams mean you own real work immediately.',
+        'Equity is part of the package at many startups — understand what you are being offered.',
+        'The culture differs hugely between an early-stage startup and a scale-up like Revolut.',
+        'Python and SQL skills open significantly more doors — even basic proficiency helps.',
+      ],
+      topInternshipPrograms: ['Revolut Finance Intern', 'Monzo Finance Placement', 'Wise (TransferWise) Finance Internship', 'Checkout.com Finance Analyst Intern', 'Stripe London Internship'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'What is LTV:CAC and what does a good ratio look like?', answer: 'LTV (Lifetime Value) divided by CAC (Customer Acquisition Cost). LTV = ARPU × Gross Margin / Churn. A ratio above 3x is generally considered healthy, meaning you get back 3x what you spend acquiring a customer over their lifetime. Above 5x suggests strong economics. Below 1x means you are destroying value on every customer — a red flag in fundraising.', keyPoints: ['LTV = ARPU × Gross Margin / Churn', 'CAC = S&M spend / new customers', '>3x healthy, >5x excellent', 'Key metric in VC investment decisions'] },
+      ],
+      behavioural: [
+        { question: 'Why FinTech over a bank?', answer: 'FinTech offers the chance to build something rather than advise on it. The pace of product development, the equity upside, and the proximity to founders creating genuinely new financial infrastructure is what draws me. Traditional banking has structural advantages — balance sheets, licences, trust — but FinTechs are re-architecting the user experience and unit economics from scratch, and that is where I want to be.', keyPoints: ['Building vs advising', 'Equity upside', 'Faster pace and more ownership', 'Proximity to founders and mission'] },
+      ],
+    },
+    networkingTips: [
+      'Follow FinTech founders and investors on Twitter/LinkedIn — engage thoughtfully with their content.',
+      'Attend London FinTech Week, MoneyConf, and SeedCamp events — most are free for students.',
+      'AngelList, Otta, and WorkInStartups list FinTech roles — check daily and apply fast.',
+      'Cold emailing founders directly (2–3 sentence email, specific observation about their product) has a surprisingly high hit rate.',
+    ],
+    booksAndPodcasts: {
+      books: ['The Payments Industry — Alistair Milne', 'FinTech for Finance Professionals — Bernard Marr', 'Venture Deals — Brad Feld', 'Zero to One — Peter Thiel'],
+      podcasts: ['Acquired (tech company deep dives)', 'FinTech Insider', '11:FS Podcast', 'The Twenty Minute VC'],
+    },
+    salaryNegotiationTips: [
+      'Always negotiate equity alongside base — use a vesting schedule calculator to understand the real value.',
+      'Series B+ companies can usually match bank base salaries — don\'t accept a huge pay cut unless equity is meaningful.',
+      'Research the company\'s last valuation and option pool to understand equity dilution.',
+    ],
+  },
+  {
+    id: 'sovereign-wealth',
+    title: 'Sovereign Wealth Fund',
+    category: 'Asset Management',
+    shortDescription: 'Manage state-owned investment pools running hundreds of billions — deploying capital across equities, fixed income, real assets, and alternatives for future generations.',
+    salaryRange: '£60,000 – £500,000+',
+    salaryLadder: [
+      { level: 'Analyst', salary: '£60,000–£90,000', description: 'Portfolio analysis, manager research, and asset class modelling.' },
+      { level: 'Senior Analyst / Associate', salary: '£90,000–£140,000', description: 'Leading investment research and supporting portfolio construction decisions.' },
+      { level: 'Portfolio Manager', salary: '£150,000–£280,000', description: 'Responsible for a specific asset class or geography within the fund.' },
+      { level: 'Director / Head of Asset Class', salary: '£280,000–£500,000+', description: 'Strategic asset allocation, external manager selection, and board reporting.' },
+    ],
+    subRoles: ['Equities', 'Fixed Income', 'Private Equity Allocation', 'Infrastructure', 'Real Estate', 'External Manager Selection', 'Absolute Return / Hedge Funds', 'ESG & Sustainable Investment'],
+    buySellContext: 'Buy-Side. SWFs are pure long-term investors deploying state capital across asset classes. They have no client liabilities (unlike pension funds or insurance) and often take a generational investment perspective.',
+    breakInRoadmap: [
+      { step: 1, description: 'Investment banking, asset management, or top consulting backgrounds are the primary feeders.' },
+      { step: 2, description: 'SWFs rarely hire undergraduates directly — 3–5 years of relevant experience is typical for entry roles.' },
+      { step: 3, description: 'CFA is almost universal in SWF investment teams — start immediately.' },
+      { step: 4, description: 'GIC (Singapore), Norges Bank Investment Management (NBIM), and Mubadala offer structured analyst programmes.' },
+      { step: 5, description: 'Language skills (Arabic, Norwegian, Chinese, Korean) add significant value for location-specific SWFs.' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–4 (usually post-experience)', description: 'Asset class research and portfolio support.' },
+      { level: 'Portfolio Manager', years: '4–10', description: 'Independent portfolio ownership within asset class.' },
+      { level: 'Head of Asset Class', years: '10–15', description: 'Strategic allocation and manager selection at scale.' },
+      { level: 'CIO / Deputy CIO', years: '15+', description: 'Total portfolio responsibility for hundreds of billions.' },
+    ],
+    exitOpportunities: ['Asset Management (senior PM)', 'Family Office CIO', 'Endowment Management', 'Pension Fund CIO', 'Private Equity (senior)', 'Government Finance Advisory'],
+    prosAndCons: {
+      pros: ['Managing capital at a scale few other roles offer', 'Long-term investment horizon reduces short-term pressure', 'Highly prestigious globally', 'Excellent work-life balance vs banking and PE', 'Exposure to every asset class simultaneously'],
+      cons: ['Hard to break in — requires strong prior experience', 'Bureaucratic decision-making in large institutions', 'Compensation lower than PE or hedge funds for equivalent seniority', 'Limited entrepreneurial freedom', 'Some SWFs require relocation to Riyadh, Oslo, Singapore, or Abu Dhabi'],
+    },
+    topFirms: ['Norges Bank Investment Management (NBIM) — £1.5 trillion', 'Government of Singapore Investment Corporation (GIC)', 'Temasek Holdings', 'Abu Dhabi Investment Authority (ADIA)', 'Kuwait Investment Authority (KIA)', 'Qatar Investment Authority (QIA)', 'Mubadala Investment Company', 'Future Fund (Australia)', 'PIF (Saudi Arabia)'],
+    dayInTheLife: [
+      { time: '08:00', activity: 'Review overnight market moves across global equity and fixed income portfolios.' },
+      { time: '09:00', activity: 'External manager due diligence call — reviewing a PE fund for a £200m allocation decision.' },
+      { time: '11:00', activity: 'Asset allocation committee — discuss rebalancing between equities and infrastructure given rate environment.' },
+      { time: '13:00', activity: 'Lunch — SWFs have very reasonable working hours compared to banks and PE funds.' },
+      { time: '14:00', activity: 'Deep dive analysis on emerging market equity opportunity in India.' },
+      { time: '16:00', activity: 'ESG review — assess climate risk exposure across the infrastructure portfolio.' },
+      { time: '17:30', activity: 'Wrap up — most SWF teams operate 8am–6pm culture with limited weekend work.' },
+    ],
+    skillsToMaster: ['Asset Allocation', 'Portfolio Construction', 'Manager Selection (due diligence)', 'Macro Economics', 'Alternatives (PE, Infrastructure, Real Assets)', 'Risk Management', 'ESG / Responsible Investment', 'CFA Level III topics'],
+    youtubeResources: [
+      { title: 'How Sovereign Wealth Funds Work', channel: 'Economics Explained' },
+      { title: 'NBIM Portfolio Strategy Explained', channel: 'Norges Bank Investment Management' },
+      { title: 'Breaking Into Asset Management', channel: 'Peak Frameworks' },
+      { title: 'Institutional Investment Explained', channel: 'Real Vision Finance' },
+    ],
+    aiThreatLevel: 'Low',
+    aiThreatAnalysis: 'SWFs rely on long-term macro judgement, political acumen, and complex multi-asset portfolio construction that remains difficult to automate. AI is being adopted for portfolio risk monitoring, manager screening, and quantitative factor analysis. However, the strategic investment decisions at the scale SWFs operate require experienced human judgement. The function is safe and AI augments rather than displaces.',
+    aiSkillsToLearn: ['AI-driven portfolio risk analytics', 'Machine learning for factor investing', 'NLP for manager research reports', 'Python for portfolio optimisation', 'ESG data analytics (MSCI, Sustainalytics AI tools)'],
+    technicalQuestions: [
+      'How do you construct a strategic asset allocation for a long-term sovereign fund?',
+      'What is the Norwegian Government Pension Fund\'s approach to ethical investing?',
+      'How do you evaluate a private equity manager for a fund-of-funds allocation?',
+      'What is the difference between strategic and tactical asset allocation?',
+      'How do interest rates affect a multi-asset portfolio?',
+    ],
+    behaviouralQuestions: [
+      'Why a SWF over a hedge fund or PE firm?',
+      'How do you think about investment decisions with a 20-year time horizon?',
+      'Tell me about an asset class you believe is mis-priced today.',
+      'How would you communicate a significant drawdown to government stakeholders?',
+      'What is the role of ESG in a sovereign wealth fund mandate?',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Strategic Asset Allocation — Mean-Variance Optimisation (concept)',
+        steps: [
+          '1. Define investment objectives: maximise return for a given level of risk (variance).',
+          '2. Expected returns: Equities 7%, Fixed Income 3%, Infrastructure 6%, Private Equity 9%.',
+          '3. Correlation matrix: equities and bonds are negatively correlated (diversification benefit).',
+          '4. Efficient frontier: calculate the portfolio mix minimising variance for each level of expected return.',
+          '5. Apply constraints: max 30% in alternatives; min 20% in fixed income (liquidity requirement).',
+          '6. Select the optimal portfolio on the frontier matching the fund\'s risk tolerance.',
+          '7. Rebalance annually back to target weights — SWFs use systematic rebalancing rules.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Very few formal internship programmes. GIC, Temasek, and Mubadala run graduate schemes. Most entry is post-experience.',
+      stages: [
+        { stage: 'Application', description: 'Formal application for structured graduate programmes.', tips: 'Demonstrate CFA progress and genuine interest in macro and multi-asset investing.' },
+        { stage: 'Technical Interview', description: 'Asset allocation, portfolio construction, and macro questions.', tips: 'Know the fund\'s mandate, asset allocation, and a view on at least one asset class.' },
+        { stage: 'Final Panel', description: 'Senior investment team panel covering investment philosophy and a case study.', tips: 'Present a specific investment idea with a 5-year thesis — shows long-term thinking.' },
+      ],
+      whatYouNeedToKnow: [
+        'Most SWF analyst hires come from banking or asset management with 2–5 years experience.',
+        'CFA is almost a prerequisite — start immediately if targeting this career.',
+        'Understand the specific fund\'s mandate: some are stabilisation funds, others are savings/development funds.',
+        'Language skills are a genuine differentiator for non-anglophone SWFs.',
+      ],
+      topInternshipPrograms: ['GIC Analyst Programme', 'Temasek Investment Intern', 'Mubadala Finance Graduate', 'Future Fund Graduate (Australia)', 'NBIM Junior Professional Programme'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'How do you build a strategic asset allocation?', answer: 'Start with the fund\'s objectives and constraints (liquidity needs, return targets, time horizon). Estimate expected returns and risk for each asset class using historical data adjusted for current macro conditions. Build a correlation matrix. Use mean-variance optimisation to find the efficient frontier. Select the portfolio matching the fund\'s risk tolerance. Apply real-world constraints (max alternatives, liquidity floors). Review and rebalance annually.', keyPoints: ['Start with mandate and constraints', 'Expected returns and risk estimates', 'Correlation = diversification', 'Efficient frontier optimisation', 'Annual rebalancing'] },
+      ],
+      behavioural: [
+        { question: 'Why a SWF over a hedge fund?', answer: 'SWFs offer the opportunity to invest at a scale and with a time horizon that no other institution can match. Rather than quarter-to-quarter performance pressure, you can take genuinely long-term positions across every major asset class. I find the combination of macro thinking, multi-asset portfolio construction, and the stewardship mission compelling. The intellectual breadth and reasonable working hours also appeal.', keyPoints: ['Long-term horizon', 'Multi-asset breadth', 'Scale of capital', 'Stewardship mission', 'Better balance vs hedge fund'] },
+      ],
+    },
+    networkingTips: [
+      'NBIM, GIC, and Temasek publish research — engage with it on LinkedIn to build visibility.',
+      'CFA Institute events attract SWF investment professionals — attend and introduce yourself.',
+      'Pension fund and SWF professionals share many career trajectories — network at both.',
+      'Alumni from bulge bracket banks and top asset managers move into SWFs — leverage your school network.',
+    ],
+    booksAndPodcasts: {
+      books: ['The New Wealth of Nations — Sovereign Wealth Funds and the Global Economy', 'Against the Gods — Peter Bernstein', 'The Intelligent Investor — Benjamin Graham', 'Adaptive Markets — Andrew Lo'],
+      podcasts: ['Invest Like the Best', 'Capital Allocators', 'Top Traders Unplugged', 'Macro Voices'],
+    },
+    salaryNegotiationTips: [
+      'SWF salaries are publicly benchmarked in many jurisdictions (NBIM publishes pay) — research before negotiating.',
+      'Compensation is lower than equivalent PE or hedge fund roles but hours are far better.',
+      'For GIC, ADIA, and Mubadala roles, cost-of-living adjustments for expatriate postings are substantial and negotiable.',
+    ],
+  },
+  {
+    id: 'family-office',
+    title: 'Family Office',
+    category: 'Wealth Management',
+    shortDescription: 'Manage the complete financial affairs of ultra-high-net-worth families — investments, tax, estate planning, philanthropy, and succession across generations.',
+    salaryRange: '£50,000 – £400,000+',
+    salaryLadder: [
+      { level: 'Analyst / Junior Investment Manager', salary: '£50,000–£80,000', description: 'Portfolio analysis, manager research, and financial reporting for the family.' },
+      { level: 'Investment Manager', salary: '£90,000–£140,000', description: 'Direct investment responsibility and relationship management with external managers.' },
+      { level: 'Senior Investment Manager / Director', salary: '£150,000–£250,000', description: 'CIO-support role, leading asset allocation and direct investment decisions.' },
+      { level: 'CIO / CEO', salary: '£250,000–£500,000+', description: 'Total responsibility for the family\'s financial strategy and relationships.' },
+    ],
+    subRoles: ['Single Family Office (SFO)', 'Multi-Family Office (MFO)', 'Direct Investment', 'Co-Investment', 'Philanthropy / Impact', 'Tax & Estate Planning', 'Concierge & Lifestyle Management'],
+    buySellContext: 'Buy-Side. Family offices deploy the private wealth of ultra-high-net-worth families across diverse asset classes — listed equities, PE, real estate, hedge funds, and direct investments. They are long-term capital allocators with no external investors to answer to.',
+    breakInRoadmap: [
+      { step: 1, description: 'Private banking, wealth management, asset management, or private equity backgrounds are the primary feeders.' },
+      { step: 2, description: 'CFA or CAIA qualifications are highly valued. CFP (Certified Financial Planner) for more holistic family office roles.' },
+      { step: 3, description: 'Family offices rarely advertise — networking and discretion are essential. Use LinkedIn and specialist recruiters (Agreus, Wickham Group).' },
+      { step: 4, description: 'Boutique investment banks and private banking (Rothschild Wealth, Coutts, UBS Private Bank) are strong feeder paths.' },
+      { step: 5, description: 'Some families hire former business operators or entrepreneurs to lead their direct investment programmes.' },
+    ],
+    careerPath: [
+      { level: 'Analyst', years: '0–4', description: 'Investment reporting, manager due diligence, and financial modelling.' },
+      { level: 'Investment Manager', years: '4–8', description: 'Asset class ownership and co-investment analysis.' },
+      { level: 'Director / Deputy CIO', years: '8–14', description: 'Strategic allocation and principal family relationship management.' },
+      { level: 'CIO', years: '14+', description: 'Trusted steward of generational wealth — highest responsibility.' },
+    ],
+    exitOpportunities: ['Sovereign Wealth Fund', 'Endowment / Foundation', 'Asset Management (senior)', 'Private Banking CIO', 'Starting your own MFO', 'Startup Founding Team'],
+    prosAndCons: {
+      pros: ['Exceptional work-life balance', 'Highly trusted, principal relationship', 'Exposure to every asset class including direct deals', 'Discretion and privacy — small, confidential teams', 'Potentially significant bonus tied to family wealth growth'],
+      cons: ['Extremely hard to find roles — no public job boards', 'Can be isolating in single-person or tiny teams', 'Family dynamics and politics can be complex', 'Comp less transparent than institutional finance', 'Career progression can stall if family relationship changes'],
+    },
+    topFirms: ['Stonehage Fleming', 'Caledonia Investments', 'Sandaire', 'Stanhope Capital', 'Brockton Capital', 'Greycoat Real Estate', 'Pelham Capital (family office arm)', 'Samos Investment (Abramovich)', 'Lansdowne Partners (family office clients)', 'Agreus Group (recruiter)'],
+    dayInTheLife: [
+      { time: '08:30', activity: 'Review portfolio P&L across listed equities, PE, and real estate. Prepare morning brief for the family principal.' },
+      { time: '10:00', activity: 'Investment committee meeting — present a PE co-investment opportunity alongside KKR fund.' },
+      { time: '11:30', activity: 'Call with Rothschild Wealth on estate restructuring and tax efficient structure.' },
+      { time: '13:00', activity: 'Lunch with family member — relationship management is as important as investment skill.' },
+      { time: '14:30', activity: 'Review hedge fund manager quarterly letter and performance attribution.' },
+      { time: '16:00', activity: 'Philanthropy project — review grant recommendations for the family foundation.' },
+      { time: '17:30', activity: 'Early finish — family offices typically operate 9am–6pm with rare weekends.' },
+    ],
+    skillsToMaster: ['Multi-Asset Portfolio Management', 'Manager Due Diligence', 'Tax & Estate Planning (awareness)', 'Direct Investment Analysis', 'Relationship Management', 'Philanthropy / Impact Investing', 'Discretion and Confidentiality', 'CFA / CAIA'],
+    youtubeResources: [
+      { title: 'What is a Family Office?', channel: 'Agreus Group' },
+      { title: 'Family Office Investment Strategies', channel: 'Real Vision Finance' },
+      { title: 'Ultra High Net Worth Wealth Management', channel: 'CFI Education' },
+      { title: 'Breaking Into Family Office from Banking', channel: 'Peak Frameworks' },
+    ],
+    aiThreatLevel: 'Low',
+    aiThreatAnalysis: 'The deeply personal, trust-based nature of family office work makes it highly resistant to AI displacement. Investment decisions, tax structuring, and succession planning require experienced human judgement and long-standing personal relationships. AI is being adopted for portfolio monitoring and manager screening but the principal relationship at the heart of family office work cannot be automated.',
+    aiSkillsToLearn: ['AI-powered portfolio analytics', 'Automated investment reporting tools', 'Digital asset / crypto fundamentals (families increasingly invest here)', 'AI for philanthropic impact measurement', 'Cybersecurity awareness (family offices are prime targets)'],
+    technicalQuestions: [
+      'How would you structure the asset allocation for a family with £500m in liquid wealth and a 30-year horizon?',
+      'What are the key differences between a single family office and a multi-family office?',
+      'How do you evaluate a hedge fund manager for a family allocation?',
+      'What tax structures are relevant for a UK-domiciled UHNW family?',
+      'How do you think about illiquidity premium in a family office portfolio?',
+    ],
+    behaviouralQuestions: [
+      'Why a family office over an asset management firm?',
+      'How would you handle a disagreement with the family principal on an investment decision?',
+      'Tell me about an investment you would make for a family with a 20-year horizon.',
+      'How do you balance investment performance with the family\'s personal values and goals?',
+      'Describe a time you managed a sensitive relationship with discretion.',
+    ],
+    calculationWalkthroughs: [
+      {
+        title: 'Illiquidity Premium Assessment',
+        steps: [
+          '1. Family has £500m. Liquid needs: £50m in cash/short-term bonds (10%) for lifestyle and emergency.',
+          '2. Semi-liquid: £100m in public equities and fixed income (20%) for tactical opportunities.',
+          '3. Illiquid allocation: £350m (70%) across PE, real estate, infrastructure, and direct deals.',
+          '4. Expected liquid return: 5% (blended equities/bonds).',
+          '5. Expected illiquid return: 12% (PE), 8% (real estate), 7% (infrastructure).',
+          '6. Blended illiquidity premium: approx 3–4% above public markets.',
+          '7. Portfolio expected return: (10% × 3%) + (20% × 5%) + (70% × 9%) = 0.3% + 1% + 6.3% = 7.6% vs 5% for all-liquid portfolio.',
+        ],
+      },
+    ],
+    internshipProcess: {
+      timeline: 'Family office roles are rarely posted. Most opportunities arise through networks and specialist recruiters. Some MFOs run structured graduate programmes.',
+      stages: [
+        { stage: 'Network-Based Introduction', description: 'Introductions through private banking, wealth management alumni, or specialist recruiters.', tips: 'Cultivate connections at Rothschild Wealth, Coutts, UBS Private Bank — they refer talent to family offices.' },
+        { stage: 'Informal Coffee Chat', description: 'Family offices often hire through extended informal processes before a formal offer.', tips: 'Demonstrate discretion, intelligence, and genuine interest in the family\'s investment approach.' },
+        { stage: 'Investment Discussion', description: 'Conversation about an investment idea, market view, or case study.', tips: 'Prepare a specific investment idea suitable for a long-term, tax-efficient family portfolio.' },
+      ],
+      whatYouNeedToKnow: [
+        'Discretion is the most important trait — family offices protect their privacy fiercely.',
+        'You will wear many hats — investment analysis, manager selection, tax awareness, and family liaison.',
+        'Building a trusted relationship with the family principal is more important than any technical skill.',
+        'Pay transparency is low — research market rates through specialist recruiters like Agreus.',
+      ],
+      topInternshipPrograms: ['Stonehage Fleming Graduate', 'Caledonia Investments', 'Stanhope Capital', 'Sandaire Family Office', 'Various Single Family Offices through Agreus'],
+    },
+    interviewQA: {
+      technical: [
+        { question: 'How would you allocate £500m for a family with a 30-year horizon?', answer: 'Start with their specific objectives: capital preservation, growth, income, philanthropy, and liquidity needs. Maintain 10% in liquid assets for lifestyle and emergencies. Allocate 25% to public markets (diversified equities and bonds). Put 65% in illiquid alternatives — PE, real estate, infrastructure — where the long time horizon allows an illiquidity premium. Rebalance annually. Layer in direct investments where the family has expertise.', keyPoints: ['Start with objectives not asset classes', 'Liquidity reserve first', 'Long horizon = higher illiquid allocation', 'Direct investments where family has edge', 'Tax efficiency throughout'] },
+      ],
+      behavioural: [
+        { question: 'Why a family office?', answer: 'Family offices offer something unique — the breadth of a sovereign fund combined with the intimacy of a principal relationship. You manage wealth across generations, across every asset class, and you build genuine trust with the family over time. I am drawn to the long-term orientation, the discretion required, and the opportunity to be a trusted steward rather than a transactional service provider.', keyPoints: ['Breadth across all asset classes', 'Long-term stewardship', 'Trust-based principal relationship', 'Discretion and privacy values', 'Generational perspective'] },
+      ],
+    },
+    networkingTips: [
+      'Agreus Group, Wickham Group, and Campden Wealth are the specialist family office recruiters — register with them.',
+      'Private banking alumni (Rothschild, Coutts, UBS) frequently move into family offices and are excellent referrers.',
+      'Campden Wealth publishes an annual family office report — read it and reference it in conversations.',
+      'Be discreet in all networking — family offices will check who you speak to and what you say.',
+    ],
+    booksAndPodcasts: {
+      books: ['Family Wealth — James Hughes', 'The Complete Family Office Handbook — Kirby Rosplock', 'Wealth — Stuart Lucas', 'The Trusted Advisor — David Maister'],
+      podcasts: ['Capital Allocators', 'The Family Office Podcast', 'Campden Wealth Insights', 'Invest Like the Best'],
+    },
+    salaryNegotiationTips: [
+      'Salary data is scarce — use Agreus and Wickham Group to benchmark before negotiating.',
+      'Discretionary bonus linked to family wealth growth can be very substantial — understand the formula.',
+      'Some family offices offer co-investment rights on deals — this is potentially more valuable than salary.',
     ],
   },
 ];
