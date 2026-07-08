@@ -27,6 +27,128 @@ type EnhancedNotes = {
 
 const STORAGE_KEY = 'findr_meetings'
 
+function getSpeechRecognition(): any {
+  const w = window as any
+  return w.SpeechRecognition || w.webkitSpeechRecognition || null
+}
+
+function formatElapsed(seconds: number) {
+  const m = Math.floor(seconds / 60)
+  const s = seconds % 60
+  return `${m}:${s.toString().padStart(2, '0')}`
+}
+
+function useVoiceRecorder(onFinalTranscript: (text: string) => void) {
+  const [recording, setRecording] = useState(false)
+  const [interim, setInterim] = useState('')
+  const [elapsed, setElapsed] = useState(0)
+  const [error, setError] = useState<string | null>(null)
+  const recRef = useRef<any>(null)
+  const recordingRef = useRef(false)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const callbackRef = useRef(onFinalTranscript)
+  callbackRef.current = onFinalTranscript
+
+  const supported = getSpeechRecognition() !== null
+
+  function stop() {
+    recordingRef.current = false
+    setRecording(false)
+    setInterim('')
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
+    if (recRef.current) { try { recRef.current.stop() } catch { /* already stopped */ } recRef.current = null }
+  }
+
+  function start() {
+    const SR = getSpeechRecognition()
+    if (!SR) {
+      setError('Voice capture is not supported in this browser — try Chrome or Edge.')
+      return
+    }
+    setError(null)
+    const rec = new SR()
+    rec.continuous = true
+    rec.interimResults = true
+    rec.lang = 'en-GB'
+    rec.onresult = (e: any) => {
+      let interimText = ''
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const res = e.results[i]
+        const text = res[0].transcript.trim()
+        if (res.isFinal) {
+          if (text) callbackRef.current(text)
+        } else {
+          interimText += res[0].transcript
+        }
+      }
+      setInterim(interimText)
+    }
+    rec.onerror = (e: any) => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        setError('Microphone access was blocked. Allow mic access in your browser settings and try again.')
+        stop()
+      }
+      // 'no-speech' and 'aborted' are harmless — onend will restart if still recording
+    }
+    // Chrome stops recognition after ~60s of speech or silence — restart to keep listening
+    rec.onend = () => {
+      if (recordingRef.current) {
+        try { rec.start() } catch { /* restart race — ignore */ }
+      }
+    }
+    recRef.current = rec
+    recordingRef.current = true
+    setRecording(true)
+    setElapsed(0)
+    timerRef.current = setInterval(() => setElapsed(s => s + 1), 1000)
+    try { rec.start() } catch { /* already started */ }
+  }
+
+  useEffect(() => stop, [])
+
+  return { supported, recording, interim, elapsed, error, start, stop }
+}
+
+function VoiceButton({ voice }: { voice: ReturnType<typeof useVoiceRecorder> }) {
+  return (
+    <button
+      onClick={() => (voice.recording ? voice.stop() : voice.start())}
+      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+        voice.recording
+          ? 'bg-red-500/20 text-red-400 border border-red-500/40'
+          : 'bg-brand-teal/10 text-brand-teal border border-brand-teal/30 hover:bg-brand-teal/20'
+      }`}
+    >
+      {voice.recording ? (
+        <>
+          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          Stop · {formatElapsed(voice.elapsed)}
+        </>
+      ) : (
+        <>🎤 Record</>
+      )}
+    </button>
+  )
+}
+
+function VoiceStatus({ voice }: { voice: ReturnType<typeof useVoiceRecorder> }) {
+  if (voice.error) {
+    return <p className="text-red-400 text-xs mt-2">{voice.error}</p>
+  }
+  if (voice.recording) {
+    return (
+      <div className="mt-2 bg-red-500/5 border border-red-500/20 rounded-lg px-3 py-2">
+        <p className="text-red-400 text-xs font-semibold flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+          Listening — speak naturally, everything is transcribed into your notes
+        </p>
+        {voice.interim && <p className="text-gray-500 text-xs mt-1 italic">{voice.interim}…</p>}
+      </div>
+    )
+  }
+  return null
+}
+
 const meetingTypeConfig: Record<MeetingType, { label: string; color: string; icon: string; promptHints: string[] }> = {
   interview: {
     label: 'Interview',
@@ -214,6 +336,26 @@ export default function MeetingNotes() {
 
   const selected = meetings.find(m => m.id === selectedId)
 
+  // Route final voice transcripts into whichever notes field is on screen
+  const transcriptTarget = useRef<(text: string) => void>(() => {})
+  transcriptTarget.current = (text: string) => {
+    const line = text.charAt(0).toUpperCase() + text.slice(1)
+    if (view === 'new') {
+      setForm(f => ({ ...f, rawNotes: (f.rawNotes ? f.rawNotes + '\n' : '') + line }))
+    } else if (view === 'detail' && selectedId) {
+      setMeetings(prev => prev.map(m => m.id === selectedId
+        ? { ...m, rawNotes: (m.rawNotes ? m.rawNotes + '\n' : '') + line, enhancedNotes: null }
+        : m))
+    }
+  }
+  const voice = useVoiceRecorder(text => transcriptTarget.current(text))
+
+  // Stop the mic when navigating between views
+  useEffect(() => {
+    voice.stop()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, selectedId])
+
   const filtered = meetings.filter(m => {
     if (filterType !== 'all' && m.type !== filterType) return false
     if (search && !m.title.toLowerCase().includes(search.toLowerCase()) && !m.company.toLowerCase().includes(search.toLowerCase()) && !m.contactName.toLowerCase().includes(search.toLowerCase())) return false
@@ -271,7 +413,7 @@ export default function MeetingNotes() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <h1 className="text-4xl font-black text-white mb-1">Meeting Notes</h1>
-            <p className="text-gray-400 text-sm">Jot rough notes during any meeting — AI turns them into structured summaries, action items, and follow-ups. Inspired by Granola.</p>
+            <p className="text-gray-400 text-sm">Press record and let it listen to your meeting — it transcribes live, then AI pulls out the key takeaways, action items, and follow-ups. Inspired by Granola.</p>
           </div>
           <button
             onClick={() => setView('new')}
@@ -480,8 +622,12 @@ export default function MeetingNotes() {
 
           {/* Raw notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Your Notes</label>
-            <div className="bg-brand-darker border border-white/5 rounded-xl p-3 mb-2 flex flex-wrap gap-2">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-300">Your Notes</label>
+              <VoiceButton voice={voice} />
+            </div>
+            <VoiceStatus voice={voice} />
+            <div className="bg-brand-darker border border-white/5 rounded-xl p-3 my-2 flex flex-wrap gap-2">
               {typeCfg.promptHints.map((hint, i) => (
                 <span key={i} className="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded-lg">{hint}</span>
               ))}
@@ -490,7 +636,7 @@ export default function MeetingNotes() {
               ref={notesRef}
               value={form.rawNotes || ''}
               onChange={e => setForm(f => ({ ...f, rawNotes: e.target.value }))}
-              placeholder={`Jot anything — bullet points, fragments, key phrases. AI will structure it after.\n\nExamples:\n• asked about DCF\n• felt nervous on the LBO question\n• she mentioned next steps in 1 week\n• follow up with thank you email`}
+              placeholder={`Type notes, or hit 🎤 Record and the meeting is transcribed here live. AI will structure it after.\n\nExamples:\n• asked about DCF\n• felt nervous on the LBO question\n• she mentioned next steps in 1 week\n• follow up with thank you email`}
               rows={10}
               className="w-full bg-brand-card border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold resize-none font-mono text-sm leading-relaxed"
             />
@@ -550,10 +696,14 @@ export default function MeetingNotes() {
           {/* Left: raw notes */}
           <div className="lg:col-span-2">
             <div className="bg-brand-card border border-white/10 rounded-xl p-5">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-3 gap-2">
                 <h3 className="text-white font-semibold text-sm">Raw Notes</h3>
-                <span className="text-xs text-gray-600">{selected.rawNotes.trim().split(/\s+/).filter(Boolean).length} words</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-600">{selected.rawNotes.trim().split(/\s+/).filter(Boolean).length} words</span>
+                  <VoiceButton voice={voice} />
+                </div>
               </div>
+              <VoiceStatus voice={voice} />
               <textarea
                 value={selected.rawNotes}
                 onChange={e => updateRawNotes(selected.id, e.target.value)}

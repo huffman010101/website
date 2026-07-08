@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
       { to: '/quiz', label: 'Career Quiz', description: 'Find your perfect finance career' },
       { to: '/cv-reviewer', label: 'CV & Cover Letter', description: 'AI-powered application review' },
       { to: '/advisor', label: 'AI Advisor', description: 'Personalised career guidance' },
-      { to: '/meeting-notes', label: 'Meeting Notes', description: 'AI-enhanced finance meeting notes' },
+      { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
     ],
   },
   {
