@@ -14,6 +14,7 @@ import Resources from './pages/Resources'
 import InterviewQuiz from './pages/InterviewQuiz'
 import MeetingNotes from './pages/MeetingNotes'
 import Learn from './pages/Learn'
+import PracticeTests from './pages/PracticeTests'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/interview-quiz" element={<InterviewQuiz />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
             <Route path="/learn" element={<Learn />} />
+            <Route path="/practice-tests" element={<PracticeTests />} />
           </Routes>
         </main>
         <Footer />

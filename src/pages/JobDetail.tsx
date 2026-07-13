@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { jobs } from '../data/jobs'
+import { mustKnow } from '../data/mustKnow'
 
 const categoryColors: Record<string, string> = {
   'Capital Markets': 'bg-blue-500/10 text-blue-400',
@@ -101,6 +102,27 @@ export default function JobDetail() {
             <h2 className="text-white font-bold text-lg mb-3">Buy-Side / Sell-Side Context</h2>
             <p className="text-gray-300 leading-relaxed">{job.buySellContext}</p>
           </div>
+
+          {/* Key things to know */}
+          {mustKnow[job.id] && (
+            <div className="bg-brand-card border border-brand-gold/20 rounded-xl p-5">
+              <h2 className="text-brand-gold font-bold text-lg mb-1">🔑 Key Things to Know</h2>
+              <p className="text-gray-500 text-xs mb-4">The concepts, realities and insider knowledge you need before pursuing this career.</p>
+              <div className="space-y-3">
+                {mustKnow[job.id].map((item, i) => (
+                  <div key={i} className="bg-white/5 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="text-brand-gold font-black text-sm flex-shrink-0 mt-0.5">{i + 1}.</span>
+                      <div>
+                        <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">{item.detail}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Sub-roles */}
           <div className="bg-brand-card border border-white/10 rounded-xl p-5">
