@@ -13,6 +13,7 @@ import Networking from './pages/Networking'
 import Resources from './pages/Resources'
 import InterviewQuiz from './pages/InterviewQuiz'
 import MeetingNotes from './pages/MeetingNotes'
+import Learn from './pages/Learn'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/interview-quiz" element={<InterviewQuiz />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
+            <Route path="/learn" element={<Learn />} />
           </Routes>
         </main>
         <Footer />

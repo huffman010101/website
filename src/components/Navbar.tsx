@@ -25,6 +25,7 @@ const navItems: NavItem[] = [
       { to: '/cv-reviewer', label: 'CV & Cover Letter', description: 'AI-powered application review' },
       { to: '/advisor', label: 'AI Advisor', description: 'Personalised career guidance' },
       { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
+      { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
     ],
   },
   {
