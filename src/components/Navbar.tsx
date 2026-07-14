@@ -27,6 +27,7 @@ const navItems: NavItem[] = [
       { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
       { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
       { to: '/practice-tests', label: 'Online Test Practice', description: 'Numerical, verbal, logical & SJT tests' },
+      { to: '/ai-skills', label: 'Develop AI Knowledge', description: 'Prompting skills & AI fluency for finance' },
     ],
   },
   {

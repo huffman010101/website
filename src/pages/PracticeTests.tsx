@@ -17,8 +17,21 @@ type TestCategory = {
   border: string
   description: string
   secondsPerQuestion: number
+  questionsPerAttempt: number
   tip: string
+  providers: string
+  requiredBy: string
+  whyUsed: string
   questions: TestQuestion[]
+}
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
 }
 
 const testCategories: TestCategory[] = [
@@ -30,7 +43,11 @@ const testCategories: TestCategory[] = [
     border: 'border-blue-500/30',
     description: 'Percentages, ratios and data interpretation — the SHL-style tables and charts banks actually send you.',
     secondsPerQuestion: 75,
+    questionsPerAttempt: 10,
     tip: 'Real tests allow a calculator — but the winners estimate first, then verify. Learn percentage shortcuts: 15% of 240 = 10% (24) + 5% (12) = 36.',
+    providers: 'SHL Verify, Korn Ferry Talent Q Elements, Cappfinity (gamified), Cut-e/Aon scales',
+    requiredBy: 'Investment banking (Goldman, JPMorgan, Morgan Stanley), sales & trading, asset management, Big 4, consulting — essentially every finance graduate scheme.',
+    whyUsed: 'Finance is a numbers job. Firms use these to screen for speed and accuracy with data under pressure before any human reviews your application — typically cutting 50%+ of candidates at this stage.',
     questions: [
       {
         context: 'A fund\'s value grows from £2.4m to £3.0m over one year.',
@@ -113,6 +130,60 @@ const testCategories: TestCategory[] = [
         answer: '£15,000',
         explanation: 'Gross gain 8% × 250k = £20k. Fee 2% × 250k = £5k. Net = £15k — the fee ate a quarter of the return.',
       },
+      {
+        prompt: '£10,000 invested at 10% compound interest for 2 years grows to:',
+        options: ['£12,000', '£12,100', '£11,000', '£12,200'],
+        answer: '£12,100',
+        explanation: 'Year 1: £11,000. Year 2: 11,000 × 1.1 = £12,100. The extra £100 is interest on interest.',
+      },
+      {
+        context: 'A product sells at £50 with variable costs of £20 per unit. Fixed costs are £120,000.',
+        prompt: 'How many units must be sold to break even?',
+        options: ['2,400', '4,000', '6,000', '3,000'],
+        answer: '4,000',
+        explanation: 'Contribution per unit = 50 − 20 = £30. Breakeven = 120,000 ÷ 30 = 4,000 units.',
+      },
+      {
+        prompt: 'After falling 20%, a share trades at £64. What was its original price?',
+        options: ['£76.80', '£80', '£84', '£78'],
+        answer: '£80',
+        explanation: '£64 is 80% of the original: 64 ÷ 0.8 = £80. Dividing by the remaining fraction reverses a percentage fall — never just add 20% back.',
+      },
+      {
+        context: 'A portfolio is 60% in Fund A (returned 5%) and 40% in Fund B (returned 10%).',
+        prompt: 'What is the portfolio\'s overall return?',
+        options: ['7.5%', '7%', '8%', '6.5%'],
+        answer: '7%',
+        explanation: 'Weighted average: 0.6 × 5 + 0.4 × 10 = 3 + 4 = 7%.',
+      },
+      {
+        context: 'Revenue is £250m with a gross margin of 40%.',
+        prompt: 'What is the cost of goods sold?',
+        options: ['£100m', '£150m', '£40m', '£210m'],
+        answer: '£150m',
+        explanation: 'Gross profit = 40% × 250 = £100m, so COGS = 250 − 100 = £150m. Watch whether the question asks for profit or cost.',
+      },
+      {
+        context: 'A company has EBIT of £45m and annual interest expense of £9m.',
+        prompt: 'What is its interest coverage ratio?',
+        options: ['5x', '4x', '9x', '0.2x'],
+        answer: '5x',
+        explanation: 'Coverage = EBIT ÷ interest = 45 ÷ 9 = 5x. Lenders watch this — below ~2x signals distress risk.',
+      },
+      {
+        context: '£1 = $1.25 and €1 = $1.00.',
+        prompt: 'What is the £/€ exchange rate?',
+        options: ['£1 = €0.80', '£1 = €1.25', '£1 = €1.00', '£1 = €2.25'],
+        answer: '£1 = €1.25',
+        explanation: 'Cross rate via the dollar: £1 buys $1.25, and $1.25 buys €1.25 (at €1 = $1). Cross-currency questions are an SHL favourite.',
+      },
+      {
+        context: 'Headcount data — Front office: 240, up 20% year-on-year. Operations: 600, down 10% year-on-year.',
+        prompt: 'What was TOTAL headcount one year ago (front office + operations)?',
+        options: ['840', '867', '800', '873'],
+        answer: '867',
+        explanation: 'Front office was 240 ÷ 1.2 = 200. Operations was 600 ÷ 0.9 ≈ 667. Total ≈ 867. Reverse-percentage on each segment separately.',
+      },
     ],
   },
   {
@@ -123,7 +194,11 @@ const testCategories: TestCategory[] = [
     border: 'border-green-500/30',
     description: 'Read a passage, then judge statements as True, False, or Cannot Say — using ONLY the passage.',
     secondsPerQuestion: 60,
+    questionsPerAttempt: 9,
     tip: 'The #1 trap: using outside knowledge. If the passage doesn\'t state or directly imply it, the answer is Cannot Say — even if you know it\'s true in real life.',
+    providers: 'SHL Verify Verbal, Watson Glaser (critical thinking variant), Korn Ferry Talent Q, Cut-e/Aon',
+    requiredBy: 'Consulting firms, investment banks, asset managers, law-adjacent roles (compliance, risk), and the Big 4. Watson Glaser specifically appears at firms testing critical reasoning.',
+    whyUsed: 'Finance runs on dense documents — research notes, term sheets, regulations. These tests screen whether you extract precisely what a text says without adding assumptions, which is exactly the discipline the job needs.',
     questions: [
       {
         context: 'Passage: "The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar."',
@@ -188,6 +263,48 @@ const testCategories: TestCategory[] = [
         answer: 'True',
         explanation: 'Closures exceeding launches for three years means fewer funds; record assets means growth. Both are stated — consolidation into bigger funds.',
       },
+      {
+        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
+        prompt: 'Statement: All fraud victims will be reimbursed under the new rules.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'False',
+        explanation: 'The passage says MOST victims, and explicitly excludes claims below £100 — so "all" is contradicted.',
+      },
+      {
+        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
+        prompt: 'Statement: Industry groups and consumer advocates disagree about the rules.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'True',
+        explanation: 'Industry warns of complacency (critical); advocates welcome accountability (supportive). Opposing stances are directly presented.',
+      },
+      {
+        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
+        prompt: 'Statement: Fraud rates will rise as a result of the new rules.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'Cannot Say',
+        explanation: 'Industry groups WARNED complacency could result — a prediction, not a stated fact. The passage doesn\'t establish what will actually happen.',
+      },
+      {
+        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
+        prompt: 'Statement: A third of all sustainable funds cannot evidence their claims.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'Cannot Say',
+        explanation: 'A third of funds EXAMINED in the review — not of all funds. Generalising from a sample to the whole population is a classic trap.',
+      },
+      {
+        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
+        prompt: 'Statement: The labelling requirements are already in force.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'False',
+        explanation: 'The passage states they take effect NEXT year — directly contradicting "already in force".',
+      },
+      {
+        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
+        prompt: 'Statement: There is no single agreed definition of a sustainable fund.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'True',
+        explanation: '"Definitions vary widely between providers" directly supports the absence of a single agreed definition.',
+      },
     ],
   },
   {
@@ -198,7 +315,11 @@ const testCategories: TestCategory[] = [
     border: 'border-purple-500/30',
     description: 'The infamous shape-sequence tests: find the pattern, predict what comes next.',
     secondsPerQuestion: 45,
+    questionsPerAttempt: 10,
     tip: 'Check patterns systematically: count of shapes, rotation, alternation, size, position, and combinations. If stuck, eliminate options that break an obvious rule and guess — never leave blanks.',
+    providers: 'SHL Inductive Reasoning, Cut-e/Aon scales cls & ix (used heavily by trading firms), Korn Ferry logical, Raven\'s Progressive Matrices',
+    requiredBy: 'Trading firms (Optiver, IMC, Flow Traders famously use cut-e), quant funds, tech divisions, consulting and most bank graduate schemes.',
+    whyUsed: 'Abstract reasoning is the closest proxy for raw pattern-recognition and learning speed — trading and quant firms weight it heavily because spotting patterns fast IS the job. It\'s also degree-agnostic, so firms use it to compare candidates fairly.',
     questions: [
       {
         shapes: '●  ○  ●  ○  ●  ?',
@@ -284,6 +405,62 @@ const testCategories: TestCategory[] = [
         answer: '11',
         explanation: 'Counts: 1, 2, 4, 7 — differences of 1, 2, 3. Next difference is 4: 7 + 4 = 11. Second-order (accelerating) sequences are a favourite.',
       },
+      {
+        shapes: '↑  →  ↓  ←  ?',
+        prompt: 'The arrow rotates. What comes next?',
+        options: ['↑', '→', '↓', '←'],
+        answer: '↑',
+        explanation: '90° clockwise each step: up, right, down, left → back to up.',
+      },
+      {
+        shapes: '▲▲▲▲▲  ▲▲▲▲  ▲▲▲  ▲▲  ?',
+        prompt: 'What comes next?',
+        options: ['▲▲', '▲', 'Nothing', '▲▲▲'],
+        answer: '▲',
+        explanation: 'The count decreases by one each step: 5, 4, 3, 2 → 1 triangle.',
+      },
+      {
+        shapes: 'A△  B□  C⬠  D⬡  E?',
+        prompt: 'Letters advance and shapes gain sides. What shape pairs with E?',
+        options: ['A triangle (3 sides)', 'A hexagon (6 sides)', 'A heptagon (7 sides)', 'A square (4 sides)'],
+        answer: 'A heptagon (7 sides)',
+        explanation: 'Sides: 3, 4, 5, 6 as letters advance A→E. E pairs with 7 sides. Two independent progressions moving together.',
+      },
+      {
+        shapes: '■□■  □■□  ■□■  ?',
+        prompt: 'What comes next?',
+        options: ['■□■', '□■□', '■■■', '□□□'],
+        answer: '□■□',
+        explanation: 'The whole triplet inverts each step (every square flips fill). After ■□■ comes □■□.',
+      },
+      {
+        shapes: '★ 1  |  ★ 1  |  ★★ 2  |  ★★★ 3  |  ★★★★★ 5  |  ? ',
+        prompt: 'How many stars come next?',
+        options: ['6', '7', '8', '10'],
+        answer: '8',
+        explanation: 'Fibonacci: each count is the sum of the previous two — 1, 1, 2, 3, 5 → 8.',
+      },
+      {
+        shapes: '◢  ◣  ◤  ◥  ?',
+        prompt: 'The corner triangle rotates. What comes next?',
+        options: ['◢', '◣', '◤', '◥'],
+        answer: '◢',
+        explanation: 'The filled corner moves anticlockwise through all four positions, then cycles back to the first: ◢.',
+      },
+      {
+        shapes: '●·  ·●  ●·  ·●  ?',
+        prompt: 'What comes next?',
+        options: ['●·', '·●', '●●', '··'],
+        answer: '●·',
+        explanation: 'The large dot alternates between first and second position. Odd steps have it first: ●·.',
+      },
+      {
+        shapes: '○○○○  ●○○○  ●●○○  ●●●○  ?',
+        prompt: 'What comes next?',
+        options: ['●●●●', '○○○○', '●●○○', '○●●●'],
+        answer: '●●●●',
+        explanation: 'One more circle fills from the left each step: 0, 1, 2, 3 → all 4 filled.',
+      },
     ],
   },
   {
@@ -294,7 +471,11 @@ const testCategories: TestCategory[] = [
     border: 'border-orange-500/30',
     description: 'Workplace scenarios — choose the MOST effective response. Tests judgement, integrity and professionalism.',
     secondsPerQuestion: 90,
+    questionsPerAttempt: 8,
     tip: 'Firms score against their values: integrity first, escalate appropriately, communicate early, never hide mistakes, and don\'t throw colleagues under the bus. Pick what a calm professional would actually do.',
+    providers: 'Cappfinity (strengths-based), HireVue (video + SJT hybrid), firm-custom assessments (e.g. JPMorgan\'s "insight" games, HSBC job simulations), SHL SJQ',
+    requiredBy: 'Virtually every graduate scheme — banks, Big 4, consulting, insurers. Often combined with a recorded video interview in the same sitting.',
+    whyUsed: 'Firms lose money and reputation when juniors show poor judgement — hiding errors, breaching confidentiality, mishandling clients. SJTs cheaply screen thousands of applicants for alignment with the firm\'s stated values before assessment centres.',
     questions: [
       {
         context: 'You\'re an intern and you notice a significant error in a spreadsheet your manager already sent to a client.',
@@ -392,6 +573,78 @@ const testCategories: TestCategory[] = [
         answer: 'Raise it directly but professionally with the colleague first',
         explanation: 'The professional sequence: address it directly first, escalate to your manager if it continues, HR after that. Gossip and work-to-rule damage you more than them.',
       },
+      {
+        context: 'A long-standing client asks you to process a request that slightly bends firm policy, saying "we always did it this way with your predecessor".',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Process it — client relationships come first',
+          'Politely explain you need to check the policy, then confirm the compliant route with your manager',
+          'Refuse bluntly and end the call',
+          'Process it but keep no record',
+        ],
+        answer: 'Politely explain you need to check the policy, then confirm the compliant route with your manager',
+        explanation: 'Neither burn the client nor breach policy: pause, verify, and find the compliant way to serve them. "We always did it this way" is never a policy override.',
+      },
+      {
+        context: 'You are falling seriously behind on a project and realise you won\'t hit Friday\'s deadline.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Tell your manager now, with a realistic revised plan and what you need',
+          'Say nothing and hope to catch up over the weekend',
+          'Deliver something half-finished on Friday without comment',
+          'Blame the workload publicly in the team meeting',
+        ],
+        answer: 'Tell your manager now, with a realistic revised plan and what you need',
+        explanation: 'Early warning with a plan lets managers re-scope, add help or reset expectations. Surprise failures on deadline day are the cardinal sin of junior work.',
+      },
+      {
+        context: 'A teammate has become withdrawn, is missing small deadlines, and mentioned they\'re "not sleeping much". Your team lead hasn\'t noticed.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Check in with them privately and genuinely, and encourage them to seek support',
+          'Report their missed deadlines to the team lead immediately',
+          'Ignore it — everyone has rough patches',
+          'Tell the whole team to give them space',
+        ],
+        answer: 'Check in with them privately and genuinely, and encourage them to seek support',
+        explanation: 'Direct human concern first — most firms\' SJTs reward colleague support. Escalation may follow if work risk grows, but leading with surveillance or gossip scores poorly.',
+      },
+      {
+        context: 'You believe your manager\'s chosen approach to a client analysis contains a methodological flaw.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Raise it privately with your manager, explaining your reasoning and proposing an alternative',
+          'Say nothing — they outrank you',
+          'Use your own approach secretly instead',
+          'Point out the flaw in front of the client',
+        ],
+        answer: 'Raise it privately with your manager, explaining your reasoning and proposing an alternative',
+        explanation: 'Respectful, private, reasoned challenge is exactly what firms say they want ("obligation to dissent" at McKinsey). Silent compliance and public undermining both fail.',
+      },
+      {
+        context: 'At a networking event, a senior director from another division gives you their card and says "email me". A week later you still haven\'t.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Email now with a brief, specific message referencing your conversation',
+          'Don\'t bother — the moment has passed',
+          'Wait until you need a favour from them',
+          'Add them on every social platform simultaneously',
+        ],
+        answer: 'Email now with a brief, specific message referencing your conversation',
+        explanation: 'A week late is better than never — brief, specific, no ask. Building relationships before you need them is the whole point of networking.',
+      },
+      {
+        context: 'Mid-project, you spot a news report that your client is under regulatory investigation — nobody on your team has mentioned it.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Flag it to your project lead immediately',
+          'Assume someone senior already knows',
+          'Post about it in the team group chat with speculation',
+          'Contact the client directly to ask about it',
+        ],
+        answer: 'Flag it to your project lead immediately',
+        explanation: 'Material information goes up the chain fast, without speculation or freelancing client contact. "Assume someone knows" is how firms get blindsided.',
+      },
     ],
   },
 ]
@@ -401,6 +654,7 @@ type View = 'home' | 'test' | 'results'
 export default function PracticeTests() {
   const [view, setView] = useState<View>('home')
   const [category, setCategory] = useState<TestCategory | null>(null)
+  const [sessionQuestions, setSessionQuestions] = useState<TestQuestion[]>([])
   const [qIndex, setQIndex] = useState(0)
   const [answers, setAnswers] = useState<(string | null)[]>([])
   const [timeLeft, setTimeLeft] = useState(0)
@@ -413,10 +667,12 @@ export default function PracticeTests() {
   useEffect(() => stopTimer, [])
 
   function startTest(cat: TestCategory) {
+    const sample = shuffle(cat.questions).slice(0, cat.questionsPerAttempt)
     setCategory(cat)
+    setSessionQuestions(sample)
     setQIndex(0)
-    setAnswers(new Array(cat.questions.length).fill(null))
-    setTimeLeft(cat.questions.length * cat.secondsPerQuestion)
+    setAnswers(new Array(sample.length).fill(null))
+    setTimeLeft(sample.length * cat.secondsPerQuestion)
     setView('test')
     stopTimer()
     timerRef.current = setInterval(() => {
@@ -469,9 +725,14 @@ export default function PracticeTests() {
                 <span className="text-3xl">{cat.icon}</span>
                 <h2 className={`text-lg font-black ${cat.color}`}>{cat.title}</h2>
               </div>
-              <p className="text-gray-400 text-sm mb-4 flex-1">{cat.description}</p>
+              <p className="text-gray-400 text-sm mb-3">{cat.description}</p>
+              <div className="bg-brand-darker border border-white/5 rounded-xl p-3.5 mb-3 space-y-2 flex-1">
+                <p className="text-xs text-gray-400"><span className={`font-bold ${cat.color}`}>Providers you'll meet:</span> {cat.providers}</p>
+                <p className="text-xs text-gray-400"><span className={`font-bold ${cat.color}`}>Who requires it:</span> {cat.requiredBy}</p>
+                <p className="text-xs text-gray-400"><span className={`font-bold ${cat.color}`}>Why firms use it:</span> {cat.whyUsed}</p>
+              </div>
               <div className="text-xs text-gray-600 mb-4">
-                {cat.questions.length} questions · {formatTime(cat.questions.length * cat.secondsPerQuestion)} time limit
+                {cat.questionsPerAttempt} questions per attempt, drawn randomly from a bank of {cat.questions.length} · {formatTime(cat.questionsPerAttempt * cat.secondsPerQuestion)} time limit · retake for a different test
               </div>
               <button
                 onClick={() => startTest(cat)}
@@ -481,6 +742,29 @@ export default function PracticeTests() {
               </button>
             </div>
           ))}
+        </div>
+
+        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
+          <h2 className="text-white font-bold text-lg mb-1">🌐 Where to practise further</h2>
+          <p className="text-gray-500 text-xs mb-4">Free and paid platforms candidates actually use — plus the providers' own practice portals, which mirror the real tests exactly.</p>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              { name: 'SHL Direct (practice.shl.com)', desc: 'Free official practice tests from the biggest provider — do these first, they mirror what banks send.', tag: 'Free · Official' },
+              { name: 'AssessmentDay', desc: 'Large free question banks for numerical, verbal and logical tests with worked solutions.', tag: 'Free + Paid' },
+              { name: 'Practice Aptitude Tests', desc: 'Free tests categorised by employer and provider — search the firm you\'re applying to.', tag: 'Free + Paid' },
+              { name: 'JobTestPrep', desc: 'Paid provider-specific prep packs (SHL, Talent Q, cut-e, Watson Glaser) — worth it for a target firm.', tag: 'Paid' },
+              { name: 'Aon/cut-e practice portal', desc: 'Official practice for the scales tests used by Optiver, IMC and other trading firms.', tag: 'Free · Official' },
+              { name: 'GraduatesFirst', desc: 'Free trials plus firm-specific test guides for banks and Big 4.', tag: 'Free + Paid' },
+            ].map((site, i) => (
+              <div key={i} className="bg-white/5 rounded-xl p-4">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="text-white font-semibold text-sm">{site.name}</span>
+                  <span className="text-[10px] font-bold text-brand-teal bg-brand-teal/10 px-2 py-0.5 rounded-full flex-shrink-0">{site.tag}</span>
+                </div>
+                <p className="text-gray-500 text-xs leading-relaxed">{site.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="bg-brand-card border border-white/10 rounded-2xl p-6">
@@ -507,8 +791,8 @@ export default function PracticeTests() {
 
   // ===== RESULTS =====
   if (view === 'results') {
-    const correct = category.questions.filter((q, i) => answers[i] === q.answer).length
-    const total = category.questions.length
+    const correct = sessionQuestions.filter((q, i) => answers[i] === q.answer).length
+    const total = sessionQuestions.length
     const pct = Math.round((correct / total) * 100)
     const band = pct >= 90 ? { label: 'Outstanding — top-tier firm ready', color: 'text-brand-gold' }
       : pct >= 75 ? { label: 'Strong — you\'d pass most screens', color: 'text-green-400' }
@@ -535,7 +819,7 @@ export default function PracticeTests() {
 
         <h2 className="text-white font-bold text-lg mb-4">Review your answers</h2>
         <div className="space-y-4">
-          {category.questions.map((q, i) => {
+          {sessionQuestions.map((q, i) => {
             const userAnswer = answers[i]
             const isCorrect = userAnswer === q.answer
             return (
@@ -562,7 +846,7 @@ export default function PracticeTests() {
   }
 
   // ===== TEST =====
-  const q = category.questions[qIndex]
+  const q = sessionQuestions[qIndex]
   const answeredCount = answers.filter(a => a !== null).length
   const urgent = timeLeft <= 60
 
@@ -573,16 +857,16 @@ export default function PracticeTests() {
         <div className={`font-mono font-bold text-lg px-4 py-1.5 rounded-lg ${urgent ? 'bg-red-500/15 text-red-400 animate-pulse' : 'bg-white/5 text-white'}`}>
           ⏱ {formatTime(timeLeft)}
         </div>
-        <span className="text-xs text-gray-500">{answeredCount}/{category.questions.length} answered</span>
+        <span className="text-xs text-gray-500">{answeredCount}/{sessionQuestions.length} answered</span>
       </div>
 
       <div className="flex-1 mb-6 h-2 bg-white/5 rounded-full overflow-hidden">
-        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((qIndex + 1) / category.questions.length) * 100}%` }} />
+        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((qIndex + 1) / sessionQuestions.length) * 100}%` }} />
       </div>
 
       <div className="mb-2">
         <span className={`text-xs font-semibold uppercase tracking-wider ${category.color}`}>
-          {category.icon} {category.title} — Question {qIndex + 1} of {category.questions.length}
+          {category.icon} {category.title} — Question {qIndex + 1} of {sessionQuestions.length}
         </span>
       </div>
 
@@ -623,7 +907,7 @@ export default function PracticeTests() {
         >
           ← Back
         </button>
-        {qIndex < category.questions.length - 1 ? (
+        {qIndex < sessionQuestions.length - 1 ? (
           <button
             onClick={() => setQIndex(i => i + 1)}
             className="flex-1 py-4 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
