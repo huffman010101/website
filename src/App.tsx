@@ -17,6 +17,7 @@ import Learn from './pages/Learn'
 import PracticeTests from './pages/PracticeTests'
 import AISkills from './pages/AISkills'
 import Dashboard from './pages/Dashboard'
+import Capstone from './pages/Capstone'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/practice-tests" element={<PracticeTests />} />
             <Route path="/ai-skills" element={<AISkills />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/learn/capstone/:id" element={<Capstone />} />
           </Routes>
         </main>
         <Footer />
