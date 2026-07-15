@@ -1,5 +1,30 @@
 import { useState, useEffect, useRef } from 'react'
-import { recordPracticeTestAttempt } from '../lib/history'
+import { recordPracticeTestAttempt, getPracticeTestHistory } from '../lib/history'
+import { recordAnswer as recordSRAnswer, weightedSample } from '../lib/spacedRepetition'
+
+const SR_KEY = 'findr_sr_practice_tests'
+
+type Difficulty = 'easy' | 'medium' | 'hard'
+
+// Difficulty is derived from a question's position in its bank (roughly
+// increasing complexity as authored) rather than hand-tagged per question —
+// avoids touching 70+ question objects individually.
+function difficultyForIndex(index: number, total: number): Difficulty {
+  const third = Math.ceil(total / 3)
+  if (index < third) return 'easy'
+  if (index < third * 2) return 'medium'
+  return 'hard'
+}
+
+function unlockedTiers(categoryId: string): Set<Difficulty> {
+  const history = getPracticeTestHistory().filter(a => a.categoryId === categoryId)
+  const tiers = new Set<Difficulty>(['easy'])
+  if (history.length >= 1) tiers.add('medium')
+  const recent = history.slice(-3)
+  const avg = recent.length ? recent.reduce((s, a) => s + a.percentage, 0) / recent.length : 0
+  if (history.length >= 3 && avg >= 70) tiers.add('hard')
+  return tiers
+}
 
 type TestQuestion = {
   prompt: string
@@ -185,6 +210,62 @@ const testCategories: TestCategory[] = [
         answer: '867',
         explanation: 'Front office was 240 ÷ 1.2 = 200. Operations was 600 ÷ 0.9 ≈ 667. Total ≈ 867. Reverse-percentage on each segment separately.',
       },
+      {
+        context: 'A fund returns 12% in year 1 and −8% in year 2.',
+        prompt: 'What is the compound (not average) two-year return?',
+        options: ['4.0%', '3.0%', '2.96%', '20.0%'],
+        answer: '3.0%',
+        explanation: '1.12 × 0.92 = 1.0304 → 3.04% ≈ 3.0%. Simple averaging (12−8)/2=2% is wrong — always compound sequential returns, never average them.',
+      },
+      {
+        context: 'A company issues 2 million new shares at £4.50 each, raising cash. It previously had 18 million shares outstanding and net income of £27m.',
+        prompt: 'By how much does EPS fall purely from the share issuance (assume net income unchanged)?',
+        options: ['About 10%', 'About 8%', 'About 11%', 'About 5%'],
+        answer: 'About 10%',
+        explanation: 'Old EPS = 27/18 = £1.50. New EPS = 27/20 = £1.35. Fall = 0.15/1.50 = 10%. Dilution from new shares reduces EPS even if profit is unchanged.',
+      },
+      {
+        context: 'A UK investor holds a US stock. The stock rises 8% in USD terms, but the pound strengthens 5% against the dollar over the same period.',
+        prompt: 'Approximately what is the investor\'s return in GBP terms?',
+        options: ['13%', '8%', '3%', '2.9%'],
+        answer: '2.9%',
+        explanation: '1.08 ÷ 1.05 − 1 ≈ 2.9%. A stronger home currency erodes foreign gains — divide (don\'t subtract) the FX move from the asset return.',
+      },
+      {
+        context: 'An analyst forecasts revenue growing 8% a year for 3 years from a base of £150m.',
+        prompt: 'What is revenue after 3 years (nearest £m)?',
+        options: ['£186m', '£189m', '£195m', '£174m'],
+        answer: '£189m',
+        explanation: '150 × 1.08³ = 150 × 1.2597 ≈ £189m. Compounding, not multiplying by 1.24 (3×8%).',
+      },
+      {
+        context: 'A company has 400,000 shares outstanding trading at £12.50, and net debt of £1.2m.',
+        prompt: 'What is its enterprise value?',
+        options: ['£5.0m', '£6.2m', '£3.8m', '£4.8m'],
+        answer: '£6.2m',
+        explanation: 'Market cap = 400,000 × £12.50 = £5.0m. EV = 5.0m + 1.2m net debt = £6.2m.',
+      },
+      {
+        context: 'Two funds: Fund X returned 15% with a 20% chance of losing money in any given year. Fund Y returned 9% with a 5% chance of losing money.',
+        prompt: 'An investor prioritising downside protection over raw return would most likely prefer:',
+        options: ['Fund X, for the higher return', 'Fund Y, for the lower loss probability', 'Both are identical', 'Neither — insufficient data on volatility'],
+        answer: 'Fund Y, for the lower loss probability',
+        explanation: 'This tests reading data with a stated preference (downside protection), not just picking the highest number — a common SHL data-interpretation trap.',
+      },
+      {
+        context: 'A bond with 5 years to maturity and a duration of 4.2 currently yields 5%. Rates are expected to rise by 0.75%.',
+        prompt: 'Approximately what price change should the bondholder expect?',
+        options: ['-3.15%', '+3.15%', '-4.2%', '-0.75%'],
+        answer: '-3.15%',
+        explanation: 'Price change ≈ −duration × yield change = −4.2 × 0.75% = −3.15%. Rising rates hurt existing bond prices.',
+      },
+      {
+        context: 'A retailer\'s like-for-like sales rose 4% while total sales rose 11%, with no store closures.',
+        prompt: 'The gap between these two figures is best explained by:',
+        options: ['Inflation', 'New store openings', 'Currency movements', 'A calculation error — this is impossible'],
+        answer: 'New store openings',
+        explanation: 'Like-for-like (same-store) sales strip out new/closed stores; total sales include them. A gap this size with no closures implies new stores added the extra growth.',
+      },
     ],
   },
   {
@@ -305,6 +386,48 @@ const testCategories: TestCategory[] = [
         options: ['True', 'False', 'Cannot Say'],
         answer: 'True',
         explanation: '"Definitions vary widely between providers" directly supports the absence of a single agreed definition.',
+      },
+      {
+        context: 'Passage: "The bank\'s trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products."',
+        prompt: 'Statement: The bank\'s overall quarterly profit rose 34%.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'Cannot Say',
+        explanation: 'The 34% figure applies to trading division REVENUE specifically, not overall bank profit — the passage gives no overall figure, and wealth management is explicitly weaker.',
+      },
+      {
+        context: 'Passage: "The bank\'s trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products."',
+        prompt: 'Statement: Wealth management clients are moving towards passive investment products.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'True',
+        explanation: 'Directly stated as the reason for the outflows.',
+      },
+      {
+        context: 'Passage: "A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used."',
+        prompt: 'Statement: The survey shows ChatGPT is the most-used AI tool among finance professionals.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'False',
+        explanation: 'The passage explicitly states the survey did NOT ask about specific tools — so any claim about a specific tool is contradicted by the text, not merely unproven.',
+      },
+      {
+        context: 'Passage: "A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used."',
+        prompt: 'Statement: Perceived reliance on AI tools has grown over the two-year period covered.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'True',
+        explanation: '68% up from 41% is a direct, stated increase.',
+      },
+      {
+        context: 'Passage: "Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both."',
+        prompt: 'Statement: The firm always hires the candidate who performs best in interview.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'False',
+        explanation: 'Candidate B interviewed best but was NOT hired — Candidate C was, despite only middling scores on both measures. This directly contradicts the statement.',
+      },
+      {
+        context: 'Passage: "Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both."',
+        prompt: 'Statement: Candidate C was hired because of consistency across both measures rather than a standout score on either.',
+        options: ['True', 'False', 'Cannot Say'],
+        answer: 'Cannot Say',
+        explanation: 'The passage states C scored in the middle on both and was hired — but never states WHY the firm chose C. Inferring the reason, even a plausible one, goes beyond what\'s written.',
       },
     ],
   },
@@ -461,6 +584,62 @@ const testCategories: TestCategory[] = [
         options: ['●●●●', '○○○○', '●●○○', '○●●●'],
         answer: '●●●●',
         explanation: 'One more circle fills from the left each step: 0, 1, 2, 3 → all 4 filled.',
+      },
+      {
+        shapes: '▢1  ▢▢2  ▢▢▢4  ▢▢▢▢▢7  ?',
+        prompt: 'The count follows a hidden rule. How many squares in the 5th group?',
+        options: ['9', '10', '11', '12'],
+        answer: '11',
+        explanation: 'Differences: +1, +2, +3 → next difference +4. 7 + 4 = 11. The same accelerating pattern as before, different shape.',
+      },
+      {
+        shapes: '◇  ◈  ◆  ◈  ◇  ◈  ?',
+        prompt: 'What comes next?',
+        options: ['◇', '◈', '◆', 'None of these'],
+        answer: '◆',
+        explanation: 'The pattern is a bounce between three states: ◇ ◈ ◆ ◈ ◇ ◈ ◆... it mirrors back and forth, so after ◇ ◈ comes ◆ again.',
+      },
+      {
+        shapes: '3+4=7  |  5+2=7  |  6+1=7  |  2+?=7',
+        prompt: 'What number completes the pattern?',
+        options: ['3', '4', '5', '9'],
+        answer: '5',
+        explanation: 'Every pair sums to 7 — a fixed-sum pattern rather than a sequence. 2 + 5 = 7.',
+      },
+      {
+        shapes: '⬡⬡⬡  |  ⬡⬡●  |  ⬡●●  |  ?',
+        prompt: 'What comes next?',
+        options: ['●●●', '⬡⬡⬡', '⬡●●', '●⬡⬡'],
+        answer: '●●●',
+        explanation: 'One more hexagon converts to a filled dot each step, left to right: 0, 1, 2 → 3 filled dots.',
+      },
+      {
+        shapes: '↖  ↗  ↘  ↙  ?',
+        prompt: 'The diagonal arrow rotates. What comes next?',
+        options: ['↖', '↗', '↘', '↙'],
+        answer: '↖',
+        explanation: '90° clockwise through the four diagonal directions, then back to the start: ↖.',
+      },
+      {
+        shapes: '1 shape  |  3 shapes  |  6 shapes  |  10 shapes  |  ? shapes',
+        prompt: 'This is the triangular number sequence. How many shapes come next?',
+        options: ['13', '14', '15', '16'],
+        answer: '15',
+        explanation: 'Triangular numbers: add one more each time than the last gap (2, 3, 4, 5): 1, 3, 6, 10, 15. A very common inductive-reasoning pattern.',
+      },
+      {
+        shapes: '■▲  ▲■  ■▲  ▲■  ■▲  ?',
+        prompt: 'What comes next?',
+        options: ['■▲', '▲■', '■■', '▲▲'],
+        answer: '▲■',
+        explanation: 'Simple two-step alternation. After 5 terms (odd count, back to ■▲), the 6th swaps again to ▲■.',
+      },
+      {
+        shapes: '5△ 25□  |  4△ 16□  |  3△ 9□  |  2△ ?□',
+        prompt: 'The square count relates to the triangle count. What replaces the ?',
+        options: ['4', '6', '8', '2'],
+        answer: '4',
+        explanation: 'The square count is always the triangle count squared: 5²=25, 4²=16, 3²=9, so 2²=4.',
       },
     ],
   },
@@ -646,16 +825,93 @@ const testCategories: TestCategory[] = [
         answer: 'Flag it to your project lead immediately',
         explanation: 'Material information goes up the chain fast, without speculation or freelancing client contact. "Assume someone knows" is how firms get blindsided.',
       },
+      {
+        context: 'You\'re asked in an interview about a weakness. You genuinely struggle with public speaking, but worry admitting it will cost you the offer.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Claim you have no real weaknesses',
+          'Describe a fake, trivial weakness like "I work too hard"',
+          'Honestly name the weakness and describe concrete steps you\'re taking to improve it',
+          'Deflect by criticising a past employer instead',
+        ],
+        answer: 'Honestly name the weakness and describe concrete steps you\'re taking to improve it',
+        explanation: 'Interviewers see through fake weaknesses instantly. Genuine self-awareness plus a credible improvement plan is what the question is actually testing.',
+      },
+      {
+        context: 'You accidentally cc\'d an external client on an internal email discussing a sensitive negotiating position.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Say nothing and hope they don\'t read it',
+          'Immediately tell your manager and discuss how to handle it with the client',
+          'Send a follow-up asking the client to delete the email, without telling your manager',
+          'Blame the email system'],
+        answer: 'Immediately tell your manager and discuss how to handle it with the client',
+        explanation: 'Fast disclosure lets your manager control the situation and any client conversation. Trying to quietly fix it yourself risks making a small error into a serious trust breach if it surfaces later.',
+      },
+      {
+        context: 'Two junior colleagues are in open conflict, and it\'s starting to affect team output. You are not their manager.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Take a side to resolve it faster',
+          'Ignore it entirely — it\'s not your role',
+          'Encourage them to address it directly, and flag the impact on output to your manager if it continues',
+          'Discuss the conflict with other colleagues'],
+        answer: 'Encourage them to address it directly, and flag the impact on output to your manager if it continues',
+        explanation: 'You\'re not positioned to referee, but ignoring a team-damaging conflict isn\'t neutral either. Encourage direct resolution first, escalate to the actual manager if the impact persists.',
+      },
+      {
+        context: 'You\'re given a task by a senior colleague that you believe is a poor use of your time given other priorities, but they outrank you significantly.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Do the task without question, however long it takes',
+          'Politely explain your current priorities and ask them to help you sequence the work',
+          'Quietly deprioritise it without telling anyone',
+          'Refuse and explain why you think it\'s a bad idea'],
+        answer: 'Politely explain your current priorities and ask them to help you sequence the work',
+        explanation: 'Transparency about competing demands, framed as seeking guidance rather than refusing, respects hierarchy while surfacing a genuine conflict for them to resolve.',
+      },
+      {
+        context: 'During onboarding, you notice the training materials contain outdated information that could mislead new starters.',
+        prompt: 'What is the MOST effective response?',
+        options: [
+          'Say nothing — it\'s not your job to fix training materials',
+          'Flag it constructively to whoever owns the materials, with the specific correction',
+          'Tell other new starters privately to ignore that section',
+          'Post publicly on the company intranet criticising the materials'],
+        answer: 'Flag it constructively to whoever owns the materials, with the specific correction',
+        explanation: 'Proactive, specific, constructive feedback through the right channel improves things for everyone and reflects well on you — silence or public criticism both help no one.',
+      },
+      {
+        context: 'You\'re offered a role at a competing firm with a modest pay rise while mid-way through an important project at your current firm.',
+        prompt: 'What is the MOST effective response regarding your CURRENT employer?',
+        options: [
+          'Leave immediately without notice',
+          'Say nothing until your last day',
+          'Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving',
+          'Tell colleagues your new pay to make a point'],
+        answer: 'Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving',
+        explanation: 'Finance is a small, reputation-driven industry — how you leave a firm follows you. A clean, professional exit protects references and future opportunities.',
+      },
     ],
   },
 ]
 
 type View = 'home' | 'test' | 'results'
 
+type QuestionMeta = { catId: string; catTitle: string; color: string; icon: string; tip: string }
+
+// Full Assessment Day: numerical → verbal → logical → SJT back to back on
+// one continuous timer, mirroring a real SHL/Cappfinity assessment day —
+// abbreviated counts so it stays a realistic ~30 minutes rather than 90+.
+const FULL_ASSESSMENT_COUNTS: Record<string, number> = { numerical: 8, verbal: 6, logical: 8, sjt: 5 }
+
 export default function PracticeTests() {
   const [view, setView] = useState<View>('home')
   const [category, setCategory] = useState<TestCategory | null>(null)
   const [sessionQuestions, setSessionQuestions] = useState<TestQuestion[]>([])
+  const [sessionIds, setSessionIds] = useState<string[]>([])
+  const [sessionMeta, setSessionMeta] = useState<QuestionMeta[]>([])
+  const [isFullAssessment, setIsFullAssessment] = useState(false)
   const [qIndex, setQIndex] = useState(0)
   const [answers, setAnswers] = useState<(string | null)[]>([])
   const [timeLeft, setTimeLeft] = useState(0)
@@ -669,31 +925,113 @@ export default function PracticeTests() {
 
   useEffect(() => stopTimer, [])
 
-  // Record the attempt exactly once when we land on the results view —
+  // Record the attempt(s) exactly once when we land on the results view —
   // using state here (not the stale timer closure) so scores are accurate
-  // whether the test was submitted manually or the clock ran out.
+  // whether the test was submitted manually or the clock ran out. Also
+  // feeds spaced-repetition stats so wrong questions resurface more often.
   useEffect(() => {
-    if (view !== 'results' || !category || recordedRef.current) return
+    if (view !== 'results' || sessionQuestions.length === 0 || recordedRef.current) return
     recordedRef.current = true
-    const correct = sessionQuestions.filter((q, i) => answers[i] === q.answer).length
-    recordPracticeTestAttempt({
-      date: new Date().toISOString(),
-      categoryId: category.id,
-      categoryTitle: category.title,
-      correct,
-      total: sessionQuestions.length,
-      percentage: Math.round((correct / sessionQuestions.length) * 100),
+
+    sessionQuestions.forEach((q, i) => {
+      recordSRAnswer(SR_KEY, sessionIds[i], answers[i] === q.answer)
     })
-  }, [view, category, sessionQuestions, answers])
+
+    if (isFullAssessment) {
+      const byCategory = new Map<string, { title: string; correct: number; total: number }>()
+      sessionQuestions.forEach((q, i) => {
+        const meta = sessionMeta[i]
+        const entry = byCategory.get(meta.catId) || { title: meta.catTitle, correct: 0, total: 0 }
+        entry.total += 1
+        if (answers[i] === q.answer) entry.correct += 1
+        byCategory.set(meta.catId, entry)
+      })
+      byCategory.forEach((entry, catId) => {
+        recordPracticeTestAttempt({
+          date: new Date().toISOString(),
+          categoryId: catId,
+          categoryTitle: entry.title,
+          correct: entry.correct,
+          total: entry.total,
+          percentage: Math.round((entry.correct / entry.total) * 100),
+        })
+      })
+    } else if (category) {
+      const correct = sessionQuestions.filter((q, i) => answers[i] === q.answer).length
+      recordPracticeTestAttempt({
+        date: new Date().toISOString(),
+        categoryId: category.id,
+        categoryTitle: category.title,
+        correct,
+        total: sessionQuestions.length,
+        percentage: Math.round((correct / sessionQuestions.length) * 100),
+      })
+    }
+  }, [view, category, sessionQuestions, sessionIds, sessionMeta, answers, isFullAssessment])
+
+  // Weighted-sample within the tiers this category has unlocked so far —
+  // wrong/unseen questions surface more; mastered ones fade but never vanish.
+  function sampleFromCategory(cat: TestCategory, n: number): { q: TestQuestion; id: string }[] {
+    const allowed = unlockedTiers(cat.id)
+    const total = cat.questions.length
+    const pool = cat.questions
+      .map((q, i) => ({ q, id: `${cat.id}-${i}`, tier: difficultyForIndex(i, total) }))
+      .filter(item => allowed.has(item.tier))
+    const usablePool = pool.length >= n ? pool : cat.questions.map((q, i) => ({ q, id: `${cat.id}-${i}`, tier: difficultyForIndex(i, total) }))
+    const sampled = weightedSample(SR_KEY, usablePool.map(p => ({ id: p.id, value: p })), n)
+    return sampled.map(s => ({ q: s.q, id: s.id }))
+  }
 
   function startTest(cat: TestCategory) {
-    const sample = shuffle(cat.questions).slice(0, cat.questionsPerAttempt)
+    const sampled = sampleFromCategory(cat, cat.questionsPerAttempt)
     recordedRef.current = false
+    setIsFullAssessment(false)
     setCategory(cat)
-    setSessionQuestions(sample)
+    setSessionQuestions(sampled.map(s => s.q))
+    setSessionIds(sampled.map(s => s.id))
+    setSessionMeta(sampled.map(() => ({ catId: cat.id, catTitle: cat.title, color: cat.color, icon: cat.icon, tip: cat.tip })))
     setQIndex(0)
-    setAnswers(new Array(sample.length).fill(null))
-    setTimeLeft(sample.length * cat.secondsPerQuestion)
+    setAnswers(new Array(sampled.length).fill(null))
+    setTimeLeft(sampled.length * cat.secondsPerQuestion)
+    setView('test')
+    stopTimer()
+    timerRef.current = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) {
+          stopTimer()
+          setView('results')
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    window.scrollTo(0, 0)
+  }
+
+  function startFullAssessment() {
+    recordedRef.current = false
+    setIsFullAssessment(true)
+    setCategory(null)
+    const allQuestions: TestQuestion[] = []
+    const allIds: string[] = []
+    const allMeta: QuestionMeta[] = []
+    let totalSeconds = 0
+    testCategories.forEach(cat => {
+      const n = FULL_ASSESSMENT_COUNTS[cat.id] ?? cat.questionsPerAttempt
+      const sampled = sampleFromCategory(cat, n)
+      sampled.forEach(s => {
+        allQuestions.push(s.q)
+        allIds.push(s.id)
+        allMeta.push({ catId: cat.id, catTitle: cat.title, color: cat.color, icon: cat.icon, tip: cat.tip })
+      })
+      totalSeconds += n * cat.secondsPerQuestion
+    })
+    setSessionQuestions(allQuestions)
+    setSessionIds(allIds)
+    setSessionMeta(allMeta)
+    setQIndex(0)
+    setAnswers(new Array(allQuestions.length).fill(null))
+    setTimeLeft(totalSeconds)
     setView('test')
     stopTimer()
     timerRef.current = setInterval(() => {
@@ -726,12 +1064,12 @@ export default function PracticeTests() {
   }
 
   // ===== HOME =====
-  if (view === 'home' || !category) {
+  if (view === 'home') {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-8">
           <h1 className="text-4xl font-black text-white mb-2">Online Test Practice</h1>
-          <p className="text-gray-400">Practise the psychometric tests banks and firms actually send — numerical, verbal, the shape puzzles, and situational judgement. Timed, scored, and every answer explained.</p>
+          <p className="text-gray-400">Practise the psychometric tests banks and firms actually send — numerical, verbal, the shape puzzles, and situational judgement. Timed, scored, and every answer explained. Questions adapt to you: get one wrong and it resurfaces more often until it sticks.</p>
         </div>
 
         <div className="bg-brand-card border border-brand-gold/20 rounded-xl p-5 mb-8">
@@ -739,8 +1077,32 @@ export default function PracticeTests() {
           <p className="text-gray-300 text-sm leading-relaxed">Almost every finance graduate scheme sends online assessments (SHL, Korn Ferry/Talent Q, Cappfinity, HireVue games) immediately after your application — often before a human ever sees your CV. They cut 50-80% of candidates. The good news: these tests are extremely learnable. Practise until the formats feel boring.</p>
         </div>
 
+        {/* Full Assessment Day */}
+        <div className="bg-gradient-to-br from-brand-gold/10 to-brand-teal/10 border border-brand-gold/30 rounded-2xl p-6 mb-8">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <p className="text-xs font-bold text-brand-gold uppercase tracking-wider mb-1">🎯 The real thing</p>
+              <h2 className="text-xl font-black text-white mb-2">Full Assessment Day Mode</h2>
+              <p className="text-gray-300 text-sm max-w-xl leading-relaxed">
+                Numerical → Verbal → Logical → SJT, back to back, on one continuous clock — exactly how SHL and Cappfinity run a real assessment day. No pausing between sections.
+              </p>
+              <p className="text-gray-500 text-xs mt-2">
+                {Object.entries(FULL_ASSESSMENT_COUNTS).map(([id, n]) => `${n} ${id}`).join(' · ')} — {formatTime(Object.entries(FULL_ASSESSMENT_COUNTS).reduce((s, [id, n]) => s + n * (testCategories.find(c => c.id === id)?.secondsPerQuestion || 0), 0))} total
+              </p>
+            </div>
+            <button
+              onClick={startFullAssessment}
+              className="px-6 py-3.5 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors flex-shrink-0"
+            >
+              Start Assessment Day →
+            </button>
+          </div>
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
-          {testCategories.map(cat => (
+          {testCategories.map(cat => {
+            const tiers = unlockedTiers(cat.id)
+            return (
             <div key={cat.id} className={`bg-brand-card border ${cat.border} rounded-2xl p-6 flex flex-col`}>
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-3xl">{cat.icon}</span>
@@ -752,8 +1114,15 @@ export default function PracticeTests() {
                 <p className="text-xs text-gray-400"><span className={`font-bold ${cat.color}`}>Who requires it:</span> {cat.requiredBy}</p>
                 <p className="text-xs text-gray-400"><span className={`font-bold ${cat.color}`}>Why firms use it:</span> {cat.whyUsed}</p>
               </div>
+              <div className="flex items-center gap-1.5 mb-3">
+                {(['easy', 'medium', 'hard'] as Difficulty[]).map(tier => (
+                  <span key={tier} className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${tiers.has(tier) ? `${cat.color} bg-white/10` : 'text-gray-700 bg-white/5'}`}>
+                    {tiers.has(tier) ? '✓' : '🔒'} {tier}
+                  </span>
+                ))}
+              </div>
               <div className="text-xs text-gray-600 mb-4">
-                {cat.questionsPerAttempt} questions per attempt, drawn randomly from a bank of {cat.questions.length} · {formatTime(cat.questionsPerAttempt * cat.secondsPerQuestion)} time limit · retake for a different test
+                {cat.questionsPerAttempt} questions per attempt, weighted-sampled from a bank of {cat.questions.length} · {formatTime(cat.questionsPerAttempt * cat.secondsPerQuestion)} time limit · retake for a different test
               </div>
               <button
                 onClick={() => startTest(cat)}
@@ -762,7 +1131,12 @@ export default function PracticeTests() {
                 Start Test →
               </button>
             </div>
-          ))}
+          )})}
+        </div>
+
+        <div className="bg-brand-card border border-white/10 rounded-xl p-5 mb-8">
+          <h2 className="text-white font-bold mb-2">🎚️ How difficulty tiers unlock</h2>
+          <p className="text-gray-400 text-sm leading-relaxed">Every category starts with Easy questions only. <span className="text-white font-semibold">Medium</span> unlocks after your first attempt. <span className="text-white font-semibold">Hard</span> unlocks once you've done 3+ attempts averaging 70% or higher over your last 3 — mastery earns you the harder questions, not the other way round.</p>
         </div>
 
         <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
@@ -820,20 +1194,48 @@ export default function PracticeTests() {
       : pct >= 55 ? { label: 'Borderline — more practice needed', color: 'text-yellow-400' }
       : { label: 'Keep practising — review every explanation below', color: 'text-red-400' }
 
+    const sectionBreakdown = isFullAssessment
+      ? Array.from(new Map(sessionMeta.map(m => [m.catId, m])).values()).map(meta => {
+          const idxs = sessionMeta.map((m, i) => (m.catId === meta.catId ? i : -1)).filter(i => i >= 0)
+          const sectionCorrect = idxs.filter(i => answers[i] === sessionQuestions[i].answer).length
+          return { meta, correct: sectionCorrect, total: idxs.length, pct: Math.round((sectionCorrect / idxs.length) * 100) }
+        })
+      : []
+
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">{pct >= 75 ? '🏆' : pct >= 55 ? '📈' : '📚'}</div>
-          <h1 className="text-3xl font-black text-white mb-2">{category.title} — Results</h1>
+          <h1 className="text-3xl font-black text-white mb-2">{isFullAssessment ? 'Full Assessment Day' : category?.title} — Results</h1>
           <div className="text-5xl font-black text-brand-gold my-4">{correct}/{total}</div>
           <p className={`font-bold ${band.color}`}>{pct}% — {band.label}</p>
         </div>
 
+        {isFullAssessment && (
+          <div className="grid sm:grid-cols-2 gap-3 mb-8">
+            {sectionBreakdown.map(s => (
+              <div key={s.meta.catId} className="bg-brand-card border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{s.meta.icon}</span>
+                  <span className={`text-sm font-semibold ${s.meta.color}`}>{s.meta.catTitle}</span>
+                </div>
+                <span className="text-white font-bold text-sm">{s.correct}/{s.total} ({s.pct}%)</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="flex gap-3 justify-center mb-10">
-          <button onClick={() => startTest(category)} className="px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors">
-            🔄 Retake
-          </button>
-          <button onClick={() => { setView('home'); setCategory(null) }} className="px-6 py-3 bg-white/5 text-gray-300 font-semibold rounded-xl hover:bg-white/10 transition-colors">
+          {isFullAssessment ? (
+            <button onClick={startFullAssessment} className="px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors">
+              🔄 Retake Assessment Day
+            </button>
+          ) : (
+            <button onClick={() => category && startTest(category)} className="px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors">
+              🔄 Retake
+            </button>
+          )}
+          <button onClick={() => { setView('home'); setCategory(null); setIsFullAssessment(false) }} className="px-6 py-3 bg-white/5 text-gray-300 font-semibold rounded-xl hover:bg-white/10 transition-colors">
             All tests
           </button>
         </div>
@@ -848,6 +1250,7 @@ export default function PracticeTests() {
                 <div className="flex items-start gap-3 mb-2">
                   <span className={`font-black text-sm flex-shrink-0 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>{isCorrect ? '✓' : '✗'} Q{i + 1}</span>
                   <div className="min-w-0 flex-1">
+                    {isFullAssessment && sessionMeta[i] && <p className={`text-xs font-bold mb-1 ${sessionMeta[i].color}`}>{sessionMeta[i].icon} {sessionMeta[i].catTitle}</p>}
                     {q.context && <p className="text-gray-500 text-xs mb-1 italic">{q.context}</p>}
                     {q.shapes && <p className="text-white text-xl tracking-widest mb-2 overflow-x-auto">{q.shapes}</p>}
                     <p className="text-gray-200 text-sm font-medium">{q.prompt}</p>
@@ -868,13 +1271,17 @@ export default function PracticeTests() {
 
   // ===== TEST =====
   const q = sessionQuestions[qIndex]
+  const currentMeta = sessionMeta[qIndex]
+  if (!q || !currentMeta) return null
   const answeredCount = answers.filter(a => a !== null).length
   const urgent = timeLeft <= 60
+  const prevMeta = qIndex > 0 ? sessionMeta[qIndex - 1] : null
+  const sectionChanged = isFullAssessment && prevMeta && prevMeta.catId !== currentMeta.catId
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
       <div className="flex items-center justify-between mb-6">
-        <button onClick={() => { stopTimer(); setView('home'); setCategory(null) }} className="text-gray-500 hover:text-white text-sm">✕ Quit</button>
+        <button onClick={() => { stopTimer(); setView('home'); setCategory(null); setIsFullAssessment(false) }} className="text-gray-500 hover:text-white text-sm">✕ Quit</button>
         <div className={`font-mono font-bold text-lg px-4 py-1.5 rounded-lg ${urgent ? 'bg-red-500/15 text-red-400 animate-pulse' : 'bg-white/5 text-white'}`}>
           ⏱ {formatTime(timeLeft)}
         </div>
@@ -885,9 +1292,16 @@ export default function PracticeTests() {
         <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((qIndex + 1) / sessionQuestions.length) * 100}%` }} />
       </div>
 
+      {isFullAssessment && sectionChanged && (
+        <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-3 mb-4 text-center">
+          <p className="text-brand-gold text-sm font-bold">New section: {currentMeta.icon} {currentMeta.catTitle} — no break, the clock keeps running</p>
+        </div>
+      )}
+
       <div className="mb-2">
-        <span className={`text-xs font-semibold uppercase tracking-wider ${category.color}`}>
-          {category.icon} {category.title} — Question {qIndex + 1} of {sessionQuestions.length}
+        <span className={`text-xs font-semibold uppercase tracking-wider ${currentMeta.color}`}>
+          {currentMeta.icon} {currentMeta.catTitle} — Question {qIndex + 1} of {sessionQuestions.length}
+          {isFullAssessment && ' (Full Assessment Day)'}
         </span>
       </div>
 
@@ -944,7 +1358,7 @@ export default function PracticeTests() {
           </button>
         )}
       </div>
-      <p className="text-gray-600 text-xs text-center mt-3">💡 {category.tip}</p>
+      <p className="text-gray-600 text-xs text-center mt-3">💡 {currentMeta.tip}</p>
     </div>
   )
 }

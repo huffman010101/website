@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { jobs } from '../data/jobs'
+import { recordAnswer as recordSRAnswer, weightedSample } from '../lib/spacedRepetition'
+import { recordInterviewQuizAttempt, getInterviewQuizHistory } from '../lib/history'
+
+const SR_KEY = 'findr_sr_interview_quiz'
 
 type Question = {
   id: string
@@ -104,6 +108,9 @@ export default function InterviewQuiz() {
   const [score, setScore] = useState<ReturnType<typeof evaluateAnswer> | null>(null)
   const [sessionScores, setSessionScores] = useState<number[]>([])
   const [started, setStarted] = useState(false)
+  const [sessionLength, setSessionLength] = useState<10 | 15 | 20 | 'all'>(15)
+  const [sessionQuestions, setSessionQuestions] = useState<Question[]>([])
+  const recordedRef = useRef(false)
 
   const filtered = combinedQuestions.filter(q => {
     if (selectedCareer && q.careerId !== selectedCareer) return false
@@ -111,7 +118,21 @@ export default function InterviewQuiz() {
     return true
   })
 
-  const current = filtered[currentIndex]
+  const current = sessionQuestions[currentIndex]
+
+  // Record the session once it ends (current becomes undefined after the last question)
+  useEffect(() => {
+    if (!started || current || sessionScores.length === 0 || recordedRef.current) return
+    recordedRef.current = true
+    const avgScore = Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length)
+    recordInterviewQuizAttempt({
+      date: new Date().toISOString(),
+      careerId: selectedCareer || 'all',
+      careerTitle: selectedCareer ? (jobs.find(j => j.id === selectedCareer)?.title || selectedCareer) : 'All Careers',
+      questionsAnswered: sessionScores.length,
+      avgScore,
+    })
+  }, [started, current, sessionScores, selectedCareer])
 
   function handleSubmit() {
     if (!userAnswer.trim() || !current) return
@@ -119,6 +140,7 @@ export default function InterviewQuiz() {
       const result = evaluateAnswer(userAnswer, current.modelAnswer, current.keyPoints)
       setScore(result)
       setSessionScores(prev => [...prev, result.score])
+      recordSRAnswer(SR_KEY, current.id, result.score >= 60)
     } else {
       setShowModel(true)
     }
@@ -126,7 +148,7 @@ export default function InterviewQuiz() {
   }
 
   function handleNext() {
-    setCurrentIndex(i => Math.min(i + 1, filtered.length - 1))
+    setCurrentIndex(i => Math.min(i + 1, sessionQuestions.length - 1))
     setUserAnswer('')
     setSubmitted(false)
     setShowModel(false)
@@ -134,6 +156,13 @@ export default function InterviewQuiz() {
   }
 
   function handleStart() {
+    recordedRef.current = false
+    const pool = filtered.map(q => ({ id: q.id, value: q }))
+    const n = sessionLength === 'all' ? pool.length : Math.min(sessionLength, pool.length)
+    // Weighted sampling means questions you've gotten wrong before are more
+    // likely to be picked and appear more often across repeated sessions.
+    const chosen = weightedSample(SR_KEY, pool, n)
+    setSessionQuestions(chosen)
     setStarted(true)
     setCurrentIndex(0)
     setSessionScores([])
@@ -189,6 +218,24 @@ export default function InterviewQuiz() {
             </div>
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Session Length</label>
+            <div className="flex gap-2">
+              {([10, 15, 20, 'all'] as const).map(len => (
+                <button
+                  key={len}
+                  onClick={() => setSessionLength(len)}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    sessionLength === len ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                  }`}
+                >
+                  {len === 'all' ? `All (${filtered.length})` : `${len} questions`}
+                </button>
+              ))}
+            </div>
+            <p className="text-gray-600 text-xs mt-2">Questions you've scored poorly on before are weighted to appear more often — the quiz adapts to your weak spots.</p>
+          </div>
+
           <div className="bg-brand-darker rounded-xl p-4">
             <p className="text-gray-300 text-sm">
               <span className="text-white font-bold">{filtered.length} questions</span> available with current filters.
@@ -209,6 +256,7 @@ export default function InterviewQuiz() {
   }
 
   if (!current) {
+    const historyTrend = getInterviewQuizHistory().slice(-10).map(a => a.avgScore)
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
         <h2 className="text-3xl font-black text-white mb-4">Session Complete!</h2>
@@ -216,6 +264,23 @@ export default function InterviewQuiz() {
           <div className={`text-6xl font-black mb-4 ${scoreColor(avgScore)}`}>{avgScore}<span className="text-2xl">/100</span></div>
         )}
         <p className="text-gray-400 mb-8">{sessionScores.length} questions answered</p>
+
+        {historyTrend.length >= 2 && (
+          <div className="bg-brand-card border border-white/10 rounded-xl p-5 mb-8 text-left max-w-sm mx-auto">
+            <p className="text-white font-semibold text-sm mb-2">Score trend — last {historyTrend.length} sessions</p>
+            <svg viewBox="0 0 240 48" className="w-full h-12">
+              <polyline
+                points={historyTrend.map((v, i) => `${(i / (historyTrend.length - 1)) * 240},${48 - (v / 100) * 48}`).join(' ')}
+                fill="none" stroke="#f5c518" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              />
+              {historyTrend.map((v, i) => (
+                <circle key={i} cx={(i / (historyTrend.length - 1)) * 240} cy={48 - (v / 100) * 48} r="2.5" fill="#f5c518" />
+              ))}
+            </svg>
+            <p className="text-gray-500 text-xs mt-1">Latest: {historyTrend[historyTrend.length - 1]}/100</p>
+          </div>
+        )}
+
         <div className="flex gap-4 justify-center">
           <button onClick={() => { setStarted(false); setCurrentIndex(0) }} className="px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors">
             New Session
@@ -235,13 +300,13 @@ export default function InterviewQuiz() {
         <button onClick={() => setStarted(false)} className="text-sm text-gray-500 hover:text-brand-gold transition-colors">← Back to Setup</button>
         <div className="flex items-center gap-4 text-sm text-gray-500">
           {sessionScores.length > 0 && <span className={`font-semibold ${scoreColor(avgScore)}`}>Avg: {avgScore}/100</span>}
-          <span>{currentIndex + 1} / {filtered.length}</span>
+          <span>{currentIndex + 1} / {sessionQuestions.length}</span>
         </div>
       </div>
 
       {/* Progress bar */}
       <div className="h-1.5 bg-white/5 rounded-full mb-8">
-        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((currentIndex + 1) / filtered.length) * 100}%` }} />
+        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((currentIndex + 1) / sessionQuestions.length) * 100}%` }} />
       </div>
 
       {/* Question card */}
@@ -377,7 +442,7 @@ export default function InterviewQuiz() {
             onClick={handleNext}
             className="w-full py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
           >
-            {currentIndex < filtered.length - 1 ? 'Next Question →' : 'Finish Session'}
+            {currentIndex < sessionQuestions.length - 1 ? 'Next Question →' : 'Finish Session'}
           </button>
         </div>
       )}

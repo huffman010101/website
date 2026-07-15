@@ -5,6 +5,7 @@ import {
   getCareerQuizHistory,
   getCVScoreHistory,
   getPracticeTestHistory,
+  getInterviewQuizHistory,
   categoryToLearnUnit,
 } from '../lib/history'
 
@@ -73,6 +74,8 @@ export default function Dashboard() {
   const quizHistory = getCareerQuizHistory()
   const cvHistory = getCVScoreHistory()
   const testHistory = getPracticeTestHistory()
+  const interviewHistory = getInterviewQuizHistory()
+  const interviewTrend = interviewHistory.slice(-10).map(e => e.avgScore)
 
   const latestQuiz = quizHistory[quizHistory.length - 1]
   const latestCV = cvHistory[cvHistory.length - 1]
@@ -86,7 +89,7 @@ export default function Dashboard() {
     return acc
   }, {})
 
-  const hasAnyActivity = quizHistory.length > 0 || cvHistory.length > 0 || testHistory.length > 0 || completedLessons > 0
+  const hasAnyActivity = quizHistory.length > 0 || cvHistory.length > 0 || testHistory.length > 0 || interviewHistory.length > 0 || completedLessons > 0
 
   const recommendedJob = latestQuiz ? jobs.find(j => j.id === latestQuiz.topMatchId) : null
   const recommendedUnit = recommendedJob ? categoryToLearnUnit[recommendedJob.category] : null
@@ -196,6 +199,22 @@ export default function Dashboard() {
                   <div className="flex items-center justify-between mt-2">
                     <p className="text-gray-500 text-xs">{cvHistory.length} draft{cvHistory.length !== 1 ? 's' : ''} reviewed</p>
                     <p className="text-white font-bold text-sm">Latest: {latestCV?.score}/100 — {latestCV?.scoreLabel}</p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Interview quiz history */}
+            <div className="bg-brand-card border border-white/10 rounded-xl p-5">
+              <h2 className="text-white font-bold mb-3">🎤 Interview Quiz Trend</h2>
+              {interviewHistory.length === 0 ? (
+                <p className="text-gray-500 text-sm">No sessions yet. <Link to="/interview-quiz" className="text-brand-gold hover:underline">Practise interview questions →</Link></p>
+              ) : (
+                <>
+                  <Sparkline values={interviewTrend} color="#14b8a6" />
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-gray-500 text-xs">{interviewHistory.length} session{interviewHistory.length !== 1 ? 's' : ''}</p>
+                    <p className="text-white font-bold text-sm">Latest avg: {interviewHistory[interviewHistory.length - 1]?.avgScore}/100</p>
                   </div>
                 </>
               )}

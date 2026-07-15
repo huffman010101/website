@@ -29,10 +29,19 @@ export type PracticeTestAttempt = {
   percentage: number
 }
 
+export type InterviewQuizAttempt = {
+  date: string
+  careerId: string
+  careerTitle: string
+  questionsAnswered: number
+  avgScore: number
+}
+
 const KEYS = {
   careerQuiz: 'findr_history_career_quiz',
   cvScores: 'findr_history_cv_scores',
   practiceTests: 'findr_history_practice_tests',
+  interviewQuiz: 'findr_history_interview_quiz',
 } as const
 
 function loadArray<T>(key: string): T[] {
@@ -73,6 +82,14 @@ export function recordPracticeTestAttempt(entry: PracticeTestAttempt) {
 
 export function getPracticeTestHistory(): PracticeTestAttempt[] {
   return loadArray<PracticeTestAttempt>(KEYS.practiceTests)
+}
+
+export function recordInterviewQuizAttempt(entry: InterviewQuizAttempt) {
+  pushEntry(KEYS.interviewQuiz, entry)
+}
+
+export function getInterviewQuizHistory(): InterviewQuizAttempt[] {
+  return loadArray<InterviewQuizAttempt>(KEYS.interviewQuiz)
 }
 
 // ---- Recommendation logic (used by the Dashboard) ----
