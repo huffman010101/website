@@ -16,6 +16,7 @@ import MeetingNotes from './pages/MeetingNotes'
 import Learn from './pages/Learn'
 import PracticeTests from './pages/PracticeTests'
 import AISkills from './pages/AISkills'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/learn" element={<Learn />} />
             <Route path="/practice-tests" element={<PracticeTests />} />
             <Route path="/ai-skills" element={<AISkills />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
         <Footer />

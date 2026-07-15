@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { jobs } from '../data/jobs'
+import { recordCareerQuizAttempt } from '../lib/history'
 
 interface CareerMatch {
   id: string
@@ -53,6 +54,20 @@ export default function Results() {
 
     setMatches(ranked)
     setLoaded(true)
+
+    // Only record once per distinct result — revisiting this page without
+    // retaking the quiz shouldn't create duplicate history entries.
+    const recordedMarker = localStorage.getItem('findr-quiz-scores-recorded')
+    if (ranked.length > 0 && recordedMarker !== stored) {
+      recordCareerQuizAttempt({
+        date: new Date().toISOString(),
+        topMatchId: ranked[0].id,
+        topMatchTitle: ranked[0].title,
+        topMatchPercentage: ranked[0].percentage,
+        top3: ranked.slice(0, 3).map(m => ({ id: m.id, title: m.title, percentage: m.percentage })),
+      })
+      localStorage.setItem('findr-quiz-scores-recorded', stored)
+    }
   }, [navigate])
 
   if (!loaded) {

@@ -10,6 +10,7 @@ type NavItem = {
 }
 
 const navItems: NavItem[] = [
+  { label: 'Dashboard', to: '/dashboard' },
   {
     label: 'Careers',
     dropdown: [

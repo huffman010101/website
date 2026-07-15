@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { recordPracticeTestAttempt } from '../lib/history'
 
 type TestQuestion = {
   prompt: string
@@ -660,14 +661,34 @@ export default function PracticeTests() {
   const [timeLeft, setTimeLeft] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  const recordedRef = useRef(false)
+
   function stopTimer() {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
   }
 
   useEffect(() => stopTimer, [])
 
+  // Record the attempt exactly once when we land on the results view —
+  // using state here (not the stale timer closure) so scores are accurate
+  // whether the test was submitted manually or the clock ran out.
+  useEffect(() => {
+    if (view !== 'results' || !category || recordedRef.current) return
+    recordedRef.current = true
+    const correct = sessionQuestions.filter((q, i) => answers[i] === q.answer).length
+    recordPracticeTestAttempt({
+      date: new Date().toISOString(),
+      categoryId: category.id,
+      categoryTitle: category.title,
+      correct,
+      total: sessionQuestions.length,
+      percentage: Math.round((correct / sessionQuestions.length) * 100),
+    })
+  }, [view, category, sessionQuestions, answers])
+
   function startTest(cat: TestCategory) {
     const sample = shuffle(cat.questions).slice(0, cat.questionsPerAttempt)
+    recordedRef.current = false
     setCategory(cat)
     setSessionQuestions(sample)
     setQIndex(0)

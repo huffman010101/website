@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { jobs } from '../data/jobs'
+import { recordCVScore } from '../lib/history'
 
 type ReviewResult = {
   score: number
@@ -103,8 +104,17 @@ export default function CVReviewer() {
     if (!text.trim() || !role) return
     setLoading(true)
     setTimeout(() => {
-      setResult(generateReview(text, role, company, tab))
+      const review = generateReview(text, role, company, tab)
+      setResult(review)
       setLoading(false)
+      recordCVScore({
+        date: new Date().toISOString(),
+        type: tab,
+        role,
+        company,
+        score: review.score,
+        scoreLabel: review.scoreLabel,
+      })
     }, 1200)
   }
 
