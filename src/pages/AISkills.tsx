@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
-const sections = ['How AI Works', 'Prompting Masterclass', 'Prompt Library', 'AI by Career', 'Pitfalls & Rules'] as const
+const sections = [
+  'How AI Works', 'Prompting Masterclass', 'Prompt Library',
+  'Claude Code for Finance', 'Tool Comparison', 'AI by Career',
+  'Firm Policies & Interviews', 'Pitfalls & Security',
+] as const
 type Section = typeof sections[number]
 
 const fundamentals = [
@@ -9,12 +13,32 @@ const fundamentals = [
     body: 'Large language models (ChatGPT, Claude, Gemini) predict the most likely next words given everything before them, trained on enormous amounts of text. They are not databases and not calculators — they are extraordinarily good pattern-completers. This explains both their power (fluent reasoning, drafting, explaining) and their weaknesses (confident errors, shaky arithmetic).',
   },
   {
+    title: 'Tokenization — how text becomes numbers',
+    body: 'Models don\'t read letters or words directly — text is chopped into "tokens", small chunks that are often sub-words (e.g. "discounting" might split into "discount" + "ing"). Roughly 1 token ≈ ¾ of an English word. Everything the model does — reading your prompt, generating a reply, its pricing, its limits — happens in units of tokens, not characters or words.',
+  },
+  {
+    title: 'Transformers & attention — the architecture underneath',
+    body: 'Since 2017 ("Attention Is All You Need"), almost every modern LLM uses the transformer architecture. Its key trick is "attention": when producing each word, the model looks back over every other word in the input and learns how much weight to give each one. That\'s how it "knows" that in "the bank raised rates because inflation was high", the word "it" later on refers to the bank, not the rate. Attention run at massive scale, across billions of parameters, is what produces fluent, context-aware text.',
+  },
+  {
+    title: 'The context window — the model\'s working memory',
+    body: 'A model can only "see" a limited number of tokens at once — its context window (modern models range from roughly 100k to 1m+ tokens). Everything in your current conversation, any documents you\'ve pasted, and the model\'s reply all count against this budget. Once you exceed it, the oldest content gets dropped or the model starts losing track — which is why very long chats can start "forgetting" things you said earlier, and why pasting a 300-page document isn\'t always a good idea even when technically possible.',
+  },
+  {
     title: 'Why they "hallucinate"',
     body: 'When a model lacks knowledge, it doesn\'t say "no data found" — it generates the most plausible-sounding answer anyway. It will invent statistics, citations, deal figures and legal cases with total confidence. Rule: any specific fact, number or source an AI gives you must be verified before it goes anywhere near your work.',
   },
   {
-    title: 'Context is everything',
-    body: 'The model only knows what\'s in your conversation. Vague input → generic output. The single biggest upgrade to your results is giving more relevant context: who you are, what you\'re doing, what you\'ve tried, what good looks like. Treat it like briefing a smart new intern who knows nothing about your situation.',
+    title: 'RAG — grounding answers in real documents',
+    body: 'Retrieval-Augmented Generation fixes the hallucination problem for specific documents: instead of relying purely on what the model memorised during training, a RAG system first searches a real, up-to-date source (a filing, a database, your company\'s knowledge base) for relevant passages, then feeds those passages into the model\'s context so it answers FROM the actual text. This is how "chat with this PDF" or "ask questions about our internal research" tools work — and why answers from them are far more trustworthy than a model working from memory alone.',
+  },
+  {
+    title: 'Agentic tool use — AI that does things, not just talks',
+    body: 'A plain chatbot only produces text. An "agent" is a model given tools — web search, a calculator, code execution, file access, an API — that it can choose to call mid-task, look at the result, and decide what to do next, often repeating this loop multiple times before giving you a final answer. This is the shift from "AI that answers questions" to "AI that completes multi-step tasks": researching a company across several sources, writing and running code to check its own arithmetic, or navigating a spreadsheet to find and fix an error.',
+  },
+  {
+    title: 'MCP — Model Context Protocol',
+    body: 'MCP (created by Anthropic, now an open standard) is a common way for AI assistants to connect to external tools and data sources — think of it as a "USB-C port for AI": one standard connector instead of a custom integration for every combination of assistant and tool. A finance-relevant example: an MCP server could give an AI assistant a consistent way to read a company\'s internal deal tracker, a market data feed, or a document repository, so the same assistant can plug into many different systems without bespoke code for each one.',
   },
   {
     title: 'Capabilities you should actually use',
@@ -194,6 +218,64 @@ const pitfalls = [
   { rule: 'Don\'t submit AI-written applications', detail: 'Recruiters now read hundreds of identical AI-voiced cover letters — the generic ones scream it. Use AI to critique, structure and sharpen YOUR draft, not to generate it. Firms also increasingly use AI-detection and, more simply, interviews expose people who can\'t reproduce their own application\'s quality.' },
   { rule: 'Understand it or don\'t use it', detail: 'If AI writes analysis you can\'t explain line-by-line when challenged, you\'ve created a career time bomb. The interview follow-up, the MD\'s question, the client push-back — all expose borrowed understanding.' },
   { rule: 'AI amplifies, it doesn\'t replace judgement', detail: 'Every serious deployment in finance keeps a human accountable for the output. Your value is shifting from producing first drafts to directing, verifying and judging — get excellent at exactly that.' },
+  { rule: 'Watch for prompt injection when AI reads external content', detail: 'If an AI agent reads a document, email or webpage on your behalf, hidden text inside it can try to hijack the AI ("ignore previous instructions, now do X"). This is a real and growing attack as agents gain more autonomy. Never let an agent take irreversible actions (sending, deleting, trading, paying) without you reviewing exactly what it\'s about to do first.' },
+]
+
+const claudeCodeSections = [
+  {
+    title: 'What Claude Code actually is',
+    body: 'Claude Code is an agentic coding assistant that runs in your terminal (or IDE) rather than a chat window. The difference matters: instead of copy-pasting code or formulas back and forth, it can directly read your files, write and edit them, run commands, execute scripts, and check its own output — then report back what it did. For a finance student, that means it can work on a real spreadsheet, a real dataset or a real codebase sitting on your laptop, not just talk about one in the abstract.',
+  },
+  {
+    title: 'Use case 1 — Building and auditing Excel models',
+    body: 'Claude Code can open a workbook (via a library like openpyxl or a CSV export), map out every formula, and flag the classic red flags an analyst checks for manually: hardcoded numbers buried inside formulas, broken or circular references, inconsistent formulas across a row, totals that don\'t tie out, and mismatched units. It can then propose specific fixes — cell by cell — for you to review and apply. This turns hours of tedious formula auditing into a focused review of a short list of flagged issues.',
+  },
+  {
+    title: 'Use case 2 — Automating research and tracker workflows',
+    body: 'A lot of junior finance work is repetitive data assembly: updating a comps tracker with the latest share prices and multiples, refreshing a deal pipeline sheet, or compiling a weekly macro/market summary from several sources. Claude Code can write a small script that pulls the data, formats it consistently, and updates the tracker automatically — the kind of automation that used to require a VBA macro or a manual hour every Monday morning.',
+  },
+  {
+    title: 'Use case 3 — Structuring due diligence packs',
+    body: 'Given a folder of data room documents, Claude Code can help build a standardised DD checklist mapped to what\'s actually present versus missing, organise files into a consistent structure, extract key terms from contracts into a summary table, and draft first-cut sections of an IC memo grounded in the source documents — all of which a human then reviews, verifies and takes ownership of before it goes anywhere near a partner.',
+  },
+]
+
+const claudeCodeWorkedExample = {
+  scenario: 'You\'re a PE summer analyst. Tomorrow\'s IC meeting needs a working comps tracker and a sanity-checked version of a colleague\'s LBO model.',
+  steps: [
+    { step: '1. Brief it like a colleague', detail: 'Tell Claude Code the file paths, what the comps tracker should contain (which companies, which multiples, which source columns), and what "checking" the LBO model means to you — e.g. "flag any hardcoded cell that should be a formula, any formula that doesn\'t match the pattern of the row it\'s in, and confirm the debt schedule ties to the balance sheet."' },
+    { step: '2. Let it read and analyse first', detail: 'It opens the workbook, walks every sheet, and builds a list of findings — e.g. "Cell F34 is hardcoded at 12.4x but every other cell in row 34 is a live formula referencing the comps tab" or "the exit EBITDA multiple doesn\'t match the entry multiple assumption stated in the summary tab."' },
+    { step: '3. Review every proposed change before it\'s applied', detail: 'Claude Code shows you exactly what it wants to change, cell by cell, before touching anything — this is the human-in-the-loop step that matters most. You approve, reject, or redirect each one; nothing is silently overwritten.' },
+    { step: '4. You still own the numbers', detail: 'Once changes are applied, you re-check the model\'s outputs yourself — the same way you\'d check any junior\'s work. The tool caught the tedious pattern-matching errors fast; the judgement call on whether the assumptions themselves make sense is still entirely yours.' },
+  ],
+  takeaway: 'The realistic value isn\'t "the AI built the model" — it\'s "hours of mechanical formula-auditing became a 15-minute review of a short, specific findings list." That\'s a genuinely useful skill to bring into an internship, and increasingly an expected one.',
+}
+
+const toolComparisonRows = [
+  { task: 'Analysing a long document (10-K, credit agreement, CIM)', claude: 'Very strong — large context window, follows detailed multi-part instructions closely', chatgpt: 'Strong, especially with the latest models; broad ecosystem of plugins', copilot: 'Not built for this — lives inside Office/VS Code, not a document-analysis tool', perplexity: 'Good for quick Q&A with citations, weaker for deep multi-step analysis' },
+  { task: 'Excel formulas, VBA, in-spreadsheet automation', claude: 'Good via chat — generates and explains formulas, but you paste them in yourself', chatgpt: 'Good via chat, same limitation — no native Excel integration', copilot: 'Best fit — Copilot for Microsoft 365 works directly inside Excel', perplexity: 'Not a fit — it\'s a research tool, not a coding/spreadsheet assistant' },
+  { task: 'Real-time market/company research with citations', claude: 'Capable with web search enabled, citations less central to the product', chatgpt: 'Capable with browsing enabled, similar to Claude here', copilot: 'Not a fit', perplexity: 'Best fit — built specifically for cited, sourced web research' },
+  { task: 'Writing and running code (data pulls, model automation)', claude: 'Very strong — Claude Code runs directly in your terminal/IDE on real files', chatgpt: 'Strong via Code Interpreter/Canvas, sandboxed rather than your own files directly', copilot: 'Very strong inside VS Code for in-editor autocomplete and inline suggestions', perplexity: 'Not a fit' },
+  { task: 'Drafting memos, emails, case prep, interview practice', claude: 'Excellent — strong at following tone/structure instructions precisely', chatgpt: 'Excellent — the most widely used for this, huge familiarity', copilot: 'Not a fit', perplexity: 'Weak fit — optimised for search, not long-form drafting' },
+]
+
+const firmPolicySections = [
+  {
+    title: 'Most firms now have an explicit AI policy',
+    body: 'Major banks and funds have moved from ignoring AI to actively governing it. Many have built internal-only AI tools precisely so staff get the productivity benefit without the confidentiality risk — examples include JPMorgan\'s internal LLM Suite and Goldman Sachs\' internal GS AI assistant. If your firm offers an approved internal tool, that\'s almost always what you should be using for anything work-related, not the consumer version of ChatGPT or Claude.',
+  },
+  {
+    title: 'What\'s typically fine',
+    body: 'Using consumer AI tools on your own devices for learning, general skill-building, practising interview answers, or drafting things that contain no client, deal or firm-confidential information whatsoever. Personal coding projects. Asking general conceptual questions ("explain how a CDS works") with no specifics attached.',
+  },
+  {
+    title: 'What\'s typically banned',
+    body: 'Pasting any client name, deal detail, internal financials, or material non-public information into a public AI tool. Using AI to produce final client-facing analysis without disclosure and full human review. Installing or connecting unapproved AI tools/plugins to a work laptop or work accounts. When in doubt, ask compliance before you paste — not after.',
+  },
+  {
+    title: 'What interviewers are starting to ask',
+    body: '"How do you use AI in your work or study?" is now a genuine, increasingly common interview question — not a trick. Interviewers are listening for a specific, credible answer that shows real use with real judgement: using it for first drafts, practice and research, while independently verifying outputs and clearly owning the final work. Two answers that land badly: "I don\'t use it at all" (reads as behind the curve) and "it basically does the work for me" (reads as someone who can\'t be trusted with judgement calls). Some firms are now even building AI-augmented case studies into assessment centres, where using the tool well — not blindly, not by ignoring it — is explicitly part of what\'s being scored.',
+  },
 ]
 
 export default function AISkills() {
@@ -298,6 +380,69 @@ export default function AISkills() {
         </div>
       )}
 
+      {active === 'Claude Code for Finance' && (
+        <div className="space-y-4">
+          <div className="bg-brand-card border border-brand-teal/20 rounded-xl p-6 mb-2">
+            <p className="text-gray-300 text-sm leading-relaxed">Chat-based AI helps you think and draft. <span className="text-white font-semibold">Agentic coding tools like Claude Code go further — they act</span>: reading your actual files, running real commands, and reporting back what changed. That distinction is the difference between "AI helped me think about the model" and "AI helped me audit the actual spreadsheet on my desktop."</p>
+          </div>
+          {claudeCodeSections.map((s, i) => (
+            <div key={i} className="bg-brand-card border border-white/10 rounded-xl p-6">
+              <h2 className="text-white font-bold text-lg mb-2">{s.title}</h2>
+              <p className="text-gray-300 text-sm leading-relaxed">{s.body}</p>
+            </div>
+          ))}
+
+          <div className="bg-brand-gold/5 border border-brand-gold/20 rounded-xl p-6">
+            <h2 className="text-brand-gold font-bold text-lg mb-2">Worked example — a real PE workflow</h2>
+            <p className="text-white text-sm font-semibold mb-4">{claudeCodeWorkedExample.scenario}</p>
+            <div className="space-y-3 mb-4">
+              {claudeCodeWorkedExample.steps.map((s, i) => (
+                <div key={i} className="bg-brand-darker rounded-lg p-4 border border-white/5">
+                  <p className="text-brand-teal font-semibold text-sm mb-1">{s.step}</p>
+                  <p className="text-gray-300 text-sm leading-relaxed">{s.detail}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed italic">{claudeCodeWorkedExample.takeaway}</p>
+          </div>
+        </div>
+      )}
+
+      {active === 'Tool Comparison' && (
+        <div className="space-y-4">
+          <div className="bg-brand-card border border-white/10 rounded-xl p-6 mb-2">
+            <p className="text-gray-300 text-sm leading-relaxed">There’s no single "best" AI tool — each is strongest at different finance tasks. Here’s how Claude, ChatGPT, Copilot and Perplexity actually compare on the work you’ll be doing, not generic feature lists.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse bg-brand-card border border-white/10 rounded-xl overflow-hidden text-sm">
+              <thead>
+                <tr className="bg-brand-darker">
+                  <th className="text-left p-3 text-gray-400 font-semibold border-b border-white/10">Finance Task</th>
+                  <th className="text-left p-3 text-brand-gold font-semibold border-b border-white/10">Claude</th>
+                  <th className="text-left p-3 text-green-400 font-semibold border-b border-white/10">ChatGPT</th>
+                  <th className="text-left p-3 text-blue-400 font-semibold border-b border-white/10">Copilot</th>
+                  <th className="text-left p-3 text-purple-400 font-semibold border-b border-white/10">Perplexity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {toolComparisonRows.map((row, i) => (
+                  <tr key={i} className="border-b border-white/5 last:border-0 align-top">
+                    <td className="p-3 text-white font-medium">{row.task}</td>
+                    <td className="p-3 text-gray-400">{row.claude}</td>
+                    <td className="p-3 text-gray-400">{row.chatgpt}</td>
+                    <td className="p-3 text-gray-400">{row.copilot}</td>
+                    <td className="p-3 text-gray-400">{row.perplexity}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="bg-brand-card border border-white/10 rounded-xl p-5">
+            <p className="text-gray-400 text-sm leading-relaxed"><span className="text-white font-semibold">Bottom line:</span> most finance students end up using two or three of these together — a general assistant (Claude or ChatGPT) for thinking, drafting and learning, Copilot inside Office/VS Code for in-app formula and code help, and Perplexity when they specifically need cited, sourced web research. Pick based on the task, not brand loyalty.</p>
+          </div>
+        </div>
+      )}
+
       {active === 'AI by Career' && (
         <div className="space-y-4">
           <p className="text-gray-400 text-sm -mb-1">How each career is actually deploying AI today, why fluency gives you an edge, and a ready-to-use prompt for that world.</p>
@@ -323,7 +468,21 @@ export default function AISkills() {
         </div>
       )}
 
-      {active === 'Pitfalls & Rules' && (
+      {active === 'Firm Policies & Interviews' && (
+        <div className="space-y-4">
+          <div className="bg-brand-card border border-white/10 rounded-xl p-6 mb-2">
+            <p className="text-gray-300 text-sm leading-relaxed">How you talk about — and actually use — AI is now part of how firms evaluate candidates and junior staff. Knowing the landscape before your first day (or your first interview) matters.</p>
+          </div>
+          {firmPolicySections.map((s, i) => (
+            <div key={i} className="bg-brand-card border border-white/10 rounded-xl p-6">
+              <h2 className="text-white font-bold text-lg mb-2">{s.title}</h2>
+              <p className="text-gray-300 text-sm leading-relaxed">{s.body}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {active === 'Pitfalls & Security' && (
         <div className="space-y-4">
           <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-6 mb-2">
             <h2 className="text-red-400 font-bold text-lg mb-2">⚠️ The rules that end careers when broken</h2>
