@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { jobs } from '../data/jobs'
-import { recordCVScore } from '../lib/history'
+import { recordCVScore, getCVScoreHistory } from '../lib/history'
+
+type ATSMatch = {
+  totalKeywords: number
+  matchedKeywords: string[]
+  missingKeywords: string[]
+  matchPct: number
+}
 
 type ReviewResult = {
   score: number
@@ -10,6 +17,48 @@ type ReviewResult = {
   suggestions: string[]
   missingKeywords: string[]
   wordCount: number
+  atsMatch: ATSMatch | null
+}
+
+// Very common English words + generic job-ad filler excluded so ATS keyword
+// extraction surfaces genuinely distinctive terms from the job description.
+const STOPWORDS = new Set([
+  'the', 'and', 'for', 'you', 'your', 'are', 'with', 'will', 'this', 'that', 'have', 'has',
+  'our', 'their', 'from', 'able', 'ability', 'role', 'roles', 'job', 'work', 'working', 'team',
+  'teams', 'company', 'candidate', 'candidates', 'experience', 'skills', 'skill', 'strong',
+  'excellent', 'good', 'high', 'well', 'across', 'within', 'into', 'other', 'such', 'all',
+  'any', 'can', 'may', 'must', 'should', 'would', 'not', 'but', 'they', 'them', 'who', 'what',
+  'when', 'where', 'how', 'also', 'more', 'most', 'some', 'each', 'per', 'etc', 'including',
+  'related', 'position', 'opportunity', 'applicants', 'apply', 'application', 'please', 'employer',
+  'about', 'they\'re', 'we\'re', 'you\'re', 'looking', 'seeking', 'ideal', 'plus', 'like',
+])
+
+function extractATSKeywords(jobDescription: string, limit = 25): string[] {
+  const words = jobDescription.toLowerCase().match(/[a-z][a-z\-&+]{2,}/g) || []
+  const freq = new Map<string, number>()
+  words.forEach(w => {
+    if (STOPWORDS.has(w)) return
+    freq.set(w, (freq.get(w) || 0) + 1)
+  })
+  return Array.from(freq.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([w]) => w)
+}
+
+function computeATSMatch(cvText: string, jobDescription: string): ATSMatch | null {
+  if (!jobDescription.trim()) return null
+  const keywords = extractATSKeywords(jobDescription)
+  if (keywords.length === 0) return null
+  const lowerCV = cvText.toLowerCase()
+  const matchedKeywords = keywords.filter(kw => lowerCV.includes(kw))
+  const missingKeywords = keywords.filter(kw => !matchedKeywords.includes(kw))
+  return {
+    totalKeywords: keywords.length,
+    matchedKeywords,
+    missingKeywords,
+    matchPct: Math.round((matchedKeywords.length / keywords.length) * 100),
+  }
 }
 
 const financeKeywords: Record<string, string[]> = {
@@ -27,7 +76,7 @@ const financeKeywords: Record<string, string[]> = {
 
 const actionVerbs = ['led', 'managed', 'built', 'developed', 'analysed', 'created', 'delivered', 'executed', 'drove', 'generated', 'improved', 'increased', 'reduced', 'achieved', 'structured', 'advised', 'presented', 'negotiated']
 
-function generateReview(text: string, role: string, company: string, type: 'cv' | 'cover'): ReviewResult {
+function generateReview(text: string, role: string, company: string, type: 'cv' | 'cover', jobDescription: string): ReviewResult {
   const lower = text.toLowerCase()
   const words = text.trim().split(/\s+/).filter(Boolean)
   const wordCount = words.length
@@ -89,7 +138,9 @@ function generateReview(text: string, role: string, company: string, type: 'cv' 
   suggestions.push('Use the exact language from the job description in your application — many firms use ATS screening')
   suggestions.push('Ensure consistency: same date formats, font, and bullet style throughout')
 
-  return { score, scoreLabel, strengths, improvements, suggestions, missingKeywords, wordCount }
+  const atsMatch = computeATSMatch(text, jobDescription)
+
+  return { score, scoreLabel, strengths, improvements, suggestions, missingKeywords, wordCount, atsMatch }
 }
 
 export default function CVReviewer() {
@@ -97,14 +148,22 @@ export default function CVReviewer() {
   const [text, setText] = useState('')
   const [role, setRole] = useState('')
   const [company, setCompany] = useState('')
+  const [jobDescription, setJobDescription] = useState('')
+  const [showATSInput, setShowATSInput] = useState(false)
   const [result, setResult] = useState<ReviewResult | null>(null)
   const [loading, setLoading] = useState(false)
+  const [priorBestScore, setPriorBestScore] = useState<number | null>(null)
 
   function handleReview() {
     if (!text.trim() || !role) return
     setLoading(true)
+    // Snapshot the previous best BEFORE recording this attempt, so the
+    // delta shown compares against past drafts, not against itself.
+    const priorHistory = getCVScoreHistory().filter(e => e.type === tab && e.role === role)
+    const priorBest = priorHistory.length > 0 ? Math.max(...priorHistory.map(e => e.score)) : null
+    setPriorBestScore(priorBest)
     setTimeout(() => {
-      const review = generateReview(text, role, company, tab)
+      const review = generateReview(text, role, company, tab, jobDescription)
       setResult(review)
       setLoading(false)
       recordCVScore({
@@ -122,6 +181,11 @@ export default function CVReviewer() {
     result.score >= 80 ? 'text-green-400' :
     result.score >= 60 ? 'text-brand-gold' :
     result.score >= 40 ? 'text-orange-400' : 'text-red-400'
+
+  // Version history: past drafts of the same document type + role, so
+  // improvement across drafts is visible rather than only the latest score.
+  const versionHistory = getCVScoreHistory().filter(e => e.type === tab && e.role === role)
+  const scoreDelta = result && priorBestScore !== null ? result.score - priorBestScore : null
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -187,6 +251,41 @@ export default function CVReviewer() {
         </div>
       </div>
 
+      {versionHistory.length > 0 && (
+        <div className="bg-brand-card border border-brand-teal/20 rounded-xl p-4 mb-6">
+          <p className="text-brand-teal text-sm font-semibold mb-2">📈 Your progress on this {tab === 'cv' ? 'CV' : 'cover letter'} for {role.replace(/-/g, ' ')}</p>
+          <div className="flex flex-wrap gap-2">
+            {versionHistory.slice(-8).map((v, i) => (
+              <div key={i} className="bg-white/5 rounded-lg px-3 py-1.5 text-xs">
+                <span className="text-gray-500">{new Date(v.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}: </span>
+                <span className="text-white font-bold">{v.score}/100</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-gray-600 text-xs mt-2">{versionHistory.length} previous draft{versionHistory.length !== 1 ? 's' : ''} on record — best so far: {Math.max(...versionHistory.map(v => v.score))}/100</p>
+        </div>
+      )}
+
+      <div className="mb-6">
+        <button
+          onClick={() => setShowATSInput(v => !v)}
+          className="text-sm text-brand-gold hover:underline flex items-center gap-1"
+        >
+          {showATSInput ? '▲' : '▼'} {showATSInput ? 'Hide' : 'Add'} a real job description for ATS keyword matching (optional)
+        </button>
+        {showATSInput && (
+          <div className="mt-3">
+            <textarea
+              value={jobDescription}
+              onChange={e => { setJobDescription(e.target.value); setResult(null) }}
+              placeholder="Paste the full job description you're applying to. We'll extract its most distinctive keywords and check how many appear in your document — the same basic idea real Applicant Tracking Systems use."
+              rows={6}
+              className="w-full bg-brand-card border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold resize-none font-mono text-sm"
+            />
+          </div>
+        )}
+      </div>
+
       <button
         onClick={handleReview}
         disabled={!text.trim() || !role || loading}
@@ -211,7 +310,36 @@ export default function CVReviewer() {
             <div className={`text-7xl font-black mb-2 ${scoreColor}`}>{result.score}<span className="text-3xl">/100</span></div>
             <div className={`text-2xl font-bold ${scoreColor}`}>{result.scoreLabel}</div>
             <p className="text-gray-400 text-sm mt-2">{result.wordCount} words detected · Targeting {role.replace(/-/g, ' ')}{company ? ` at ${company}` : ''}</p>
+            {scoreDelta !== null && (
+              <p className={`text-sm font-bold mt-3 inline-block px-3 py-1 rounded-full ${scoreDelta >= 0 ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                {scoreDelta >= 0 ? '↑' : '↓'} {scoreDelta >= 0 ? '+' : ''}{scoreDelta} vs your previous best draft
+              </p>
+            )}
           </div>
+
+          {/* ATS Match */}
+          {result.atsMatch && (
+            <div className="bg-brand-card border border-brand-teal/20 rounded-xl p-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-brand-teal font-bold text-lg">🎯 ATS Keyword Match</h3>
+                <span className="text-2xl font-black text-brand-teal">{result.atsMatch.matchPct}%</span>
+              </div>
+              <div className="h-2 bg-white/10 rounded-full mb-4 overflow-hidden">
+                <div className="h-full bg-brand-teal rounded-full transition-all" style={{ width: `${result.atsMatch.matchPct}%` }} />
+              </div>
+              <p className="text-gray-400 text-sm mb-4">{result.atsMatch.matchedKeywords.length} of {result.atsMatch.totalKeywords} distinctive keywords from the job description appear in your document. Many real ATS systems screen on exactly this kind of overlap before a human ever reads your application.</p>
+              {result.atsMatch.missingKeywords.length > 0 && (
+                <div>
+                  <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">Missing from your document</p>
+                  <div className="flex flex-wrap gap-2">
+                    {result.atsMatch.missingKeywords.map((kw, i) => (
+                      <span key={i} className="px-3 py-1 bg-red-500/10 text-red-400 rounded-full text-sm border border-red-500/20">{kw}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Strengths */}
           <div className="bg-brand-card border border-green-500/20 rounded-xl p-6">

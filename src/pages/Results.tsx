@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { jobs } from '../data/jobs'
-import { recordCareerQuizAttempt } from '../lib/history'
+import { recordCareerQuizAttempt, categoryToLearnUnit } from '../lib/history'
 
 interface CareerMatch {
   id: string
@@ -131,12 +131,28 @@ export default function Results() {
           />
         </div>
 
-        <Link
-          to={`/jobs/${topMatch?.id}`}
-          className="inline-block px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
-        >
-          Explore This Career →
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            to={`/jobs/${topMatch?.id}`}
+            className="inline-block px-6 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
+          >
+            Explore This Career →
+          </Link>
+          {topMatch && categoryToLearnUnit[topMatch.category] && (
+            <Link
+              to="/learn"
+              className="inline-block px-6 py-3 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-colors"
+            >
+              📖 Start {categoryToLearnUnit[topMatch.category].unitTitle}
+            </Link>
+          )}
+          <Link
+            to="/interview-quiz"
+            className="inline-block px-6 py-3 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-colors"
+          >
+            🎯 Practise {topMatch?.title} Interview Questions
+          </Link>
+        </div>
       </div>
 
       {/* Top 3 */}

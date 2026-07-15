@@ -8,6 +8,68 @@ interface Message {
   timestamp: Date
 }
 
+const MEMORY_KEY = 'findr_advisor_memory'
+
+type AdvisorMemory = {
+  topicsDiscussed: string[]
+  messageCount: number
+  firstVisit: string
+  lastVisit: string
+}
+
+function loadMemory(): AdvisorMemory {
+  try {
+    const stored = localStorage.getItem(MEMORY_KEY)
+    if (stored) return JSON.parse(stored)
+  } catch { /* corrupted — start fresh */ }
+  const now = new Date().toISOString()
+  return { topicsDiscussed: [], messageCount: 0, firstVisit: now, lastVisit: now }
+}
+
+function saveMemory(m: AdvisorMemory) {
+  localStorage.setItem(MEMORY_KEY, JSON.stringify(m))
+}
+
+const topicLabels: Record<string, string> = {
+  'investment banking': 'investment banking',
+  'private equity': 'private equity',
+  'cfa': 'CFA vs MBA',
+  'hedge fund': 'hedge funds',
+  'python': 'Python / quant skills',
+  'work-life balance': 'work-life balance across careers',
+}
+
+const MESSAGES_KEY = 'findr_advisor_messages'
+const MAX_STORED_MESSAGES = 40
+
+function loadStoredMessages(): Message[] | null {
+  try {
+    const stored = localStorage.getItem(MESSAGES_KEY)
+    if (!stored) return null
+    const parsed = JSON.parse(stored) as (Omit<Message, 'timestamp'> & { timestamp: string })[]
+    if (!Array.isArray(parsed) || parsed.length === 0) return null
+    return parsed.map(m => ({ ...m, timestamp: new Date(m.timestamp) }))
+  } catch {
+    return null
+  }
+}
+
+function saveMessages(messages: Message[]) {
+  localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)))
+}
+
+function buildInitialMessages(): Message[] {
+  const stored = loadStoredMessages()
+  if (stored) return stored
+
+  const memory = loadMemory()
+  const greeting = memory.messageCount > 0
+    ? `Welcome back! Last time we talked about ${memory.topicsDiscussed.slice(-3).map(t => topicLabels[t] || t).join(', ')}. I'm your FINdr AI Career Advisor — ask me anything else about finance careers, break-in strategies, or interview prep.`
+    : "Hi! I'm your FINdr AI Career Advisor. I can help you explore finance careers, understand break-in strategies, compare roles, and prepare for interviews. What would you like to know?"
+
+  return [{ id: 1, role: 'assistant', content: greeting, timestamp: new Date() }]
+}
+
 const suggestedQuestions = [
   'How do I break into investment banking from a non-target university?',
   'What is the difference between private equity and venture capital?',
@@ -33,44 +95,42 @@ const mockResponses: Record<string, string> = {
   'work-life balance': "Work-life balance varies enormously across finance careers. Here's a rough ranking from best to worst: (1) Actuarial Science and Risk Management — typically 9-6 with rare weekend work. (2) FP&A / Corporate Finance — good balance except at month/quarter end. (3) Portfolio Management / Asset Management — reasonable hours, early mornings but rarely past 7pm. (4) Financial Advisory — flexible, especially once you have your own client book. (5) Equity Research — longer hours, especially during earnings seasons. (6) Consulting — heavy travel but often home on weekends. (7) Private Equity — intense around deal processes but less consistently brutal than IB. (8) Investment Banking — the worst. 80–100+ hour weeks are common for analysts. If work-life balance is your top priority, actuarial science or FP&A at a well-run corporate are probably your best bets — check those profiles on FINdr for more detail.",
 }
 
-function getMockResponse(message: string): string {
+function getMockResponse(message: string): { key: string | null; text: string } {
   const lower = message.toLowerCase()
   if (lower.includes('investment bank') || lower.includes('non-target') || lower.includes('spring week')) {
-    return mockResponses['investment banking']
+    return { key: 'investment banking', text: mockResponses['investment banking'] }
   }
   if (lower.includes('private equity') || lower.includes('lbo') || lower.includes('buyout')) {
-    return mockResponses['private equity']
+    return { key: 'private equity', text: mockResponses['private equity'] }
   }
   if (lower.includes('cfa') || lower.includes('mba') || lower.includes('asset management') || lower.includes('charterholder')) {
-    return mockResponses['cfa']
+    return { key: 'cfa', text: mockResponses['cfa'] }
   }
   if (lower.includes('hedge fund') || lower.includes('stock pitch') || lower.includes('long/short')) {
-    return mockResponses['hedge fund']
+    return { key: 'hedge fund', text: mockResponses['hedge fund'] }
   }
   if (lower.includes('python') || lower.includes('quant') || lower.includes('coding') || lower.includes('programming')) {
-    return mockResponses['python']
+    return { key: 'python', text: mockResponses['python'] }
   }
   if (lower.includes('work-life') || lower.includes('work life') || lower.includes('balance') || lower.includes('hours')) {
-    return mockResponses['work-life balance']
+    return { key: 'work-life balance', text: mockResponses['work-life balance'] }
   }
-  return mockResponses['default']
+  return { key: null, text: mockResponses['default'] }
 }
 
 export default function Advisor() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      role: 'assistant',
-      content: "Hi! I'm your FINdr AI Career Advisor. I can help you explore finance careers, understand break-in strategies, compare roles, and prepare for interviews. What would you like to know?",
-      timestamp: new Date(),
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>(buildInitialMessages)
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [returningSession] = useState(() => loadMemory().messageCount > 0 && !loadStoredMessages())
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  useEffect(() => {
+    saveMessages(messages)
   }, [messages])
 
   const sendMessage = async (text: string) => {
@@ -94,9 +154,18 @@ export default function Advisor() {
     const assistantMessage: Message = {
       id: Date.now() + 1,
       role: 'assistant',
-      content: response,
+      content: response.text,
       timestamp: new Date(),
     }
+
+    // Persist lightweight memory across sessions — which topics have been
+    // covered before, so future visits can build on prior context instead
+    // of starting cold every time.
+    const memory = loadMemory()
+    const topicsDiscussed = response.key && !memory.topicsDiscussed.includes(response.key)
+      ? [...memory.topicsDiscussed, response.key]
+      : memory.topicsDiscussed
+    saveMemory({ ...memory, topicsDiscussed, messageCount: memory.messageCount + 1, lastVisit: new Date().toISOString() })
 
     setIsTyping(false)
     setMessages(prev => [...prev, assistantMessage])
@@ -111,6 +180,17 @@ export default function Advisor() {
     sendMessage(question)
   }
 
+  const clearConversation = () => {
+    localStorage.removeItem(MESSAGES_KEY)
+    localStorage.removeItem(MEMORY_KEY)
+    setMessages([{
+      id: Date.now(),
+      role: 'assistant',
+      content: "Hi! I'm your FINdr AI Career Advisor. I can help you explore finance careers, understand break-in strategies, compare roles, and prepare for interviews. What would you like to know?",
+      timestamp: new Date(),
+    }])
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
@@ -123,6 +203,9 @@ export default function Advisor() {
           AI Career <span className="text-gradient-teal">Advisor</span>
         </h1>
         <p className="text-gray-400 text-sm">Ask me anything about finance careers, break-in strategies, and interview preparation.</p>
+        {returningSession && (
+          <p className="text-brand-teal text-xs mt-2">💭 Remembering what we discussed last time</p>
+        )}
       </div>
 
       {/* Chat container */}
@@ -217,9 +300,14 @@ export default function Advisor() {
 
       {/* Disclaimer */}
       <p className="text-center text-gray-600 text-xs mt-6">
-        This is a demo AI advisor with pre-programmed responses. For the full AI experience, explore our career profiles.{' '}
+        This is a demo AI advisor with pre-programmed responses. Your conversation is saved in this browser so it picks up where you left off next time. For the full AI experience, explore our career profiles.{' '}
         <Link to="/jobs" className="text-brand-gold hover:underline">Browse careers →</Link>
       </p>
+      <div className="text-center mt-2">
+        <button onClick={clearConversation} className="text-gray-600 hover:text-gray-400 text-xs underline">
+          Clear conversation & memory
+        </button>
+      </div>
     </div>
   )
 }
