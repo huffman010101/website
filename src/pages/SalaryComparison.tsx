@@ -137,6 +137,92 @@ const salaryData: Record<string, Record<string, { base: string; total: string }>
     'VP / Senior': { base: '£160,000', total: '£260,000' },
     'MD / Partner': { base: '£280,000', total: '£500,000+' },
   },
+  'restructuring': {
+    'Analyst': { base: '£65,000', total: '£95,000' },
+    'Associate / Manager': { base: '£110,000', total: '£170,000' },
+    'VP / Senior': { base: '£180,000', total: '£350,000' },
+    'MD / Partner': { base: '£350,000', total: '£600,000+' },
+  },
+  'structured-finance': {
+    'Analyst': { base: '£60,000', total: '£90,000' },
+    'Associate / Manager': { base: '£100,000', total: '£150,000' },
+    'VP / Senior': { base: '£160,000', total: '£250,000' },
+    'MD / Partner': { base: '£250,000', total: '£350,000+' },
+  },
+  'private-banking': {
+    'Analyst': { base: '£45,000', total: '£65,000' },
+    'Associate / Manager': { base: '£70,000', total: '£110,000' },
+    'VP / Senior': { base: '£120,000', total: '£250,000' },
+    'MD / Partner': { base: '£250,000', total: '£450,000+' },
+  },
+  'energy-commodities': {
+    'Analyst': { base: '£55,000', total: '£85,000' },
+    'Associate / Manager': { base: '£90,000', total: '£160,000' },
+    'VP / Senior': { base: '£170,000', total: '£350,000' },
+    'MD / Partner': { base: '£350,000', total: '£700,000+' },
+  },
+  'insurance-underwriting': {
+    'Analyst': { base: '£35,000', total: '£50,000' },
+    'Associate / Manager': { base: '£55,000', total: '£90,000' },
+    'VP / Senior': { base: '£95,000', total: '£180,000' },
+    'MD / Partner': { base: '£200,000', total: '£350,000+' },
+  },
+}
+
+// Illustrative deferred/carry profile: how much of the ABOVE-BASE portion of
+// comp typically shows up as deferred stock/cash or carried interest at
+// senior levels, rather than immediate cash bonus. Junior levels are
+// treated as ~all cash bonus, which matches how these careers actually pay.
+type CompProfile = { deferredShare: number; carryShare: number }
+const compProfiles: Record<string, CompProfile> = {
+  'private-equity': { deferredShare: 0.10, carryShare: 0.60 },
+  'hedge-fund': { deferredShare: 0.15, carryShare: 0.20 },
+  'venture-capital': { deferredShare: 0.05, carryShare: 0.50 },
+  'family-office': { deferredShare: 0.05, carryShare: 0.15 },
+  'sovereign-wealth': { deferredShare: 0.10, carryShare: 0 },
+  'investment-banking': { deferredShare: 0.35, carryShare: 0 },
+  'trading': { deferredShare: 0.25, carryShare: 0 },
+  'fixed-income': { deferredShare: 0.25, carryShare: 0 },
+  'commodities-trading': { deferredShare: 0.20, carryShare: 0 },
+  'energy-commodities': { deferredShare: 0.15, carryShare: 0.10 },
+  'quantitative-finance': { deferredShare: 0.20, carryShare: 0 },
+  'equity-research': { deferredShare: 0.15, carryShare: 0 },
+  'portfolio-management': { deferredShare: 0.20, carryShare: 0.05 },
+  'restructuring': { deferredShare: 0.20, carryShare: 0 },
+  'structured-finance': { deferredShare: 0.20, carryShare: 0 },
+  'private-banking': { deferredShare: 0.10, carryShare: 0 },
+  'real-estate-finance': { deferredShare: 0.15, carryShare: 0.10 },
+  'corporate-development': { deferredShare: 0.15, carryShare: 0 },
+}
+const defaultCompProfile: CompProfile = { deferredShare: 0.10, carryShare: 0 }
+const seniorLevels = new Set(['VP / Senior', 'MD / Partner'])
+
+function getCompBreakdown(jobId: string, level: string, base: number, total: number) {
+  const basePct = total > 0 ? Math.round((base / total) * 100) : 100
+  const remainderPct = 100 - basePct
+  const isSenior = seniorLevels.has(level)
+  const profile = compProfiles[jobId] || defaultCompProfile
+  const deferredPct = isSenior ? Math.round(remainderPct * profile.deferredShare) : 0
+  const carryPct = isSenior ? Math.round(remainderPct * profile.carryShare) : 0
+  const bonusPct = Math.max(remainderPct - deferredPct - carryPct, 0)
+  return { basePct, bonusPct, deferredPct, carryPct }
+}
+
+const geographies = ['London', 'New York', 'Singapore', 'Regional UK'] as const
+type Geography = typeof geographies[number]
+// Illustrative uplift/discount vs London, applied to the same GBP figures
+// purely for relative comparability — not a currency conversion.
+const geoMultipliers: Record<Geography, number> = { 'London': 1, 'New York': 1.15, 'Singapore': 1.05, 'Regional UK': 0.8 }
+const geoNotes: Record<Geography, string> = {
+  'London': 'Baseline figures as shown across the rest of FINdr.',
+  'New York': 'US financial centre comp typically runs higher in cash terms, partly offsetting a higher cost of living — shown here as an illustrative +15% uplift.',
+  'Singapore': 'A growing APAC hub with comp broadly comparable to London, often with more favourable personal tax treatment — illustrative +5% uplift.',
+  'Regional UK': 'Roles outside London (Edinburgh, Leeds, Manchester) typically pay less in cash terms but come with a much lower cost of living — illustrative -20% adjustment.',
+}
+
+function formatGBP(n: number, hadPlus: boolean): string {
+  const rounded = Math.round(n / 1000) * 1000
+  return `£${rounded.toLocaleString('en-GB')}${hadPlus ? '+' : ''}`
 }
 
 function parseTotal(s: string): number {
@@ -161,11 +247,21 @@ const categoryColors: Record<string, string> = {
 export default function SalaryComparison() {
   const [selectedLevel, setSelectedLevel] = useState('Analyst')
   const [sortBy, setSortBy] = useState<'name' | 'salary'>('salary')
+  const [geography, setGeography] = useState<Geography>('London')
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+
+  const multiplier = geoMultipliers[geography]
 
   const rows = jobs.map(job => {
     const data = salaryData[job.id]?.[selectedLevel]
-    const total = data ? parseTotal(data.total) : 0
-    return { job, data, total }
+    if (!data) return { job, data: null, total: 0, base: 0, hadPlus: false, breakdown: null }
+    const rawTotal = parseTotal(data.total)
+    const rawBase = parseTotal(data.base)
+    const hadPlus = data.total.includes('+')
+    const total = rawTotal * multiplier
+    const base = rawBase * multiplier
+    const breakdown = getCompBreakdown(job.id, selectedLevel, base, total)
+    return { job, data, total, base, hadPlus, breakdown }
   }).filter(r => r.data)
 
   const sorted = [...rows].sort((a, b) =>
@@ -179,7 +275,7 @@ export default function SalaryComparison() {
       <div className="mb-8">
         <Link to="/jobs" className="text-sm text-gray-500 hover:text-brand-gold transition-colors">← Back to Careers</Link>
         <h1 className="text-4xl font-black text-white mt-3 mb-2">Salary Comparison</h1>
-        <p className="text-gray-400">Compare total compensation across all 23 finance careers. Figures in GBP, including base + typical bonus.</p>
+        <p className="text-gray-400">Compare total compensation across {jobs.length} finance careers. Figures include base + typical bonus, with a comp structure breakdown and geography adjustment for each.</p>
       </div>
 
       {/* Controls */}
@@ -219,47 +315,88 @@ export default function SalaryComparison() {
             </button>
           </div>
         </div>
+        <div>
+          <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">Geography</p>
+          <div className="flex gap-2 flex-wrap">
+            {geographies.map(geo => (
+              <button
+                key={geo}
+                onClick={() => setGeography(geo)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${geography === geo ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+              >
+                {geo}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {geography !== 'London' && (
+        <div className="bg-brand-card border border-brand-gold/20 rounded-xl p-4 mb-6">
+          <p className="text-gray-300 text-sm">📍 <span className="text-brand-gold font-semibold">{geography}:</span> {geoNotes[geography]}</p>
+        </div>
+      )}
 
       {/* Chart */}
       <div className="space-y-3">
-        {sorted.map(({ job, data, total }, i) => {
+        {sorted.map(({ job, data, total, base, hadPlus, breakdown }, i) => {
           const barWidth = maxTotal > 0 ? (total / maxTotal) * 100 : 0
           const catColor = categoryColors[job.category] || 'bg-gray-500'
+          const isExpanded = expandedId === job.id
           return (
-            <Link
-              to={`/jobs/${job.id}`}
-              key={job.id}
-              className="block bg-brand-card border border-white/10 rounded-xl p-4 hover:border-brand-gold/30 transition-all group"
-            >
-              <div className="flex items-center gap-4">
-                <span className="text-gray-500 text-sm w-6 font-mono">{i + 1}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-white font-semibold group-hover:text-brand-gold transition-colors">{job.title}</span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${catColor}/20 text-white/70`}>{job.category}</span>
+            <div key={job.id} className="bg-brand-card border border-white/10 rounded-xl overflow-hidden hover:border-brand-gold/30 transition-all group">
+              <button onClick={() => setExpandedId(isExpanded ? null : job.id)} className="w-full text-left p-4">
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-500 text-sm w-6 font-mono">{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-white font-semibold group-hover:text-brand-gold transition-colors">{job.title}</span>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${catColor}/20 text-white/70`}>{job.category}</span>
+                      </div>
+                      <div className="text-right ml-4 flex-shrink-0">
+                        <div className="text-brand-gold font-bold text-sm">{formatGBP(total, hadPlus)}</div>
+                        <div className="text-gray-500 text-xs">Base: {formatGBP(base, false)}</div>
+                      </div>
                     </div>
-                    <div className="text-right ml-4 flex-shrink-0">
-                      <div className="text-brand-gold font-bold text-sm">{data?.total}</div>
-                      <div className="text-gray-500 text-xs">Base: {data?.base}</div>
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${catColor} rounded-full transition-all duration-700`}
+                        style={{ width: `${barWidth}%` }}
+                      />
                     </div>
                   </div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${catColor} rounded-full transition-all duration-700`}
-                      style={{ width: `${barWidth}%` }}
-                    />
-                  </div>
+                  <span className="text-gray-600 text-xs flex-shrink-0">{isExpanded ? '▲' : '▼'}</span>
                 </div>
-              </div>
-            </Link>
+              </button>
+              {isExpanded && breakdown && (
+                <div className="px-4 pb-4 pt-1 border-t border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-2">Comp Structure at {selectedLevel}</p>
+                  <div className="h-3 w-full flex rounded-full overflow-hidden mb-3">
+                    <div className="bg-brand-gold" style={{ width: `${breakdown.basePct}%` }} title={`Base ${breakdown.basePct}%`} />
+                    <div className="bg-brand-teal" style={{ width: `${breakdown.bonusPct}%` }} title={`Cash bonus ${breakdown.bonusPct}%`} />
+                    {breakdown.deferredPct > 0 && <div className="bg-purple-400" style={{ width: `${breakdown.deferredPct}%` }} title={`Deferred ${breakdown.deferredPct}%`} />}
+                    {breakdown.carryPct > 0 && <div className="bg-orange-400" style={{ width: `${breakdown.carryPct}%` }} title={`Carry ${breakdown.carryPct}%`} />}
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-xs">
+                    <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-brand-gold inline-block" /> Base {breakdown.basePct}%</span>
+                    <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-brand-teal inline-block" /> Cash bonus {breakdown.bonusPct}%</span>
+                    {breakdown.deferredPct > 0 && <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block" /> Deferred stock/cash {breakdown.deferredPct}%</span>}
+                    {breakdown.carryPct > 0 && <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-orange-400 inline-block" /> Carried interest {breakdown.carryPct}%</span>}
+                  </div>
+                  {(breakdown.deferredPct === 0 && breakdown.carryPct === 0) && (
+                    <p className="text-gray-600 text-xs mt-2">At {selectedLevel.toLowerCase()} level, comp here is almost entirely cash — deferred stock and carry typically only kick in from VP/Senior upward.</p>
+                  )}
+                  <Link to={`/jobs/${job.id}`} className="inline-block mt-3 text-brand-gold text-xs font-semibold hover:underline">View full career profile →</Link>
+                </div>
+              )}
+            </div>
           )
         })}
       </div>
 
       <p className="text-gray-600 text-xs mt-6 text-center">
-        Figures represent typical UK market total compensation (base + bonus) at each level. Ranges vary by firm size, location, and performance. Carry and equity not included in all-in figures.
+        Figures represent typical UK market total compensation (base + bonus) at each level, adjusted for the selected geography using an illustrative multiplier. Comp structure breakdowns (base/bonus/deferred/carry) are approximate and vary significantly by firm — click any row to expand. Ranges vary by firm size, location, and performance.
       </p>
     </div>
   )

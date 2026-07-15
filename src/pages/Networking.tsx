@@ -105,6 +105,62 @@ const coffeeChatQuestions = [
   },
 ]
 
+const linkedinTemplates = [
+  {
+    scenario: 'Connection request to an alumnus/alumna in your target career',
+    message: `Hi [Name], I'm a [Year] student at [University] studying [Subject] and saw you're a [Role] at [Firm] — I noticed we're both [University] alumni. I'm exploring a career in [industry/role] and would love to connect and potentially hear a little about your experience, if you're open to it.`,
+  },
+  {
+    scenario: 'Follow-up message after they accept your connection',
+    message: `Thanks for connecting, [Name]! As mentioned, I'm keen to learn more about your path into [role/firm]. Would you have 15 minutes for a quick call in the next few weeks? Completely happy to work around your schedule — no pressure at all if you're too busy right now.`,
+  },
+  {
+    scenario: 'Cold connection request (no shared background)',
+    message: `Hi [Name], I've been following [Firm]'s work in [sector/area] and found your recent [post/comment/deal] really interesting. I'm a [Year] student aiming for a career in [industry] and would value the chance to connect and learn from your experience.`,
+  },
+  {
+    scenario: 'Reconnecting after a networking event',
+    message: `Hi [Name], great to meet you at [event] yesterday — I really enjoyed our conversation about [specific topic discussed]. I'd love to stay in touch as I continue exploring [industry], and wanted to connect here. Thanks again for your time!`,
+  },
+  {
+    scenario: 'Asking for a referral (only once real rapport is built)',
+    message: `Hi [Name], I hope you've been well since we last spoke! I wanted to let you know I've applied for the [Role] position at [Firm] (req #[if known]). Given our conversations about [specific topic], I'd be really grateful if you felt comfortable referring my application internally — but no worries at all if that's not something you're able to do.`,
+  },
+]
+
+const negotiationScripts = [
+  {
+    scenario: 'Asking for time to consider an offer',
+    script: `Thank you so much for the offer — I'm genuinely excited about the opportunity to join [Firm]. This is a significant decision for me, so I'd like to take [3-5 business days] to review the details fully before confirming. Is that timeline workable on your end?`,
+    tip: 'Always thank them and express genuine enthusiasm first — asking for time is completely normal and expected, but tone matters.',
+  },
+  {
+    scenario: 'Negotiating base salary',
+    script: `I'm really excited about this offer and joining the team. Based on my research into market rates for this role [and my experience with X], I was hoping we could discuss the base salary — would there be flexibility to move it closer to £[target]?`,
+    tip: 'Have specific, credible market data ready (Salary Comparison tool, Glassdoor, recruiter conversations) — vague requests to "pay more" rarely land well.',
+  },
+  {
+    scenario: 'Handling a competing offer',
+    script: `I want to be transparent with you — I've also received an offer from another firm with [specific detail, e.g. a higher base]. [Firm] is genuinely my first choice because of [specific reason], and I wanted to see if there's any flexibility before I make my final decision.`,
+    tip: 'Never bluff a competing offer that doesn\'t exist — it can be checked, and getting caught destroys trust permanently in a small industry.',
+  },
+  {
+    scenario: 'Declining an offer gracefully',
+    script: `Thank you so much for this offer and for the time everyone invested in the process — I really enjoyed getting to know the team. After careful consideration, I've decided to accept another opportunity that's a slightly better fit for my [specific goal]. I hope we can stay in touch, and I'd love to be considered for future opportunities.`,
+    tip: 'Decline promptly once you\'ve decided — holding an offer open while you wait on others is considered bad etiquette and burns bridges.',
+  },
+  {
+    scenario: 'Asking about bonus/deferred comp structure',
+    script: `Could you help me understand how the bonus is typically structured for this role — is it discretionary or formulaic, and roughly what percentage of total comp does it usually represent? I want to make sure I fully understand the full compensation picture.`,
+    tip: 'Check the Salary Comparison tool\'s comp structure breakdown before this conversation so you know what\'s typical for the role and can ask informed questions.',
+  },
+  {
+    scenario: 'Post-interview thank-you note (sent within 24 hours)',
+    script: `Thank you for taking the time to speak with me today about the [Role] position. I really enjoyed our conversation about [specific topic discussed] and it confirmed my enthusiasm for the opportunity. Please let me know if there's any additional information I can provide as you move forward with your decision.`,
+    tip: 'Send this within 24 hours of every interview round, tailored with a genuine specific — generic "thank you for your time" notes are forgettable.',
+  },
+]
+
 const timeline = [
   { year: 'Year 1', title: 'Build the Foundation', actions: ['Join your university finance and investment societies', 'Open a paper trading portfolio — track 5 stocks and understand why they move', 'Read the FT daily — develop a market habit early', 'Complete free online courses (CFI, Coursera) in financial modelling basics', 'Attend first networking events — focus on learning, not job hunting'] },
   { year: 'Year 2', title: 'Get Visible', actions: ['Apply for Spring Weeks at banks (applications open October–November)', 'Attend company insight days and firm presentations', 'Start building LinkedIn properly — connect with alumni in target careers', 'Begin mock case interview practice for consulting', 'Research firms deeply: coverage groups, recent deals, culture'] },
@@ -196,6 +252,20 @@ export default function Networking() {
         </div>
       </section>
 
+      {/* LinkedIn Outreach Templates */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-white mb-2">LinkedIn Outreach Templates</h2>
+        <p className="text-gray-500 text-sm mb-6">LinkedIn moves faster than email but the same rules apply — always personalise, always include a message with connection requests, never lead with an ask.</p>
+        <div className="space-y-3">
+          {linkedinTemplates.map((t, i) => (
+            <div key={i} className="bg-brand-card border border-white/10 rounded-xl p-5">
+              <p className="text-brand-teal text-xs font-bold uppercase tracking-wider mb-2">{t.scenario}</p>
+              <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{t.message}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Coffee Chat Questions */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold text-white mb-2">Coffee Chat Questions</h2>
@@ -223,6 +293,21 @@ export default function Networking() {
                   </ul>
                 </div>
               )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Post-Interview & Negotiation Scripts */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-white mb-2">Post-Interview & Negotiation Scripts</h2>
+        <p className="text-gray-500 text-sm mb-6">What to say once you're through the process — thank-you notes, buying time, negotiating comp, and handling competing offers professionally.</p>
+        <div className="space-y-3">
+          {negotiationScripts.map((s, i) => (
+            <div key={i} className="bg-brand-card border border-brand-teal/20 rounded-xl p-5">
+              <p className="text-white font-semibold text-sm mb-2">{s.scenario}</p>
+              <p className="text-gray-300 text-sm leading-relaxed italic mb-3 bg-brand-darker rounded-lg p-3">"{s.script}"</p>
+              <p className="text-gray-500 text-xs">💡 {s.tip}</p>
             </div>
           ))}
         </div>

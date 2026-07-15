@@ -14,8 +14,9 @@ const navItems: NavItem[] = [
   {
     label: 'Careers',
     dropdown: [
-      { to: '/jobs', label: 'All Careers', description: 'Browse all 23 finance careers' },
+      { to: '/jobs', label: 'All Careers', description: 'Browse all 27 finance careers' },
       { to: '/salary-comparison', label: 'Salary Comparison', description: 'Compare pay across roles' },
+      { to: '/career-comparison', label: 'Career Comparison', description: 'Hours, comp & skills side by side' },
       { to: '/interview-quiz', label: 'Interview Quiz', description: 'Practice real interview questions' },
     ],
   },

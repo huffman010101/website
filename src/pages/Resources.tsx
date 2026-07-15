@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const books = [
   { title: 'The Intelligent Investor', author: 'Benjamin Graham', category: 'Investing', description: 'The definitive guide to value investing. Required reading for any serious investor.' },
@@ -127,7 +128,7 @@ export default function Resources() {
   const [bookFilter, setBookFilter] = useState<Category>('All')
   const [certFilter, setCertFilter] = useState<string>('All')
   const [glossarySearch, setGlossarySearch] = useState('')
-  const [activeSection, setActiveSection] = useState<'books' | 'certs' | 'glossary'>('books')
+  const [activeSection, setActiveSection] = useState<'books' | 'certs' | 'glossary' | 'templates'>('books')
 
   const bookCategories: Category[] = ['All', ...Array.from(new Set(books.map(b => b.category as Category)))]
   const certCategories = ['All', 'Investment', 'Accounting', 'Risk', 'Quant', 'Alternatives', 'Treasury']
@@ -152,16 +153,55 @@ export default function Resources() {
 
       {/* Section nav */}
       <div className="flex gap-2 mb-8">
-        {(['books', 'certs', 'glossary'] as const).map(s => (
+        {(['books', 'certs', 'glossary', 'templates'] as const).map(s => (
           <button
             key={s}
             onClick={() => setActiveSection(s)}
             className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all capitalize ${activeSection === s ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
           >
-            {s === 'certs' ? 'Qualifications' : s === 'books' ? 'Books' : 'Glossary'}
+            {s === 'certs' ? 'Qualifications' : s === 'books' ? 'Books' : s === 'templates' ? 'Excel Templates' : 'Glossary'}
           </button>
         ))}
       </div>
+
+      {activeSection === 'templates' && (
+        <div>
+          <div className="bg-brand-card border border-brand-gold/20 rounded-xl p-5 mb-6">
+            <p className="text-gray-300 text-sm leading-relaxed">Real, working <code className="text-brand-gold">.xlsx</code> files with live formulas — not screenshots. Yellow cells are inputs, everything else recalculates automatically. Each includes a "How to Use" sheet. Pair these with the guided, step-by-step versions in <Link to="/learn" className="text-brand-gold hover:underline">Develop Knowledge → Capstone Modules</Link> if you want checked, explained practice first.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="bg-brand-card border border-white/10 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-3xl">📈</span>
+                <h3 className="text-white font-bold text-lg">DCF Valuation Template</h3>
+              </div>
+              <p className="text-gray-400 text-sm mb-4 leading-relaxed">A full single-stage DCF skeleton: revenue build, EBIT/NOPAT, unlevered free cash flow, discounting, terminal value (Gordon growth), and the bridge from enterprise value to implied share price.</p>
+              <a
+                href="/website/templates/FINdr_DCF_Template.xlsx"
+                download
+                className="inline-block px-5 py-2.5 bg-brand-gold text-black font-bold rounded-xl text-sm hover:bg-brand-gold2 transition-colors"
+              >
+                ⬇ Download DCF Template (.xlsx)
+              </a>
+            </div>
+            <div className="bg-brand-card border border-white/10 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-3xl">💰</span>
+                <h3 className="text-white font-bold text-lg">LBO Model Template</h3>
+              </div>
+              <p className="text-gray-400 text-sm mb-4 leading-relaxed">Purchase price and financing structure, a debt paydown schedule with a cash sweep, EBITDA growth projection, exit value calculation, and the full MOIC/IRR returns summary.</p>
+              <a
+                href="/website/templates/FINdr_LBO_Template.xlsx"
+                download
+                className="inline-block px-5 py-2.5 bg-brand-gold text-black font-bold rounded-xl text-sm hover:bg-brand-gold2 transition-colors"
+              >
+                ⬇ Download LBO Template (.xlsx)
+              </a>
+            </div>
+          </div>
+          <p className="text-gray-600 text-xs mt-6 text-center">These are simplified, single-scenario skeletons built for learning — real banker/PE models add sensitivity tables, scenario toggles and multi-tranche debt. Use these as your starting point and build up from here.</p>
+        </div>
+      )}
 
       {activeSection === 'books' && (
         <div>

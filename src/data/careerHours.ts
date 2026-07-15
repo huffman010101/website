@@ -1,0 +1,32 @@
+// Typical weekly hours by career — used by the Career Comparison view.
+// Estimates reflect the norms described across each career's own profile
+// (day-in-the-life, pros/cons) rather than a separate invented dataset.
+export const careerHours: Record<string, { junior: string; senior: string; intensity: 'Low' | 'Moderate' | 'High' | 'Extreme' }> = {
+  'investment-banking': { junior: '70–90 hrs/wk', senior: '55–70 hrs/wk', intensity: 'Extreme' },
+  'consulting': { junior: '55–70 hrs/wk', senior: '50–60 hrs/wk', intensity: 'High' },
+  'private-equity': { junior: '65–80 hrs/wk', senior: '55–65 hrs/wk', intensity: 'Extreme' },
+  'hedge-fund': { junior: '55–70 hrs/wk', senior: '50–60 hrs/wk', intensity: 'High' },
+  'quantitative-finance': { junior: '45–55 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'equity-research': { junior: '55–70 hrs/wk (spikes at earnings)', senior: '50–60 hrs/wk', intensity: 'High' },
+  'trading': { junior: '50–60 hrs/wk (early starts)', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'portfolio-management': { junior: '45–55 hrs/wk', senior: '45–50 hrs/wk', intensity: 'Moderate' },
+  'venture-capital': { junior: '50–60 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'financial-advisor': { junior: '40–50 hrs/wk', senior: '40–50 hrs/wk (flexible)', intensity: 'Low' },
+  'risk-management': { junior: '40–50 hrs/wk', senior: '45–50 hrs/wk', intensity: 'Low' },
+  'fp-and-a': { junior: '40–50 hrs/wk (heavier at close)', senior: '45–50 hrs/wk', intensity: 'Low' },
+  'actuarial': { junior: '35–42 hrs/wk', senior: '40–45 hrs/wk', intensity: 'Low' },
+  'corporate-development': { junior: '45–55 hrs/wk', senior: '50–55 hrs/wk', intensity: 'Moderate' },
+  'treasury': { junior: '40–50 hrs/wk', senior: '45–50 hrs/wk', intensity: 'Low' },
+  'real-estate-finance': { junior: '50–60 hrs/wk', senior: '50–55 hrs/wk', intensity: 'Moderate' },
+  'fixed-income': { junior: '50–60 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'commodities-trading': { junior: '55–65 hrs/wk (early starts)', senior: '50–60 hrs/wk', intensity: 'High' },
+  'compliance': { junior: '40–50 hrs/wk', senior: '45–50 hrs/wk', intensity: 'Low' },
+  'fintech': { junior: '45–55 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'sovereign-wealth': { junior: '45–55 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Moderate' },
+  'family-office': { junior: '40–48 hrs/wk', senior: '40–48 hrs/wk', intensity: 'Low' },
+  'restructuring': { junior: '65–85 hrs/wk (live processes)', senior: '55–65 hrs/wk', intensity: 'Extreme' },
+  'structured-finance': { junior: '50–60 hrs/wk', senior: '50–55 hrs/wk', intensity: 'Moderate' },
+  'private-banking': { junior: '45–55 hrs/wk', senior: '45–55 hrs/wk', intensity: 'Low' },
+  'energy-commodities': { junior: '55–65 hrs/wk (early starts)', senior: '50–60 hrs/wk', intensity: 'High' },
+  'insurance-underwriting': { junior: '38–45 hrs/wk', senior: '40–48 hrs/wk', intensity: 'Low' },
+}
