@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
       { to: '/career-comparison', label: 'Career Comparison', description: 'Hours, comp & skills side by side' },
       { to: '/interview-guide', label: 'Interview Mastery', description: 'Technique, model answers & your year plan' },
       { to: '/interview-quiz', label: 'Interview Quiz', description: 'Practice real interview questions' },
+      { to: '/video-practice', label: 'Video / HireVue Practice', description: 'Record timed answers to camera' },
     ],
   },
   {

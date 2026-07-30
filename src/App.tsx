@@ -20,6 +20,7 @@ import Dashboard from './pages/Dashboard'
 import Capstone from './pages/Capstone'
 import CareerComparison from './pages/CareerComparison'
 import InterviewGuide from './pages/InterviewGuide'
+import VideoPractice from './pages/VideoPractice'
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/learn/capstone/:id" element={<Capstone />} />
             <Route path="/career-comparison" element={<CareerComparison />} />
             <Route path="/interview-guide" element={<InterviewGuide />} />
+            <Route path="/video-practice" element={<VideoPractice />} />
           </Routes>
         </main>
         <Footer />
