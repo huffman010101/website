@@ -29,14 +29,14 @@ const navItems: NavItem[] = [
       { to: '/cv-reviewer', label: 'CV & Cover Letter', description: 'AI-powered application review' },
       { to: '/advisor', label: 'AI Advisor', description: 'Personalised career guidance' },
       { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
-      { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
       { to: '/practice-tests', label: 'Online Test Practice', description: 'Numerical, verbal, logical & SJT tests' },
-      { to: '/ai-skills', label: 'Develop AI Knowledge', description: 'Prompting skills & AI fluency for finance' },
     ],
   },
   {
     label: 'Learn',
     dropdown: [
+      { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
+      { to: '/ai-skills', label: 'Develop AI Knowledge', description: 'Prompting skills & AI fluency for finance' },
       { to: '/networking', label: 'Networking Guide', description: 'Cold emails, coffee chat scripts' },
       { to: '/resources', label: 'Resources', description: 'Books, qualifications, glossary' },
     ],

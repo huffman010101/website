@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { jobs } from '../data/jobs'
 import { recordCVScore, getCVScoreHistory } from '../lib/history'
+import { extractTextFromFile, ACCEPTED_FILE_TYPES } from '../lib/fileText'
 
 type ATSMatch = {
   totalKeywords: number
@@ -280,6 +281,34 @@ export default function CVReviewer() {
   const [company, setCompany] = useState('')
   const [jobDescription, setJobDescription] = useState('')
   const [showATSInput, setShowATSInput] = useState(false)
+  const [fileName, setFileName] = useState<string | null>(null)
+  const [fileError, setFileError] = useState<string | null>(null)
+  const [extracting, setExtracting] = useState(false)
+  const [dragging, setDragging] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(file: File | undefined | null) {
+    if (!file) return
+    setFileError(null)
+    setResult(null)
+    setExtracting(true)
+    try {
+      const extracted = await extractTextFromFile(file)
+      if (!extracted || extracted.split(/\s+/).filter(Boolean).length < 20) {
+        setFileError('Barely any text could be read from that file. If it\'s a scanned/image PDF, paste the text manually instead.')
+        setFileName(null)
+      } else {
+        setText(extracted)
+        setFileName(file.name)
+      }
+    } catch (err) {
+      setFileError(err instanceof Error ? err.message : 'Could not read that file.')
+      setFileName(null)
+    } finally {
+      setExtracting(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
   const [result, setResult] = useState<ReviewResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [priorBestScore, setPriorBestScore] = useState<number | null>(null)
@@ -361,9 +390,51 @@ export default function CVReviewer() {
         </div>
       </div>
 
+      {/* File upload */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Upload your {tab === 'cv' ? 'CV' : 'cover letter'}
+        </label>
+        <div
+          onDragOver={e => { e.preventDefault(); setDragging(true) }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={e => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files?.[0]) }}
+          onClick={() => fileInputRef.current?.click()}
+          className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+            dragging ? 'border-brand-gold bg-brand-gold/5' : 'border-white/15 bg-brand-card hover:border-brand-gold/50'
+          }`}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={ACCEPTED_FILE_TYPES}
+            onChange={e => handleFile(e.target.files?.[0])}
+            className="hidden"
+          />
+          {extracting ? (
+            <div className="flex items-center justify-center gap-3 text-gray-300 text-sm">
+              <div className="w-4 h-4 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+              Reading your file...
+            </div>
+          ) : fileName ? (
+            <div>
+              <p className="text-green-400 font-semibold text-sm">✓ {fileName}</p>
+              <p className="text-gray-500 text-xs mt-1">Text extracted below — click to replace with a different file</p>
+            </div>
+          ) : (
+            <div>
+              <p className="text-3xl mb-2">📎</p>
+              <p className="text-white font-semibold text-sm">Drop a file here, or click to browse</p>
+              <p className="text-gray-500 text-xs mt-1">PDF, DOCX, TXT or MD · processed entirely in your browser, never uploaded</p>
+            </div>
+          )}
+        </div>
+        {fileError && <p className="text-red-400 text-xs mt-2">{fileError}</p>}
+      </div>
+
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-300 mb-2">
-          Paste your {tab === 'cv' ? 'CV' : 'cover letter'} below *
+          {fileName ? 'Extracted text — edit if anything came through wrong' : `Or paste your ${tab === 'cv' ? 'CV' : 'cover letter'} below`} *
         </label>
         <textarea
           value={text}
@@ -580,7 +651,7 @@ export default function CVReviewer() {
           </div>
 
           <button
-            onClick={() => { setResult(null); setText(''); setCompany('') }}
+            onClick={() => { setResult(null); setText(''); setCompany(''); setFileName(null); setFileError(null) }}
             className="w-full py-3 border border-white/10 rounded-xl text-gray-400 hover:text-white hover:border-white/20 transition-all text-sm"
           >
             Review Another Document
