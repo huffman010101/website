@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - claude/gifted-fermi-5z5bgt
+      - claude/vibrant-cori-87quqp
 
 permissions:
   contents: read
@@ -35,6 +36,23 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # The gym app is built into dist/gym so it is reachable at /website/gym/.
+      # It is deliberately NOT linked from this site — the only way in is the direct URL.
+      - name: Checkout gym app
+        uses: actions/checkout@v4
+        with:
+          repository: huffman010101/gym
+          ref: claude/vibrant-cori-87quqp
+          path: gym-src
+
+      - name: Build gym app
+        run: |
+          cd gym-src
+          npm install
+          npm run build
+          mkdir -p ../dist/gym
+          cp -r dist/* ../dist/gym/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
