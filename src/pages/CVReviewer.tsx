@@ -9,6 +9,15 @@ type ATSMatch = {
   matchPct: number
 }
 
+type AICheck = {
+  aiScore: number            // 0-100, higher = reads more AI-written
+  verdict: string
+  verdictColor: string
+  flaggedPhrases: string[]
+  signals: string[]
+  fixes: string[]
+}
+
 type ReviewResult = {
   score: number
   scoreLabel: string
@@ -18,6 +27,125 @@ type ReviewResult = {
   missingKeywords: string[]
   wordCount: number
   atsMatch: ATSMatch | null
+  aiCheck: AICheck
+}
+
+// Phrases that recruiters increasingly read as AI-generated filler. None of
+// these are "wrong" English — they're just statistically overused by LLMs and
+// rare in genuine student writing, so a cluster of them is a strong tell.
+const AI_TELL_PHRASES = [
+  'delve into', 'in today\'s fast-paced', 'fast-paced world', 'ever-evolving', 'ever-changing',
+  'i am passionate about', 'deeply passionate', 'passionate about leveraging', 'leverage my skills',
+  'a testament to', 'underscores my', 'showcasing my', 'showcase my ability',
+  'pivotal role', 'instrumental in', 'seamlessly', 'meticulous attention to detail',
+  'robust understanding', 'comprehensive understanding', 'invaluable experience',
+  'honed my skills', 'hone my skills', 'i am eager to leverage', 'eager to contribute',
+  'align with my career', 'aligns perfectly', 'perfectly aligns', 'resonates deeply',
+  'furthermore,', 'moreover,', 'in conclusion,', 'it is worth noting',
+  'dynamic environment', 'fast-paced environment', 'wealth of experience',
+  'unwavering commitment', 'steadfast', 'i firmly believe', 'i am confident that my',
+  'this opportunity would allow me', 'i am excited about the opportunity',
+  'proven track record of', 'results-driven', 'detail-oriented individual',
+  'strong foundation in', 'solidified my', 'cultivated a', 'fostered a',
+  'navigate the complexities', 'complexities of the financial', 'landscape of finance',
+  'rapidly evolving', 'cutting-edge', 'holistic approach', 'multifaceted',
+]
+
+function computeAICheck(text: string, type: 'cv' | 'cover'): AICheck {
+  const lower = text.toLowerCase()
+  const words = text.trim().split(/\s+/).filter(Boolean)
+  const wordCount = words.length
+
+  const flaggedPhrases = AI_TELL_PHRASES.filter(p => lower.includes(p))
+
+  const signals: string[] = []
+  const fixes: string[] = []
+  let aiScore = 0
+
+  // 1. Tell-phrase density (the strongest single signal)
+  const phraseDensity = wordCount > 0 ? (flaggedPhrases.length / wordCount) * 1000 : 0
+  if (flaggedPhrases.length >= 5) {
+    aiScore += 35
+    signals.push(`${flaggedPhrases.length} phrases commonly overused by AI writing tools`)
+    fixes.push('Replace the flagged phrases below with how you\'d actually describe it out loud to a friend.')
+  } else if (flaggedPhrases.length >= 2) {
+    aiScore += 18
+    signals.push(`${flaggedPhrases.length} mildly AI-flavoured phrases detected`)
+    fixes.push('Swap the flagged phrases for plainer wording — they\'re the fastest tell to remove.')
+  } else if (flaggedPhrases.length === 1) {
+    aiScore += 6
+  }
+  if (phraseDensity > 8) aiScore += 8
+
+  // 2. Uniform sentence length — humans vary far more than LLMs do
+  const sentences = text.split(/[.!?]+/).map(s => s.trim().split(/\s+/).filter(Boolean).length).filter(n => n > 2)
+  if (sentences.length >= 4) {
+    const mean = sentences.reduce((a, b) => a + b, 0) / sentences.length
+    const variance = sentences.reduce((a, b) => a + (b - mean) ** 2, 0) / sentences.length
+    const stdev = Math.sqrt(variance)
+    if (stdev < 4 && mean > 14) {
+      aiScore += 20
+      signals.push('Sentences are unusually uniform in length — human writing varies much more')
+      fixes.push('Break up the rhythm: cut one long sentence in half, and let another run longer.')
+    }
+  }
+
+  // 3. Absence of concrete specifics — the most damning content signal
+  const hasNumbers = /\d/.test(text)
+  const quantCount = (text.match(/£|%|\d+x|\d{2,}/g) || []).length
+  if (!hasNumbers) {
+    aiScore += 20
+    signals.push('No numbers anywhere — AI-written applications are generically impressive but rarely specific')
+    fixes.push('Add at least three hard numbers: team sizes, percentages, amounts, dates, member counts.')
+  } else if (quantCount < 3 && wordCount > 200) {
+    aiScore += 10
+    signals.push('Very few concrete figures for the length of the document')
+    fixes.push('Quantify two more claims — specificity is the single strongest signal of genuine authorship.')
+  }
+
+  // 4. Superlative/adverb inflation
+  const inflation = (lower.match(/\b(extremely|highly|deeply|truly|incredibly|significantly|greatly|immensely|profoundly)\b/g) || []).length
+  if (inflation >= 4) {
+    aiScore += 12
+    signals.push(`${inflation} intensifier adverbs ("highly", "deeply", "truly") — a classic LLM habit`)
+    fixes.push('Delete most intensifiers. "I improved it 30%" beats "I significantly improved it".')
+  }
+
+  // 5. Em-dash overuse (LLMs love them; most students rarely type them)
+  const emDashes = (text.match(/—/g) || []).length
+  if (emDashes >= 4) {
+    aiScore += 8
+    signals.push(`${emDashes} em-dashes — heavily overrepresented in AI-generated text`)
+    fixes.push('Convert most em-dashes to full stops or commas.')
+  }
+
+  // 6. Cover-letter-specific: no named specifics about the firm
+  if (type === 'cover') {
+    const hasNamedSpecific = /\b(19|20)\d{2}\b/.test(text) || /\bacquisition|deal|IPO|report|launch|fund\b/i.test(text)
+    if (!hasNamedSpecific) {
+      aiScore += 15
+      signals.push('No specific, checkable reference to the firm (a deal, a report, a person, a date)')
+      fixes.push('Name one real, verifiable thing about the firm — a deal, a piece of research, someone you spoke to.')
+    }
+  }
+
+  aiScore = Math.max(0, Math.min(aiScore, 98))
+
+  const verdict =
+    aiScore >= 65 ? 'Reads as AI-written' :
+    aiScore >= 40 ? 'Some AI tells present' :
+    aiScore >= 20 ? 'Mostly human, minor tells' : 'Reads as genuinely human'
+  const verdictColor =
+    aiScore >= 65 ? 'text-red-400' :
+    aiScore >= 40 ? 'text-orange-400' :
+    aiScore >= 20 ? 'text-yellow-400' : 'text-green-400'
+
+  if (signals.length === 0) {
+    signals.push('No significant AI writing patterns detected')
+    fixes.push('Keep the specific, plainly-worded style you\'re using — it reads as authentically yours.')
+  }
+
+  return { aiScore, verdict, verdictColor, flaggedPhrases, signals, fixes }
 }
 
 // Very common English words + generic job-ad filler excluded so ATS keyword
@@ -140,7 +268,9 @@ function generateReview(text: string, role: string, company: string, type: 'cv' 
 
   const atsMatch = computeATSMatch(text, jobDescription)
 
-  return { score, scoreLabel, strengths, improvements, suggestions, missingKeywords, wordCount, atsMatch }
+  const aiCheck = computeAICheck(text, type)
+
+  return { score, scoreLabel, strengths, improvements, suggestions, missingKeywords, wordCount, atsMatch, aiCheck }
 }
 
 export default function CVReviewer() {
@@ -315,6 +445,61 @@ export default function CVReviewer() {
                 {scoreDelta >= 0 ? '↑' : '↓'} {scoreDelta >= 0 ? '+' : ''}{scoreDelta} vs your previous best draft
               </p>
             )}
+          </div>
+
+          {/* AI-Written Check */}
+          <div className="bg-brand-card border border-purple-500/20 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-purple-400 font-bold text-lg">🤖 AI-Written Check</h3>
+              <div className="text-right">
+                <span className={`text-2xl font-black ${result.aiCheck.verdictColor}`}>{result.aiCheck.aiScore}%</span>
+                <p className={`text-xs font-bold ${result.aiCheck.verdictColor}`}>{result.aiCheck.verdict}</p>
+              </div>
+            </div>
+            <div className="h-2 bg-white/10 rounded-full mb-4 overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all ${result.aiCheck.aiScore >= 65 ? 'bg-red-400' : result.aiCheck.aiScore >= 40 ? 'bg-orange-400' : result.aiCheck.aiScore >= 20 ? 'bg-yellow-400' : 'bg-green-400'}`}
+                style={{ width: `${Math.max(result.aiCheck.aiScore, 3)}%` }}
+              />
+            </div>
+            <p className="text-gray-400 text-sm mb-4">
+              How much this reads as AI-generated. Recruiters now screen hundreds of identically-voiced applications a season — sounding like a real person is a genuine advantage. Lower is better.
+            </p>
+
+            <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">What we detected</p>
+            <ul className="space-y-1.5 mb-4">
+              {result.aiCheck.signals.map((s, i) => (
+                <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                  <span className={`mt-0.5 flex-shrink-0 ${result.aiCheck.aiScore >= 40 ? 'text-orange-400' : 'text-green-400'}`}>
+                    {result.aiCheck.aiScore >= 40 ? '!' : '✓'}
+                  </span> {s}
+                </li>
+              ))}
+            </ul>
+
+            {result.aiCheck.flaggedPhrases.length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">Flagged phrases in your text</p>
+                <div className="flex flex-wrap gap-2">
+                  {result.aiCheck.flaggedPhrases.map((p, i) => (
+                    <span key={i} className="px-3 py-1 bg-purple-500/10 text-purple-300 rounded-full text-xs border border-purple-500/20">"{p}"</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">How to sound more like you</p>
+            <ul className="space-y-1.5">
+              {result.aiCheck.fixes.map((f, i) => (
+                <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                  <span className="text-brand-teal mt-0.5 flex-shrink-0">→</span> {f}
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-gray-600 text-xs mt-4 pt-3 border-t border-white/5">
+              This is a heuristic writing-style check, not a forensic detector — no tool can prove authorship. Use it to make your writing sound more specific and more like you, which helps regardless of how you drafted it.
+            </p>
           </div>
 
           {/* ATS Match */}
