@@ -9,8 +9,10 @@ export default function Quiz() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
 
   const question = quizQuestions[currentQuestion]
-  const progress = ((currentQuestion) / quizQuestions.length) * 100
+  // Count the question you're currently on as done, so finishing shows 100%
+  const progress = ((currentQuestion + 1) / quizQuestions.length) * 100
   const isLast = currentQuestion === quizQuestions.length - 1
+  const answeredCount = Object.keys(answers).length
 
   const handleSelect = (optionIndex: number) => {
     setSelectedOption(optionIndex)
@@ -22,24 +24,50 @@ export default function Quiz() {
     setAnswers(newAnswers)
 
     if (isLast) {
-      // Calculate scores
-      const scores: Record<string, number> = {}
+      // Raw points from the answers actually chosen
+      const raw: Record<string, number> = {}
       quizQuestions.forEach(q => {
         const answerIndex = newAnswers[q.id]
         if (answerIndex !== undefined) {
           const option = q.options[answerIndex]
           if (option) {
             Object.entries(option.scores).forEach(([careerId, score]) => {
-              scores[careerId] = (scores[careerId] || 0) + score
+              raw[careerId] = (raw[careerId] || 0) + score
             })
           }
         }
       })
+
+      // Careers aren't mentioned in an equal number of questions, so raw
+      // totals unfairly favour the ones that appear most often. Normalise
+      // each career against the maximum it could possibly have scored.
+      const maxPossible: Record<string, number> = {}
+      quizQuestions.forEach(q => {
+        const best: Record<string, number> = {}
+        q.options.forEach(opt => {
+          Object.entries(opt.scores).forEach(([careerId, score]) => {
+            best[careerId] = Math.max(best[careerId] || 0, score)
+          })
+        })
+        Object.entries(best).forEach(([careerId, score]) => {
+          maxPossible[careerId] = (maxPossible[careerId] || 0) + score
+        })
+      })
+
+      const scores: Record<string, number> = {}
+      Object.entries(raw).forEach(([careerId, score]) => {
+        const ceiling = maxPossible[careerId] || 1
+        scores[careerId] = Math.round((score / ceiling) * 1000) / 10
+      })
+
       localStorage.setItem('findr-quiz-scores', JSON.stringify(scores))
       navigate('/results')
     } else {
+      // Restore any previously-given answer, so going Back then Next again
+      // doesn't show the next question as unanswered when it isn't.
+      const nextAnswer = newAnswers[quizQuestions[currentQuestion + 1].id]
       setCurrentQuestion(prev => prev + 1)
-      setSelectedOption(null)
+      setSelectedOption(nextAnswer !== undefined ? nextAnswer : null)
     }
   }
 
@@ -66,7 +94,7 @@ export default function Quiz() {
         <div className="mb-8">
           <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
             <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
-            <span>{Math.round(progress)}% complete</span>
+            <span>{answeredCount} answered · {Math.round(progress)}% complete</span>
           </div>
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -130,19 +158,27 @@ export default function Quiz() {
         </div>
 
         {/* Question dots */}
-        <div className="flex justify-center gap-1.5 mt-6">
-          {quizQuestions.map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i < currentQuestion
-                  ? 'bg-brand-gold'
-                  : i === currentQuestion
-                  ? 'bg-brand-teal w-4'
-                  : 'bg-white/20'
-              }`}
-            />
-          ))}
+        <div className="flex justify-center flex-wrap gap-1.5 mt-6">
+          {quizQuestions.map((q, i) => {
+            const isAnswered = answers[q.id] !== undefined
+            const isCurrent = i === currentQuestion
+            return (
+              <button
+                key={i}
+                title={`Question ${i + 1}${isAnswered ? ' (answered)' : ''}`}
+                onClick={() => {
+                  // Only allow jumping to questions already reached
+                  if (i > currentQuestion && !isAnswered) return
+                  setCurrentQuestion(i)
+                  const a = answers[quizQuestions[i].id]
+                  setSelectedOption(a !== undefined ? a : null)
+                }}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  isCurrent ? 'bg-brand-teal w-4' : isAnswered ? 'bg-brand-gold w-2 hover:scale-125' : 'bg-white/20 w-2'
+                }`}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

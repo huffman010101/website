@@ -348,4 +348,138 @@ export const quizQuestions: QuizQuestion[] = [
       },
     ],
   },
+  {
+    id: 14,
+    question: 'Which of these would you most enjoy becoming an expert in?',
+    options: [
+      {
+        text: 'Property — valuing buildings, structuring development finance, reading local markets',
+        scores: { 'real-estate-finance': 5, 'private-equity': 2, 'structured-finance': 2 },
+      },
+      {
+        text: 'Physical commodities and energy — oil cargoes, power grids, the energy transition',
+        scores: { 'energy-commodities': 5, 'commodities-trading': 5, 'trading': 2 },
+      },
+      {
+        text: 'Credit and debt — how loans get priced, packaged, rated and sold on',
+        scores: { 'structured-finance': 5, 'fixed-income': 4, 'restructuring': 2 },
+      },
+      {
+        text: 'Insurance risk — pricing hurricanes, cyber attacks and things that have never happened before',
+        scores: { 'insurance-underwriting': 5, 'actuarial': 4, 'risk-management': 3 },
+      },
+      {
+        text: 'Technology and products — how financial services actually get built and delivered',
+        scores: { 'fintech': 5, 'quantitative-finance': 2, 'corporate-development': 2 },
+      },
+      {
+        text: 'Rules and financial crime — regulation, market abuse, keeping firms out of trouble',
+        scores: { 'compliance': 5, 'risk-management': 3 },
+      },
+    ],
+  },
+  {
+    id: 15,
+    question: 'Whose money would you most like to be responsible for?',
+    options: [
+      {
+        text: 'A single ultra-wealthy family, across every asset class and generation',
+        scores: { 'family-office': 5, 'private-banking': 3, 'portfolio-management': 2 },
+      },
+      {
+        text: 'Wealthy individual clients you build long-term personal relationships with',
+        scores: { 'private-banking': 5, 'financial-advisor': 4, 'family-office': 2 },
+      },
+      {
+        text: 'A nation\'s sovereign wealth — enormous, patient, long-horizon capital',
+        scores: { 'sovereign-wealth': 5, 'portfolio-management': 3, 'private-equity': 2 },
+      },
+      {
+        text: 'A company\'s own balance sheet — its cash, debt, and currency exposure',
+        scores: { 'treasury': 5, 'fp-and-a': 3, 'corporate-development': 2 },
+      },
+      {
+        text: 'Institutional investors\' capital, judged against a benchmark every quarter',
+        scores: { 'portfolio-management': 5, 'hedge-fund': 3, 'equity-research': 2 },
+      },
+    ],
+  },
+  {
+    id: 16,
+    question: 'A company you follow is in serious financial distress. Your instinct is to:',
+    options: [
+      {
+        text: 'Work out who gets paid what, and negotiate the restructuring between creditors',
+        scores: { 'restructuring': 5, 'fixed-income': 2, 'investment-banking': 2 },
+      },
+      {
+        text: 'Analyse whether its debt is now mispriced and worth buying cheaply',
+        scores: { 'hedge-fund': 4, 'fixed-income': 4, 'restructuring': 3 },
+      },
+      {
+        text: 'Ask whether a stronger competitor should acquire it, and at what price',
+        scores: { 'investment-banking': 4, 'corporate-development': 4, 'private-equity': 3 },
+      },
+      {
+        text: 'Look at what went wrong operationally and how it could be turned around',
+        scores: { 'consulting': 4, 'private-equity': 3, 'restructuring': 3 },
+      },
+      {
+        text: 'Check what exposure my own firm has to it, and whether we are protected',
+        scores: { 'risk-management': 5, 'compliance': 3, 'treasury': 3 },
+      },
+    ],
+  },
+  {
+    id: 17,
+    question: 'Would you rather work inside a financial firm, or inside a normal company\'s finance team?',
+    options: [
+      {
+        text: 'A financial firm — I want to be where the deals and markets actually happen',
+        scores: { 'investment-banking': 3, 'hedge-fund': 3, 'private-equity': 3, 'trading': 3 },
+      },
+      {
+        text: 'A normal company — buying other businesses and shaping its strategy from within',
+        scores: { 'corporate-development': 5, 'fp-and-a': 2, 'treasury': 2 },
+      },
+      {
+        text: 'A normal company — forecasting, budgeting and partnering with the business',
+        scores: { 'fp-and-a': 5, 'corporate-development': 2, 'treasury': 3 },
+      },
+      {
+        text: 'A normal company — managing its cash, funding and financial risk',
+        scores: { 'treasury': 5, 'risk-management': 2, 'fp-and-a': 2 },
+      },
+      {
+        text: 'A fast-growing startup where the finance function is still being built',
+        scores: { 'fintech': 5, 'venture-capital': 3, 'corporate-development': 2 },
+      },
+    ],
+  },
+  {
+    id: 18,
+    question: 'Which working pattern genuinely suits you best?',
+    options: [
+      {
+        text: 'Brutal hours early on, in exchange for the fastest learning curve and best exits',
+        scores: { 'investment-banking': 5, 'private-equity': 4, 'restructuring': 4, 'consulting': 3 },
+      },
+      {
+        text: 'Early starts tied to market hours, intense but genuinely finished by evening',
+        scores: { 'trading': 5, 'commodities-trading': 4, 'energy-commodities': 4, 'fixed-income': 3 },
+      },
+      {
+        text: 'Steady professional hours with deep technical work and real job security',
+        scores: { 'actuarial': 5, 'insurance-underwriting': 5, 'compliance': 4, 'risk-management': 4 },
+      },
+      {
+        text: 'Balanced hours with genuine responsibility, inside a business rather than a bank',
+        scores: { 'fp-and-a': 4, 'treasury': 4, 'corporate-development': 3, 'structured-finance': 2 },
+      },
+      {
+        text: 'Relationship-led and flexible, where my network and trust are the real asset',
+        scores: { 'private-banking': 5, 'family-office': 4, 'financial-advisor': 4, 'venture-capital': 2 },
+      },
+    ],
+  },
 ];
