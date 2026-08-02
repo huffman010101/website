@@ -1,5 +1,71 @@
 import { useState, useEffect, useRef } from 'react'
+import MentalMathsDrill from '../components/MentalMathsDrill'
 import { recordPracticeTestAttempt, getPracticeTestHistory } from '../lib/history'
+
+const mentalMathsShortcuts = [
+  {
+    group: 'Percentages — build them from parts',
+    items: [
+      '10% = move the decimal one place. 1% = move it two. Every other percentage is built from these.',
+      '15% of 240 → 10% (24) + 5% (12) = 36. Never reach for long multiplication.',
+      '25% = ÷4 · 50% = ÷2 · 20% = ÷5 · 75% = ÷2 then ×3. Learn these as division, not multiplication.',
+      'Percentages are reversible: 18% of 50 is identical to 50% of 18 = 9. Flip whichever way is easier.',
+    ],
+  },
+  {
+    group: 'Reverse percentages — the #1 test trap',
+    items: [
+      'After a 20% FALL to £64, the original is 64 ÷ 0.8 = £80. Adding 20% back gives £76.80 and is wrong.',
+      'After a 25% RISE to £150, the original is 150 ÷ 1.25 = £120.',
+      'Rule: to undo a percentage change, DIVIDE by (1 ± rate). Never add or subtract the same percentage back.',
+      'This appears in almost every numerical test, usually disguised as "what was headcount last year?"',
+    ],
+  },
+  {
+    group: 'Growth and compounding',
+    items: [
+      'Sequential returns multiply, never average. +12% then −8% = 1.12 × 0.92 = 1.03, so +3% — not +2%.',
+      'A fall then an equal rise always loses: −20% then +20% = 0.8 × 1.2 = 0.96, down 4%.',
+      'Rule of 72: 72 ÷ growth rate ≈ years to double. 8% growth doubles in about 9 years.',
+      'For small rates over a few years, quick estimate: 5% for 3 years ≈ +15% plus a little (actually 15.8%).',
+    ],
+  },
+  {
+    group: 'Multiplication shortcuts',
+    items: [
+      '×5 → halve it and ×10. 86 × 5 = 43 × 10 = 430.',
+      '×25 → ÷4 then ×100. 32 × 25 = 8 × 100 = 800.',
+      '×11 (two digits) → add the digits and drop the sum in the middle. 34 × 11 = 3_(3+4)_4 = 374.',
+      '×9 → ×10 then subtract one lot. 47 × 9 = 470 − 47 = 423.',
+      'Split awkward numbers: 34 × 27 = 34×25 + 34×2 = 850 + 68 = 918.',
+    ],
+  },
+  {
+    group: 'Fractions and decimals worth memorising',
+    items: [
+      '1/8 = 12.5% · 1/6 ≈ 16.7% · 1/5 = 20% · 1/4 = 25% · 1/3 ≈ 33.3% · 3/8 = 37.5% · 5/8 = 62.5%',
+      '×0.25 is ÷4 · ×0.5 is ÷2 · ×0.2 is ÷5 · ×0.125 is ÷8. Decimals hide simple divisions.',
+      'Squares to 20 and the 12–19 times tables save seconds on every single question.',
+    ],
+  },
+  {
+    group: 'Ratios and shares',
+    items: [
+      'Add the parts first. Split £1.8m as 5:3:2 → 10 parts → each part £180k → the 3-share is £540k.',
+      'A ratio question is always: total ÷ sum of parts = one part. Then multiply.',
+      'Per-unit questions: work out the rate for ONE, then scale. 4 analysts × 6 days = 24 analyst-days.',
+    ],
+  },
+  {
+    group: 'Estimate first, calculate second',
+    items: [
+      'Round hard, get a ballpark, then eliminate. Two of four options usually die immediately.',
+      'Sanity-check direction before precision: should this number be bigger or smaller than the input?',
+      'Check the units the question asks for — £m vs £bn vs % is where careless marks are lost.',
+      'If a calculation is taking more than ~40 seconds, you have misread the question. Reread it.',
+    ],
+  },
+]
 import { recordAnswer as recordSRAnswer, weightedSample } from '../lib/spacedRepetition'
 
 const SR_KEY = 'findr_sr_practice_tests'
@@ -1172,6 +1238,44 @@ export default function PracticeTests() {
         <div className="bg-brand-card border border-white/10 rounded-xl p-5 mb-8">
           <h2 className="text-white font-bold mb-2">🎚️ How difficulty tiers unlock</h2>
           <p className="text-gray-400 text-sm leading-relaxed">Every category starts with Easy questions only. <span className="text-white font-semibold">Medium</span> unlocks after your first attempt. <span className="text-white font-semibold">Hard</span> unlocks once you've done 3+ attempts averaging 70% or higher over your last 3 — mastery earns you the harder questions, not the other way round.</p>
+        </div>
+
+        {/* Mental maths drill */}
+        <div className="mb-8">
+          <MentalMathsDrill />
+        </div>
+
+        {/* Mental maths technique */}
+        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
+          <h2 className="text-white font-bold text-lg mb-1">🧮 Mental Maths — the shortcuts worth drilling</h2>
+          <p className="text-gray-500 text-xs mb-5">
+            Numerical tests allow a calculator, but the candidates who score highest barely use it — they estimate,
+            eliminate, and only calculate to confirm. Trading firms test raw speed with no calculator at all.
+            These are the specific techniques that produce that speed.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-5">
+            {mentalMathsShortcuts.map((sec, i) => (
+              <div key={i} className="bg-brand-darker border border-white/5 rounded-xl p-4">
+                <h3 className="text-brand-gold font-bold text-sm mb-2.5">{sec.group}</h3>
+                <ul className="space-y-2">
+                  {sec.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2 text-gray-300 text-xs leading-relaxed">
+                      <span className="text-brand-teal mt-0.5 flex-shrink-0">▸</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 pt-4 border-t border-white/5">
+            <p className="text-gray-400 text-sm leading-relaxed">
+              <span className="text-white font-semibold">How to actually improve:</span> run the sprint above for
+              5 minutes a day rather than an hour once a week — arithmetic speed is a motor skill and responds to
+              frequency, not volume. Keep accuracy above 80% before pushing pace; below that you are guessing, and
+              guessing trains the wrong habit. When you miss one, work out <em>which</em> shortcut above would have
+              caught it rather than just noting the right answer.
+            </p>
+          </div>
         </div>
 
         <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
