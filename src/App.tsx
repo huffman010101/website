@@ -24,6 +24,7 @@ import VideoPractice from './pages/VideoPractice'
 import SkillDrills from './pages/SkillDrills'
 import Technicals from './pages/Technicals'
 import CaseStudies from './pages/CaseStudies'
+import MarketIntel from './pages/MarketIntel'
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             <Route path="/skill-drills" element={<SkillDrills />} />
             <Route path="/technicals" element={<Technicals />} />
             <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/market-intel" element={<MarketIntel />} />
           </Routes>
         </main>
         <Footer />
