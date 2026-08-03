@@ -36,6 +36,7 @@ const navItems: NavItem[] = [
   {
     label: 'Learn',
     dropdown: [
+      { to: '/technicals', label: 'Technicals & Routes In', description: 'What to know, the process, how to break in' },
       { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
       { to: '/ai-skills', label: 'Develop AI Knowledge', description: 'Prompting skills & AI fluency for finance' },
       { to: '/networking', label: 'Networking Guide', description: 'Cold emails, coffee chat scripts' },

@@ -22,6 +22,7 @@ import CareerComparison from './pages/CareerComparison'
 import InterviewGuide from './pages/InterviewGuide'
 import VideoPractice from './pages/VideoPractice'
 import SkillDrills from './pages/SkillDrills'
+import Technicals from './pages/Technicals'
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="/interview-guide" element={<InterviewGuide />} />
             <Route path="/video-practice" element={<VideoPractice />} />
             <Route path="/skill-drills" element={<SkillDrills />} />
+            <Route path="/technicals" element={<Technicals />} />
           </Routes>
         </main>
         <Footer />
