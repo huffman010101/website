@@ -31,6 +31,7 @@ const navItems: NavItem[] = [
       { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
       { to: '/practice-tests', label: 'Online Test Practice', description: 'Numerical, verbal, logical & SJT tests' },
       { to: '/skill-drills', label: 'Role Skill Drills', description: 'Trading, consulting, IB & PE interview maths' },
+      { to: '/case-studies', label: 'Full Case Studies', description: 'Complete cases worked stage by stage' },
     ],
   },
   {
