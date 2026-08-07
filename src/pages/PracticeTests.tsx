@@ -93,10 +93,18 @@ function unlockedTiers(categoryId: string): Set<Difficulty> {
   return tiers
 }
 
+type DataTable = {
+  title: string
+  headers: string[]
+  rows: string[][]
+  note?: string
+}
+
 type TestQuestion = {
   prompt: string
   context?: string
   shapes?: string
+  dataTable?: DataTable
   difficulty?: Difficulty
   options: string[]
   answer: string
@@ -349,6 +357,73 @@ const testCategories: TestCategory[] = [
         options: ['£213m', '£256m', '£180m', '£310m'],
         answer: '£213m',
         explanation: 'Let A revenue = x. Group profit = 0.22x + (320 × 0.12) = 0.22x + 38.4. Group revenue = x + 320. Set the blend to 16%: 0.22x + 38.4 = 0.16(x + 320) = 0.16x + 51.2 → 0.06x = 12.8 → x = £213m. Sanity check: at £213m, group profit = 46.9 + 38.4 = £85.3m on revenue of £533m = 16.0% ✓. A must therefore grow from £180m to about £213m. Multi-division margin questions are algebra, not estimation — define the unknown and write one equation.',
+      },
+      {
+        dataTable: {
+          title: 'Exhibit A — Divisional revenue (£m)',
+          headers: ['Division', 'FY22', 'FY23', 'FY24'],
+          rows: [
+            ['Equities', '420', '455', '486'],
+            ['Fixed Income', '380', '362', '398'],
+            ['Advisory', '290', '338', '352'],
+            ['Wealth Management', '210', '231', '268'],
+          ],
+          note: 'Three questions in this test may refer to this exhibit — real numerical tests group questions around shared data.',
+        },
+        prompt: 'Which division grew fastest between FY22 and FY24?',
+        options: ['Equities', 'Advisory', 'Wealth Management', 'Fixed Income'],
+        answer: 'Wealth Management',
+        explanation: 'Two-year growth: Equities 486/420 = +15.7%; Fixed Income 398/380 = +4.7%; Advisory 352/290 = +21.4%; Wealth 268/210 = +27.6%. Wealth grew fastest. The trap is comparing absolute increases — Equities added £66m versus Wealth\'s £58m, but Wealth grew from a much smaller base.',
+      },
+      {
+        dataTable: {
+          title: 'Exhibit A — Divisional revenue (£m)',
+          headers: ['Division', 'FY22', 'FY23', 'FY24'],
+          rows: [
+            ['Equities', '420', '455', '486'],
+            ['Fixed Income', '380', '362', '398'],
+            ['Advisory', '290', '338', '352'],
+            ['Wealth Management', '210', '231', '268'],
+          ],
+        },
+        prompt: 'What percentage of FY24 total revenue did Advisory represent?',
+        options: ['21.4%', '23.4%', '25.4%', '19.8%'],
+        answer: '23.4%',
+        explanation: 'FY24 total = 486 + 398 + 352 + 268 = £1,504m. Advisory share = 352 ÷ 1,504 = 23.4%. Always total the column before calculating a share — the most common error is dividing by the prior year total.',
+      },
+      {
+        dataTable: {
+          title: 'Exhibit A — Divisional revenue (£m)',
+          headers: ['Division', 'FY22', 'FY23', 'FY24'],
+          rows: [
+            ['Equities', '420', '455', '486'],
+            ['Fixed Income', '380', '362', '398'],
+            ['Advisory', '290', '338', '352'],
+            ['Wealth Management', '210', '231', '268'],
+          ],
+        },
+        prompt: 'If total revenue grows in FY25 at the same rate as FY23 to FY24, what will FY25 total revenue be?',
+        options: ['£1,632m', '£1,588m', '£1,704m', '£1,552m'],
+        answer: '£1,632m',
+        explanation: 'FY23 total = 1,386; FY24 total = 1,504. Growth = 1,504/1,386 − 1 = 8.5%. FY25 = 1,504 × 1.085 = £1,632m. Two steps people skip: totalling both columns, and applying growth to FY24 rather than FY23.',
+      },
+      {
+        difficulty: 'expert',
+        dataTable: {
+          title: 'Exhibit B — Fund performance (annualised)',
+          headers: ['Fund', 'Gross return', 'Volatility', 'Annual fee'],
+          rows: [
+            ['Alpha', '12.4%', '8.2%', '1.50%'],
+            ['Beta', '9.1%', '5.0%', '1.00%'],
+            ['Gamma', '15.2%', '14.0%', '1.75%'],
+            ['Delta', '7.8%', '4.1%', '0.75%'],
+          ],
+          note: 'Risk-free rate is 3.0%.',
+        },
+        prompt: 'Which fund delivered the best risk-adjusted return NET of fees (highest Sharpe ratio)?',
+        options: ['Alpha', 'Beta', 'Gamma', 'Delta'],
+        answer: 'Beta',
+        explanation: 'Sharpe = (net return − risk-free) ÷ volatility. Alpha: (10.9−3)/8.2 = 0.96. Beta: (8.1−3)/5.0 = 1.02. Gamma: (13.45−3)/14.0 = 0.75. Delta: (7.05−3)/4.1 = 0.99. Beta wins despite having the second-lowest headline return — and Gamma, with the highest gross return, is worst risk-adjusted. Real tests deliberately reward the candidate who reads which metric was asked for.',
       },
       {
         difficulty: 'expert',
@@ -1098,6 +1173,27 @@ const testCategories: TestCategory[] = [
         answer: 'Tell your manager immediately with the error, its impact, and options for correcting it',
         explanation: 'The tempting logic — "the conclusion is unchanged, so why cause pain?" — is exactly the reasoning firms most want to screen out. Client-facing work carries a record; if the error surfaces later, the concealment becomes far more serious than the mistake. Reporting immediately WITH an assessment of impact and options lets your manager make a proportionate call, which may well be to correct it quietly. Never make the disclosure decision alone.',
       },
+      {
+        context: 'RATING FORMAT — Many real SJTs ask you to rate a single response rather than pick the best of four.\n\nScenario: A colleague asks you to sign off their work as reviewed, saying they are under time pressure and it is "definitely fine". You have not actually reviewed it.\n\nProposed response: "Sign it off to help them out, and review it properly afterwards when you have time."',
+        prompt: 'How effective is this response?',
+        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
+        answer: 'Very ineffective',
+        explanation: 'A sign-off is a control, and signing off work you have not reviewed defeats the control entirely — regardless of intention to check later. In regulated environments this can be a disciplinary matter. Rating-format SJTs test the same judgement as the multiple-choice version, but you must calibrate degree rather than pick a winner. Reserve "very ineffective" for responses that breach a control, conceal something, or create risk for others.',
+      },
+      {
+        context: 'RATING FORMAT\n\nScenario: You are three weeks into your internship. In a team meeting, a senior person states a figure about a market you have researched extensively, and you are fairly confident it is out of date.\n\nProposed response: "Say nothing in the meeting, then message them privately afterwards with the updated figure and your source."',
+        prompt: 'How effective is this response?',
+        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
+        answer: 'Somewhat effective',
+        explanation: 'This is deliberately not a clear-cut case, which is what makes it realistic. Correcting privately with a source is respectful and low-risk, so it is genuinely effective. But it is only "somewhat" — if the meeting is making a decision on that figure, staying silent lets a wrong number drive an outcome, and a brief, humble in-meeting flag ("I may have seen a more recent figure, shall I check?") would be better. Rating SJTs frequently include defensible-but-imperfect options; resist the urge to rate everything at the extremes.',
+      },
+      {
+        context: 'RATING FORMAT\n\nScenario: A client asks you directly for your personal opinion on whether they should proceed with a transaction. You are a junior analyst and this is well outside your remit.\n\nProposed response: "Give them your honest personal view, since they asked you directly and deserve a straight answer."',
+        prompt: 'How effective is this response?',
+        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
+        answer: 'Somewhat ineffective',
+        explanation: 'Honesty is a good instinct, so this is not "very ineffective" — but a junior giving unmandated advice to a client can constitute an unauthorised recommendation, may conflict with the firm\'s formal position, and exposes both you and the firm. The effective response acknowledges the question warmly and redirects: "That is really a question for [senior], let me bring them in." Note how the rating scale rewards recognising that a well-intentioned action can still be wrong.',
+      },
     ],
   },
 ]
@@ -1371,6 +1467,28 @@ export default function PracticeTests() {
           )})}
         </div>
 
+        {/* Realism notes */}
+        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
+          <h2 className="text-white font-bold text-lg mb-1">📋 How the real tests differ from practice</h2>
+          <p className="text-gray-500 text-xs mb-4">Practice here is deliberately close to the real formats, but there are differences worth knowing before you sit a live one.</p>
+          <div className="space-y-3">
+            {[
+              { t: 'Scoring is percentile, not percentage', d: 'Real tests compare you to a norm group of comparable candidates. Firms sift at a percentile threshold, often around 50th-70th, so what matters is how you did relative to others — not your raw score.' },
+              { t: 'Numerical tests group questions around shared exhibits', d: 'You typically get a table or chart with three or four questions on it, so time invested understanding the data pays off across several questions. Some questions here now replicate this.' },
+              { t: 'Many are adaptive', d: 'SHL Verify Interactive and similar adjust difficulty based on your answers — get one right and the next is harder. This means you cannot judge how you are doing from question difficulty, so do not panic if items feel hard.' },
+              { t: 'Some formats do not let you go back', d: 'Cut-e/Aon tests often auto-advance with a fixed time per item and no navigation. SHL usually allows review within the section. Check the instructions carefully before starting.' },
+              { t: 'SJTs use several answer formats', d: 'Beyond "pick the most effective", real SJTs ask you to rate each response on a scale, rank all four, or pick both the best AND worst. Rating-format examples are included here.' },
+              { t: 'You will be verified later', d: 'Many firms re-test shortlisted candidates in supervised conditions at the assessment centre. A wildly different score raises flags, which is another reason not to get help on the online stage.' },
+              { t: 'Calculators are allowed on numerical, never on trading firm speed tests', d: 'SHL-style tests assume a calculator. Optiver, IMC and similar mental arithmetic rounds explicitly forbid one — train both ways.' },
+            ].map((r, i) => (
+              <div key={i} className="bg-brand-darker border border-white/5 rounded-lg p-3.5">
+                <p className="text-brand-gold font-semibold text-sm mb-0.5">{r.t}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{r.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="bg-brand-card border border-white/10 rounded-xl p-5 mb-8">
           <h2 className="text-white font-bold mb-2">🎚️ How difficulty tiers unlock</h2>
           <p className="text-gray-400 text-sm leading-relaxed">Every category starts with Easy questions only. <span className="text-white font-semibold">Medium</span> unlocks after your first attempt. <span className="text-white font-semibold">Hard</span> unlocks once you've done 3+ attempts averaging 70% or higher over your last 3 — mastery earns you the harder questions, not the other way round.</p>
@@ -1484,6 +1602,16 @@ export default function PracticeTests() {
           <h1 className="text-3xl font-black text-white mb-2">{isFullAssessment ? 'Full Assessment Day' : category?.title} — Results</h1>
           <div className="text-5xl font-black text-brand-gold my-4">{correct}/{total}</div>
           <p className={`font-bold ${band.color}`}>{pct}% — {band.label}</p>
+          <div className="bg-brand-card border border-white/10 rounded-xl p-4 mt-5 text-left max-w-lg mx-auto">
+            <p className="text-xs text-brand-teal font-bold uppercase tracking-wider mb-1">How real tests would score this</p>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Actual tests report a <span className="text-white font-semibold">percentile against a norm group</span>,
+              not a raw percentage — so "you scored in the 75th percentile" means you beat 75% of comparable candidates.
+              Banks typically sift at around the <span className="text-white font-semibold">50th-70th percentile</span>,
+              and competitive programmes higher. A raw {pct}% here is
+              {pct >= 85 ? ' comfortably above where most sifts are set.' : pct >= 70 ? ' around the level most sifts require — build more margin before the real thing.' : ' below where most sifts are set. Keep drilling before you sit a live test.'}
+            </p>
+          </div>
         </div>
 
         {isFullAssessment && (
@@ -1526,7 +1654,8 @@ export default function PracticeTests() {
                   <span className={`font-black text-sm flex-shrink-0 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>{isCorrect ? '✓' : '✗'} Q{i + 1}</span>
                   <div className="min-w-0 flex-1">
                     {isFullAssessment && sessionMeta[i] && <p className={`text-xs font-bold mb-1 ${sessionMeta[i].color}`}>{sessionMeta[i].icon} {sessionMeta[i].catTitle}</p>}
-                    {q.context && <p className="text-gray-500 text-xs mb-1 italic">{q.context}</p>}
+                    {q.dataTable && <p className="text-gray-500 text-xs mb-1 italic">[{q.dataTable.title}]</p>}
+                    {q.context && <p className="text-gray-500 text-xs mb-1 italic whitespace-pre-line">{q.context}</p>}
                     {q.shapes && <p className="text-white text-xl tracking-widest mb-2 overflow-x-auto">{q.shapes}</p>}
                     <p className="text-gray-200 text-sm font-medium">{q.prompt}</p>
                   </div>
@@ -1581,9 +1710,33 @@ export default function PracticeTests() {
       </div>
 
       <div className="bg-brand-card border border-white/10 rounded-2xl p-6 sm:p-8 mb-4">
+        {q.dataTable && (
+          <div className="bg-brand-darker border border-white/10 rounded-xl p-4 mb-4 overflow-x-auto">
+            <p className="text-white font-semibold text-sm mb-2">{q.dataTable.title}</p>
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr>
+                  {q.dataTable.headers.map((h, i) => (
+                    <th key={i} className="text-left p-2 text-gray-400 font-semibold border-b border-white/10 whitespace-nowrap">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {q.dataTable.rows.map((row, i) => (
+                  <tr key={i} className="border-b border-white/5 last:border-0">
+                    {row.map((cell, j) => (
+                      <td key={j} className={`p-2 whitespace-nowrap ${j === 0 ? 'text-gray-300' : 'text-white font-medium'}`}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {q.dataTable.note && <p className="text-gray-500 text-xs mt-2 italic">{q.dataTable.note}</p>}
+          </div>
+        )}
         {q.context && (
           <div className="bg-brand-darker border border-white/5 rounded-xl p-4 mb-4">
-            <p className="text-gray-300 text-sm leading-relaxed">{q.context}</p>
+            <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{q.context}</p>
           </div>
         )}
         {q.shapes && (
