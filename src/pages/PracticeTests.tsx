@@ -124,6 +124,8 @@ type TestCategory = {
   providers: string
   requiredBy: string
   whyUsed: string
+  improveTitle: string
+  improveTips: string[]
   questions: TestQuestion[]
 }
 
@@ -150,6 +152,8 @@ const testCategories: TestCategory[] = [
     providers: 'SHL Verify, Korn Ferry Talent Q Elements, Cappfinity (gamified), Cut-e/Aon scales',
     requiredBy: 'Investment banking (Goldman, JPMorgan, Morgan Stanley), sales & trading, asset management, Big 4, consulting — essentially every finance graduate scheme.',
     whyUsed: 'Finance is a numbers job. Firms use these to screen for speed and accuracy with data under pressure before any human reviews your application — typically cutting 50%+ of candidates at this stage.',
+    improveTitle: "How to get better at Numerical Reasoning",
+    improveTips: ["Estimate before you calculate. Round every number hard, get a ballpark answer, and eliminate any option that is not in the right order of magnitude — this alone kills 1-2 of the 4 options in under 10 seconds, before you touch the real arithmetic.","Master reverse percentages, because it is the single most repeated trap on every provider's numerical test. To undo a percentage change you DIVIDE by (1 ± rate), never add or subtract the same percentage back. \"£64 after a 20% fall\" means original = 64 ÷ 0.8, not 64 × 1.2.","Never average sequential percentage changes — compound them. +12% then −8% is 1.12 × 0.92, not (12−8)/2. A rise and an equal fall always nets to a loss, because the fall applies to a bigger base.","Drill the mental-maths shortcuts below (percentages built from 10%/1%, the ×5/×11/×25 tricks, fraction-to-percent conversions) for 5 minutes a day rather than an hour once a week — arithmetic speed is a motor skill and responds to frequency, not one-off volume.","On table-based questions, total each column ONCE and write it in the margin — most tables carry 2-3 questions off the same exhibit, so that thirty seconds pays for itself immediately, and it stops the classic error of dividing by the wrong year's total.","Check units before you answer. £m vs £bn, % vs percentage points, and per-unit vs total are where most careless marks are lost — not the arithmetic itself.","If a single question is taking more than about 40 seconds, you have almost certainly misread it — stop calculating and re-read the question rather than pushing through with the wrong approach."],
     questions: [
       {
         context: 'A fund\'s value grows from £2.4m to £3.0m over one year.',
@@ -448,6 +452,8 @@ const testCategories: TestCategory[] = [
     providers: 'SHL Verify Verbal, Watson Glaser (critical thinking variant), Korn Ferry Talent Q, Cut-e/Aon',
     requiredBy: 'Consulting firms, investment banks, asset managers, law-adjacent roles (compliance, risk), and the Big 4. Watson Glaser specifically appears at firms testing critical reasoning.',
     whyUsed: 'Finance runs on dense documents — research notes, term sheets, regulations. These tests screen whether you extract precisely what a text says without adding assumptions, which is exactly the discipline the job needs.',
+    improveTitle: "How to get better at Verbal Reasoning",
+    improveTips: ["Use ONLY the passage. Outside knowledge — even things you know are true in the real world — must never influence a True/False/Cannot Say answer. If the passage does not state or directly imply it, the answer is Cannot Say, however plausible it feels.","Separate timing words from causation words. \"Following\", \"after\", \"amid\" and \"as\" mark sequence only. \"Because\", \"due to\", \"driven by\" and \"led to\" mark causation. If the passage uses a timing word and the statement claims causation, the answer is almost always Cannot Say.","Watch for sample-to-population swaps — \"funds examined\" versus \"all funds\", \"respondents\" versus \"the public\", \"this quarter\" versus \"always\". Compare the group in the statistic to the group in the statement word for word; if they differ, the answer is Cannot Say.","Scan for absolutes first — never, always, all, none, only, every. They are very easy to contradict (one counter-example is enough) and very hard to support, so check for a counter-example before doing anything else.","Read the statement before hunting in the passage, not after. Identify exactly what is being claimed — is it about the world, or about what a study/survey specifically showed? — then go find the matching clause, rather than re-reading the whole passage hoping the answer surfaces.","A single logical step (e.g. \"definitions vary widely\" therefore \"no single agreed definition\") is fair game and often True. A chain of two or more inferential steps is almost always too far — treat elegant, multi-step explanations with suspicion even when they fit every fact.","Practise against the clock, not just for accuracy. Real verbal tests give roughly 45-60 seconds per statement including reading time, so timed reps matter as much as understanding the traps."],
     questions: [
       {
         context: 'Passage: "The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar."',
@@ -627,6 +633,8 @@ const testCategories: TestCategory[] = [
     providers: 'SHL Inductive Reasoning, Cut-e/Aon scales cls & ix (used heavily by trading firms), Korn Ferry logical, Raven\'s Progressive Matrices',
     requiredBy: 'Trading firms (Optiver, IMC, Flow Traders famously use cut-e), quant funds, tech divisions, consulting and most bank graduate schemes.',
     whyUsed: 'Abstract reasoning is the closest proxy for raw pattern-recognition and learning speed — trading and quant firms weight it heavily because spotting patterns fast IS the job. It\'s also degree-agnostic, so firms use it to compare candidates fairly.',
+    improveTitle: "How to get better at Logical & Abstract Reasoning",
+    improveTips: ["Name the attributes before you hunt for a rule: shape, fill, count, position, size, rotation, orientation. State which are moving and which are fixed — this alone eliminates options that vary an attribute the sequence holds constant.","For any accelerating or unusual number sequence, write the differences underneath, and if those are not constant, write the differences of the differences. Two rows of subtraction resolve almost every numeric progression you will see.","For rotating or cyclic sequences, find the period first (how many steps until it repeats), then answer by position MOD period rather than tracing every single step — this is the only way to answer items that ask for position 6 or 7 inside a strict time limit.","When two attributes change at once, isolate and track them completely separately. Most marks are lost on multi-attribute items not because the rule is hard, but because both attributes are tracked together and one gets dropped.","Never assume a sequence bounces, wraps, or reverses at a boundary unless it has already shown you that behaviour. Extend the demonstrated pattern; only change behaviour when the sequence or the question explicitly tells you to.","If you are stuck, eliminate options that break an obvious rule (wrong shape, wrong count, wrong direction) and guess from what remains rather than leaving it blank — there is no penalty for a wrong answer on almost every real provider's test.","Trading and quant firms in particular (cut-e/Aon \"scales\") run these adaptively with very short per-item timers, sometimes under 15 seconds — if you are targeting those firms specifically, practise faster than this page's default timer to build real margin."],
     questions: [
       {
         shapes: '●  ○  ●  ○  ●  ?',
@@ -898,6 +906,8 @@ const testCategories: TestCategory[] = [
     providers: 'Cappfinity (strengths-based), HireVue (video + SJT hybrid), firm-custom assessments (e.g. JPMorgan\'s "insight" games, HSBC job simulations), SHL SJQ',
     requiredBy: 'Virtually every graduate scheme — banks, Big 4, consulting, insurers. Often combined with a recorded video interview in the same sitting.',
     whyUsed: 'Firms lose money and reputation when juniors show poor judgement — hiding errors, breaching confidentiality, mishandling clients. SJTs cheaply screen thousands of applicants for alignment with the firm\'s stated values before assessment centres.',
+    improveTitle: "How to get better at Situational Judgement",
+    improveTips: ["Learn the standard escalation ladder and apply it by default: raise it directly with the person involved first, escalate to your manager if it continues, HR only after that — skipping straight to the top rung (or never leaving the bottom rung) both score poorly.","Never conceal a mistake and never freelance outside your authority. The two failure modes SJTs screen hardest for are hiding errors and taking unilateral action you are not empowered to take (contacting a client directly, overriding a senior's work, editing a shared record without telling anyone).","Speed of disclosure is usually the biggest driver of the score on any \"should I flag this\" scenario. The earlier a problem is surfaced, the more options exist to fix it — flag on day one of a two-week project is a non-event, flagging the night before a deadline is a crisis.","For \"I disagree with someone senior\" scenarios, the answer is almost always about CHANNEL, not content — raise it privately and respectfully with reasoning and an alternative, never publicly and never by silently overriding them.","On rating-format items (\"how effective is this response?\"), resist the pull to the extremes. Reserve \"very ineffective\" for responses that breach a control, conceal something, or create real risk; reserve \"very effective\" for responses with no real downside. Genuinely mixed responses should get a middle rating.","Firms score against their stated values, not against what feels emotionally satisfying — integrity first, escalate appropriately, communicate early, never hide mistakes, never throw colleagues under the bus. When two options both seem reasonable, pick the one a calm, values-led professional would actually do.","Answer as the person you want to become, not as you might act under real stress on your worst day — SJTs measure judgement about the ideal response, and firms know nobody is perfect, but they are screening for what you know the right move is."],
     questions: [
       {
         context: 'You\'re an intern and you notice a significant error in a spreadsheet your manager already sent to a client.',
@@ -1209,6 +1219,8 @@ const testCategories: TestCategory[] = [
     "providers": "Watson Glaser II (Pearson) — the market-standard critical thinking test",
     "requiredBy": "Magic/Silver Circle law firms, the Big 4 (audit, tax, advisory), consulting firms, and compliance/risk functions at investment banks. Also used in many training-contract and internship applications alongside finance ones.",
     "whyUsed": "It measures whether you can reason carefully about information rather than jump to conclusions — the exact skill needed to read a term sheet, assess a client claim, or evaluate a deal argument without over- or under-reading the evidence.",
+    improveTitle: "How to get better at Watson Glaser Critical Thinking",
+    improveTips: ["Learn what each of the five sub-types actually asks, because they are not interchangeable: Inference wants a likelihood rating, Assumptions wants whether something is silently required, Deduction wants pure logical necessity, Interpretation wants \"beyond reasonable doubt\", Evaluation of Arguments wants relevance plus importance to the specific question.","For Assumptions, always apply the negation test: negate the candidate assumption and check whether the argument still holds. If negating it destroys the argument, the assumption was being made; if the argument survives, it was not.","For Deduction, treat the premises as definitely true even if they contradict what you know about the real world, and reason ONLY from the stated structure — this is the one sub-test where being right about reality can make you wrong about the answer.","For Interpretation, ask whether a sceptical reader could construct a credible alternative explanation consistent with every stated fact. If yes, the conclusion does not clear the beyond-reasonable-doubt bar, however plausible the causal story sounds.","For Evaluation of Arguments, remember truth is not the test — relevance is. A completely true statement can still be a weak argument if it does not actually address the SPECIFIC question asked. Restate the exact question before judging any argument.","For Inference specifically, calibrate the five-point scale deliberately: ask first whether the evidence points a direction at all, then how strongly — do not collapse \"well-supported\" and \"proven\" into the same answer, and do not treat every unconfirmed pattern as automatically \"insufficient\".","This format rewards slow, deliberate reading far more than the other test types — resist the urge to speed through on instinct, since the traps are specifically built to catch fast, confident, real-world pattern-matching."],
     "questions": [
       {
         "context": "INFERENCE — judge how likely a conclusion is GIVEN the facts, on a scale from definitely true to definitely false.\n\nStatement: \"Sales of the company's flagship product fell 15% this quarter, the third consecutive quarterly decline. The CFO resigned during the quarter, citing personal reasons.\"",
@@ -1331,6 +1343,8 @@ const testCategories: TestCategory[] = [
     "providers": "SHL Checking Test, Talent Q Elements Checking, Cut-e/Aon scales cch, bespoke back-office screening tools",
     "requiredBy": "Operations, settlements, trade support, fund administration, KYC/onboarding teams, and increasingly as a fast initial screen even for some analyst schemes at banks and asset managers.",
     "whyUsed": "A single mistyped account number or transposed figure in a trade confirmation or client record can cause a real financial loss or a regulatory breach. Firms use checking tests because they are a direct, low-cost proxy for exactly that risk — can you reliably catch a small discrepancy under time pressure, again and again, without fatigue causing you to miss one.",
+    improveTitle: "How to get better at Checking & Attention to Detail",
+    improveTips: ["Never compare two long strings by overall shape or \"does it look right\" — split every field into chunks (thousands/hundreds/tens/units for money, groups of 4 for IBANs, day/month/year for dates) and compare chunk by chunk.","Handle letters and digits as two separate passes on any alphanumeric code (passport numbers, references, SWIFT/BIC codes) — the eye tends to verify a distinctive letter prefix carefully while skimming the digit string, which is exactly where transposition errors hide.","For free-text fields (names, addresses), read for CHARACTERS, not meaning — your brain auto-corrects familiar words on sight, silently \"fixing\" a missing or swapped letter before you consciously notice it. Reading a word backwards, end to start, defeats this auto-correction.","Recompute percentage-based fields (VAT, fees, rates) independently from their base figure rather than only checking that the components sum correctly — a total can be internally consistent while still applying the wrong rate.","Expect roughly a third to half of real checking-test items to be genuine matches. Do not let a run of \"discrepancy found\" answers create momentum toward assuming every remaining item has an error too — false positives are graded as wrong, exactly like missed real errors.","Work at a fixed, sustainable pace rather than rushing the easy-looking items — these tests are usually scored on accuracy under a tight but even time budget, and fatigue-driven misses cluster in the last third of a long test far more than the first.","Practise on real numbers you have to actually compute, not just visual \"spot the difference\" puzzles — the highest-value checking questions (like the VAT-rate item in this bank) require you to verify a calculation is correct, not just that two records match."],
     "questions": [
       {
         "context": "Compare the two records. They should be identical.",
@@ -1788,6 +1802,8 @@ export default function PracticeTests() {
   const [sessionMeta, setSessionMeta] = useState<QuestionMeta[]>([])
   const [isFullAssessment, setIsFullAssessment] = useState(false)
   const [expertMode, setExpertMode] = useState(false)
+  const [expandedTips, setExpandedTips] = useState<string | null>(null)
+  const [showReference, setShowReference] = useState(false)
   const [qIndex, setQIndex] = useState(0)
   const [answers, setAnswers] = useState<(string | null)[]>([])
   const [timeLeft, setTimeLeft] = useState(0)
@@ -2030,121 +2046,137 @@ export default function PracticeTests() {
               <div className="text-xs text-gray-600 mb-4">
                 {cat.questionsPerAttempt} questions per attempt, weighted-sampled from a bank of {cat.questions.length} · {formatTime(cat.questionsPerAttempt * cat.secondsPerQuestion)} time limit · retake for a different test
               </div>
-              <button
-                onClick={() => startTest(cat)}
-                className="w-full py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
-              >
-                Start Test →
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => startTest(cat)}
+                  className="flex-1 py-3 bg-brand-gold text-black font-bold rounded-xl hover:bg-brand-gold2 transition-colors"
+                >
+                  Start Test →
+                </button>
+                <button
+                  onClick={() => setExpandedTips(expandedTips === cat.id ? null : cat.id)}
+                  className={`px-4 py-3 rounded-xl font-bold text-sm transition-colors ${expandedTips === cat.id ? `${cat.color} bg-white/10` : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+                >
+                  📈 {expandedTips === cat.id ? 'Hide tips' : 'How to improve'}
+                </button>
+              </div>
+
+              {expandedTips === cat.id && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <p className={`text-xs font-bold uppercase tracking-wider mb-2.5 ${cat.color}`}>{cat.improveTitle}</p>
+                  <ul className="space-y-2 mb-1">
+                    {cat.improveTips.map((tip, i) => (
+                      <li key={i} className="flex items-start gap-2 text-gray-300 text-xs leading-relaxed">
+                        <span className={`mt-0.5 flex-shrink-0 ${cat.color}`}>▸</span> {tip}
+                      </li>
+                    ))}
+                  </ul>
+                  {cat.id === 'numerical' && (
+                    <div className="mt-4 pt-4 border-t border-white/5">
+                      <MentalMathsDrill />
+                      <div className="grid sm:grid-cols-2 gap-3 mt-4">
+                        {mentalMathsShortcuts.map((sec, i) => (
+                          <div key={i} className="bg-brand-darker border border-white/5 rounded-xl p-3.5">
+                            <h3 className="text-brand-gold font-bold text-xs mb-2">{sec.group}</h3>
+                            <ul className="space-y-1.5">
+                              {sec.items.map((item, j) => (
+                                <li key={j} className="flex items-start gap-1.5 text-gray-300 text-[11px] leading-relaxed">
+                                  <span className="text-brand-teal mt-0.5 flex-shrink-0">▸</span> {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )})}
         </div>
 
-        {/* Realism notes */}
-        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
-          <h2 className="text-white font-bold text-lg mb-1">📋 How the real tests differ from practice</h2>
-          <p className="text-gray-500 text-xs mb-4">Practice here is deliberately close to the real formats, but there are differences worth knowing before you sit a live one.</p>
-          <div className="space-y-3">
-            {[
-              { t: 'Scoring is percentile, not percentage', d: 'Real tests compare you to a norm group of comparable candidates. Firms sift at a percentile threshold, often around 50th-70th, so what matters is how you did relative to others — not your raw score.' },
-              { t: 'Numerical tests group questions around shared exhibits', d: 'You typically get a table or chart with three or four questions on it, so time invested understanding the data pays off across several questions. Some questions here now replicate this.' },
-              { t: 'Many are adaptive', d: 'SHL Verify Interactive and similar adjust difficulty based on your answers — get one right and the next is harder. This means you cannot judge how you are doing from question difficulty, so do not panic if items feel hard.' },
-              { t: 'Some formats do not let you go back', d: 'Cut-e/Aon tests often auto-advance with a fixed time per item and no navigation. SHL usually allows review within the section. Check the instructions carefully before starting.' },
-              { t: 'SJTs use several answer formats', d: 'Beyond "pick the most effective", real SJTs ask you to rate each response on a scale, rank all four, or pick both the best AND worst. Rating-format examples are included here.' },
-              { t: 'You will be verified later', d: 'Many firms re-test shortlisted candidates in supervised conditions at the assessment centre. A wildly different score raises flags, which is another reason not to get help on the online stage.' },
-              { t: 'Calculators are allowed on numerical, never on trading firm speed tests', d: 'SHL-style tests assume a calculator. Optiver, IMC and similar mental arithmetic rounds explicitly forbid one — train both ways.' },
-            ].map((r, i) => (
-              <div key={i} className="bg-brand-darker border border-white/5 rounded-lg p-3.5">
-                <p className="text-brand-gold font-semibold text-sm mb-0.5">{r.t}</p>
-                <p className="text-gray-400 text-sm leading-relaxed">{r.d}</p>
+        {/* Reference — collapsed by default so it doesn't dilute the "start a test" decision */}
+        <div className="bg-brand-card border border-white/10 rounded-2xl overflow-hidden">
+          <button
+            onClick={() => setShowReference(!showReference)}
+            className="w-full flex items-center justify-between p-5 hover:bg-white/5 transition-colors"
+          >
+            <span className="text-white font-bold">📚 Test-day reference — how real tests differ, difficulty tiers, where else to practise</span>
+            <span className={`text-gray-500 transition-transform ${showReference ? 'rotate-180' : ''}`}>▾</span>
+          </button>
+
+          {showReference && (
+            <div className="p-6 pt-0 space-y-8">
+              <div>
+                <h2 className="text-white font-bold text-lg mb-1">📋 How the real tests differ from practice</h2>
+                <p className="text-gray-500 text-xs mb-4">Practice here is deliberately close to the real formats, but there are differences worth knowing before you sit a live one.</p>
+                <div className="space-y-3">
+                  {[
+                    { t: 'Scoring is percentile, not percentage', d: 'Real tests compare you to a norm group of comparable candidates. Firms sift at a percentile threshold, often around 50th-70th, so what matters is how you did relative to others — not your raw score.' },
+                    { t: 'Numerical tests group questions around shared exhibits', d: 'You typically get a table or chart with three or four questions on it, so time invested understanding the data pays off across several questions. Some questions here now replicate this.' },
+                    { t: 'Many are adaptive', d: 'SHL Verify Interactive and similar adjust difficulty based on your answers — get one right and the next is harder. This means you cannot judge how you are doing from question difficulty, so do not panic if items feel hard.' },
+                    { t: 'Some formats do not let you go back', d: 'Cut-e/Aon tests often auto-advance with a fixed time per item and no navigation. SHL usually allows review within the section. Check the instructions carefully before starting.' },
+                    { t: 'SJTs use several answer formats', d: 'Beyond "pick the most effective", real SJTs ask you to rate each response on a scale, rank all four, or pick both the best AND worst. Rating-format examples are included here.' },
+                    { t: 'You will be verified later', d: 'Many firms re-test shortlisted candidates in supervised conditions at the assessment centre. A wildly different score raises flags, which is another reason not to get help on the online stage.' },
+                    { t: 'Calculators are allowed on numerical, never on trading firm speed tests', d: 'SHL-style tests assume a calculator. Optiver, IMC and similar mental arithmetic rounds explicitly forbid one — train both ways.' },
+                  ].map((r, i) => (
+                    <div key={i} className="bg-brand-darker border border-white/5 rounded-lg p-3.5">
+                      <p className="text-brand-gold font-semibold text-sm mb-0.5">{r.t}</p>
+                      <p className="text-gray-400 text-sm leading-relaxed">{r.d}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        <div className="bg-brand-card border border-white/10 rounded-xl p-5 mb-8">
-          <h2 className="text-white font-bold mb-2">🎚️ How difficulty tiers unlock</h2>
-          <p className="text-gray-400 text-sm leading-relaxed">Every category starts with Easy questions only. <span className="text-white font-semibold">Medium</span> unlocks after your first attempt. <span className="text-white font-semibold">Hard</span> unlocks once you've done 3+ attempts averaging 70% or higher over your last 3 — mastery earns you the harder questions, not the other way round.</p>
-        </div>
+              <div>
+                <h2 className="text-white font-bold mb-2">🎚️ How difficulty tiers unlock</h2>
+                <p className="text-gray-400 text-sm leading-relaxed">Every category starts with Easy questions only. <span className="text-white font-semibold">Medium</span> unlocks after your first attempt. <span className="text-white font-semibold">Hard</span> unlocks once you've done 3+ attempts averaging 70% or higher over your last 3 — mastery earns you the harder questions, not the other way round.</p>
+              </div>
 
-        {/* Mental maths drill */}
-        <div className="mb-8">
-          <MentalMathsDrill />
-        </div>
+              <div>
+                <h2 className="text-white font-bold text-lg mb-1">🌐 Where to practise further</h2>
+                <p className="text-gray-500 text-xs mb-4">Free and paid platforms candidates actually use — plus the providers' own practice portals, which mirror the real tests exactly.</p>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    { name: 'SHL Direct (practice.shl.com)', desc: 'Free official practice tests from the biggest provider — do these first, they mirror what banks send.', tag: 'Free · Official' },
+                    { name: 'AssessmentDay', desc: 'Large free question banks for numerical, verbal and logical tests with worked solutions.', tag: 'Free + Paid' },
+                    { name: 'Practice Aptitude Tests', desc: 'Free tests categorised by employer and provider — search the firm you\'re applying to.', tag: 'Free + Paid' },
+                    { name: 'JobTestPrep', desc: 'Paid provider-specific prep packs (SHL, Talent Q, cut-e, Watson Glaser) — worth it for a target firm.', tag: 'Paid' },
+                    { name: 'Aon/cut-e practice portal', desc: 'Official practice for the scales tests used by Optiver, IMC and other trading firms.', tag: 'Free · Official' },
+                    { name: 'GraduatesFirst', desc: 'Free trials plus firm-specific test guides for banks and Big 4.', tag: 'Free + Paid' },
+                  ].map((site, i) => (
+                    <div key={i} className="bg-white/5 rounded-xl p-4">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <span className="text-white font-semibold text-sm">{site.name}</span>
+                        <span className="text-[10px] font-bold text-brand-teal bg-brand-teal/10 px-2 py-0.5 rounded-full flex-shrink-0">{site.tag}</span>
+                      </div>
+                      <p className="text-gray-500 text-xs leading-relaxed">{site.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-        {/* Mental maths technique */}
-        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
-          <h2 className="text-white font-bold text-lg mb-1">🧮 Mental Maths — the shortcuts worth drilling</h2>
-          <p className="text-gray-500 text-xs mb-5">
-            Numerical tests allow a calculator, but the candidates who score highest barely use it — they estimate,
-            eliminate, and only calculate to confirm. Trading firms test raw speed with no calculator at all.
-            These are the specific techniques that produce that speed.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-5">
-            {mentalMathsShortcuts.map((sec, i) => (
-              <div key={i} className="bg-brand-darker border border-white/5 rounded-xl p-4">
-                <h3 className="text-brand-gold font-bold text-sm mb-2.5">{sec.group}</h3>
-                <ul className="space-y-2">
-                  {sec.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-2 text-gray-300 text-xs leading-relaxed">
-                      <span className="text-brand-teal mt-0.5 flex-shrink-0">▸</span> {item}
+              <div>
+                <h2 className="text-white font-bold text-lg mb-4">🎯 Test-day tactics that actually work</h2>
+                <ul className="space-y-2.5">
+                  {[
+                    'Do the practice questions every provider offers before the real test — formats vary and familiarity is free marks.',
+                    'Use a proper calculator, pen and paper for numerical tests — mental-only maths under time pressure causes silly errors.',
+                    'Never leave blanks: most tests don\'t punish wrong answers, so eliminate and guess.',
+                    'For verbal reasoning: answer ONLY from the passage. Your outside knowledge is the trap.',
+                    'For logical tests: check count → rotation → alternation → size → position, in that order.',
+                    'For SJTs: research the firm\'s stated values first — you\'re being scored against them.',
+                    'Take the test fresh, in the morning, on a proper computer with stable internet — not on your phone at midnight before the deadline.',
+                  ].map((tip, i) => (
+                    <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                      <span className="text-brand-teal mt-0.5 flex-shrink-0">✓</span> {tip}
                     </li>
                   ))}
                 </ul>
               </div>
-            ))}
-          </div>
-          <div className="mt-5 pt-4 border-t border-white/5">
-            <p className="text-gray-400 text-sm leading-relaxed">
-              <span className="text-white font-semibold">How to actually improve:</span> run the sprint above for
-              5 minutes a day rather than an hour once a week — arithmetic speed is a motor skill and responds to
-              frequency, not volume. Keep accuracy above 80% before pushing pace; below that you are guessing, and
-              guessing trains the wrong habit. When you miss one, work out <em>which</em> shortcut above would have
-              caught it rather than just noting the right answer.
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-brand-card border border-white/10 rounded-2xl p-6 mb-8">
-          <h2 className="text-white font-bold text-lg mb-1">🌐 Where to practise further</h2>
-          <p className="text-gray-500 text-xs mb-4">Free and paid platforms candidates actually use — plus the providers' own practice portals, which mirror the real tests exactly.</p>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {[
-              { name: 'SHL Direct (practice.shl.com)', desc: 'Free official practice tests from the biggest provider — do these first, they mirror what banks send.', tag: 'Free · Official' },
-              { name: 'AssessmentDay', desc: 'Large free question banks for numerical, verbal and logical tests with worked solutions.', tag: 'Free + Paid' },
-              { name: 'Practice Aptitude Tests', desc: 'Free tests categorised by employer and provider — search the firm you\'re applying to.', tag: 'Free + Paid' },
-              { name: 'JobTestPrep', desc: 'Paid provider-specific prep packs (SHL, Talent Q, cut-e, Watson Glaser) — worth it for a target firm.', tag: 'Paid' },
-              { name: 'Aon/cut-e practice portal', desc: 'Official practice for the scales tests used by Optiver, IMC and other trading firms.', tag: 'Free · Official' },
-              { name: 'GraduatesFirst', desc: 'Free trials plus firm-specific test guides for banks and Big 4.', tag: 'Free + Paid' },
-            ].map((site, i) => (
-              <div key={i} className="bg-white/5 rounded-xl p-4">
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="text-white font-semibold text-sm">{site.name}</span>
-                  <span className="text-[10px] font-bold text-brand-teal bg-brand-teal/10 px-2 py-0.5 rounded-full flex-shrink-0">{site.tag}</span>
-                </div>
-                <p className="text-gray-500 text-xs leading-relaxed">{site.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-brand-card border border-white/10 rounded-2xl p-6">
-          <h2 className="text-white font-bold text-lg mb-4">🎯 Test-day tactics that actually work</h2>
-          <ul className="space-y-2.5">
-            {[
-              'Do the practice questions every provider offers before the real test — formats vary and familiarity is free marks.',
-              'Use a proper calculator, pen and paper for numerical tests — mental-only maths under time pressure causes silly errors.',
-              'Never leave blanks: most tests don\'t punish wrong answers, so eliminate and guess.',
-              'For verbal reasoning: answer ONLY from the passage. Your outside knowledge is the trap.',
-              'For logical tests: check count → rotation → alternation → size → position, in that order.',
-              'For SJTs: research the firm\'s stated values first — you\'re being scored against them.',
-              'Take the test fresh, in the morning, on a proper computer with stable internet — not on your phone at midnight before the deadline.',
-            ].map((tip, i) => (
-              <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
-                <span className="text-brand-teal mt-0.5 flex-shrink-0">✓</span> {tip}
-              </li>
-            ))}
-          </ul>
+            </div>
+          )}
         </div>
       </div>
     )

@@ -15,21 +15,18 @@ const navItems: NavItem[] = [
     label: 'Careers',
     dropdown: [
       { to: '/jobs', label: 'All Careers', description: 'Browse all 27 finance careers' },
+      { to: '/quiz', label: 'Career Quiz', description: 'Find your perfect finance career' },
       { to: '/salary-comparison', label: 'Salary Comparison', description: 'Compare pay across roles' },
       { to: '/career-comparison', label: 'Career Comparison', description: 'Hours, comp & skills side by side' },
     ],
   },
   {
-    label: 'Tools',
+    label: 'Prepare',
     dropdown: [
       { to: '/interview-guide', label: 'Interview Mastery', description: 'Technique, model answers & your year plan' },
       { to: '/interview-quiz', label: 'Interview Quiz', description: 'Practice real interview questions' },
       { to: '/video-practice', label: 'Video / HireVue Practice', description: 'Record timed answers to camera' },
-      { to: '/quiz', label: 'Career Quiz', description: 'Find your perfect finance career' },
-      { to: '/cv-reviewer', label: 'CV & Cover Letter', description: 'AI-powered application review' },
-      { to: '/advisor', label: 'AI Advisor', description: 'Personalised career guidance' },
-      { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
-      { to: '/practice-tests', label: 'Online Test Practice', description: 'Numerical, verbal, logical & SJT tests' },
+      { to: '/practice-tests', label: 'Online Test Practice', description: 'Numerical, verbal, logical, SJT, checking & Watson Glaser' },
       { to: '/skill-drills', label: 'Role Skill Drills', description: 'Trading, consulting, IB & PE interview maths' },
       { to: '/case-studies', label: 'Full Case Studies', description: 'Complete cases worked stage by stage' },
     ],
@@ -38,11 +35,19 @@ const navItems: NavItem[] = [
     label: 'Learn',
     dropdown: [
       { to: '/technicals', label: 'Technicals & Routes In', description: 'What to know, the process, how to break in' },
-      { to: '/market-intel', label: 'Deals & Market Intel', description: 'Deal teardowns, rate drivers, sector impact' },
       { to: '/learn', label: 'Develop Knowledge', description: 'Duolingo-style finance mastery course' },
       { to: '/ai-skills', label: 'Develop AI Knowledge', description: 'Prompting skills & AI fluency for finance' },
+      { to: '/market-intel', label: 'Deals & Market Intel', description: 'Deal teardowns, rate drivers, sector impact' },
       { to: '/networking', label: 'Networking Guide', description: 'Cold emails, coffee chat scripts' },
       { to: '/resources', label: 'Resources', description: 'Books, qualifications, glossary' },
+    ],
+  },
+  {
+    label: 'My Toolkit',
+    dropdown: [
+      { to: '/cv-reviewer', label: 'CV & Cover Letter', description: 'AI-powered application review' },
+      { to: '/advisor', label: 'AI Advisor', description: 'Personalised career guidance' },
+      { to: '/meeting-notes', label: 'Meeting Notes', description: 'Record meetings, get AI takeaways' },
     ],
   },
 ]
