@@ -1196,6 +1196,579 @@ const testCategories: TestCategory[] = [
       },
     ],
   },
+  {
+    "id": "critical-thinking",
+    "title": "Watson Glaser Critical Thinking",
+    "icon": "🧭",
+    "color": "text-cyan-400",
+    "border": "border-cyan-500/30",
+    "description": "The proper 5-part critical thinking format: inference, assumptions, deduction, interpretation, argument evaluation.",
+    "secondsPerQuestion": 40,
+    "questionsPerAttempt": 10,
+    "tip": "Each of the five sub-types has ONE specific job. Answer the question type actually asked, not a generic \"is this true\" instinct — inference wants likelihood, deduction wants logical necessity, and they are not the same thing.",
+    "providers": "Watson Glaser II (Pearson) — the market-standard critical thinking test",
+    "requiredBy": "Magic/Silver Circle law firms, the Big 4 (audit, tax, advisory), consulting firms, and compliance/risk functions at investment banks. Also used in many training-contract and internship applications alongside finance ones.",
+    "whyUsed": "It measures whether you can reason carefully about information rather than jump to conclusions — the exact skill needed to read a term sheet, assess a client claim, or evaluate a deal argument without over- or under-reading the evidence.",
+    "questions": [
+      {
+        "context": "INFERENCE — judge how likely a conclusion is GIVEN the facts, on a scale from definitely true to definitely false.\n\nStatement: \"Sales of the company's flagship product fell 15% this quarter, the third consecutive quarterly decline. The CFO resigned during the quarter, citing personal reasons.\"",
+        "prompt": "Inference: \"The CFO's resignation was linked to the declining sales.\"",
+        "options": [
+          "True",
+          "Probably True",
+          "Insufficient Data",
+          "Probably False",
+          "False"
+        ],
+        "answer": "Insufficient Data",
+        "explanation": "Working: an inference is a conclusion drawn beyond what is directly stated, and Watson Glaser asks you to rate how strongly the facts support it — not whether it feels plausible in the real world.\n\nWhy the wrong answers tempt: \"Probably True\" is the instinctive real-world read — CFOs resigning during a sales slump often ARE connected, and if you were reading this in the FT you would assume a link. But the passage gives an explicit alternative reason (\"personal reasons\") and no evidence tying the two events together beyond timing. \"Probably False\" over-corrects, treating the stated reason as proof of no link, when resignation announcements routinely cite \"personal reasons\" as a face-saving cover regardless of the truth. \"True\" and \"False\" are both too strong for a single, unconfirmed inference either way.\n\nTechnique: Watson Glaser deliberately builds inference items where real-world intuition and textual support diverge. Two unrelated facts appearing in the same paragraph is not evidence of a causal link — it is coincidence in timing, and coincidence is the single most common inference trap on this test. \"Insufficient Data\" is correct whenever the facts could support several different, contradictory explanations equally well, which is exactly the case here: sales fell for any number of reasons, and executives leave for any number of reasons, and the passage supplies no bridge between them."
+      },
+      {
+        "context": "INFERENCE\n\nStatement: \"In a survey of 500 graduate applicants, 82% said they had used AI tools to help prepare their CVs. Recruiters at three major banks reported a rise in CVs with near-identical phrasing this year.\"",
+        "prompt": "Inference: \"AI tools are causing some CVs to look similar to each other.\"",
+        "options": [
+          "True",
+          "Probably True",
+          "Insufficient Data",
+          "Probably False",
+          "False"
+        ],
+        "answer": "Probably True",
+        "explanation": "Working: two facts are given — heavy AI usage in CV writing, and recruiters independently noticing more similar phrasing. The two are consistent and mutually reinforcing, even though no formal causal study is cited, so the inference is well-supported without being proven.\n\nWhy the wrong answers tempt: \"True\" over-states the certainty — recruiter impressions are anecdotal, not a controlled study, so \"definitely\" is too strong a claim from this evidence. \"Insufficient Data\" undersells a genuinely strong circumstantial link — this is the mirror-image trap of the previous item: here the two facts DO point the same direction, and treating every unconfirmed pattern as \"insufficient\" is as much an error as reading causation into pure coincidence. \"Probably False\" and \"False\" both contradict the direction the evidence actually points.\n\nTechnique: the inference scale exists to force you to distinguish PROVEN from WELL-SUPPORTED from UNSUPPORTED from CONTRADICTED — five genuinely different positions, not a binary. Ask two questions: does the evidence point this way at all, and if so, how strongly? Here it points clearly one way (unlike the CFO item, where it could point either way), but falls short of proof because there is no controlled comparison — hence \"Probably True\" rather than \"True\". Comparing this item against the previous one is the fastest way to internalise the difference between \"insufficient\" and \"probable\"."
+      },
+      {
+        "context": "ASSUMPTIONS — decide whether an unstated assumption is actually being made in the argument.\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
+        "prompt": "Assumption made: \"The lower-cost location has staff capable of performing the work to the required standard.\"",
+        "options": [
+          "Assumption Made",
+          "Assumption Not Made"
+        ],
+        "answer": "Assumption Made",
+        "explanation": "Working: an assumption is something the speaker must be taking for granted for their argument to make sense, even though they never say it. The proposal only protects margins if the new location can actually do the work properly — if the staff there could not perform the work, moving would not protect margins, it would create losses through errors and rework. So the argument silently depends on this being true.\n\nWhy the wrong answer tempts: candidates who mark \"Assumption Not Made\" are usually reasoning that the statement never mentions staff quality at all, so how can it be assuming something about them? But that misunderstands what an assumption is — it is precisely the thing that is NOT said but MUST be true for the stated conclusion to follow. If you can construct a scenario where the stated premise is true but the assumption is false, and the argument then falls apart, the assumption is being made.\n\nTechnique: apply the negation test. Negate the candidate assumption (\"staff at the new location CANNOT perform the work to standard\") and ask whether the original argument still holds. Here it collapses instantly — cheap processing done badly does not protect margins, it destroys them through errors, rework and reputational cost. When negating a statement destroys the argument, the assumption was being made. When negating it leaves the argument standing, it was not — that second case is what the sister question below tests."
+      },
+      {
+        "context": "ASSUMPTIONS\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
+        "prompt": "Assumption made: \"The lower-cost location is outside the company's home country.\"",
+        "options": [
+          "Assumption Made",
+          "Assumption Not Made"
+        ],
+        "answer": "Assumption Not Made",
+        "explanation": "Working: apply the negation test again. Negate the candidate assumption — \"the lower-cost location is INSIDE the home country\" — and check whether the argument still works. It does: many countries have regions with materially lower costs than a head-office city, so relocating processing domestically could protect margins just as well as relocating it abroad.\n\nWhy the wrong answer tempts: \"offshoring\" is the almost automatic mental image that \"lower-cost location\" conjures for anyone who has read about outsourcing in the news, and it is very easy to import that assumption from real-world pattern-matching rather than from the actual text. The statement never says overseas, never says offshore, and the argument logic (lower cost protects margins) works identically whether the new location is in the next region over or a different continent.\n\nTechnique: this pair of questions is deliberately built to expose the difference between an assumption the ARGUMENT needs and a detail your BACKGROUND KNOWLEDGE fills in automatically. Real assumptions are structurally necessary — remove them and the logic breaks. Imported details are just the first mental picture that comes to mind and are usually not necessary at all. Whenever a candidate assumption feels obvious because that is usually how it works in practice, stop and run the negation test explicitly rather than trusting the feeling — the feeling is exactly what this sub-test is designed to catch out."
+      },
+      {
+        "context": "DEDUCTION — decide whether a conclusion follows with LOGICAL NECESSITY from the given statements, treating them as definitely true even if they seem odd.\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
+        "prompt": "Conclusion: \"None of the fund's top-five holdings has paid a dividend in the last three years.\"",
+        "options": [
+          "Conclusion Follows",
+          "Conclusion Does Not Follow"
+        ],
+        "answer": "Conclusion Follows",
+        "explanation": "Working: this is a syllogism. Premise 1: top-five holdings sit inside technology companies. Premise 2: no technology company in the fund has paid a dividend. Combining them, every top-five holding is a technology company, and no technology company has paid a dividend — so no top-five holding has paid a dividend. The logic is airtight regardless of whether it happens to match reality.\n\nWhy the wrong answer tempts: some candidates hesitate because they know in real life that some large tech companies DO pay dividends, and that outside knowledge creates doubt. Deduction questions explicitly instruct you to treat the premises as true and reason ONLY from them — the test is measuring logical validity, not real-world accuracy, and bringing in outside facts is exactly the error this section is built to catch.\n\nTechnique: draw the sets. Top-five holdings sit entirely inside technology companies in the fund (premise 1). Technology companies in the fund sit entirely inside companies that have not paid a dividend (premise 2, restated). Therefore top-five holdings sit entirely inside not paid a dividend — the conclusion is forced. When a conclusion follows purely from the logical structure, mark it as following even if you personally doubt the premises; when it does not follow from the structure, mark it as not following even if you believe it is probably true in reality. Deduction is the one sub-test where being right about the world can make you wrong about the answer."
+      },
+      {
+        "context": "DEDUCTION\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
+        "prompt": "Conclusion: \"The fund holds no dividend-paying companies at all.\"",
+        "options": [
+          "Conclusion Follows",
+          "Conclusion Does Not Follow"
+        ],
+        "answer": "Conclusion Does Not Follow",
+        "explanation": "Working: the premises only describe the fund top-five holdings and technology companies within the fund. They say nothing about the fund other holdings, which could easily include non-technology, dividend-paying companies further down the portfolio. The conclusion generalises far beyond what the premises cover.\n\nWhy the wrong answer tempts: this is placed immediately after a nearly identical, correctly-following conclusion, and the surface similarity is deliberate — both conclusions are about dividends and the fund, and a candidate moving quickly can carry the follows verdict over from the previous item without re-checking the scope. The premises talk about a SUBSET (top-five holdings, technology companies) while this conclusion claims something about the WHOLE fund — a scope expansion that breaks the logical chain.\n\nTechnique: always check what the premises actually cover versus what the conclusion claims. A conclusion that stays within the scope of the premises can follow with necessity; a conclusion that quietly widens the scope — from top five to all, from technology companies to every company, from this quarter to always — almost never follows, however plausible it sounds. Pairing a valid and an invalid conclusion from the same premises, as this bank does deliberately, is the standard Watson Glaser construction, and re-reading the premises exact scope before each conclusion is the only reliable defence."
+      },
+      {
+        "context": "INTERPRETATION — decide whether a conclusion follows BEYOND REASONABLE DOUBT from the passage, treating \"beyond reasonable doubt\" as a stricter bar than \"plausible\" but not as strict as pure logical deduction.\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
+        "prompt": "Conclusion: \"The regulator's fine directly caused the compliance leadership changes.\"",
+        "options": [
+          "Conclusion Follows",
+          "Conclusion Does Not Follow"
+        ],
+        "answer": "Conclusion Does Not Follow",
+        "explanation": "Working: the passage establishes a fine and, separately, leadership changes at two of the three banks. It never states a causal mechanism connecting them, and there are ordinary alternative explanations — the changes might reflect a broader reshuffle, planned succession, or reputational pressure from the underlying failures rather than the fine specifically. Beyond reasonable doubt requires the passage to rule out credible alternatives, which it does not.\n\nWhy the wrong answer tempts: causally connecting a fine to a subsequent leadership change is an entirely reasonable real-world inference and a journalist would likely frame the story that way — this is exactly why interpretation questions use financial-news-style passages, where causal narrative is the default reading style. But beyond reasonable doubt is a higher bar than reasonable interpretation, and the passage supplies correlation (fine, then changes) without ruling out alternative causes.\n\nTechnique: interpretation sits between inference (probabilistic) and deduction (logically forced), and the deciding question is: could a sceptical, careful reader construct a credible alternative explanation consistent with every stated fact? Here, yes — several alternative explanations survive the passage untouched, so the conclusion does not clear the beyond-reasonable-doubt bar. Only when the passage closes off realistic alternatives, typically through explicit causal language such as \"in response to the fine, the bank replaced...\", does an interpretation conclusion follow."
+      },
+      {
+        "context": "INTERPRETATION\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
+        "prompt": "Conclusion: \"At least one of the three fined banks still has the same head of compliance as before the fine.\"",
+        "options": [
+          "Conclusion Follows",
+          "Conclusion Does Not Follow"
+        ],
+        "answer": "Conclusion Follows",
+        "explanation": "Working: the passage states two of the three banks have replaced their heads of compliance. By straightforward arithmetic, the third bank has not been stated to have replaced theirs, meaning at least one of the three retains their pre-fine head of compliance (absent any information suggesting otherwise).\n\nWhy the wrong answer tempts: some candidates hesitate here purely on principle, having just marked the previous conclusion as does not follow and expecting a section to alternate or continue a pattern of doubt — a form of momentum error, not a reasoning error. Others mistakenly read two of the three as approximate or as implying at least two, possibly all three, which the wording does not support.\n\nTechnique: interpretation conclusions that are just precise restatements of a stated fact — including the simple arithmetic implication of a stated fact — clear the beyond-reasonable-doubt bar easily, because there is no room for a credible alternative reading. This is the counterpart to the previous item: do not let a run of does-not-follow answers create a false sense that the passage is generally unreliable — assess every conclusion strictly on its own relationship to the stated facts, including obvious arithmetic ones like two of three leaving one of three unaccounted for."
+      },
+      {
+        "context": "EVALUATION OF ARGUMENTS — judge whether an argument is STRONG (directly relevant and important to the issue) or WEAK (irrelevant, trivial, or based on unsupported assertion), for the stated question.\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"Yes, because analysts who cannot navigate Bloomberg efficiently take significantly longer to complete basic market data tasks, slowing down the whole team's output.\"",
+        "prompt": "Is this argument strong or weak?",
+        "options": [
+          "Strong",
+          "Weak"
+        ],
+        "answer": "Strong",
+        "explanation": "Working: a strong argument must be both relevant to the specific question asked and important, not merely true in passing. This one directly addresses whether certification should be REQUIRED, gives a concrete mechanism (slower task completion) and a real organisational cost (team-wide slowdown) — exactly the kind of practical, on-point reasoning the question calls for.\n\nWhy weak arguments get mistaken for strong ones (and vice versa here): the trap in this sub-test usually runs the other way — a TRUE but irrelevant or trivial statement gets mistaken for a strong argument because it sounds like an authoritative fact. This argument avoids that trap: it is not just true, it is directly load-bearing for the specific policy question (mandatory certification), which is what strong actually requires.\n\nTechnique: strength requires passing two tests, not one — relevance (does it actually address the specific question, not just the general topic) and importance (does it carry real practical weight, not a minor or already-obvious point). An argument can be completely true and still be weak if it is a triviality such as \"Bloomberg is widely used in finance\" or addresses a nearby but different question. Practise stating, in one sentence, exactly what the question is asking, then check whether the argument substance would actually move a reasonable decision-maker on that specific question."
+      },
+      {
+        "context": "EVALUATION OF ARGUMENTS\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"No, because Bloomberg terminals are extremely expensive to license.\"",
+        "prompt": "Is this argument strong or weak?",
+        "options": [
+          "Strong",
+          "Weak"
+        ],
+        "answer": "Weak",
+        "explanation": "Working: the argument is factually true — Bloomberg terminal licences are genuinely expensive — but it is irrelevant to the specific question asked. The question is about REQUIRING CERTIFICATION for analysts, not about whether to license terminals at all; the firm has, by the question own framing, presumably already decided to have Bloomberg terminals in the office. The cost of the terminals themselves is a sunk consideration unrelated to whether staff should be certified to use them well.\n\nWhy the wrong answer tempts: this is the classic evaluation-of-arguments trap — a statement that is completely true and sounds like a serious, weighty business consideration such as cost gets waved through as strong simply because it is factual and financially framed. But truth is not the test; relevance to the SPECIFIC question is. \"Bloomberg is expensive\" is a strong argument against buying terminals in the first place, and a weak one against training staff to use terminals the firm already has.\n\nTechnique: build the habit of restating the exact question before judging any argument, and check whether the argument conclusion, if accepted, would actually change your answer to THAT question. Here, even a firm believer that Bloomberg is expensive gains nothing by refusing to certify staff — the terminals are being paid for either way, and certification only affects how well the existing investment is used. Any argument that would be equally true whether the specific proposal passed or failed is weak by definition, however true or serious it sounds."
+      }
+    ]
+  },
+  {
+    "id": "checking",
+    "title": "Checking & Attention to Detail",
+    "icon": "🔍",
+    "color": "text-pink-400",
+    "border": "border-pink-500/30",
+    "description": "Fast comparison and error-spotting tests — the format used to screen for operations, settlements and data-heavy junior roles.",
+    "secondsPerQuestion": 20,
+    "questionsPerAttempt": 10,
+    "tip": "Work systematically left to right or field by field — never eyeball the whole line at once and guess it \"looks the same\". These tests are won on method, not on being naturally observant.",
+    "providers": "SHL Checking Test, Talent Q Elements Checking, Cut-e/Aon scales cch, bespoke back-office screening tools",
+    "requiredBy": "Operations, settlements, trade support, fund administration, KYC/onboarding teams, and increasingly as a fast initial screen even for some analyst schemes at banks and asset managers.",
+    "whyUsed": "A single mistyped account number or transposed figure in a trade confirmation or client record can cause a real financial loss or a regulatory breach. Firms use checking tests because they are a direct, low-cost proxy for exactly that risk — can you reliably catch a small discrepancy under time pressure, again and again, without fatigue causing you to miss one.",
+    "questions": [
+      {
+        "context": "Compare the two records. They should be identical.",
+        "dataTable": {
+          "title": "Record A vs Record B",
+          "headers": [
+            "Field",
+            "Record A",
+            "Record B"
+          ],
+          "rows": [
+            [
+              "Account No.",
+              "GB29 NWBK 6016 1331 9268 19",
+              "GB29 NWBK 6016 1331 9268 19"
+            ],
+            [
+              "Sort Code",
+              "60-16-13",
+              "60-16-13"
+            ],
+            [
+              "Amount",
+              "£128,450.00",
+              "£128,405.00"
+            ],
+            [
+              "Value Date",
+              "14/03/2026",
+              "14/03/2026"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "Account No.",
+          "Sort Code",
+          "Amount",
+          "Value Date"
+        ],
+        "answer": "Amount",
+        "explanation": "Working: check each field independently, character by character where the strings are long. Account No. and Sort Code match exactly on inspection. Value Date matches. Amount does not: Record A reads £128,450.00 and Record B reads £128,405.00 — the tens and units digits of the last three digits are transposed, \"50\" versus \"05\", so 450 becomes 405.\n\nWhy this specific error is the standard trap: a transposed pair of digits (450 vs 405) is the single most common real-world data entry error, because both numbers look right at a glance — the digit count matches, the surrounding text matches, and the eye tends to register \"starts with 128,4\" as a match without checking the final three digits individually. This is precisely the error type checking tests are designed around, because it is also the error type that causes real payment failures.\n\nTechnique: never compare two long strings by overall shape. Split any numeric field into chunks (thousands, hundreds, tens, units for money; groups of four for IBANs) and compare chunk by chunk, out loud or under your breath if you are practising alone. For account numbers and IBANs specifically, compare in groups of 4 characters as they are formatted — the space-separated groups exist for exactly this reason, to make transposition errors easier to catch."
+      },
+      {
+        "context": "Compare the two client name records. They should be identical.",
+        "dataTable": {
+          "title": "System A vs System B",
+          "headers": [
+            "Field",
+            "System A",
+            "System B"
+          ],
+          "rows": [
+            [
+              "Client Name",
+              "Fairweather Holdings Ltd",
+              "Fairweather Holdings Ltd"
+            ],
+            [
+              "Reference",
+              "FWH-2024-0091",
+              "FWH-2024-0091"
+            ],
+            [
+              "Address Line 1",
+              "14 Grosvenor Street",
+              "14 Grosvenor Steet"
+            ],
+            [
+              "Postcode",
+              "W1K 4QQ",
+              "W1K 4QQ"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "Client Name",
+          "Reference",
+          "Address Line 1",
+          "Postcode"
+        ],
+        "answer": "Address Line 1",
+        "explanation": "Working: check each field. Client Name, Reference and Postcode all match exactly. Address Line 1 does not — System A reads \"Grosvenor Street\" and System B reads \"Grosvenor Steet\", missing the first \"r\" in Street.\n\nWhy this specific error is the standard trap: a single missing letter inside a long, familiar word is very hard to catch by pattern recognition, because the brain auto-corrects familiar words on sight — you read \"Steet\" and your brain silently supplies \"Street\" before you consciously register the missing letter. This is a well-documented reading phenomenon, and it is exactly why free-text fields (names, addresses) are more error-prone to check than structured numeric fields, despite feeling easier to read.\n\nTechnique: for free-text fields, do not read for MEANING — read for CHARACTERS. Slow down and trace the word letter by letter rather than recognising it as a whole, particularly for longer or less common words (street names, foreign company names, compound surnames). A practical trick: read the two versions in reverse, end to start; this defeats the brain tendency to auto-complete a familiar word from its first few letters, because reversed text has no learned pattern to pattern-match against."
+      },
+      {
+        "context": "Compare the two trade confirmation records. They should be identical.",
+        "dataTable": {
+          "title": "Confirmation A vs Confirmation B",
+          "headers": [
+            "Field",
+            "Confirmation A",
+            "Confirmation B"
+          ],
+          "rows": [
+            [
+              "ISIN",
+              "GB0007980591",
+              "GB0007980591"
+            ],
+            [
+              "Quantity",
+              "15,000",
+              "15,000"
+            ],
+            [
+              "Price",
+              "412.75",
+              "412.75"
+            ],
+            [
+              "Trade Date",
+              "11/03/2026",
+              "11/03/2026"
+            ],
+            [
+              "Settlement Date",
+              "13/03/2026",
+              "14/03/2026"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "ISIN",
+          "Quantity",
+          "Price",
+          "Settlement Date"
+        ],
+        "answer": "Settlement Date",
+        "explanation": "Working: ISIN, Quantity and Price all match on careful comparison. Settlement Date does not — Confirmation A reads 13/03/2026, Confirmation B reads 14/03/2026, a one-day difference.\n\nWhy this specific error is the standard trap: dates are compared casually far more often than numbers, because the format is familiar and short, so the eye tends to confirm \"yes, both are dates in March 2026\" without checking the day digit precisely. A one-day settlement discrepancy is also a realistic and consequential real-world error: standard equity settlement is T+2, so a one-day slip here would actually put one of the two records outside the normal settlement cycle entirely — exactly the kind of error a checking test is a proxy for catching before it reaches a real trade.\n\nTechnique: never let a field format familiarity substitute for checking its CONTENT. Dates, times and reference codes all look instantly comparable because you recognise the pattern (DD/MM/YYYY) at a glance, but recognising the pattern is not the same as verifying the digits. Isolate the day, month and year as three separate two-to-four digit checks, the same discipline you would apply to a long number, rather than treating \"it is a date, so it is probably fine\" as a shortcut."
+      },
+      {
+        "context": "Compare the two employee record entries. They should be identical.",
+        "dataTable": {
+          "title": "HR System vs Payroll System",
+          "headers": [
+            "Field",
+            "HR System",
+            "Payroll System"
+          ],
+          "rows": [
+            [
+              "Employee ID",
+              "EMP-88213",
+              "EMP-88213"
+            ],
+            [
+              "National Insurance No.",
+              "QQ 12 34 56 C",
+              "QQ 12 34 56 C"
+            ],
+            [
+              "Annual Salary",
+              "£42,500",
+              "£42,500"
+            ],
+            [
+              "Start Date",
+              "03/09/2025",
+              "03/09/2025"
+            ]
+          ]
+        },
+        "prompt": "Do these two records match exactly?",
+        "options": [
+          "Yes, they match exactly",
+          "No, there is a discrepancy"
+        ],
+        "answer": "Yes, they match exactly",
+        "explanation": "Working: check every field methodically — Employee ID, National Insurance number (in its 2-2-2-2-1 grouped format), Annual Salary, and Start Date. Every field is identical between the two systems.\n\nWhy this item matters: checking tests always include genuinely matching pairs, usually around a third to half of all items, and they exist specifically to test whether you will manufacture a discrepancy that is not there under time pressure. Candidates primed by several consecutive spot-the-error items sometimes talk themselves into seeing a difference that does not exist, especially in a long alphanumeric string like a National Insurance number, simply because they expect one to be there.\n\nTechnique: apply exactly the same rigour to confirming a match as to finding a discrepancy — a false positive (flagging an error that is not there) is graded as wrong just as a missed real error is. Do not let the item number or the run of previous questions bias your expectation. If you have checked every field methodically and found nothing, trust the process and answer that they match — resist the urge to search harder for something that must be there."
+      },
+      {
+        "context": "Compare the two fund pricing records. They should be identical.",
+        "dataTable": {
+          "title": "Custodian Feed vs Administrator Feed",
+          "headers": [
+            "Field",
+            "Custodian Feed",
+            "Administrator Feed"
+          ],
+          "rows": [
+            [
+              "Fund Code",
+              "FND-7734",
+              "FND-7734"
+            ],
+            [
+              "NAV per Share",
+              "1.2456",
+              "1.2465"
+            ],
+            [
+              "Total Fund Value",
+              "£184,320,000",
+              "£184,320,000"
+            ],
+            [
+              "Shares in Issue",
+              "147,981,342",
+              "147,981,342"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "Fund Code",
+          "NAV per Share",
+          "Total Fund Value",
+          "Shares in Issue"
+        ],
+        "answer": "NAV per Share",
+        "explanation": "Working: Fund Code, Total Fund Value and Shares in Issue all match. NAV per Share does not — 1.2456 versus 1.2465, the same four digits (2, 4, 5, 6) in a different order, a transposition of the last two decimal places.\n\nWhy this specific error is the standard trap: this is the hardest variant of the discrepancy type, because the two numbers share every digit — nothing is added, removed or substituted, only reordered. A quick glance at digit COUNT and digit SET both pass, so any check less rigorous than position-by-position comparison will miss it. This exact error type is also a realistic and serious one: a NAV discrepancy of this size, uncaught, would misprice every unit of the fund traded that day, which is precisely why fund administrators run automated tolerance checks for exactly this scenario in practice.\n\nTechnique: for decimal numbers especially, compare position by position rather than as a whole value — first decimal place, second, third, fourth, treating each as an independent check. A useful test-day habit: cover one number with a finger or your other hand, read the visible number digits aloud in order, then reveal and check the other number digit by digit against what you just said, rather than trying to hold both numbers in view and compare them as gestalt shapes."
+      },
+      {
+        "context": "Compare the two invoice records. They should be identical.",
+        "dataTable": {
+          "title": "Invoice A vs Invoice B",
+          "headers": [
+            "Field",
+            "Invoice A",
+            "Invoice B"
+          ],
+          "rows": [
+            [
+              "Invoice No.",
+              "INV-2026-4471",
+              "INV-2026-4471"
+            ],
+            [
+              "Vendor",
+              "Hartley & Marsh Associates",
+              "Hartley & Marsh Associates"
+            ],
+            [
+              "Net Amount",
+              "£9,840.00",
+              "£9,840.00"
+            ],
+            [
+              "VAT (20%)",
+              "£1,868.00",
+              "£1,868.00"
+            ],
+            [
+              "Gross Amount",
+              "£11,708.00",
+              "£11,708.00"
+            ]
+          ]
+        },
+        "prompt": "Do these two records match exactly, or is there a discrepancy — and separately, is the arithmetic on the invoice itself correct?",
+        "options": [
+          "The two records match, and the arithmetic is correct",
+          "The two records match, but the arithmetic is wrong",
+          "The two records do not match"
+        ],
+        "answer": "The two records match, but the arithmetic is wrong",
+        "explanation": "Working: this question has two independent checks. First, do Invoice A and Invoice B match each other — yes, every field is identical between the two copies. Second, is the arithmetic on the invoice itself internally consistent — check the VAT rate against the net amount, not just whether the total adds up. 20% of £9,840.00 should be £1,968.00 (9,840 times 0.2 equals 1,968), but the invoice shows VAT of £1,868.00 — £100 short of what a genuine 20% charge would be. The addition itself is self-consistent (9,840 plus 1,868 equals 11,708, matching the stated gross), which is exactly what makes the error easy to miss: the invoice adds up while still charging the wrong rate.\n\nWhy this specific error is the standard trap: an invoice where the total is internally consistent feels checked once you have confirmed Net plus VAT equals Gross, which is the natural first thing anyone verifies. But that check only confirms the three numbers are consistent WITH EACH OTHER — it says nothing about whether the VAT was calculated correctly from the net amount in the first place. A candidate who stops at \"the sum adds up\" misses a genuine mispriced invoice.\n\nTechnique: when a question asks you to check both a cross-reference AND an internal calculation, do them as two fully separate passes — field matching first, arithmetic second — and within the arithmetic pass, independently recompute any percentage-based field from its base figure rather than only checking that the components sum correctly. A consistent-looking total can still hide an incorrectly applied rate, because addition consistency and rate correctness are two different facts that a single does-it-add-up glance conflates."
+      },
+      {
+        "context": "Compare the two counterparty records. They should be identical.",
+        "dataTable": {
+          "title": "Internal System vs SWIFT Message",
+          "headers": [
+            "Field",
+            "Internal System",
+            "SWIFT Message"
+          ],
+          "rows": [
+            [
+              "SWIFT/BIC",
+              "DEUTDEFF",
+              "DEUTDEFF"
+            ],
+            [
+              "Counterparty",
+              "Deutsche Bank AG",
+              "Deutsche Bank AG"
+            ],
+            [
+              "Currency",
+              "EUR",
+              "EUR"
+            ],
+            [
+              "Amount",
+              "2,450,000.00",
+              "2,540,000.00"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "SWIFT/BIC",
+          "Counterparty",
+          "Currency",
+          "Amount"
+        ],
+        "answer": "Amount",
+        "explanation": "Working: SWIFT/BIC, Counterparty and Currency all match exactly. Amount does not — 2,450,000.00 versus 2,540,000.00, a transposition of the 4 and 5 in the hundred-thousands and ten-thousands positions.\n\nWhy this specific error is the standard trap: this is a payments scenario, and a transposed pair of digits of this size (a swing of £90,000) is precisely the kind of error that causes real settlement failures and, in the worst case, funds being sent with a technically valid but wrong amount, triggering a costly unwind. Test writers use payments and SWIFT-style contexts specifically because the stakes make the format realistic, not decorative — this is close to the actual daily task of a payments or settlements analyst.\n\nTechnique: for any large numeric amount, mentally group digits in threes from the right (as the commas already do) and compare group by group: 2,450,000 breaks into 2 / 450 / 000; 2,540,000 breaks into 2 / 540 / 000. The millions group matches, the thousands group does not. This groups the comparison into small, verifiable chunks rather than one long unwieldy number, which is exactly how the comma formatting is designed to be read in the first place."
+      },
+      {
+        "context": "Compare the two client onboarding (KYC) records. They should be identical.",
+        "dataTable": {
+          "title": "Application Form vs System Record",
+          "headers": [
+            "Field",
+            "Application Form",
+            "System Record"
+          ],
+          "rows": [
+            [
+              "Full Legal Name",
+              "Alexander James Whitfield",
+              "Alexander James Whitfield"
+            ],
+            [
+              "Date of Birth",
+              "22/07/1991",
+              "22/07/1991"
+            ],
+            [
+              "Nationality",
+              "British",
+              "British"
+            ],
+            [
+              "Passport No.",
+              "PX4471983",
+              "PX4417983"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "Full Legal Name",
+          "Date of Birth",
+          "Nationality",
+          "Passport No."
+        ],
+        "answer": "Passport No.",
+        "explanation": "Working: Full Legal Name, Date of Birth and Nationality all match. Passport No. does not — PX4471983 versus PX4417983, digits 7 and 1 transposed — the digit string reads 4-4-7-1-9-8-3 versus 4-4-1-7-9-8-3, with the third and fourth digits swapped.\n\nWhy this specific error is the standard trap: alphanumeric identifiers like passport numbers combine letters and digits, and the eye tends to verify the letter prefix carefully (because it looks distinctive) while skimming the digit string as \"a number, probably fine\" — the opposite of where the actual risk sits. In a real KYC context, a passport number mismatch is precisely the kind of error that causes a client onboarding to be flagged, delayed or, if uncaught, creates a compliance record that does not actually match the verified identity document.\n\nTechnique: for mixed alphanumeric codes, split the check into two separate passes — verify the letters as a group first, then verify the digits as a group, digit by digit, rather than reading the whole string as one unit. Long, unfamiliar digit strings (as opposed to numbers with real-world meaning like amounts or dates) are the ones most likely to be skimmed rather than checked, precisely because they carry no intuitive \"does this look right\" signal to catch you — which means they need the most mechanical, position-by-position discipline, not less."
+      },
+      {
+        "context": "Compare the two order records. They should be identical.",
+        "dataTable": {
+          "title": "Order Ticket vs Execution Report",
+          "headers": [
+            "Field",
+            "Order Ticket",
+            "Execution Report"
+          ],
+          "rows": [
+            [
+              "Ticker",
+              "BARC.L",
+              "BARC.L"
+            ],
+            [
+              "Side",
+              "BUY",
+              "BUY"
+            ],
+            [
+              "Quantity",
+              "25,000",
+              "25,000"
+            ],
+            [
+              "Limit Price",
+              "198.50p",
+              "198.50p"
+            ],
+            [
+              "Executed Price",
+              "198.42p",
+              "198.24p"
+            ]
+          ]
+        },
+        "prompt": "Which field contains a discrepancy?",
+        "options": [
+          "Ticker",
+          "Quantity",
+          "Limit Price",
+          "Executed Price"
+        ],
+        "answer": "Executed Price",
+        "explanation": "Working: Ticker, Side, Quantity and Limit Price all match. Executed Price does not — 198.42p versus 198.24p, a transposition of the two decimal digits.\n\nWhy this specific error is the standard trap: this item sits right next to a correctly matching Limit Price of 198.50p, and the visual similarity between 198.42, 198.24 and 198.50 — three numbers starting identically and differing only in the last two digits — is exactly the pattern that causes real trade breaks. It is also worth noting the executed price beats the limit on both readings (either is a valid buy fill below the 198.50p limit), so there is no logical inconsistency to alert you; only a direct digit-by-digit comparison catches it.\n\nTechnique: when several numbers in the same table share a long common prefix (here, all four prices start \"198.\"), do not rely on the prefix matching as reassurance — it is specifically the SUFFIX that test-writers vary, because that is where real transcription errors cluster (the start of a number is typically read and typed first and most carefully; the end is rushed). Always isolate and compare the final two or three digits of similar-looking numbers as their own explicit check, especially when, as here, multiple numbers in the same row family look almost identical."
+      },
+      {
+        "context": "Compare the two static data records. They should be identical.",
+        "dataTable": {
+          "title": "Trading System vs Risk System",
+          "headers": [
+            "Field",
+            "Trading System",
+            "Risk System"
+          ],
+          "rows": [
+            [
+              "Instrument",
+              "US Treasury 10Y",
+              "US Treasury 10Y"
+            ],
+            [
+              "CUSIP",
+              "912828YY0",
+              "912828YY0"
+            ],
+            [
+              "Coupon",
+              "4.125%",
+              "4.125%"
+            ],
+            [
+              "Maturity Date",
+              "15/08/2035",
+              "15/08/2035"
+            ],
+            [
+              "Currency",
+              "USD",
+              "USD"
+            ]
+          ]
+        },
+        "prompt": "Do these two records match exactly?",
+        "options": [
+          "Yes, they match exactly",
+          "No, there is a discrepancy"
+        ],
+        "answer": "Yes, they match exactly",
+        "explanation": "Working: check every field — Instrument, CUSIP (character by character), Coupon, Maturity Date, Currency. All five fields are identical between the two systems.\n\nWhy this item matters: this is the second true-match item in the bank, deliberately placed later once the pattern of \"there is always a discrepancy\" has had time to set in from the earlier items. Real checking tests are typically 30-50% genuine matches, precisely because a candidate who has learned to expect an error every time — and starts finding one whether it exists or not — fails the test just as surely as one who misses real discrepancies.\n\nTechnique: reset your expectation before every single item; do not let a run of discrepancy-found answers create momentum toward assuming the next one has an error too. Discipline here means finishing your full field-by-field check even when nothing has jumped out, and being willing to answer match with the same confidence as discrepancy when that is what the methodical check actually shows. If you find yourself inventing a reason something might be different without being able to point to the specific differing character, that is a signal you are pattern-matching against expectation rather than actually checking."
+      }
+    ]
+  },
 ]
 
 type View = 'home' | 'test' | 'results'
@@ -1321,8 +1894,8 @@ export default function PracticeTests() {
     const allIds: string[] = []
     const allMeta: QuestionMeta[] = []
     let totalSeconds = 0
-    testCategories.forEach(cat => {
-      const n = FULL_ASSESSMENT_COUNTS[cat.id] ?? cat.questionsPerAttempt
+    testCategories.filter(cat => cat.id in FULL_ASSESSMENT_COUNTS).forEach(cat => {
+      const n = FULL_ASSESSMENT_COUNTS[cat.id]
       const sampled = sampleFromCategory(cat, n)
       sampled.forEach(s => {
         allQuestions.push(s.q)
