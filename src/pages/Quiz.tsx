@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { quizQuestions } from '../data/quiz'
+import { quizQuestionGroups, QuizQuestion } from '../data/quiz'
+
+function pickSessionQuestions(): QuizQuestion[] {
+  return quizQuestionGroups.map(group => {
+    const variant = group.variants[Math.floor(Math.random() * group.variants.length)]
+    return variant
+  })
+}
 
 export default function Quiz() {
   const navigate = useNavigate()
+  const [quizQuestions] = useState<QuizQuestion[]>(() => pickSessionQuestions())
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
