@@ -17,6 +17,13 @@ export default defineConfig({
         // HashRouter means every real route is served from index.html;
         // never try to fetch a network path for in-app navigation.
         navigateFallbackDenylist: [/^\/website\/?$/],
+        // Without these, a brand-new service worker installs quietly in
+        // the background but does NOT take control of the tab that's
+        // already open — offline only starts working after you close and
+        // reopen the site a second time. Force it to take over immediately
+        // on first visit instead.
+        clientsClaim: true,
+        skipWaiting: true,
       },
       manifest: {
         name: 'FINdr — Finance Career Discovery',
