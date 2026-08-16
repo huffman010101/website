@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import OfflineStatus from './OfflineStatus'
 
 export default function Footer() {
   return (
@@ -90,7 +91,8 @@ export default function Footer() {
         <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">© 2025 FINdr. Helping the next generation find their path in finance.</p>
           <div className="flex items-center gap-4 text-xs text-gray-500">
-            <span>13 Careers</span>
+            <OfflineStatus />
+            <span>27 Careers</span>
             <span>•</span>
             <span>100+ Firms</span>
             <span>•</span>
