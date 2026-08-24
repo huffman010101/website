@@ -1,3 +1,4 @@
+import { pctRounded, barWidth } from '../lib/num'
 import { useState, useEffect, useRef } from 'react'
 import MentalMathsDrill from '../components/MentalMathsDrill'
 import { recordPracticeTestAttempt, getPracticeTestHistory } from '../lib/history'
@@ -1856,7 +1857,7 @@ export default function PracticeTests() {
         categoryTitle: category.title,
         correct,
         total: sessionQuestions.length,
-        percentage: Math.round((correct / sessionQuestions.length) * 100),
+        percentage: pctRounded(correct, sessionQuestions.length),
       })
     }
   }, [view, category, sessionQuestions, sessionIds, sessionMeta, answers, isFullAssessment])
@@ -2196,7 +2197,7 @@ export default function PracticeTests() {
       ? Array.from(new Map(sessionMeta.map(m => [m.catId, m])).values()).map(meta => {
           const idxs = sessionMeta.map((m, i) => (m.catId === meta.catId ? i : -1)).filter(i => i >= 0)
           const sectionCorrect = idxs.filter(i => answers[i] === sessionQuestions[i].answer).length
-          return { meta, correct: sectionCorrect, total: idxs.length, pct: Math.round((sectionCorrect / idxs.length) * 100) }
+          return { meta, correct: sectionCorrect, total: idxs.length, pct: pctRounded(sectionCorrect, idxs.length) }
         })
       : []
 
@@ -2298,7 +2299,7 @@ export default function PracticeTests() {
       </div>
 
       <div className="flex-1 mb-6 h-2 bg-white/5 rounded-full overflow-hidden">
-        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((qIndex + 1) / sessionQuestions.length) * 100}%` }} />
+        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: barWidth(qIndex + 1, sessionQuestions.length) }} />
       </div>
 
       {isFullAssessment && sectionChanged && (

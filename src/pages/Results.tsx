@@ -1,3 +1,4 @@
+import { safeMax } from '../lib/num'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { jobs } from '../data/jobs'
@@ -142,7 +143,7 @@ export default function Results() {
     }
 
     const scores: Record<string, number> = JSON.parse(stored)
-    const maxScore = Math.max(...Object.values(scores))
+    const maxScore = safeMax(Object.values(scores))
 
     const ranked: CareerMatch[] = jobs.map(job => ({
       id: job.id,

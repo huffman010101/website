@@ -1,3 +1,4 @@
+import { pct } from '../lib/num'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { quizQuestionGroups, QuizQuestion } from '../data/quiz'
@@ -18,7 +19,7 @@ export default function Quiz() {
 
   const question = quizQuestions[currentQuestion]
   // Count the question you're currently on as done, so finishing shows 100%
-  const progress = ((currentQuestion + 1) / quizQuestions.length) * 100
+  const progress = pct(currentQuestion + 1, quizQuestions.length)
   const isLast = currentQuestion === quizQuestions.length - 1
   const answeredCount = Object.keys(answers).length
 

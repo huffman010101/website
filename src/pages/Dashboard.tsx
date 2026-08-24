@@ -1,3 +1,4 @@
+import { mean, safeMax, pctRounded } from '../lib/num'
 import { Link } from 'react-router-dom'
 import { units, totalLessons } from '../data/learn'
 import { jobs } from '../data/jobs'
@@ -228,8 +229,8 @@ export default function Dashboard() {
               ) : (
                 <div className="grid sm:grid-cols-2 gap-4">
                   {Object.entries(testsByCategory).map(([catId, attempts]) => {
-                    const best = Math.max(...attempts.map(a => a.percentage))
-                    const avg = Math.round(attempts.reduce((s, a) => s + a.percentage, 0) / attempts.length)
+                    const best = safeMax(attempts.map(a => a.percentage))
+                    const avg = Math.round(mean(attempts.map(a => a.percentage)))
                     const trend = attempts.slice(-8).map(a => a.percentage)
                     return (
                       <div key={catId} className="bg-white/5 rounded-lg p-4">
@@ -255,7 +256,7 @@ export default function Dashboard() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {units.map(unit => {
                   const done = unit.lessons.filter(l => learn.lessons[l.id]?.completed).length
-                  const pct = Math.round((done / unit.lessons.length) * 100)
+                  const pct = pctRounded(done, unit.lessons.length)
                   return (
                     <div key={unit.id} className="bg-white/5 rounded-lg p-3">
                       <div className="flex items-center gap-2 mb-1.5">

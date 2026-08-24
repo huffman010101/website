@@ -1,3 +1,4 @@
+import { pctRounded, barWidth } from '../lib/num'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { units, totalLessons, totalQuestions, totalCards, Lesson, Unit, LearnQuestion } from '../data/learn'
@@ -111,7 +112,7 @@ export default function Learn() {
   function finishLesson() {
     if (!activeLesson) return
     const total = activeLesson.lesson.questions.length
-    const score = Math.round((correctCount / total) * 100)
+    const score = pctRounded(correctCount, total)
     const perfect = correctCount === total
     const bonus = 20 + (perfect ? 10 : 0)
     const earned = sessionXp + bonus
@@ -171,7 +172,7 @@ export default function Learn() {
         <div className="flex items-center justify-between mb-6">
           <button onClick={() => setReviewCards(null)} className="text-gray-500 hover:text-white text-sm">✕ Exit review</button>
           <div className="flex-1 mx-4 h-3 bg-white/5 rounded-full overflow-hidden">
-            <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: `${((reviewIndex + 1) / reviewCards.length) * 100}%` }} />
+            <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: barWidth(reviewIndex + 1, reviewCards.length) }} />
           </div>
           <span className="text-xs text-gray-500">{reviewIndex + 1}/{reviewCards.length}</span>
         </div>
@@ -230,7 +231,7 @@ export default function Learn() {
           <div className="flex items-center justify-between mb-6">
             <button onClick={exitLesson} className="text-gray-500 hover:text-white text-sm">✕ Exit</button>
             <div className="flex-1 mx-4 h-3 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: `${((cardIndex + 1) / lesson.cards.length) * 100}%` }} />
+              <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: barWidth(cardIndex + 1, lesson.cards.length) }} />
             </div>
             <span className="text-xs text-gray-500">{cardIndex + 1}/{lesson.cards.length}</span>
           </div>
@@ -303,7 +304,7 @@ export default function Learn() {
     // COMPLETE PHASE
     if (phase === 'complete') {
       const total = lesson.questions.length
-      const score = Math.round((correctCount / total) * 100)
+      const score = pctRounded(correctCount, total)
       const perfect = correctCount === total
       return (
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
@@ -347,7 +348,7 @@ export default function Learn() {
         <div className="flex items-center justify-between mb-6">
           <button onClick={exitLesson} className="text-gray-500 hover:text-white text-sm">✕ Exit</button>
           <div className="flex-1 mx-4 h-3 bg-white/5 rounded-full overflow-hidden">
-            <div className="h-full bg-brand-gold rounded-full transition-all duration-300" style={{ width: `${(qIndex / lesson.questions.length) * 100}%` }} />
+            <div className="h-full bg-brand-gold rounded-full transition-all duration-300" style={{ width: barWidth(qIndex, lesson.questions.length) }} />
           </div>
           <div className="flex items-center gap-1 text-sm">
             {[0, 1, 2].map(i => (
@@ -467,7 +468,7 @@ export default function Learn() {
           <div className="text-xs text-gray-500 mt-1">Lessons done</div>
         </div>
         <div className="bg-brand-card border border-brand-teal/20 rounded-xl p-4 text-center">
-          <div className="text-2xl font-black text-brand-teal">{Math.round((completedCount / totalLessons) * 100)}%</div>
+          <div className="text-2xl font-black text-brand-teal">{pctRounded(completedCount, totalLessons)}%</div>
           <div className="text-xs text-gray-500 mt-1">Curriculum mastered</div>
         </div>
       </div>

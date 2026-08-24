@@ -1,3 +1,4 @@
+import { mean, barWidth } from '../lib/num'
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { jobs } from '../data/jobs'
@@ -124,7 +125,7 @@ export default function InterviewQuiz() {
   useEffect(() => {
     if (!started || current || sessionScores.length === 0 || recordedRef.current) return
     recordedRef.current = true
-    const avgScore = Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length)
+    const avgScore = Math.round(mean(sessionScores))
     recordInterviewQuizAttempt({
       date: new Date().toISOString(),
       careerId: selectedCareer || 'all',
@@ -169,7 +170,7 @@ export default function InterviewQuiz() {
   }
 
   const avgScore = sessionScores.length > 0
-    ? Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length)
+    ? Math.round(mean(sessionScores))
     : 0
 
   const scoreColor = (s: number) =>
@@ -306,7 +307,7 @@ export default function InterviewQuiz() {
 
       {/* Progress bar */}
       <div className="h-1.5 bg-white/5 rounded-full mb-8">
-        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: `${((currentIndex + 1) / sessionQuestions.length) * 100}%` }} />
+        <div className="h-full bg-brand-gold rounded-full transition-all" style={{ width: barWidth(currentIndex + 1, sessionQuestions.length) }} />
       </div>
 
       {/* Question card */}

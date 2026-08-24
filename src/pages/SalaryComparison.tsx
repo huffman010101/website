@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { jobs } from '../data/jobs'
+import { safeMax } from '../lib/num'
 
 const levels = ['Analyst', 'Associate / Manager', 'VP / Senior', 'MD / Partner']
 
@@ -268,7 +269,9 @@ export default function SalaryComparison() {
     sortBy === 'salary' ? b.total - a.total : a.job.title.localeCompare(b.job.title)
   )
 
-  const maxTotal = Math.max(...sorted.map(r => r.total))
+  // Guard the empty case: Math.max() of nothing is -Infinity, which would
+  // turn every bar width into "NaN%" if a filter ever excluded every row.
+  const maxTotal = safeMax(sorted.map(r => r.total))
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

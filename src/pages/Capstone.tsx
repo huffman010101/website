@@ -1,3 +1,4 @@
+import { barWidth } from '../lib/num'
 import { useState, useEffect, useRef } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { capstones, CapstoneFormat } from '../data/capstones'
@@ -118,7 +119,7 @@ export default function Capstone() {
       <div className="flex items-center justify-between mb-6">
         <Link to="/learn" className="text-gray-500 hover:text-white text-sm">✕ Exit</Link>
         <div className="flex-1 mx-4 h-3 bg-white/5 rounded-full overflow-hidden">
-          <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: `${((stepIndex + 1) / capstone.steps.length) * 100}%` }} />
+          <div className="h-full bg-brand-teal rounded-full transition-all duration-300" style={{ width: barWidth(stepIndex + 1, capstone.steps.length) }} />
         </div>
         <span className="text-xs text-gray-500">{stepIndex + 1}/{capstone.steps.length}</span>
       </div>
