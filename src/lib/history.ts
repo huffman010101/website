@@ -105,6 +105,7 @@ export const categoryToLearnUnit: Record<string, { unitId: string; unitTitle: st
   'Wealth Management': { unitId: 'equities', unitTitle: 'Equity Markets & Investing' },
   'Risk & Control': { unitId: 'fixed-income', unitTitle: 'Fixed Income & Credit' },
   'Corporate Finance': { unitId: 'accounting', unitTitle: 'Accounting & Financial Statements' },
+  'Trading': { unitId: 'track-trading', unitTitle: 'Career Track: Trading & Markets' },
 }
 
 export function clearAllHistory() {
