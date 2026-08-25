@@ -158,11 +158,27 @@ export default function InterviewQuiz() {
 
   function handleStart() {
     recordedRef.current = false
-    const pool = filtered.map(q => ({ id: q.id, value: q }))
-    const n = sessionLength === 'all' ? pool.length : Math.min(sessionLength, pool.length)
+    const n = sessionLength === 'all' ? filtered.length : Math.min(sessionLength, filtered.length)
+
+    // Only some questions carry a written model answer and key points; the
+    // rest are practice-only and can just be self-assessed. Coached questions
+    // are far more useful, so fill the session from those first and only top
+    // up with practice-only ones if the session is longer than the coached
+    // pool. Without this, a session drawn at random is mostly uncoached.
+    const coached = filtered.filter(q => q.modelAnswer)
+    const selfAssessed = filtered.filter(q => !q.modelAnswer)
+
     // Weighted sampling means questions you've gotten wrong before are more
     // likely to be picked and appear more often across repeated sessions.
-    const chosen = weightedSample(SR_KEY, pool, n)
+    const chosen = weightedSample(SR_KEY, coached.map(q => ({ id: q.id, value: q })), Math.min(n, coached.length))
+    if (chosen.length < n) {
+      chosen.push(...weightedSample(
+        SR_KEY,
+        selfAssessed.map(q => ({ id: q.id, value: q })),
+        n - chosen.length,
+      ))
+    }
+
     setSessionQuestions(chosen)
     setStarted(true)
     setCurrentIndex(0)
@@ -319,6 +335,19 @@ export default function InterviewQuiz() {
           <Link to={`/jobs/${current.careerId}`} className="text-xs text-gray-500 hover:text-brand-gold transition-colors">
             {current.careerTitle}
           </Link>
+          {/* Be upfront about which questions come with a written model answer
+              and which are self-assessed, so an empty model answer is never a
+              silent surprise after you have committed to an answer. */}
+          <span
+            title={current.modelAnswer
+              ? 'A written model answer and key points are provided for this question.'
+              : 'Extra practice question — you assess your own answer against the prompts provided.'}
+            className={`text-xs font-bold px-3 py-1 rounded-full ml-auto ${
+              current.modelAnswer ? 'bg-brand-teal/10 text-brand-teal' : 'bg-white/5 text-gray-500'
+            }`}
+          >
+            {current.modelAnswer ? '✓ Model answer' : 'Self-assessed'}
+          </span>
         </div>
         <h2 className="text-xl font-bold text-white leading-relaxed">{current.question}</h2>
       </div>

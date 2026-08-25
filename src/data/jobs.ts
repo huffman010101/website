@@ -83,6 +83,62 @@ export interface Job {
 export const jobs: Job[] = [
   {
     id: 'investment-banking',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "Walk me through a DCF.",
+                      "answer": "Project unlevered free cash flow for five to ten years: start from EBIT, tax it at the marginal rate to get NOPAT, add back D&A, subtract capex and the increase in net working capital. Discount those flows at WACC. Then calculate a terminal value — either Gordon Growth (final-year FCF x (1+g) / (WACC - g)) or an exit multiple on terminal EBITDA — and discount that back too. Summing gives enterprise value; subtract net debt to reach equity value, then divide by diluted shares for implied share price.",
+                      "keyPoints": [
+                            "Unlevered FCF = EBIT x (1-t) + D&A - capex - change in NWC",
+                            "Discount at WACC because the flows are unlevered",
+                            "Terminal value usually drives 60-80% of the total",
+                            "EV - net debt = equity value, then divide by diluted shares"
+                      ]
+                },
+                {
+                      "question": "How do the three financial statements link together?",
+                      "answer": "Net income from the income statement flows to the top of the cash flow statement and into retained earnings on the balance sheet. The cash flow statement adjusts net income for non-cash items and working capital movements across operating, investing and financing, and its closing cash balance becomes the cash line on the balance sheet. Depreciation reduces income statement profit but is added back in cash flow and reduces PP&E on the balance sheet.",
+                      "keyPoints": [
+                            "Net income links income statement to both cash flow and retained earnings",
+                            "Closing cash from the cash flow statement is the balance sheet cash line",
+                            "Non-cash items like D&A are added back in operating cash flow",
+                            "Balance sheet must balance — it is the check on the whole model"
+                      ]
+                },
+                {
+                      "question": "A company buys a £100 piece of equipment with debt. Walk me through the three statements.",
+                      "answer": "At purchase there is no income statement impact. On the cash flow statement, capex of £100 is an outflow in investing and £100 debt raised is an inflow in financing, so cash is unchanged. On the balance sheet PP&E rises £100 and debt rises £100, so it balances. In year one, assuming ten-year straight-line depreciation, £10 of depreciation reduces pre-tax income by £10 and net income by £8 at a 20% tax rate. Cash flow adds the £10 back, so cash rises £2. PP&E falls to £90, cash rises £2, and retained earnings fall £8 — both sides move by £8 and it balances.",
+                      "keyPoints": [
+                            "Purchase itself is cash-neutral when fully debt-funded",
+                            "Depreciation is the only income statement impact in year one",
+                            "Add depreciation back on the cash flow statement — the tax shield raises cash",
+                            "Always close by proving the balance sheet still balances"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Why investment banking?",
+                      "answer": "Give a specific, honest reason grounded in the work rather than the prestige — for example that you want to see how strategic decisions get made at the most consequential moments in a company's life, and that you want the steepest possible technical learning curve early. Back it with evidence: a deal you followed and why it interested you, a modelling project you did, or a spring week where a specific conversation confirmed it. Avoid generic references to fast pace and hard work, which every candidate says.",
+                      "keyPoints": [
+                            "Anchor to the actual work, not prestige or pay",
+                            "Support the claim with specific evidence from your own experience",
+                            "Reference a real deal you can discuss with a point of view",
+                            "Avoid the generic 'fast-paced, hardworking' answer"
+                      ]
+                },
+                {
+                      "question": "Walk me through your CV.",
+                      "answer": "Deliver a tight two-minute narrative with a through-line, not a chronological list. Structure it as: where you started and what sparked the interest in finance, the two or three experiences that built relevant skills with a specific outcome for each, and why that path leads logically to this role at this bank. Every item should earn its place by supporting the story of why you are a credible candidate now.",
+                      "keyPoints": [
+                            "Two minutes, with a clear narrative arc rather than a list",
+                            "Two or three experiences with concrete, quantified outcomes",
+                            "Explicitly connect the ending to why this role and this firm",
+                            "Cut anything that does not support the through-line"
+                      ]
+                }
+          ]
+    },
     title: 'Investment Banking',
     category: 'Capital Markets',
     shortDescription: 'Advise corporations on M&A, capital raises, and strategic transactions. The most prestigious and demanding entry point in finance.',
@@ -170,6 +226,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'consulting',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "Our client is a UK supermarket whose profits have fallen 15% despite flat revenue. How would you approach this?",
+                      "answer": "Since revenue is flat, the problem sits in costs or in the mix — so I would start by decomposing profit into revenue minus costs and drive down the cost side first. I would split costs into cost of goods sold and operating costs, then ask whether COGS per unit has risen (supplier prices, input inflation, shrinkage, promotional discounting eroding realised price) or whether operating costs have risen (labour, energy, rent, distribution). I would also check mix within flat revenue: a shift from high-margin own-brand to low-margin branded goods would cut profit with no revenue change. Before recommending anything I would want the actual cost breakdown by line, year on year.",
+                      "keyPoints": [
+                            "State the profit equation and narrow to the cost side, since revenue is flat",
+                            "Split COGS versus operating costs, then go one level deeper on each",
+                            "Flat revenue can still hide an adverse margin mix shift",
+                            "Ask for the specific data you need rather than assuming a cause"
+                      ]
+                },
+                {
+                      "question": "How many petrol stations are there in the UK?",
+                      "answer": "Work top-down from population. The UK has roughly 67 million people, or about 28 million households, and roughly 33 million cars. Assume an average car fills up once a fortnight, so about 26 fills a year, giving roughly 860 million fills annually. A typical station might serve around 400 cars a day, or about 145,000 fills a year. Dividing gives roughly 5,900 stations. I would sanity-check that against the real figure of about 8,000 and note my estimate is the right order of magnitude — the gap likely reflects rural stations running well below 400 cars a day.",
+                      "keyPoints": [
+                            "State your assumptions explicitly and keep the numbers round",
+                            "Build a clear chain: population to cars to fills to stations",
+                            "Sanity-check the answer and say what would explain a gap",
+                            "The structure and the arithmetic transparency matter more than the exact number"
+                      ]
+                },
+                {
+                      "question": "A client is considering entering the German market. How do you assess it?",
+                      "answer": "I would test four things in order. First, market attractiveness: size, growth rate, and profitability of the segment. Second, competition: who holds share, how concentrated it is, and how incumbents would respond to entry. Third, the client's right to win: whether their cost position, brand or capability actually transfers to Germany. Fourth, entry mode and economics: organic build versus acquisition versus partnership, the investment required, and the payback period. I would only recommend entry if the market is attractive AND the client has a defensible advantage — an attractive market they cannot win in is a trap.",
+                      "keyPoints": [
+                            "Market attractiveness, competition, right to win, entry mode",
+                            "An attractive market is not enough without a transferable advantage",
+                            "Consider incumbent response, not just the static picture",
+                            "Finish with entry mode and the investment case, not just 'yes or no'"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Why consulting, and why our firm?",
+                      "answer": "For consulting, be concrete about what the work gives you: exposure to many industries and problem types in a short period, and the discipline of structuring genuinely ambiguous problems. For the firm, avoid rankings and cite something specific and verifiable — a particular practice strength, a piece of published research you actually read, or a consistent theme from people you spoke to. The interviewer is testing whether you have done real diligence or are reading from a brochure.",
+                      "keyPoints": [
+                            "Be specific about what the work itself offers you",
+                            "Cite firm-specific evidence, not league tables",
+                            "Reference real conversations or published work you have read",
+                            "Show you could not give this same answer about a competitor"
+                      ]
+                },
+                {
+                      "question": "Tell me about a time you influenced someone without authority.",
+                      "answer": "Use STAR and pick a case where the other person initially disagreed. Situation and task: the context and what needed to change. Action: focus on how you built the case — understanding their objection first, finding evidence that addressed it specifically, and adjusting your proposal rather than repeating it louder. Result: quantify the outcome. Consulting runs almost entirely on influence without authority, so this question is a direct proxy for the job.",
+                      "keyPoints": [
+                            "Use STAR and pick a genuine initial disagreement",
+                            "Show you understood their objection before arguing",
+                            "Demonstrate you adapted the proposal, not just the volume",
+                            "Quantify the result and note what you would do differently"
+                      ]
+                }
+          ]
+    },
     title: 'Management Consulting',
     category: 'Advisory',
     shortDescription: 'Solve complex business problems for top corporations and governments. Strategy, operations, and transformation across every industry.',
@@ -255,6 +367,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'private-equity',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "Walk me through a paper LBO.",
+                      "answer": "Take a company with £100m EBITDA bought at 10x, so a £1bn purchase price, funded with 60% debt (£600m) and £400m equity. Assume EBITDA grows to £130m by year five and all cash flow pays down debt, leaving £400m of debt at exit. Exit at the same 10x on £130m gives £1.3bn enterprise value, minus £400m debt equals £900m of equity. Against £400m invested that is 2.25x MOIC over five years, which is roughly a 17-18% IRR — using the rule that 2x in five years is about 15% and 2.5x is about 20%.",
+                      "keyPoints": [
+                            "Set up sources and uses first: purchase price, debt, equity",
+                            "Debt paydown and EBITDA growth are the two main value drivers",
+                            "Exit equity = exit EV - remaining net debt",
+                            "Know the MOIC-to-IRR shortcuts: 2x/5yr = ~15%, 3x/5yr = ~25%"
+                      ]
+                },
+                {
+                      "question": "What makes a good LBO candidate?",
+                      "answer": "Above all, stable and predictable free cash flow, because the entire structure depends on servicing and repaying debt. Beyond that: low capital intensity so cash is not consumed by maintenance capex, a defensible market position with pricing power, low existing leverage leaving debt capacity, identifiable operational improvement or cost-out opportunity, strong asset backing to support borrowing, and a clear exit route — trade sale, secondary buyout or IPO. Cyclical businesses with volatile earnings are poor candidates however cheap they look.",
+                      "keyPoints": [
+                            "Predictable free cash flow is the single most important criterion",
+                            "Low capex intensity and low existing leverage",
+                            "Defensible position with pricing power and a cost-out opportunity",
+                            "A credible exit route must exist at entry"
+                      ]
+                },
+                {
+                      "question": "What are the main drivers of returns in an LBO?",
+                      "answer": "Three, and you should be able to bridge between them. Multiple expansion — exiting at a higher multiple than entry, which is the least reliable because it depends on market conditions rather than anything you control. EBITDA growth — through revenue growth or margin improvement, which is what operationally-focused funds target. And debt paydown — using the company's own cash flow to convert enterprise value into equity value. Modern funds emphasise EBITDA growth because leverage alone is now competed away and multiple expansion cannot be underwritten.",
+                      "keyPoints": [
+                            "Multiple expansion, EBITDA growth, debt paydown",
+                            "Be able to attribute returns across the three in a bridge",
+                            "Multiple expansion is the least controllable and should not be underwritten",
+                            "Operational improvement is where modern funds claim to add value"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Why private equity over staying in banking?",
+                      "answer": "The honest answer centres on ownership and time horizon: in banking you advise on a transaction and move on, whereas in PE you commit capital, live with the consequences and are measured on whether the business actually improves. Say that you want to build a view and be accountable for it rather than execute someone else's. Reference the analytical continuity too — you keep the modelling rigour but apply it to your own decisions.",
+                      "keyPoints": [
+                            "Ownership and accountability rather than advisory",
+                            "Longer time horizon and exposure to value creation",
+                            "You want to form and defend your own investment view",
+                            "Acknowledge what banking gave you rather than criticising it"
+                      ]
+                },
+                {
+                      "question": "Pitch me a company you would take private.",
+                      "answer": "Have one prepared and know it properly. Cover: what the business does and how it makes money; why it is a good LBO candidate specifically (cash flow stability, leverage capacity, fragmented competition); the value creation plan with two or three concrete levers; a rough entry multiple and what you would underwrite; the biggest risk to the thesis and how you would mitigate it; and the likely exit. The willingness to name the strongest argument against your own pitch is what separates strong candidates.",
+                      "keyPoints": [
+                            "Know the business model and unit economics, not just the story",
+                            "Tie it explicitly to LBO suitability criteria",
+                            "Give two or three concrete value creation levers",
+                            "Volunteer the biggest risk to your own thesis"
+                      ]
+                }
+          ]
+    },
     title: 'Private Equity',
     category: 'Alternative Investments',
     shortDescription: 'Buy, transform, and sell private companies to generate outsized returns. The pinnacle of the finance career ladder for many practitioners.',
@@ -341,6 +509,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'hedge-fund',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "Pitch me a long idea.",
+                      "answer": "Structure it as thesis, variant perception, catalyst, valuation, risk. Start with a one-sentence thesis. Then the crucial part: what does the market believe that you think is wrong, and why do you have an edge — better channel work, a misread of an accounting item, an underappreciated segment. Name a catalyst that closes the gap within your horizon. Give a target price with the method and the assumptions. Finish with what would make you wrong and where you would cut. A pitch without a variant perception is just a description of a good company.",
+                      "keyPoints": [
+                            "Thesis, variant perception, catalyst, valuation, risk",
+                            "Variant perception is the core — what is consensus missing and why",
+                            "A catalyst matters because being early is indistinguishable from being wrong",
+                            "State your exit discipline and what would falsify the thesis"
+                      ]
+                },
+                {
+                      "question": "How would you hedge that position?",
+                      "answer": "It depends what you want to isolate. If the thesis is company-specific, short a close peer or a sector ETF to strip out sector and market beta so you are paid for the idiosyncratic call rather than market direction. Size the hedge on beta, not notional. Be explicit about what the hedge does not remove — a pairs trade still carries idiosyncratic risk on the short leg, and shorting a peer that gets acquired is a painful way to learn that. Also consider factor exposures: a long value, short growth pair is a factor bet whether or not you intended it.",
+                      "keyPoints": [
+                            "Hedge to isolate the risk you actually want exposure to",
+                            "Size on beta rather than matching notional",
+                            "The short leg carries its own idiosyncratic risk",
+                            "Check unintended factor exposures in any pair"
+                      ]
+                },
+                {
+                      "question": "What accounting red flags do you look for?",
+                      "answer": "Divergence between net income and cash flow from operations over several periods is the headline one — profits that never become cash. Then: receivables or inventory growing materially faster than revenue, which can signal channel stuffing or obsolescence; frequent 'one-off' charges that recur every year; aggressive revenue recognition or capitalising costs that peers expense; declining reserve or provision levels flattering earnings; and heavy reliance on non-GAAP measures that exclude real recurring costs like share-based compensation. Auditor changes and restatements raise the bar for everything else.",
+                      "keyPoints": [
+                            "Net income persistently exceeding operating cash flow",
+                            "Receivables and inventory growing faster than revenue",
+                            "Recurring 'one-off' charges and aggressive capitalisation",
+                            "Non-GAAP adjustments that exclude genuinely recurring costs"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Tell me about an investment you got wrong.",
+                      "answer": "Pick a real one and be specific about the mistake in your process, not just the outcome. Explain the original thesis, what actually happened, and crucially where your reasoning was flawed — did you anchor on a single data point, ignore disconfirming evidence, or size it beyond your conviction? Then say what you changed. Funds care far more about process discipline and intellectual honesty than about a clean record, and a candidate who has never been wrong is a candidate who has never had real conviction.",
+                      "keyPoints": [
+                            "Name a real loss and own the process error, not just bad luck",
+                            "Distinguish a bad decision from a bad outcome",
+                            "Explain the specific change you made to your process",
+                            "Intellectual honesty is being tested more than the P&L"
+                      ]
+                },
+                {
+                      "question": "How do you generate ideas?",
+                      "answer": "Describe a repeatable process rather than saying you read widely. For example: a screen for a specific setup (high insider buying, spin-offs, post-restructuring, unusual insider ownership), then a first-pass filter on business quality and balance sheet, then deep work on the two or three survivors — filings, competitor calls, channel checks. Mention where you look that others do not, and be able to name something you found through it. Specificity here is what distinguishes genuine interest from stated interest.",
+                      "keyPoints": [
+                            "Describe a repeatable, filterable process not a reading habit",
+                            "Name the specific screen or setup you focus on",
+                            "Show the funnel from wide screen to deep work on a few names",
+                            "Have a concrete example the process actually produced"
+                      ]
+                }
+          ]
+    },
     title: 'Hedge Fund',
     category: 'Alternative Investments',
     shortDescription: 'Manage absolute return strategies across equities, credit, macro, and quantitative approaches. The highest intellectual challenge in public markets.',
@@ -423,6 +647,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'quantitative-finance',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "A fair coin is flipped until the first head. What is the expected number of flips?",
+                      "answer": "This is a geometric distribution with p = 0.5, so the expectation is 1/p = 2. You can also derive it directly: let E be the expected number of flips. With probability 0.5 you get a head on the first flip and stop at 1; with probability 0.5 you get a tail and are back where you started having used one flip. So E = 0.5(1) + 0.5(1 + E), which gives E = 1 + 0.5E, so 0.5E = 1 and E = 2. Showing the recursive derivation matters more than quoting 1/p.",
+                      "keyPoints": [
+                            "Recognise the geometric distribution: E = 1/p",
+                            "Derive it recursively: E = 1 + (1-p)E",
+                            "State the memorylessness that makes the recursion valid",
+                            "Show the derivation rather than only quoting the formula"
+                      ]
+                },
+                {
+                      "question": "Explain what Black-Scholes assumes and where it breaks down.",
+                      "answer": "It assumes the underlying follows geometric Brownian motion with constant volatility and constant risk-free rate, no transaction costs, continuous trading and no arbitrage, with lognormally distributed returns. It breaks down because real volatility is not constant — it clusters and is stochastic — and returns have fat tails, so extreme moves happen far more often than a lognormal implies. The clearest empirical evidence is the volatility smile or skew: if the model held, implied volatility would be flat across strikes, but out-of-the-money puts trade at higher implied vol because the market prices crash risk the model ignores.",
+                      "keyPoints": [
+                            "GBM, constant vol and rates, continuous trading, no arbitrage",
+                            "Real returns have fat tails and volatility clusters",
+                            "The volatility smile is the direct empirical refutation",
+                            "OTM puts bid up because the model underprices crash risk"
+                      ]
+                },
+                {
+                      "question": "You have a biased coin but do not know the bias. How do you simulate a fair coin flip?",
+                      "answer": "Use von Neumann's trick: flip the coin twice. If you get heads-then-tails call it heads; if tails-then-heads call it tails; if you get two of the same, discard and repeat. Since flips are independent with fixed bias p, the probability of HT is p(1-p) and of TH is (1-p)p — identical regardless of p — so the two outcomes are equally likely and the result is unbiased. The expected number of raw flips is 1/(p(1-p)), so it is inefficient for very biased coins but always correct.",
+                      "keyPoints": [
+                            "Pair the flips and use only the two mixed outcomes",
+                            "P(HT) = P(TH) = p(1-p) whatever the bias is",
+                            "Discard HH and TT and repeat",
+                            "Note the efficiency cost: expected 1/(p(1-p)) flips"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Tell me about a technical project you built.",
+                      "answer": "Pick something you genuinely built and can defend at depth. Cover the problem, why you chose that approach over alternatives, the specific technical obstacle you hit and how you diagnosed it, and how you validated the result. Be honest about limitations — a candidate who says their backtest had look-ahead bias they later found and fixed is far more credible than one claiming flawless results. Expect to be pushed on the details, so do not present anything you cannot explain line by line.",
+                      "keyPoints": [
+                            "Choose something you can defend in genuine technical depth",
+                            "Justify your approach against the alternatives you rejected",
+                            "Describe how you validated the result, not just what it produced",
+                            "Volunteer the limitations — overclaiming is the fastest way to fail"
+                      ]
+                },
+                {
+                      "question": "How do you approach a problem you have never seen before?",
+                      "answer": "Describe a genuine method: restate the problem to check understanding, solve a simplified or smaller case first to build intuition, look for structure or symmetry that reduces the general case, then generalise and sanity-check the answer at the boundaries. Say out loud that you check limiting cases — what happens when n equals 1, or when p goes to 0 or 1 — because that catches most errors. Quant interviews are largely a test of whether you can think audibly and systematically under uncertainty.",
+                      "keyPoints": [
+                            "Restate the problem before solving it",
+                            "Solve a smaller or simpler case to build intuition",
+                            "Check limiting and boundary cases to catch errors",
+                            "Think out loud — the process is what is being assessed"
+                      ]
+                }
+          ]
+    },
     title: 'Quantitative Finance',
     category: 'Technology & Quant',
     shortDescription: 'Apply advanced mathematics, statistics, and machine learning to build trading models, price derivatives, and manage risk. The intersection of finance and technology.',
@@ -507,6 +787,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'equity-research',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "How would you value a company you cover?",
+                      "answer": "Use several methods and triangulate rather than relying on one. A DCF for the intrinsic view, which forces you to be explicit about growth, margins and reinvestment. Trading comparables on the metrics the market actually uses for that sector — EV/EBITDA for industrials, P/E for stable earners, EV/Sales or EV/ARR for unprofitable software, P/B and ROE for banks. Precedent transactions for a control premium reference. Then reconcile the differences: if the DCF says 30% upside but comps say fairly valued, understanding that gap is the actual insight, and it is usually where the differentiated view lives.",
+                      "keyPoints": [
+                            "Triangulate DCF, trading comps and precedents",
+                            "Use the multiple the market actually applies to that sector",
+                            "Reconciling the gap between methods is where the insight is",
+                            "Be explicit about the assumptions driving the DCF"
+                      ]
+                },
+                {
+                      "question": "What would make you downgrade a stock you rate a Buy?",
+                      "answer": "Be specific and pre-commit: the thesis breaking rather than the price moving. Concretely — a structural deterioration in the drivers you underwrote (pricing power eroding, market share losses to a new entrant, a regulatory change that resets the economics), evidence your key assumption was wrong, or the price reaching your target so the risk-reward no longer compensates. Note the distinction that matters: a falling share price alone is not a reason to downgrade if the thesis is intact — that is when you should be more constructive, not less.",
+                      "keyPoints": [
+                            "Downgrade on thesis break, not on price alone",
+                            "Name the specific drivers you underwrote and would monitor",
+                            "Valuation reaching target is a legitimate downgrade reason",
+                            "Distinguish price weakness from fundamental deterioration"
+                      ]
+                },
+                {
+                      "question": "How do you build a revenue model for a company?",
+                      "answer": "Build it bottom-up from the actual drivers rather than applying a growth rate to the total. For a retailer that means store count times sales per store, split into like-for-like growth and new openings. For software, opening ARR plus new bookings minus churn, or customers times average revenue per customer. For a bank, interest-earning assets times net interest margin plus fee income. The point of driver-based modelling is that it forces you to have a view on something real and testable, and it tells you which assumption the valuation is actually most sensitive to.",
+                      "keyPoints": [
+                            "Build bottom-up from real operational drivers",
+                            "Match the driver structure to the business model",
+                            "Driver-based models expose what the valuation is sensitive to",
+                            "Avoid applying a blanket growth rate to total revenue"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Pitch me a stock.",
+                      "answer": "Have two prepared, one long and one short. Lead with a one-sentence recommendation and target price, then the two or three reasons, then the variant perception — what consensus believes that you think is wrong. Give the catalyst and timeframe, then the main risk to the view. Keep it to two minutes and be ready to defend every number. The mistake most candidates make is describing a well-known good company without saying what the market is missing, which is a description rather than a pitch.",
+                      "keyPoints": [
+                            "Lead with the recommendation and target, then support it",
+                            "Include a genuine variant perception versus consensus",
+                            "Name a catalyst and a timeframe",
+                            "State the key risk and what would change your mind"
+                      ]
+                },
+                {
+                      "question": "Why equity research rather than an investing role?",
+                      "answer": "Be honest about what the seat gives you: depth on a defined universe, the discipline of publishing a view your name is attached to, and direct client contact where your job is to be genuinely useful rather than just right. Say that you value being accountable in public for a written thesis and that you want to build real sector expertise before allocating capital. Do not frame it as a stepping stone to the buy-side even if that is your intent — it reads as a lack of commitment to the actual job.",
+                      "keyPoints": [
+                            "Depth over a defined universe and genuine sector expertise",
+                            "Publishing a view under your own name creates accountability",
+                            "Client interaction is a core part of the role, not a side effect",
+                            "Do not frame it purely as a route to the buy-side"
+                      ]
+                }
+          ]
+    },
     title: 'Equity Research',
     category: 'Capital Markets',
     shortDescription: 'Analyse public companies and publish investment recommendations used by institutional investors. Deep fundamental analysis meets market storytelling.',
@@ -590,6 +926,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'trading',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "I offer you a bet: roll a die, and I pay you the number in pounds. What would you pay to play?",
+                      "answer": "The expected value is (1+2+3+4+5+6)/6 = 3.5, so 3.5 is the break-even price and I would pay below that to have positive edge. How far below depends on repetition and size: for a single small bet I would pay up to maybe 3.2 to leave edge; if I could play thousands of times I would pay closer to 3.4 because variance averages out and volume matters more than per-trade margin. If the stake were large relative to my capital I would pay materially less, because expected value alone ignores risk of ruin.",
+                      "keyPoints": [
+                            "Compute EV first: 3.5 for a fair six-sided die",
+                            "Quote below EV to retain edge — never pay fair value",
+                            "Adjust for repetition: more plays justifies paying closer to EV",
+                            "Mention sizing and risk of ruin for large stakes"
+                      ]
+                },
+                {
+                      "question": "What is the bid-ask spread and what makes it widen?",
+                      "answer": "The spread is the difference between the best bid and best offer, and it is the market maker's compensation for providing liquidity and bearing inventory and adverse selection risk. It widens with lower liquidity and fewer participants, higher volatility (the inventory becomes riskier to hold), greater uncertainty such as around earnings or data releases, larger trade size relative to normal volume, and higher perceived adverse selection — if a market maker suspects the person trading knows more than they do, they widen to protect themselves.",
+                      "keyPoints": [
+                            "Compensation for liquidity provision, inventory and adverse selection",
+                            "Widens with volatility and thinner liquidity",
+                            "Widens around scheduled events and data releases",
+                            "Adverse selection risk is the key theoretical driver"
+                      ]
+                },
+                {
+                      "question": "You are long a position that has fallen 20%. What do you do?",
+                      "answer": "Separate the decision from the loss. Re-run the original thesis: has any of the information I underwrote actually changed, or is this price action alone? If the thesis is intact and nothing fundamental has changed, the position is more attractive and I would consider adding within my risk limits. If the thesis is broken, I cut regardless of the loss — the entry price is a sunk cost and irrelevant to whether the trade is good from here. What I would not do is average down purely to lower my average entry, which is how small losses become career-ending ones.",
+                      "keyPoints": [
+                            "Re-test the thesis rather than reacting to the P&L",
+                            "Entry price is sunk and irrelevant to the forward decision",
+                            "Add only if the thesis is intact and risk limits allow",
+                            "Never average down simply to improve the average entry"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Talk me through a view you have on a market right now.",
+                      "answer": "Pick one asset class you actually follow and have a genuine, current view with a reason and a level. Structure it: what you think happens, the two or three drivers behind it, what the market is currently pricing, and what would prove you wrong. The failure mode is vagueness — saying rates are uncertain tells the interviewer nothing. They are testing whether you follow markets because you find them interesting or because you were told to.",
+                      "keyPoints": [
+                            "Have a real, current view on one market with a level",
+                            "Explain what is already priced in, not just your direction",
+                            "Name the drivers and the falsifying evidence",
+                            "Vagueness reads as a lack of genuine interest"
+                      ]
+                },
+                {
+                      "question": "How do you handle losing money?",
+                      "answer": "Describe a process, not an emotion. Say you separate decision quality from outcome — a well-reasoned trade that loses is different from a lucky trade that wins — and that you review both. Explain that you size positions so no single loss threatens your ability to keep trading, that you have pre-set levels rather than deciding under pressure, and that you keep a record so you can spot recurring mistakes. Trading firms screen hard for emotional stability under loss, so calm specificity is the answer.",
+                      "keyPoints": [
+                            "Separate decision quality from outcome",
+                            "Pre-commit to levels rather than deciding under stress",
+                            "Size so no single loss ends your ability to keep going",
+                            "Keep a record and review for recurring process errors"
+                      ]
+                }
+          ]
+    },
     title: 'Trading',
     category: 'Capital Markets',
     shortDescription: 'Execute and manage positions across equities, fixed income, FX, and derivatives. High-stakes, fast-paced, and performance-driven from day one.',
@@ -674,6 +1066,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'portfolio-management',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "How do you construct a portfolio?",
+                      "answer": "Start from the mandate and constraints — objective, benchmark, risk budget, liquidity needs, time horizon and any restrictions. Then set strategic asset allocation, which drives the large majority of long-run return variance, before any security selection. Within that, size positions on conviction and correlation rather than equally: two highly correlated positions are effectively one larger bet. Then set the risk framework — position limits, sector limits, tracking error budget — and a rebalancing discipline, since rebalancing is what systematically enforces selling strength and buying weakness.",
+                      "keyPoints": [
+                            "Start with mandate, constraints and risk budget",
+                            "Asset allocation drives most of long-run return variance",
+                            "Size on conviction and correlation, not equally",
+                            "Rebalancing discipline enforces buying low and selling high"
+                      ]
+                },
+                {
+                      "question": "Explain the Sharpe ratio and its limitations.",
+                      "answer": "Sharpe is excess return over the risk-free rate divided by standard deviation — return per unit of total volatility. Its limitations matter: it treats upside and downside volatility identically, when investors only dislike the downside, which is what the Sortino ratio addresses. It assumes roughly normal returns, so it flatters strategies with negatively skewed payoffs like selling options, which look excellent until they blow up. It is also easily gamed by illiquid or infrequently-marked assets whose smoothed valuations understate true volatility, and it is sensitive to the measurement period chosen.",
+                      "keyPoints": [
+                            "Excess return per unit of total volatility",
+                            "Penalises upside volatility identically to downside",
+                            "Flatters negatively skewed strategies like option selling",
+                            "Gameable via illiquid assets with smoothed marks"
+                      ]
+                },
+                {
+                      "question": "How do you attribute performance?",
+                      "answer": "Decompose the return versus benchmark into its sources so you know whether you were skilful or lucky. Allocation effect measures whether overweighting sectors that outperformed added value. Selection effect measures whether the specific securities you chose within each sector beat that sector. There is an interaction term between the two. Beyond that, separate out currency contribution for international portfolios and factor exposures — a manager who has simply been long small-cap value in a small-cap value rally has factor beta, not alpha, and attribution is what reveals that.",
+                      "keyPoints": [
+                            "Split allocation effect from selection effect",
+                            "Include the interaction and currency contribution",
+                            "Check factor exposures to distinguish beta from alpha",
+                            "Attribution reveals whether outperformance is repeatable"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "How would you explain a period of underperformance to a client?",
+                      "answer": "Lead with transparency and specifics rather than deflection. Explain exactly what drove it, distinguishing between the strategy working as designed in an unfavourable environment and genuine mistakes — and name the mistakes honestly. Re-anchor to the mandate and time horizon they signed up for. Say what, if anything, you are changing and why, and be clear when the answer is that you are changing nothing because the process is intact. Clients forgive underperformance far more readily than they forgive being managed.",
+                      "keyPoints": [
+                            "Be specific about drivers rather than deflecting to markets",
+                            "Separate the strategy underperforming from genuine errors",
+                            "Re-anchor to mandate and agreed time horizon",
+                            "Be explicit about what you are and are not changing"
+                      ]
+                },
+                {
+                      "question": "Why portfolio management?",
+                      "answer": "Focus on the accountability and the breadth: you own the outcome for real money against a benchmark that measures you continuously, and you have to think about how positions interact rather than just whether each idea is good. Say you are drawn to the discipline of risk budgeting and to the long feedback loop that forces genuine process rather than one-off calls. Mentioning that you want to be measured objectively is a strong signal in this seat.",
+                      "keyPoints": [
+                            "You own the outcome and are measured objectively",
+                            "Portfolio thinking is about interaction, not isolated ideas",
+                            "Risk budgeting discipline is core to the appeal",
+                            "Long feedback loops reward process over one-off calls"
+                      ]
+                }
+          ]
+    },
     title: 'Portfolio Management',
     category: 'Asset Management',
     shortDescription: 'Construct and manage investment portfolios on behalf of institutions and individuals. Where analytical skill meets long-term investment conviction.',
@@ -758,6 +1206,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'venture-capital',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "How do you value a pre-revenue startup?",
+                      "answer": "Traditional valuation does not apply, so you triangulate. Comparable recent financings for similar stage, sector and geography set the market rate. The scorecard or checklist method adjusts a regional average for team quality, market size, product traction and competitive position. The venture capital method works backwards: estimate an exit value in five to seven years, apply the multiple your fund needs given the failure rate, and discount to a pre-money today. In practice, price at seed is set far more by round dynamics, competition for the deal and how much ownership the fund needs than by any model.",
+                      "keyPoints": [
+                            "Comparables by stage, sector and geography set the market",
+                            "Scorecard method adjusts a base for team, market and traction",
+                            "VC method works backwards from a required exit multiple",
+                            "Round dynamics and target ownership matter more than models"
+                      ]
+                },
+                {
+                      "question": "What do you look for in an early-stage company?",
+                      "answer": "Team first at seed, because the product will change: founder-market fit, evidence they can recruit people better than themselves, and speed of learning. Then market size and timing — venture returns require outcomes large enough to return a fund, so a great business in a small market is a poor venture investment even if it is a good company. Then product and any evidence of genuine pull rather than push: retention and engagement matter more than raw signups. Finally unit economics direction of travel, defensibility, and whether the round gives enough runway to reach the next credible milestone.",
+                      "keyPoints": [
+                            "Founder-market fit and hiring ability dominate at seed",
+                            "Market must be large enough to return the fund",
+                            "Retention and engagement beat vanity growth metrics",
+                            "Check runway is sufficient to reach the next milestone"
+                      ]
+                },
+                {
+                      "question": "Explain how a liquidation preference works.",
+                      "answer": "A liquidation preference determines who gets paid first and how much in an exit. A 1x non-participating preference means the investor takes the greater of their money back or their pro-rata share as converted equity — they choose whichever is higher but not both. Participating preferred means they take their money back AND then share in the remainder, which is far more investor-favourable and materially reduces founder and common proceeds in a modest exit. Multiples above 1x, and stacked seniority across rounds, can mean common shareholders receive nothing even in an exit that looks like a headline success.",
+                      "keyPoints": [
+                            "Non-participating: greater of preference or converted pro-rata",
+                            "Participating: preference AND a share of the remainder",
+                            "Higher multiples and stacked seniority hurt common badly",
+                            "Matters most in modest exits, not large ones"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "What company would you invest in and why?",
+                      "answer": "Pick something real and ideally not obvious, then give a proper investment case: the problem, why now (what changed in technology, regulation or behaviour that makes this possible now and not five years ago), why this team, the market size, evidence of traction, and the main risk. The why-now question is the one most candidates miss and the one VCs care about most, because timing explains far more venture outcomes than idea quality does.",
+                      "keyPoints": [
+                            "Choose something non-obvious you genuinely understand",
+                            "Answer 'why now' explicitly — timing is the core VC question",
+                            "Cover team, market size and evidence of real pull",
+                            "Name the biggest risk to the investment"
+                      ]
+                },
+                {
+                      "question": "How would you source deals?",
+                      "answer": "Describe a concrete, repeatable system rather than saying you would network. For example: building relationships with specific accelerators and university spinout offices, being genuinely active in a technical community where founders already are, tracking engineers leaving strong companies as a leading signal of new founding teams, and creating a reason for founders to seek you out such as consistently useful writing on a niche. Then explain how you would triage inbound so the funnel is manageable. Sourcing is most of the job at junior level, so specificity is being tested.",
+                      "keyPoints": [
+                            "Describe a repeatable system, not generic networking",
+                            "Track leading signals like notable engineer departures",
+                            "Create inbound pull through genuinely useful presence",
+                            "Explain how you triage the funnel, not just fill it"
+                      ]
+                }
+          ]
+    },
     title: 'Venture Capital',
     category: 'Alternative Investments',
     shortDescription: 'Back early-stage startups with capital and mentorship. Where financial analysis meets entrepreneurial vision and pattern recognition.',
@@ -840,6 +1344,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'financial-advisor',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "A client has £250,000 to invest and is 40 with two children. How do you approach it?",
+                      "answer": "I would not recommend anything before understanding the full picture: objectives and time horizon for each goal, existing pensions and assets, income and job security, debts including mortgage rate, emergency fund, attitude to risk and crucially capacity for loss, plus tax position and available allowances. Then structure by goal and horizon — short-term needs in cash, long-term growth in diversified equities — using tax wrappers efficiently, ISAs and pension contributions first given the tax relief. The single biggest mistake a junior adviser makes is recommending products before completing the fact-find.",
+                      "keyPoints": [
+                            "Complete a full fact-find before any recommendation",
+                            "Distinguish attitude to risk from capacity for loss",
+                            "Use tax wrappers first: ISA and pension allowances",
+                            "Match asset choice to each goal's time horizon"
+                      ]
+                },
+                {
+                      "question": "How do you explain risk to a client who says they want high returns with no risk?",
+                      "answer": "Reframe it in terms they can feel rather than lecture them on volatility. Explain that return is the compensation for accepting uncertainty and that removing the uncertainty removes the return — cash is not risk-free either, because inflation erodes its purchasing power with certainty. Then make it concrete: ask how they would feel and what they would do if this portfolio fell 25% in a year, because that reveals capacity for loss far better than a questionnaire. Finally, agree an allocation they can actually hold through a downturn, since the best portfolio is one the client will not abandon at the bottom.",
+                      "keyPoints": [
+                            "Return is compensation for accepting uncertainty",
+                            "Cash carries certain inflation risk, not zero risk",
+                            "Test reaction to a specific drawdown, not an abstract score",
+                            "The right portfolio is one the client can actually hold"
+                      ]
+                },
+                {
+                      "question": "What is the difference between attitude to risk and capacity for loss?",
+                      "answer": "Attitude to risk is psychological — how comfortable the client feels with volatility. Capacity for loss is financial and objective — how much they could actually afford to lose without materially damaging their standard of living or missing a goal. They frequently conflict, and when they do capacity must govern. A client near retirement who is emotionally comfortable with high risk still has low capacity, because there is no time to recover a large drawdown before drawing on the money. Advising to attitude while ignoring capacity is a classic suitability failure.",
+                      "keyPoints": [
+                            "Attitude is psychological, capacity is objective and financial",
+                            "Capacity must take precedence where the two conflict",
+                            "Time horizon is the main determinant of capacity",
+                            "Ignoring capacity is a suitability breach, not just bad advice"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "How would you build trust with a new client?",
+                      "answer": "Emphasise listening before advising: spend the first meeting understanding their situation and what they actually worry about, not presenting solutions. Be explicit and unprompted about how you are paid and any conflicts, because volunteering that builds more credibility than anything else. Explain things without jargon and check understanding rather than assuming it. Then do the small things reliably — follow up when you say you will — because trust in this role is built through consistency over time, not through one impressive meeting.",
+                      "keyPoints": [
+                            "Listen and complete the fact-find before advising",
+                            "Disclose fees and conflicts unprompted",
+                            "Explain without jargon and check understanding",
+                            "Trust compounds through reliability, not one good meeting"
+                      ]
+                },
+                {
+                      "question": "A client wants to sell everything after a market fall. What do you do?",
+                      "answer": "Acknowledge the feeling first — dismissing it destroys trust and makes them more likely to act unilaterally. Then re-anchor: revisit the original plan, the time horizon and the fact that this scenario was discussed when we agreed the allocation. Show what selling would actually lock in versus historical recovery patterns, without promising anything. If they still want to de-risk, consider a partial reduction so they retain participation — a compromise they can live with beats them liquidating entirely against advice. Document the conversation and the recommendation either way.",
+                      "keyPoints": [
+                            "Acknowledge the emotion before presenting logic",
+                            "Re-anchor to the agreed plan and horizon",
+                            "Offer a partial reduction rather than an all-or-nothing stance",
+                            "Document the discussion and your recommendation"
+                      ]
+                }
+          ]
+    },
     title: 'Financial Advisor (IFA / Financial Planning)',
     category: 'Wealth Management',
     shortDescription: 'Help individuals and families achieve their financial goals through personalised advice on investments, retirement, tax, and estate planning.',
@@ -923,6 +1483,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'risk-management',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "What is VaR and what are its weaknesses?",
+                      "answer": "Value at Risk estimates the maximum loss over a given horizon at a given confidence level — for example a one-day 99% VaR of £10m means you would expect to lose more than £10m on roughly one day in a hundred. Its central weakness is that it says nothing about the size of the loss when the threshold is breached, which is precisely the case you care about; Expected Shortfall addresses that by averaging losses beyond VaR. It also typically assumes normally distributed returns and relies on historical correlations that break down exactly when markets are stressed, and it is not sub-additive, so it can perversely suggest a diversified portfolio is riskier than its parts.",
+                      "keyPoints": [
+                            "Maximum expected loss at a confidence level over a horizon",
+                            "Says nothing about severity beyond the threshold",
+                            "Expected Shortfall fixes the tail blindness",
+                            "Correlations break down under stress, exactly when it matters"
+                      ]
+                },
+                {
+                      "question": "Explain the main categories of risk a bank faces.",
+                      "answer": "Credit risk — a borrower or counterparty failing to pay, the largest risk for most commercial banks. Market risk — losses from moves in rates, FX, equity or commodity prices on positions held. Liquidity risk, which splits into funding liquidity (unable to meet obligations as they fall due) and market liquidity (unable to exit a position without moving the price); this is what actually kills banks fastest, since a solvent bank can still fail if it cannot fund itself. Operational risk — failures of people, process or systems, including fraud and cyber. Plus conduct, regulatory, reputational and increasingly climate risk.",
+                      "keyPoints": [
+                            "Credit, market, liquidity, operational as the core four",
+                            "Split liquidity into funding and market liquidity",
+                            "Liquidity failure kills faster than solvency failure",
+                            "Conduct, regulatory and climate risk increasingly material"
+                      ]
+                },
+                {
+                      "question": "What is stress testing and how does it differ from VaR?",
+                      "answer": "VaR is a statistical estimate derived from historical distributions, telling you about losses under normal conditions at a stated confidence. Stress testing is scenario-based and deliberately not probabilistic: it asks what happens under a specific severe but plausible scenario — rates up 300bp, a named counterparty defaulting, a repeat of 2008 — regardless of how likely that is. The point is to examine the tail that VaR explicitly excludes, and to reveal non-linear exposures and correlation breakdowns that a statistical model built on calm periods will systematically miss. Reverse stress testing goes further and asks what scenario would actually break the firm.",
+                      "keyPoints": [
+                            "VaR is statistical and historical, stress testing is scenario-based",
+                            "Stress tests examine the tail VaR excludes by construction",
+                            "Reveals non-linearity and correlation breakdown",
+                            "Reverse stress testing asks what would break the firm"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "A trader disputes your risk limit and says you are costing the desk money. How do you handle it?",
+                      "answer": "Stay factual and depersonalise it. Explain the specific basis for the limit — the exposure calculation, the policy, the appetite it derives from — rather than asserting authority. Listen genuinely, because the trader may have information the model lacks, such as an offsetting position or a hedge not captured. If their case is valid, escalate for a formal limit review rather than granting an informal exception. If it is not, hold the limit and escalate the disagreement to your own management. The one thing you never do is quietly allow a breach to avoid conflict.",
+                      "keyPoints": [
+                            "Explain the basis for the limit rather than asserting authority",
+                            "Listen — the trader may know something the model misses",
+                            "Route genuine disagreements through formal review",
+                            "Never permit an informal breach to avoid confrontation"
+                      ]
+                },
+                {
+                      "question": "Why risk management?",
+                      "answer": "Frame it as genuine interest rather than as a fallback from a front-office role, which interviewers detect immediately. Say you are drawn to understanding how institutions actually fail and to the systems-level view risk gives you across every desk and product. Mention the intellectual appeal of quantifying uncertainty and the fact that the role requires the confidence to say no to people who outrank you. Referencing a specific case — a bank failure you studied and what the control gap was — makes the interest credible.",
+                      "keyPoints": [
+                            "Present it as a genuine choice, not a front-office fallback",
+                            "Highlight the firm-wide, systems-level perspective",
+                            "Emphasise willingness to challenge senior colleagues",
+                            "Cite a specific failure case you have studied"
+                      ]
+                }
+          ]
+    },
     title: 'Risk Management',
     category: 'Risk & Control',
     shortDescription: 'Identify, measure, and mitigate financial and operational risks within banks, insurers, and corporates. The guardian function of modern finance.',
@@ -1007,6 +1623,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'fp-and-a',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "How would you build a budget for a business unit?",
+                      "answer": "Build bottom-up from drivers and validate top-down against strategy. Start with revenue drivers — volume times price, or customers times ARPU — agreed with the commercial teams who own them, rather than imposing a growth rate. Then variable costs as a function of those same drivers so the model flexes correctly, then fixed costs built from actual commitments: headcount plan by role and start date, contracts, rent. Layer in capex and its depreciation. Then reconcile the bottom-up total against the top-down target and, where there is a gap, make the trade-offs explicit rather than quietly stretching assumptions.",
+                      "keyPoints": [
+                            "Build bottom-up from drivers owned by the business",
+                            "Variable costs must flex with the revenue drivers",
+                            "Headcount built by role and start date, not a blended number",
+                            "Reconcile bottom-up against top-down and surface the gap"
+                      ]
+                },
+                {
+                      "question": "Actual results came in 12% below budget. How do you investigate?",
+                      "answer": "Decompose before explaining. Split the variance into price versus volume — selling fewer units is a very different problem from discounting. Then by segment, product and geography to find whether the miss is broad or concentrated in one area. Check timing effects: a slipped deal that closes next month is a phasing issue, not a demand issue. Separate one-off items from run-rate deterioration, because only the latter should change the forecast. Then talk to the commercial owners to test the hypothesis before writing it up, and finish with the implication for the full-year outlook.",
+                      "keyPoints": [
+                            "Split price versus volume first — they imply different actions",
+                            "Segment the variance to see if it is broad or concentrated",
+                            "Separate timing and one-offs from run-rate deterioration",
+                            "Validate with the business, then restate the full-year outlook"
+                      ]
+                },
+                {
+                      "question": "What is the difference between a forecast, a budget and a target?",
+                      "answer": "A budget is the financial plan agreed at the start of the period, against which performance is measured and often compensation is set — it is fixed and becomes stale as conditions change. A forecast is the current best estimate of where the year actually lands, updated as new information arrives, and it should be unbiased rather than aspirational. A target is what leadership wants to achieve, which is often deliberately more ambitious than the forecast. Confusing them causes real damage: if the forecast quietly becomes the target, you lose the honest view of reality that decisions depend on.",
+                      "keyPoints": [
+                            "Budget is fixed and used for measurement",
+                            "Forecast is the unbiased current best estimate",
+                            "Target is aspirational and set by leadership",
+                            "Letting the forecast drift toward the target destroys its value"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "How do you influence a business leader who disagrees with your numbers?",
+                      "answer": "Separate the data from the interpretation. First confirm you agree on the underlying facts, because most disputes are actually about assumptions rather than arithmetic. Then surface the specific assumption you differ on and make it explicit — often the disagreement is about a conversion rate or a launch date, not about finance. Offer a scenario range rather than defending a single point estimate, which gives them a way to engage rather than to fight. Frame yourself as a business partner helping them hit their goal, not as a scorekeeper.",
+                      "keyPoints": [
+                            "Agree on the facts before debating the interpretation",
+                            "Isolate the specific assumption in dispute",
+                            "Offer scenarios instead of defending one point estimate",
+                            "Position as a business partner, not a scorekeeper"
+                      ]
+                },
+                {
+                      "question": "Why FP&A rather than investment banking?",
+                      "answer": "Be positive about the choice rather than framing it as avoiding banking hours. Emphasise the appeal of ownership and continuity: you see decisions through to their consequences inside one business rather than advising and moving on, and you build genuine operational understanding of how a company actually works. Mention the breadth of stakeholder contact across commercial, operations and leadership, and the fact that the work directly changes what the business does next.",
+                      "keyPoints": [
+                            "Frame positively — ownership and continuity, not avoiding hours",
+                            "You see decisions through to their consequences",
+                            "Deep operational understanding of one business",
+                            "Direct influence on what the company actually does"
+                      ]
+                }
+          ]
+    },
     title: 'FP&A (Financial Planning & Analysis)',
     category: 'Corporate Finance',
     shortDescription: 'Be the financial brain of a corporation. Drive budgeting, forecasting, and strategic decision-making from within a company\'s finance function.',
@@ -1090,6 +1762,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'actuarial',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "How would you price an insurance policy?",
+                      "answer": "Start from expected claims cost, which is frequency times severity, estimated from historical data for that risk class and adjusted for trend and inflation. Add a risk margin for the uncertainty around that expectation — the more volatile and less credible the data, the larger the margin. Then load for expenses, commission and cost of capital, and add a profit margin. Apply credibility theory to blend the specific experience of a small group with broader portfolio data, since a small sample alone is not statistically reliable. Finally sense-check against the market, because a technically correct price nobody will pay is not commercially useful.",
+                      "keyPoints": [
+                            "Expected cost = frequency x severity, trended forward",
+                            "Add a risk margin scaled to uncertainty and data credibility",
+                            "Load for expenses, capital cost and profit",
+                            "Use credibility theory to blend small-sample with portfolio data"
+                      ]
+                },
+                {
+                      "question": "Explain the time value of money and how you use it.",
+                      "answer": "A pound today is worth more than a pound in the future because it can be invested to earn a return, so future cash flows must be discounted to be compared. Present value equals future value divided by (1+r) to the power n. In actuarial work this underpins everything: reserving requires discounting future expected claim payments to a value held today, pension liabilities are the discounted value of promised future benefits, and the discount rate chosen has an enormous effect — for long-duration pension liabilities a one percentage point change in the discount rate can move the liability by roughly 15-20%, which is why the rate is so heavily debated and regulated.",
+                      "keyPoints": [
+                            "PV = FV / (1+r)^n — the core of all actuarial valuation",
+                            "Reserves and pension liabilities are discounted future cash flows",
+                            "Small discount rate changes move long liabilities enormously",
+                            "Discount rate choice is regulated precisely because of that sensitivity"
+                      ]
+                },
+                {
+                      "question": "What is reserving and why is it difficult?",
+                      "answer": "Reserving estimates the money an insurer must hold today for claims that have already occurred but are not yet fully paid. The difficulty is that you are estimating an unknown: claims incurred but not reported (IBNR) have happened but the insurer does not know yet, and reported claims may develop far beyond the initial estimate. Methods like chain ladder project historical development patterns forward, but they assume the past pattern holds — which breaks when there are changes in claims handling, legal environment, inflation or the mix of business. Under-reserving flatters current profit and creates a much larger problem later, which is why it attracts intense regulatory and auditor scrutiny.",
+                      "keyPoints": [
+                            "Money held for claims already incurred but not fully paid",
+                            "IBNR is the hard part — claims that have happened unreported",
+                            "Chain ladder assumes past development patterns continue",
+                            "Under-reserving flatters profit now and creates a worse problem later"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "How do you explain a technical result to a non-technical audience?",
+                      "answer": "Lead with the conclusion and its business implication, not the method — say what it means and what should be done, then offer the detail if they want it. Use a concrete comparison rather than a distribution, and be explicit about uncertainty in plain terms: a range and what would move the number, rather than a false single figure. Check understanding by asking what they would do with the result. Actuaries who cannot translate are far less valuable than those who can, and this is directly tested in the profession's exams and in practice.",
+                      "keyPoints": [
+                            "Lead with the conclusion and implication, not the method",
+                            "Express uncertainty as a range with drivers, not a false precision",
+                            "Use concrete comparisons rather than statistical language",
+                            "Check understanding by asking what they would do with it"
+                      ]
+                },
+                {
+                      "question": "The actuarial exams take years. How do you know you will stick with it?",
+                      "answer": "Be concrete rather than expressing enthusiasm. Reference evidence you already have of sustained study alongside other commitments — a module you self-taught, exams you passed while working, any actuarial exemptions already achieved. Describe a specific study plan and how you would protect the time. Acknowledge honestly that it is demanding and that the pass rates are low, because a candidate who has clearly researched the reality is far more credible than one who says they enjoy learning.",
+                      "keyPoints": [
+                            "Provide evidence of sustained study alongside other commitments",
+                            "Reference any exemptions or exams already passed",
+                            "Describe a concrete, realistic study plan",
+                            "Acknowledge the genuine difficulty and low pass rates"
+                      ]
+                }
+          ]
+    },
     title: 'Actuarial Science',
     category: 'Risk & Control',
     shortDescription: 'Use advanced mathematics and statistics to price risk and ensure financial solvency of insurance and pension funds. One of the most technically rigorous careers in finance.',
@@ -2343,6 +3071,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'structured-finance',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "Explain how a securitisation works.",
+                      "answer": "A originator pools income-generating assets — mortgages, auto loans, credit card receivables — and sells them to a bankruptcy-remote special purpose vehicle, so the assets are legally separated from the originator's own credit. The SPV funds the purchase by issuing notes to investors, backed by the cash flows from that pool. Those notes are tranched by seniority: senior tranches are paid first and carry the highest ratings, mezzanine next, and the equity or first-loss tranche absorbs initial losses and is usually retained by the originator to align incentives. Investors get exposure to the asset pool rather than to the originator, and the originator gets funding and balance sheet relief.",
+                      "keyPoints": [
+                            "Assets sold to a bankruptcy-remote SPV for true legal separation",
+                            "Notes issued against pool cash flows and tranched by seniority",
+                            "Equity tranche takes first loss, usually retained for alignment",
+                            "Originator gains funding and capital relief; investors get pool exposure"
+                      ]
+                },
+                {
+                      "question": "What is a waterfall and how does credit enhancement work?",
+                      "answer": "The waterfall is the contractual order in which collections are applied: typically fees and servicing first, then senior interest, then senior principal, then down through mezzanine to equity — so losses hit from the bottom up while cash flows fill from the top down. Credit enhancement is what protects the senior notes. Subordination is the main form: lower tranches absorbing losses first. Overcollateralisation means the pool balance exceeds the notes issued. Excess spread is the surplus of pool interest over note interest and fees, which absorbs losses before principal is touched. Reserve funds and third-party guarantees add further layers.",
+                      "keyPoints": [
+                            "Cash fills top-down; losses hit bottom-up",
+                            "Subordination is the primary credit enhancement",
+                            "Overcollateralisation and excess spread absorb losses first",
+                            "Reserve funds and guarantees provide additional support"
+                      ]
+                },
+                {
+                      "question": "Why did structured products perform so badly in 2008?",
+                      "answer": "Several failures compounded. Underwriting standards in the underlying mortgage pools deteriorated badly while models were calibrated on historical data from a period of rising house prices. Correlation assumptions were the central error: models assumed regional mortgage defaults were largely independent, when in a national house price decline they became highly correlated, so the diversification that justified senior tranche ratings evaporated exactly when it was needed. Re-securitisation into CDO-squared structures made exposures nearly impossible to trace, and rating agencies were paid by issuers, creating a conflict. The lesson is that a model is only as good as its correlation assumption under stress.",
+                      "keyPoints": [
+                            "Underwriting deteriorated while models used benign historical data",
+                            "Correlation assumptions failed — defaults were not independent",
+                            "Diversification vanished exactly when it was relied upon",
+                            "Re-securitisation obscured exposures; rating conflicts compounded it"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "Why structured finance?",
+                      "answer": "Emphasise the combination of legal, quantitative and credit analysis — few seats require you to understand cash flow modelling, documentation and credit risk simultaneously. Say you find the structuring itself interesting: the same pool of assets can be engineered into instruments with genuinely different risk profiles, and getting the waterfall and enhancement right is what determines whether the senior notes actually deserve their rating. Referencing the post-2008 regulatory changes such as risk retention shows you understand the modern context rather than the pre-crisis version of the job.",
+                      "keyPoints": [
+                            "Combines legal, quantitative and credit analysis uniquely",
+                            "The structuring itself creates genuinely different risk profiles",
+                            "Show awareness of post-crisis regulation like risk retention",
+                            "Demonstrate interest in the mechanics, not just the label"
+                      ]
+                },
+                {
+                      "question": "How would you explain a complex structure to an investor?",
+                      "answer": "Start with what they actually get paid and when, then what has to go wrong before they lose money — that is the question every investor is really asking. Use the waterfall as the narrative spine, explaining protection in terms of how much of the pool would need to default before their tranche is touched. Be direct about the risks rather than burying them: prepayment, extension, correlation and servicer quality. Volunteering the weak points builds far more credibility than a polished pitch that omits them.",
+                      "keyPoints": [
+                            "Lead with what they are paid and what breaks it",
+                            "Use the waterfall as the explanatory structure",
+                            "Quantify protection as losses-before-impairment",
+                            "Volunteer the risks rather than burying them"
+                      ]
+                }
+          ]
+    },
     title: 'Structured Finance & Securitisation',
     category: 'Capital Markets',
     shortDescription: 'Design and execute the pooling and tranching of loans (mortgages, auto loans, credit card debt) into tradeable securities — the engineering side of debt markets.',
@@ -2423,6 +3207,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'private-banking',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "A client sells their business for £20m. What are the priorities?",
+                      "answer": "Before investing anything: confirm the tax position on the sale, since planning done after completion is usually too late, and check whether reliefs such as Business Asset Disposal Relief were used. Then establish liquidity for near-term needs and any tax due. Then the actual planning conversation — what the money is for: lifestyle, family provision, philanthropy, or a further venture. Structure follows from that: appropriate wrappers, trusts where inheritance tax planning is relevant, and a diversified allocation that deliberately reduces the concentration risk they have just exited. Many entrepreneurs want to reinvest in what they know, which recreates the concentration they were just paid to diversify away from.",
+                      "keyPoints": [
+                            "Tax position first — post-completion planning is often too late",
+                            "Set aside liquidity for tax and near-term needs",
+                            "Define purpose before structure: lifestyle, family, philanthropy",
+                            "Watch for re-concentration into familiar but correlated risk"
+                      ]
+                },
+                {
+                      "question": "How do you approach intergenerational wealth transfer?",
+                      "answer": "Start with the family's objectives, not the instruments — who should receive what, when, and with what degree of control. Then the technical layer: inheritance tax exposure, lifetime gifting and the seven-year rule, trusts to control timing and protect assets, and pension assets which can be highly IHT-efficient. Equally important is the non-technical side that professionals often neglect: preparing the next generation to receive wealth, and facilitating a family conversation about intent, because the most common failure mode is not a tax mistake but heirs who are unprepared and family disputes that were never surfaced.",
+                      "keyPoints": [
+                            "Objectives and family intent before instruments",
+                            "IHT exposure, lifetime gifting, trusts and pension efficiency",
+                            "Preparing the next generation is as important as the structure",
+                            "Most failures are family dynamics, not tax technicalities"
+                      ]
+                },
+                {
+                      "question": "What is the difference between advisory and discretionary management?",
+                      "answer": "Under an advisory mandate the bank recommends and the client decides — every transaction requires their approval, so the client retains control and ultimate responsibility for each decision. Under a discretionary mandate the client sets the objectives, constraints and risk parameters, and the manager then executes within that framework without seeking approval per trade. Discretionary allows faster execution and more consistent implementation of a strategy, and typically carries higher fees; advisory suits clients who want involvement and have the time and expertise for it. The regulatory suitability obligations differ meaningfully between the two.",
+                      "keyPoints": [
+                            "Advisory: bank recommends, client approves each transaction",
+                            "Discretionary: manager executes within an agreed mandate",
+                            "Discretionary enables faster, more consistent implementation",
+                            "Suitability obligations differ between the two models"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "How would you handle a client who wants something unsuitable?",
+                      "answer": "Understand the motivation first — often an apparently unsuitable request reflects a real underlying concern that has not been articulated, such as fear of missing out or an unstated liquidity need. Explain clearly why it does not fit their stated objectives and capacity, using their own goals rather than policy language. Offer an alternative that addresses the underlying want within suitable bounds, such as a limited allocation. If they insist on something genuinely unsuitable, escalate and document rather than accommodate — suitability is a regulatory obligation, and a client relationship is not a reason to breach it.",
+                      "keyPoints": [
+                            "Understand the underlying motivation behind the request",
+                            "Explain unsuitability against their own stated goals",
+                            "Offer a suitable alternative that addresses the real want",
+                            "Escalate and document rather than accommodate a breach"
+                      ]
+                },
+                {
+                      "question": "Why private banking?",
+                      "answer": "Focus on the long-horizon relationship and the breadth: you deal with the whole of a client's financial life across investments, tax, lending, succession and often the family dynamics behind them, over decades rather than transactions. Say you are drawn to being genuinely trusted with something personal and consequential, and to the technical breadth required to be credible across that range. Being clear that you value discretion and long-term relationship building over transactional wins is the right signal for this seat.",
+                      "keyPoints": [
+                            "Whole-of-life financial relationships over decades",
+                            "Technical breadth across investments, tax, lending and succession",
+                            "Trust and discretion are the core of the role",
+                            "Relationship building rather than transactional selling"
+                      ]
+                }
+          ]
+    },
     title: 'Private Banking (HNW/UHNW)',
     category: 'Wealth Management',
     shortDescription: 'Manage the total banking, lending and investment relationship for high and ultra-high-net-worth individuals at a private bank — distinct from retail financial planning in scale, discretion and relationship depth.',
@@ -2504,6 +3344,62 @@ export const jobs: Job[] = [
   },
   {
     id: 'energy-commodities',
+    interviewQA: {
+          "technical": [
+                {
+                      "question": "What drives oil prices?",
+                      "answer": "Supply and demand fundamentals first: OPEC+ production decisions and compliance, US shale output which responds to price with a lag of several months, unplanned outages, and demand driven by global growth, transport and seasonality. Then inventories, which are the clearest real-time balance signal — builds above the five-year average indicate oversupply. Then the curve structure: backwardation signals tightness, contango signals surplus and makes storage economic. Layered on top are geopolitics and risk premium, the dollar (oil is dollar-denominated, so a stronger dollar is a headwind), and financial flows from funds that can dominate short-term moves regardless of fundamentals.",
+                      "keyPoints": [
+                            "OPEC+ policy, shale response and outages on the supply side",
+                            "Inventories versus the five-year average as the balance signal",
+                            "Curve structure: backwardation is tight, contango is surplus",
+                            "Dollar strength and financial flows can dominate short term"
+                      ]
+                },
+                {
+                      "question": "Explain contango and backwardation.",
+                      "answer": "Contango is when forward prices are above spot, which typically reflects a well-supplied market where the forward price covers the cost of carry — storage, insurance and financing. It makes storage profitable and penalises anyone rolling a long futures position, since they repeatedly sell a cheaper expiring contract and buy a more expensive one, producing negative roll yield. Backwardation is the opposite: forward below spot, signalling immediate scarcity where buyers pay a premium for physical delivery now. It produces positive roll yield for long positions. For a physical trader the curve shape directly determines whether storing the commodity is economic.",
+                      "keyPoints": [
+                            "Contango: forward above spot, well supplied, cost of carry",
+                            "Backwardation: forward below spot, immediate physical scarcity",
+                            "Roll yield is negative in contango, positive in backwardation",
+                            "Curve shape determines whether storage is economic"
+                      ]
+                },
+                {
+                      "question": "How is a physical commodity trade different from a financial one?",
+                      "answer": "A physical trade involves actually taking title to and delivering a real cargo, which brings a set of risks a financial position does not have: logistics and freight, quality specification and assay disputes, demurrage when loading or discharge is delayed, credit risk on the counterparty, and the working capital required to finance a cargo in transit for weeks. Financial futures settle against a reference price with none of that operational exposure. This is why physical traders often make money on basis, quality differentials and timing arbitrage rather than on flat price direction — and why they hedge flat price out with futures while keeping the physical spread.",
+                      "keyPoints": [
+                            "Physical carries logistics, quality, demurrage and credit risk",
+                            "Working capital to finance cargoes in transit is substantial",
+                            "Physical edge is in basis, quality and timing, not flat price",
+                            "Flat price is usually hedged with futures, keeping the spread"
+                      ]
+                }
+          ],
+          "behavioural": [
+                {
+                      "question": "What is your view on the energy transition?",
+                      "answer": "Show balance and specificity rather than an ideological position. Acknowledge the direction of travel is clear while being realistic on timing and on the fact that hydrocarbon demand has proven persistent. Discuss concrete implications for the sector: underinvestment in conventional supply creating potential price spikes, growing volatility as intermittent renewables raise the value of flexibility and storage, and new tradeable markets in power, carbon and eventually hydrogen. Traders value people who can hold a nuanced two-sided view because that is what pricing risk actually requires.",
+                      "keyPoints": [
+                            "Balanced view — direction is clear, timing is uncertain",
+                            "Underinvestment in conventional supply as a price risk",
+                            "Intermittency raises the value of flexibility and storage",
+                            "New tradeable markets in power, carbon and hydrogen"
+                      ]
+                },
+                {
+                      "question": "Tell me about a time you made a decision with incomplete information.",
+                      "answer": "Commodities trading is fundamentally about acting on partial information, so choose an example where you had to move before you were comfortable. Explain how you decided what information was actually decision-relevant versus merely interesting, what assumptions you made explicit, how you limited downside while you learned more, and how you set a point at which you would revisit. Emphasise that you acted rather than waited — but that you sized the decision to the uncertainty. That combination is exactly the trait being screened for.",
+                      "keyPoints": [
+                            "Distinguish decision-relevant information from interesting detail",
+                            "Make your assumptions explicit rather than implicit",
+                            "Limit downside while retaining the ability to learn more",
+                            "Act decisively but size the commitment to the uncertainty"
+                      ]
+                }
+          ]
+    },
     title: 'Energy & Commodities Finance',
     category: 'Capital Markets',
     shortDescription: 'Finance, trade and structure risk around physical energy and commodities — from oil and gas project finance to power trading and the energy transition.',
