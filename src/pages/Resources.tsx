@@ -151,13 +151,14 @@ export default function Resources() {
         <p className="text-gray-400">The finance library — books, qualifications, and a glossary of every term you need to know.</p>
       </div>
 
-      {/* Section nav */}
-      <div className="flex gap-2 mb-8">
+      {/* Section nav — scrolls horizontally rather than pushing the whole page
+          sideways on narrow phones */}
+      <div className="flex gap-2 mb-8 overflow-x-auto pb-1">
         {(['books', 'certs', 'glossary', 'templates'] as const).map(s => (
           <button
             key={s}
             onClick={() => setActiveSection(s)}
-            className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all capitalize ${activeSection === s ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+            className={`flex-shrink-0 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all capitalize ${activeSection === s ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
           >
             {s === 'certs' ? 'Qualifications' : s === 'books' ? 'Books' : s === 'templates' ? 'Excel Templates' : 'Glossary'}
           </button>

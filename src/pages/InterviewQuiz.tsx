@@ -237,12 +237,14 @@ export default function InterviewQuiz() {
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Session Length</label>
-            <div className="flex gap-2">
+            {/* Scrolls horizontally rather than pushing the whole page sideways
+                on narrow phones — "All (383)" is wide enough to overflow 375px */}
+            <div className="flex gap-2 overflow-x-auto pb-1">
               {([10, 15, 20, 'all'] as const).map(len => (
                 <button
                   key={len}
                   onClick={() => setSessionLength(len)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                     sessionLength === len ? 'bg-brand-gold text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10'
                   }`}
                 >
