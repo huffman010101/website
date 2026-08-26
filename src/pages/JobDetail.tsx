@@ -12,6 +12,7 @@ const categoryColors: Record<string, string> = {
   'Wealth Management': 'bg-pink-500/10 text-pink-400',
   'Risk & Control': 'bg-red-500/10 text-red-400',
   'Corporate Finance': 'bg-yellow-500/10 text-yellow-400',
+  'Trading': 'bg-teal-500/10 text-teal-400',
 }
 
 const aiColors: Record<string, string> = {

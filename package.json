@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "node scripts/content-truth-check.mjs && tsc && vite build",
+    "preview": "vite preview",
+    "check:content": "node scripts/content-truth-check.mjs"
   },
   "dependencies": {
     "mammoth": "^1.12.0",

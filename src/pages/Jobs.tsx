@@ -11,6 +11,7 @@ const categoryColors: Record<string, string> = {
   'Wealth Management': 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   'Risk & Control': 'bg-red-500/10 text-red-400 border-red-500/20',
   'Corporate Finance': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+  'Trading': 'bg-teal-500/10 text-teal-400 border-teal-500/20',
 }
 
 const aiColors: Record<string, string> = {
@@ -44,7 +45,7 @@ export default function Jobs() {
         <h1 className="text-3xl sm:text-4xl font-black text-white mb-3">
           Finance <span className="text-gradient-gold">Careers</span>
         </h1>
-        <p className="text-gray-400 text-lg">Explore 13 in-depth finance career profiles with salary data, break-in guides, and AI threat analysis.</p>
+        <p className="text-gray-400 text-lg">Explore {jobs.length} in-depth finance career profiles with salary data, break-in guides, and AI threat analysis.</p>
       </div>
 
       {/* Search */}

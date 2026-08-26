@@ -1,16 +1,22 @@
 import { Link } from 'react-router-dom'
 import { jobs } from '../data/jobs'
+import { quizQuestionGroups } from '../data/quiz'
+
+// Derived from the data rather than hardcoded, so these headline numbers can
+// never drift out of date when careers or quiz questions are added.
+const careerCount = jobs.length
+const quizQuestionCount = quizQuestionGroups.length
 
 const features = [
   {
     icon: '🗂️',
-    title: '13 Finance Careers',
-    description: 'In-depth profiles covering investment banking, private equity, hedge funds, quant finance, and 9 more career paths — all in one place.',
+    title: `${careerCount} Finance Careers`,
+    description: `In-depth profiles covering investment banking, private equity, hedge funds, quant finance, and ${careerCount - 4} more career paths — all in one place.`,
   },
   {
     icon: '🎯',
     title: 'Personality-Matched Quiz',
-    description: 'Our 13-question quiz maps your skills, lifestyle preferences, and goals to the finance career that suits you best.',
+    description: `Our ${quizQuestionCount}-question quiz maps your skills, lifestyle preferences, and goals to the finance career that suits you best — and draws different questions each time you retake it.`,
   },
   {
     icon: '🤖',
@@ -20,7 +26,7 @@ const features = [
 ]
 
 const stats = [
-  { value: '13', label: 'Finance Careers' },
+  { value: String(careerCount), label: 'Finance Careers' },
   { value: '100+', label: 'Top Firms Covered' },
   { value: '£0', label: 'Cost to You' },
   { value: '∞', label: 'Career Potential' },
@@ -35,6 +41,7 @@ const categoryColors: Record<string, string> = {
   'Wealth Management': 'bg-pink-500/10 text-pink-400',
   'Risk & Control': 'bg-red-500/10 text-red-400',
   'Corporate Finance': 'bg-yellow-500/10 text-yellow-400',
+  'Trading': 'bg-teal-500/10 text-teal-400',
 }
 
 export default function Home() {
@@ -59,7 +66,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Explore 13 in-depth finance career profiles, take our personality quiz, and get AI-powered guidance — all built for ambitious students and graduates in the UK.
+            Explore {careerCount} in-depth finance career profiles, take our personality quiz, and get AI-powered guidance — all built for ambitious students and graduates in the UK.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -153,7 +160,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-brand-gold/10 to-brand-teal/10 border-y border-white/10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Not sure which career is right for you?</h2>
-          <p className="text-gray-400 mb-8">Our 13-question quiz matches your personality and goals to the finance careers that suit you best.</p>
+          <p className="text-gray-400 mb-8">Our {quizQuestionCount}-question quiz matches your personality and goals to the finance careers that suit you best.</p>
           <Link
             to="/quiz"
             className="inline-block px-10 py-4 bg-brand-gold text-black font-bold text-lg rounded-xl hover:bg-brand-gold2 transition-all duration-200 hover:scale-105 shadow-lg shadow-brand-gold/20"
