@@ -1,175 +1,88 @@
-# Prompt: Build the "Develop Knowledge" learning section
+# Prompt: "Develop Knowledge" — Duolingo-style finance learning section
 
-Copy everything below into a new chat.
+Paste into Base44 / any AI builder. Client-side only, no backend, all progress in localStorage.
 
 ---
 
-Build a **Duolingo-style finance learning section** called **Develop Knowledge** for my React website.
+Build a gamified finance learning section called **Develop Knowledge**. Dark theme, mobile-first, no backend — all progress saved to localStorage.
 
-## Tech constraints (non-negotiable)
+## Curriculum — 11 units × 3 lessons (33 total)
 
-- React 18 + TypeScript + Vite + Tailwind CSS, React Router with `HashRouter`
-- **100% client-side. No backend, no database, no accounts, no external APIs.** All progress persists to `localStorage` only.
-- Must work fully offline once loaded
-- Routes: `/learn` (main page) and `/learn/capstone/:id` (capstone runner)
+Each lesson = **4 concept cards** + **5 questions**.
 
-## Data model
+1. 🏛️ Foundations of Finance — Time Value of Money · Risk & Return · How the Financial System Works
+2. 📒 Accounting — Income Statement · Balance Sheet · Cash Flow & Linking the Statements
+3. 💰 Valuation & Corporate Finance — DCF · Multiples & Comps · M&A and LBOs
+4. 📈 Equity Markets — Stocks & Markets · Investment Styles · Portfolio Theory & Behavioural Finance
+5. 🏦 Fixed Income & Credit — Bond Basics · Credit & the Yield Curve · Central Banks & Rates
+6. ⚖️ Derivatives — Futures & Forwards · Options · Swaps & Structured Products
+7. 🌍 Economics & Macro — GDP & Recessions · Inflation & Monetary Policy · Currencies, Trade & Fiscal Policy
+8. 🚀 Alternative Investments — PE & VC · Hedge Funds · Real Assets & Crypto
+9. 🏢 Career Track: Investment Banking — Technicals · Deal Process · Analyst Toolkit
+10. 📟 Career Track: Trading — Market Microstructure · The Greeks & Desk Risk · Macro Trading
+11. 📊 Career Track: Consulting — Case Maths & Market Sizing · Strategy Concepts · Consulting Toolkit
 
-```ts
-export type QuestionType = 'mc' | 'tf' | 'fill'
+**Card** = term, definition, worked example, why it matters in a real job (all four always filled).
+**Questions** = mix of multiple-choice, true/false, and fill-in-the-blank (accept case-insensitive + alternative spellings). Every question shows a full explanation after answering, right or wrong.
 
-export type LearnCard = {
-  term: string
-  definition: string
-  example?: string        // a concrete worked example — always populate
-  whyItMatters?: string   // why this matters in a real finance job — always populate
-}
+Content must be UK-focused, interview-grade, and arithmetically correct — verify every number.
 
-export type LearnQuestion = {
-  type: QuestionType
-  prompt: string
-  options?: string[]      // for 'mc' and 'tf'
-  answer: string
-  accept?: string[]       // alternative accepted strings for 'fill'
-  explanation: string     // shown after answering, right or wrong
-}
+## Core lesson loop
 
-export type Lesson = {
-  id: string
-  title: string
-  description: string
-  cards: LearnCard[]
-  questions: LearnQuestion[]
-}
+Cards → quiz → complete. **3 ❤️ per lesson**, one lost per wrong answer; at zero, show "Out of hearts", let them review the cards and retry.
 
-export type Unit = {
-  id: string
-  title: string
-  icon: string      // emoji
-  color: string     // tailwind text colour class
-  description: string
-  lessons: Lesson[]
-}
-```
+**XP:** 10 per correct · +20 lesson completion · +10 perfect lesson · 100 per capstone.
+**🔥 Streak:** +1 per active day, resets if a day is missed.
 
-## Curriculum — 11 units, 33 lessons, 132 cards, 165 questions
+## Make it feel great — the good bits
 
-Exactly **3 lessons per unit**, **4 cards per lesson**, **5 questions per lesson**. Every card must have both `example` and `whyItMatters` filled in.
+**Career rank from XP** — Intern → Analyst → Associate → VP → Director → MD, with a progress bar to the next rank. Show the rank badge everywhere.
 
-1. 🏛️ **Foundations of Finance** — Time Value of Money · Risk & Return · How the Financial System Works
-2. 📒 **Accounting & Financial Statements** — The Income Statement · The Balance Sheet · Cash Flow & Linking the Statements
-3. 💰 **Valuation & Corporate Finance** — DCF & Intrinsic Value · Multiples & Comparable Companies · M&A and Leveraged Buyouts
-4. 📈 **Equity Markets & Investing** — Stocks & Stock Markets · Investment Styles & Analysis · Portfolio Theory & Behavioural Finance
-5. 🏦 **Fixed Income & Credit** — Bond Basics · Credit & the Yield Curve · Central Banks & Interest Rates
-6. ⚖️ **Derivatives** — Futures & Forwards · Options · Swaps & Structured Products
-7. 🌍 **Economics & Macro** — GDP, Growth & Recessions · Inflation & Monetary Policy · Currencies, Trade & Fiscal Policy
-8. 🚀 **Alternative Investments** — Private Equity & Venture Capital · Hedge Funds · Real Assets & Crypto
-9. 🏢 **Career Track: Investment Banking** — IB Technicals Masterclass · Deal Process & Products · The Analyst Toolkit
-10. 📟 **Career Track: Trading & Markets** — Market Microstructure · The Greeks & Desk Risk · Macro Trading Fluency
-11. 📊 **Career Track: Consulting** — Case Maths & Market Sizing · Strategy Concepts · The Consulting Toolkit
+**Skill tree** — units laid out as a visual path, not a list. Later units show as locked until the prerequisite unit hits ~60%, with a satisfying unlock animation.
 
-**Content quality bar:** UK-focused, interview-grade, genuinely accurate. Every number must actually compute — verify all arithmetic. Explanations should teach the underlying reasoning, not just state the answer. Mix all three question types across each lesson.
+**Combo multiplier** — consecutive correct answers build a streak (3× = 1.5× XP, 5× = 2× XP). Show a rising counter with escalating colour. Breaks on a wrong answer.
 
-## Lesson flow
+**Daily goal + heatmap** — user picks a daily XP target (Casual 20 / Regular 50 / Serious 100). Show a GitHub-style contribution heatmap of the last 12 weeks.
 
-Four phases: `learn` → `quiz` → `complete` (or `failed`).
+**Weak Spots** — automatically collect every question answered wrong into a personal drill deck, with a "Fix my weak spots" button that quizzes only those until mastered.
 
-**Learn phase** — flip through the lesson's cards one at a time showing term, definition, example, why it matters. Progress bar. Then continue to the quiz.
+**Confidence check** — on some questions ask "how sure are you?" before revealing. Being confident and wrong costs an extra heart; unsure and right gives bonus XP. Trains calibration, which is exactly what interviewers probe.
 
-**Quiz phase** — questions served in shuffled order:
-- `mc` — multiple choice buttons
-- `tf` — True/False
-- `fill` — free-text input, case/whitespace-insensitive, accepting any string in `accept[]`
-- After each answer show correct/incorrect plus the `explanation`, then Next.
+**Unit Exam ("Boss Fight")** — after finishing all 3 lessons in a unit, unlock a timed 15-question exam mixing the whole unit. Pass at 80% to earn the unit's certificate. Distinct dramatic styling.
 
-**Hearts** — start each lesson with **3 ❤️**. Each wrong answer loses one. At 0 hearts go to the `failed` phase ("Out of hearts!") and let the user review the cards and retry.
+**Daily Review (spaced repetition)** — concept cards resurface on an SM-2 schedule: "Got it" doubles the interval (cap 60 days), "Still learning" resets to 1 day. Cards seed as due immediately after a lesson. Show a "N cards due" badge.
 
-**Complete phase** — show score %, a 🏆 for a perfect lesson, XP earned, and a retry option if not perfect.
+**Streak freeze** — earn one freeze per 7-day streak (max 2 banked) that auto-protects the streak on a missed day. Removes the all-or-nothing anxiety.
 
-## Gamification rules (exact)
+**Shareable progress card** — generate a clean image of rank, XP, streak and badges to save or post.
 
-- **10 XP** per correct answer
-- **+20 XP** lesson completion bonus
-- **+10 XP** extra for a perfect lesson (all questions right)
-- **100 XP** for completing a capstone (awarded once only)
-- **🔥 Streak** — increments once per calendar day of activity; resets to 1 if a day is missed; unchanged if already active today
-- Persist `{ xp, streak, lastActiveDate, lessons: Record<lessonId, { completed, bestScore, timesCompleted }> }`
+**Glossary search** — one search box across all 132 concept cards, so it doubles as a finance dictionary.
 
-## Daily Review — spaced repetition
+## Capstones — actually do the maths
 
-A separate review mode over **concept cards** (not questions), using a lightweight SM-2-style scheduler:
+Three step-by-step wizards where the user calculates each number themselves:
 
-- When a lesson's card phase is completed, seed all its cards as **due immediately** so the first reinforcement happens on the next visit
-- Review shows the term, user self-rates by flipping: **"Got it"** → interval **doubles** (capped at **60 days**); **"Still learning"** → interval **resets to 1 day**
-- Only cards whose `dueDate` has passed appear
-- Show an empty state when the queue is clear, and a summary when the session ends
-- Store under its own localStorage key, card id format `unitId::lessonId::cardIndex`
+1. **3-Statement Model** (5 steps) — Revenue → Gross Profit & EBIT → Net Income → Free Cash Flow → Ending Cash
+2. **LBO Model** (6 steps) — Purchase Price → Financing → Debt Paydown → Exit Value → Equity Proceeds → MOIC
+3. **DCF Valuation** (5 steps) — FCF Projection → Discounting → Terminal Value → PV of Terminal Value → Enterprise Value
 
-Also weight the **lesson quiz** questions by spaced repetition, so questions previously answered wrong resurface more often.
+Each step: scene-setting narrative, the given assumptions, one number to calculate, answer accepted within a % tolerance, then the **full worked solution**. Always carry the *correct* value into the next step so one slip doesn't corrupt the model. Award 100 XP on first completion.
 
-## Capstones — guided model-building wizards
+## Badges
 
-Three step-by-step wizards where the user **actually does the maths**, at `/learn/capstone/:id`:
+🏛️ Foundations Master · 🏢 IB Certified (track + all 3 capstones) · 📟 Trading Certified · 📊 Consulting Certified · 👑 Full Curriculum Master · 🔥 30-Day Streak · 🎯 Perfectionist (10 perfect lessons) · ⚡ Speed Demon (unit exam in under 5 min)
 
-1. **Build a 3-Statement Model** (5 steps) — Revenue Build → Gross Profit & EBIT → Net Income → Free Cash Flow → Ending Cash Balance. Badge: *3-Statement Model Builder*
-2. **Build an LBO Model** (6 steps) — Purchase Price → Financing Structure → Debt Paydown → Exit Value → Equity Proceeds → Returns (MOIC). Badge: *LBO Model Builder*
-3. **Build a DCF Valuation** (5 steps) — FCF Projection → Discounting a Cash Flow → Terminal Value → PV of Terminal Value → Enterprise Value. Badge: *DCF Model Builder*
+Earned in colour, unearned dimmed with a progress label ("14/33 lessons").
 
-Each step:
-```ts
-type CapstoneStep = {
-  id: string
-  title: string
-  narrative: string                       // sets the scene
-  given: { label: string; key: string; format: CapstoneFormat }[]
-  question: string                        // asks for ONE number
-  expected: (state: Record<string, number>) => number
-  tolerancePct: number                    // accept within a % tolerance
-  resultKey: string                       // feeds the next step
-  resultLabel: string
-  format: 'currency' | 'percent' | 'number' | 'years' | 'multiple'
-  explanation: (state, expectedVal) => string   // full worked solution
-  derived?: (state) => Record<string, number>   // silent values later steps need
-}
-```
+## Home screen
 
-The user types a number; accept it within `tolerancePct` (with a small absolute floor so near-zero answers work). Show the full worked explanation either way, then carry the **correct** value forward so one early mistake doesn't corrupt the whole model. Progress bar across steps. Award 100 XP on first completion only.
+Rank + XP bar, 🔥 streak, daily-goal ring, % curriculum mastered, "Daily Review (N due)" button, badge shelf, capstone cards, then the skill tree.
 
-## Badges (5)
+## Must not break
 
-| Badge | Icon | Earned by |
-|---|---|---|
-| Foundations Master | 🏛️ | Complete every lesson in Foundations of Finance |
-| Investment Banking Certified | 🏢 | Complete the IB track **and** all 3 capstones |
-| Trading & Markets Certified | 📟 | Complete every lesson in the Trading track |
-| Consulting Certified | 📊 | Complete every lesson in the Consulting track |
-| Full Curriculum Master | 👑 | Complete every lesson in the whole curriculum |
+- Never divide by a possibly-zero length — `0/0` renders as literal `NaN%`. Guard every percentage and clamp progress bars to 0–100%.
+- Wrap all `JSON.parse` of localStorage in try/catch and fall back to fresh state.
+- No horizontal page scroll at 375px — tab rows scroll inside themselves, never push the page sideways.
+- Tap targets ≥32px.
 
-Show earned badges in colour and unearned ones dimmed with a progress label (e.g. "14/33 lessons", "Lessons done · 2/3 capstones").
-
-## Main page layout
-
-- Header with **total XP**, **🔥 streak**, **% curriculum mastered**, and a **Daily Review** button showing the number of cards due
-- A "How it works" explainer stating the XP and hearts rules explicitly
-- Badge shelf
-- Capstone cards
-- Unit list — each unit shows icon, title, description, a progress bar, and its 3 lessons with completion ticks and best score
-
-## Robustness requirements
-
-- **Never divide by a possibly-zero length.** `0/0` renders as literal `NaN%` and `x/0` as `Infinity%`. Route every percentage and progress-bar width through guarded helpers that return 0 for a zero denominator, and clamp bar widths to 0–100%.
-- Handle corrupted `localStorage` (wrap `JSON.parse` in try/catch and fall back to a fresh state)
-- Mobile-first: no horizontal page scroll at 375px — tab/filter rows must scroll within themselves (`overflow-x-auto` + `flex-shrink-0`), never push the page sideways
-- Dark theme, high contrast, tap targets at least 32px
-
-## Deliverables
-
-- `src/data/learn.ts` — the full curriculum (all 11 units, 33 lessons, 132 cards, 165 questions)
-- `src/data/capstones.ts` — the 3 capstone wizards
-- `src/pages/Learn.tsx` — main page + lesson runner + review mode
-- `src/pages/Capstone.tsx` — capstone runner
-- `src/lib/learnProgress.ts` — XP, streak, lesson progress
-- `src/lib/cardReview.ts` — SM-2 card scheduling
-- `src/lib/badges.ts` — badge logic
-
-Write the **complete** curriculum content — do not stub lessons, leave TODOs, or say "add more here". Verify every calculation in the content is arithmetically correct before finishing.
+Write the complete curriculum content — no stubs, no TODOs, no "add more here".
