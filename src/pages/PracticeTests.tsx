@@ -1,6 +1,7 @@
 import { pctRounded, barWidth } from '../lib/num'
 import { useState, useEffect, useRef } from 'react'
 import MentalMathsDrill from '../components/MentalMathsDrill'
+import TestChart, { ChartData } from '../components/TestChart'
 import { recordPracticeTestAttempt, getPracticeTestHistory } from '../lib/history'
 
 const mentalMathsShortcuts = [
@@ -106,6 +107,7 @@ type TestQuestion = {
   context?: string
   shapes?: string
   dataTable?: DataTable
+  chart?: ChartData
   difficulty?: Difficulty
   options: string[]
   answer: string
@@ -437,6 +439,304 @@ const testCategories: TestCategory[] = [
         options: ['£62,500', '£75,000', '£250,000', '£100,000'],
         answer: '£62,500',
         explanation: 'Depreciable amount = 2,400,000 − 400,000 residual = £2,000,000. Annual depreciation = 2,000,000 ÷ 8 = £250,000. Tax saving = 250,000 × 25% = £62,500. Two traps: forgetting to deduct residual value before dividing, and confusing the depreciation charge itself with the tax saving it generates.',
+      },
+      {
+            "chart": {
+                  "title": "Exhibit C — Assets under management by region (£bn), FY24",
+                  "type": "bar",
+                  "categories": [
+                        "UK",
+                        "Europe",
+                        "US",
+                        "Asia"
+                  ],
+                  "series": [
+                        {
+                              "label": "AUM (£bn)",
+                              "values": [
+                                    340,
+                                    285,
+                                    512,
+                                    198
+                              ],
+                              "color": "#d4af37"
+                        }
+                  ],
+                  "yLabel": "£bn"
+            },
+            "prompt": "What percentage of total AUM is managed in the US?",
+            "options": [
+                  "38.4%",
+                  "35.2%",
+                  "41.6%",
+                  "33.8%"
+            ],
+            "answer": "38.4%",
+            "explanation": "Working: read the four bars — UK 340, Europe 285, US 512, Asia 198. Total = 340 + 285 = 625; 625 + 512 = 1,137; 1,137 + 198 = £1,335bn. US share = 512 ÷ 1,335 = 38.35%, so 38.4%.\n\nWhy the wrong answers tempt: 41.6% is 512 ÷ 1,231, a total with Asia omitted — the easiest bar to skip because it is shortest and sits at the end. 35.2% divides by an inflated total near 1,455 (double-counting a bar). 33.8% is 512 ÷ 1,515. Every distractor is a specific mis-totalling, not a random number, so finding your answer in the list proves nothing.\n\nTechnique: on a chart exhibit, write every bar value down before calculating anything — reading values off an axis is where the errors happen, not in the arithmetic. Then sense-check the share: four regions means 25% each if equal, and the US bar is clearly the tallest but nowhere near half, so something just under 40% is exactly what you should expect. That single check kills 33.8% and 41.6% before you divide.",
+            "difficulty": "medium"
+      },
+      {
+            "chart": {
+                  "title": "Exhibit C — Assets under management by region (£bn), FY24",
+                  "type": "bar",
+                  "categories": [
+                        "UK",
+                        "Europe",
+                        "US",
+                        "Asia"
+                  ],
+                  "series": [
+                        {
+                              "label": "AUM (£bn)",
+                              "values": [
+                                    340,
+                                    285,
+                                    512,
+                                    198
+                              ],
+                              "color": "#d4af37"
+                        }
+                  ],
+                  "yLabel": "£bn"
+            },
+            "prompt": "If Asian AUM grows 22% next year and all other regions are flat, what is the new total?",
+            "options": [
+                  "£1,379bn",
+                  "£1,357bn",
+                  "£1,404bn",
+                  "£1,629bn"
+            ],
+            "answer": "£1,379bn",
+            "explanation": "Working: Asia grows from 198 to 198 × 1.22 = £241.6bn, an increase of £43.6bn. Everything else is unchanged, so the new total = 1,335 + 43.6 = £1,378.6bn ≈ £1,379bn.\n\nWhy the wrong answers tempt: £1,629bn applies the 22% growth to the WHOLE total (1,335 × 1.22) — the single most common error on this question type, and it ignores the word \"flat\". £1,357bn adds only half the increase, or applies 11%. £1,404bn applies 22% to Asia plus a stray adjustment elsewhere.\n\nTechnique: when only one component changes, work with the CHANGE, not the new totals — compute the increase (£43.6bn) and add it to the existing total. That is faster and far less error-prone than rebuilding the whole sum, and it makes the \"all others flat\" condition impossible to forget. Sense-check the magnitude: Asia is the smallest region at under 15% of the total, so a 22% rise in it can only move the total by around 3%; any option more than about 5% above 1,335 must be wrong.",
+            "difficulty": "medium"
+      },
+      {
+            "chart": {
+                  "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
+                  "type": "line",
+                  "categories": [
+                        "2020",
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024",
+                        "2025"
+                  ],
+                  "series": [
+                        {
+                              "label": "CPI inflation (%)",
+                              "values": [
+                                    0.9,
+                                    2.6,
+                                    9.1,
+                                    6.8,
+                                    3.2,
+                                    2.1
+                              ],
+                              "color": "#2dd4bf"
+                        }
+                  ],
+                  "yLabel": "Annual inflation rate, %"
+            },
+            "prompt": "By how much did the inflation rate fall from its 2022 peak to 2025?",
+            "options": [
+                  "7.0 percentage points",
+                  "76.9%",
+                  "7.0%",
+                  "4.7 percentage points"
+            ],
+            "answer": "7.0 percentage points",
+            "explanation": "Working: the rate peaked at 9.1% in 2022 and was 2.1% in 2025. The fall is 9.1 − 2.1 = 7.0 PERCENTAGE POINTS.\n\nWhy the wrong answers tempt: this is the single most important distinction in numerical reasoning and the option set is built entirely around it. \"76.9%\" is the RELATIVE fall (7.0 ÷ 9.1 = 76.9%) — a correct calculation of a different quantity, and the answer most candidates pick. \"7.0%\" has the right number with the wrong unit, which in a real report would be simply false: inflation did not fall by 7%, it fell by 7 percentage points to a level of 2.1%. \"4.7 percentage points\" measures from 2023 rather than the 2022 peak.\n\nTechnique: percentage points measure the ARITHMETIC gap between two percentages; a percentage change measures the PROPORTIONAL change between them. Whenever both quantities are themselves percentages — inflation rates, margins, interest rates, market shares, unemployment — check which one is being asked for, because both are computable and only one is right. A margin moving from 20% to 25% rose 5 percentage points or 25%, and confusing the two is a genuine professional error, not just a test trap. If the question says \"percentage points\", subtract. If it says \"by what percentage\", divide by the starting value.",
+            "difficulty": "hard"
+      },
+      {
+            "chart": {
+                  "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
+                  "type": "line",
+                  "categories": [
+                        "2020",
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024",
+                        "2025"
+                  ],
+                  "series": [
+                        {
+                              "label": "CPI inflation (%)",
+                              "values": [
+                                    0.9,
+                                    2.6,
+                                    9.1,
+                                    6.8,
+                                    3.2,
+                                    2.1
+                              ],
+                              "color": "#2dd4bf"
+                        }
+                  ],
+                  "yLabel": "Annual inflation rate, %"
+            },
+            "prompt": "Were prices falling in 2025?",
+            "options": [
+                  "No — prices were still rising, just more slowly",
+                  "Yes — inflation fell so prices fell",
+                  "Yes — prices fell 2.1%",
+                  "Cannot be determined from the chart"
+            ],
+            "answer": "No — prices were still rising, just more slowly",
+            "explanation": "Working: the chart plots the inflation RATE, not the price level. In 2025 the rate is +2.1%, which is positive — so prices rose 2.1% over the year. The rate falling from 9.1% to 2.1% means prices rose more slowly than before, a process called disinflation. Prices only actually fall when the rate goes BELOW zero, which is deflation, and the line never crosses zero.\n\nWhy the wrong answers tempt: \"inflation fell so prices fell\" conflates the rate with the level and is the intuitive reading of a falling line — the chart slopes down, so surely things are getting cheaper. They are not; they are getting more expensive more slowly. \"Prices fell 2.1%\" reads the value with the sign inverted. \"Cannot be determined\" is wrong because a positive inflation rate is sufficient to establish that prices rose.\n\nTechnique: always identify whether a chart shows a LEVEL or a RATE OF CHANGE, because a falling line means completely different things in each case. This is one of the most consequential misreadings in finance commentary — the gap between \"inflation is falling\" and \"prices are falling\" — and interviewers use it as a quick test of whether a candidate genuinely understands macro data or is pattern-matching on chart shape. The same trap applies to earnings growth slowing versus earnings shrinking.",
+            "difficulty": "hard"
+      },
+      {
+            "dataTable": {
+                  "title": "Exhibit E — Group revenue index (2020 = 100)",
+                  "headers": [
+                        "Year",
+                        "2020",
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024"
+                  ],
+                  "rows": [
+                        [
+                              "Revenue index",
+                              "100",
+                              "106",
+                              "115",
+                              "121",
+                              "128"
+                        ]
+                  ],
+                  "note": "An index rebases every figure to a starting year set at 100."
+            },
+            "prompt": "By what percentage did revenue grow between 2021 and 2024?",
+            "options": [
+                  "20.8%",
+                  "22.0%",
+                  "28.0%",
+                  "18.1%"
+            ],
+            "answer": "20.8%",
+            "explanation": "Working: index values are proportional to the underlying revenue, so you can work directly with them. Growth = (128 − 106) ÷ 106 = 22 ÷ 106 = 20.75%, so 20.8%.\n\nWhy the wrong answers tempt: 22.0% is the difference in INDEX POINTS (128 − 106 = 22) mistaken for a percentage — the defining error on index questions, because the numbers look like percentages but are not. 28.0% reads the 2024 value as growth from the base year, which is growth since 2020, not since 2021. 18.1% divides by 121 (the wrong starting year) or by 128 (dividing by the end value instead of the start).\n\nTechnique: an index is just a rescaled series where the base year equals 100, so percentage change between ANY two points is (new − old) ÷ old, exactly as with raw figures. Two rules make index questions easy marks. First, index points are not percentages: a move from 106 to 128 is 22 points but 20.8%. Second, only growth measured FROM the base year can be read straight off the index — since 2020 = 100, the 2024 value of 128 means 28% growth since 2020, and that shortcut applies to no other pair. Indices appear constantly in real assessments precisely because they let examiners test whether you understand relative measurement.",
+            "difficulty": "hard"
+      },
+      {
+            "dataTable": {
+                  "title": "Exhibit E — Group revenue index (2020 = 100)",
+                  "headers": [
+                        "Year",
+                        "2020",
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024"
+                  ],
+                  "rows": [
+                        [
+                              "Revenue index",
+                              "100",
+                              "106",
+                              "115",
+                              "121",
+                              "128"
+                        ]
+                  ],
+                  "note": "An index rebases every figure to a starting year set at 100."
+            },
+            "prompt": "If 2020 revenue was £480m, what was 2024 revenue?",
+            "options": [
+                  "£614.4m",
+                  "£608.0m",
+                  "£560.6m",
+                  "£627.2m"
+            ],
+            "answer": "£614.4m",
+            "explanation": "Working: the base year is 2020 = 100, so the 2024 index of 128 means revenue is 128% of the 2020 level. Revenue = £480m × 1.28 = £614.4m.\n\nWhy the wrong answers tempt: £608.0m applies a flat 28% split evenly across years or uses an index of 126.7. £560.6m applies the 2022 index of 115 (£480m × 1.168) — reading the wrong column. £627.2m uses 130.7, or compounds the index growth a second time on top of itself.\n\nTechnique: converting an index back to real money is a single multiplication, but ONLY from the base year, because that is the only point where the index equals a known absolute value. If a question gave you 2022 revenue instead and asked for 2024, you would need the ratio 128 ÷ 115 = 1.113, not 1.28 — a distinction worth a mark every time it appears. Sense-check the size: 28% growth on £480m is roughly £134m of increase, so an answer near £614m is right and anything below £600m or above £630m should be suspect before you commit to it.",
+            "difficulty": "hard"
+      },
+      {
+            "dataTable": {
+                  "title": "Exhibit F — UK platform market, client accounts (000s)",
+                  "headers": [
+                        "Provider",
+                        "Accounts (000s)"
+                  ],
+                  "rows": [
+                        [
+                              "Firm A",
+                              "2,400"
+                        ],
+                        [
+                              "Firm B",
+                              "1,800"
+                        ],
+                        [
+                              "Firm C",
+                              "1,500"
+                        ],
+                        [
+                              "Firm D",
+                              "900"
+                        ],
+                        [
+                              "All others",
+                              "1,400"
+                        ]
+                  ]
+            },
+            "prompt": "What is Firm A's market share?",
+            "options": [
+                  "30.0%",
+                  "33.3%",
+                  "25.5%",
+                  "27.6%"
+            ],
+            "answer": "30.0%",
+            "explanation": "Working: total the market first — 2,400 + 1,800 = 4,200; + 1,500 = 5,700; + 900 = 6,600; + 1,400 = 8,000 thousand accounts. Firm A's share = 2,400 ÷ 8,000 = 30.0%.\n\nWhy the wrong answers tempt: 33.3% is 2,400 ÷ 7,200, excluding the \"All others\" row — by far the most common market-share error, because that row has no company name and the eye skips it. Market share is always measured against the TOTAL market, including the unnamed tail. 25.5% and 27.6% come from inflated totals after double-counting a row.\n\nTechnique: on any share question, the first move is to define the denominator explicitly and say what it includes. \"All others\", \"Other\", and \"Rest of market\" rows exist precisely to be overlooked, and excluding them systematically overstates every named firm's share. Then sense-check: five entries where the largest is a bit under a third of the total is entirely plausible for a fragmented market, whereas 33.3% would imply the four named firms plus others sum to exactly three times Firm A, which the numbers do not support.",
+            "difficulty": "easy"
+      },
+      {
+            "dataTable": {
+                  "title": "Exhibit F — UK platform market, client accounts (000s)",
+                  "headers": [
+                        "Provider",
+                        "Accounts (000s)"
+                  ],
+                  "rows": [
+                        [
+                              "Firm A",
+                              "2,400"
+                        ],
+                        [
+                              "Firm B",
+                              "1,800"
+                        ],
+                        [
+                              "Firm C",
+                              "1,500"
+                        ],
+                        [
+                              "Firm D",
+                              "900"
+                        ],
+                        [
+                              "All others",
+                              "1,400"
+                        ]
+                  ]
+            },
+            "prompt": "If Firm A acquires Firm D, what would the combined market share be?",
+            "options": [
+                  "41.25%",
+                  "37.5%",
+                  "45.0%",
+                  "50.0%"
+            ],
+            "answer": "41.25%",
+            "explanation": "Working: combined accounts = 2,400 + 900 = 3,300. The total market is unchanged at 8,000, because an acquisition moves accounts between owners without creating or destroying any. Share = 3,300 ÷ 8,000 = 41.25%.\n\nWhy the wrong answers tempt: 45.0% divides 3,300 by 7,333 — the answer you get if you wrongly remove Firm D from the denominator, reasoning that Firm D no longer exists. It does not exist as a competitor, but its accounts remain in the market. 37.5% is 3,000 ÷ 8,000, mis-adding the two firms. 50.0% simply adds the two percentage shares as 30% + 20%, which is wrong on both counts since Firm D holds 11.25%, not 20%.\n\nTechnique: in any consolidation question, ask what happens to the numerator AND the denominator separately. An acquisition within the same market changes only the numerator; the denominator moves only if the combined entity enters a new market or loses customers. A useful check: shares must still sum to 100% across all remaining players afterwards. Note also that you can add the two firms' individual shares directly — 30.00% + 11.25% = 41.25% — which is a faster route and confirms the answer independently.",
+            "difficulty": "medium"
       },
     ],
   },
@@ -2340,6 +2640,7 @@ export default function PracticeTests() {
             {q.dataTable.note && <p className="text-gray-500 text-xs mt-2 italic">{q.dataTable.note}</p>}
           </div>
         )}
+        {q.chart && <TestChart data={q.chart} />}
         {q.context && (
           <div className="bg-brand-darker border border-white/5 rounded-xl p-4 mb-4">
             <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{q.context}</p>
