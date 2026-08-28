@@ -142,1949 +142,3113 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 const testCategories: TestCategory[] = [
-  {
-    id: 'numerical',
-    title: 'Numerical Reasoning',
-    icon: '🔢',
-    color: 'text-blue-400',
-    border: 'border-blue-500/30',
-    description: 'Percentages, ratios and data interpretation — the SHL-style tables and charts banks actually send you.',
-    secondsPerQuestion: 75,
-    questionsPerAttempt: 10,
-    tip: 'Real tests allow a calculator — but the winners estimate first, then verify. Learn percentage shortcuts: 15% of 240 = 10% (24) + 5% (12) = 36.',
-    providers: 'SHL Verify, Korn Ferry Talent Q Elements, Cappfinity (gamified), Cut-e/Aon scales',
-    requiredBy: 'Investment banking (Goldman, JPMorgan, Morgan Stanley), sales & trading, asset management, Big 4, consulting — essentially every finance graduate scheme.',
-    whyUsed: 'Finance is a numbers job. Firms use these to screen for speed and accuracy with data under pressure before any human reviews your application — typically cutting 50%+ of candidates at this stage.',
-    improveTitle: "How to get better at Numerical Reasoning",
-    improveTips: ["Estimate before you calculate. Round every number hard, get a ballpark answer, and eliminate any option that is not in the right order of magnitude — this alone kills 1-2 of the 4 options in under 10 seconds, before you touch the real arithmetic.","Master reverse percentages, because it is the single most repeated trap on every provider's numerical test. To undo a percentage change you DIVIDE by (1 ± rate), never add or subtract the same percentage back. \"£64 after a 20% fall\" means original = 64 ÷ 0.8, not 64 × 1.2.","Never average sequential percentage changes — compound them. +12% then −8% is 1.12 × 0.92, not (12−8)/2. A rise and an equal fall always nets to a loss, because the fall applies to a bigger base.","Drill the mental-maths shortcuts below (percentages built from 10%/1%, the ×5/×11/×25 tricks, fraction-to-percent conversions) for 5 minutes a day rather than an hour once a week — arithmetic speed is a motor skill and responds to frequency, not one-off volume.","On table-based questions, total each column ONCE and write it in the margin — most tables carry 2-3 questions off the same exhibit, so that thirty seconds pays for itself immediately, and it stops the classic error of dividing by the wrong year's total.","Check units before you answer. £m vs £bn, % vs percentage points, and per-unit vs total are where most careless marks are lost — not the arithmetic itself.","If a single question is taking more than about 40 seconds, you have almost certainly misread it — stop calculating and re-read the question rather than pushing through with the wrong approach."],
-    questions: [
-      {
-        context: 'A fund\'s value grows from £2.4m to £3.0m over one year.',
-        prompt: 'What is the percentage increase?',
-        options: ['20%', '25%', '30%', '60%'],
-        answer: '25%',
-        explanation: 'Working: the increase is £3.0m − £2.4m = £0.6m. Percentage change = change ÷ ORIGINAL value = 0.6 ÷ 2.4 = 0.25 = 25%.\n\nWhy the wrong answers tempt: 20% comes from dividing by the NEW value (0.6 ÷ 3.0) — the single most common percentage error. 30% comes from a rough guess without calculating. 60% is the raw increase read as a percentage.\n\nTechnique: percentage change always divides by where you started, never where you ended. If you catch yourself dividing by the bigger number, you have made this mistake. A quick sanity check: a quarter of 2.4 is 0.6, so 25% must be right.',
-      },
-      {
-        context: 'Company revenue: 2021: £480m · 2022: £552m · 2023: £600m.',
-        prompt: 'In which year was percentage growth higher, and what was it?',
-        options: ['2022, at 15%', '2023, at 15%', '2022, at 13%', '2023, at 8.7%'],
-        answer: '2022, at 15%',
-        explanation: 'Working: 2022 growth = (552 − 480) ÷ 480 = 72 ÷ 480 = 15%. 2023 growth = (600 − 552) ÷ 552 = 48 ÷ 552 = 8.7%. So 2022 grew faster.\n\nWhy the wrong answers tempt: "2023, at 15%" swaps the years — easy to do when scanning quickly. "2022, at 13%" comes from dividing 72 by 552 (the wrong base). "2023, at 8.7%" has the right arithmetic attached to the wrong year.\n\nTechnique: growth on a larger base requires a larger absolute increase to produce the same percentage. Revenue rose £72m then £48m — the absolute increase actually shrank while the base grew, so the percentage had to fall sharply. Spotting that before calculating tells you the answer is 2022 and you only need to compute one figure precisely.',
-      },
-      {
-        context: 'A portfolio is split equities : bonds : cash in the ratio 5 : 3 : 2. The portfolio is worth £1.8m.',
-        prompt: 'How much is held in bonds?',
-        options: ['£360,000', '£540,000', '£600,000', '£900,000'],
-        answer: '£540,000',
-        explanation: 'Working: the ratio 5 : 3 : 2 has 5 + 3 + 2 = 10 parts. One part = £1.8m ÷ 10 = £180,000. Bonds are 3 parts = 3 × £180,000 = £540,000.\n\nWhy the wrong answers tempt: £360,000 is 2 parts (the cash allocation). £900,000 is 5 parts (equities). £600,000 comes from dividing by 3 rather than working out the part value — treating "3" as a third rather than three tenths.\n\nTechnique: always sum the ratio parts FIRST, then find the value of one part. Every ratio question in every test reduces to that two-step move. The distractors are almost always the other allocations in the same ratio, so identifying which component was asked for matters as much as the arithmetic.',
-      },
-      {
-        prompt: 'A trader buys shares at £8.00 and sells at £9.20, paying 0.5% commission on each transaction (on transaction value). Approximate net profit per share?',
-        options: ['£1.20', '£1.11', '£1.16', '£1.03'],
-        answer: '£1.11',
-        explanation: 'Working: gross profit = £9.20 − £8.00 = £1.20. Commission is charged on BOTH transactions: 0.5% × £8.00 = 4.0p on the buy, and 0.5% × £9.20 = 4.6p on the sell, totalling 8.6p. Net profit = £1.20 − £0.086 = £1.114, so about £1.11.\n\nWhy the wrong answers tempt: £1.20 ignores commission entirely. £1.16 charges commission only once (a very common slip). £1.03 applies 0.5% to something larger, or double-counts.\n\nTechnique: read carefully for whether a cost applies once or on every transaction — "on each transaction" is doing real work in that sentence. In markets questions, round-trip costs are charged on both legs, and test writers rely on candidates forgetting the second one.',
-      },
-      {
-        context: 'An analyst\'s bonus is 40% of base salary. Base salary is £65,000.',
-        prompt: 'What is total compensation?',
-        options: ['£91,000', '£105,000', '£26,000', '£89,000'],
-        answer: '£91,000',
-        explanation: 'Working: bonus = 40% × £65,000 = £26,000. Total compensation = base + bonus = £65,000 + £26,000 = £91,000.\n\nWhy the wrong answers tempt: £26,000 is the bonus alone — answering the wrong question. £105,000 treats the bonus as 40% of an already-grossed-up figure, or simply guesses. £89,000 is arithmetic drift.\n\nTechnique: this one is easy, which is exactly the risk. Under time pressure candidates select the bonus figure because it is the number they just calculated. Before selecting, re-read what was asked — "total compensation" not "bonus". Test writers always include the intermediate value as a distractor.',
-      },
-      {
-        context: 'GDP data: Country A: $2.0tn growing at 3%. Country B: $1.6tn growing at 5%.',
-        prompt: 'Approximately how much does each economy add next year?',
-        options: ['A: $60bn, B: $80bn', 'A: $80bn, B: $60bn', 'A: $60bn, B: $60bn', 'A: $30bn, B: $50bn'],
-        answer: 'A: $60bn, B: $80bn',
-        explanation: 'Working: Country A adds 3% × $2,000bn = $60bn. Country B adds 5% × $1,600bn = $80bn.\n\nWhy the wrong answers tempt: "A: $80bn, B: $60bn" swaps them, which is easy when the larger economy intuitively feels like it should add more. "A: $60bn, B: $60bn" comes from applying A\'s figure to both. "A: $30bn, B: $50bn" halves the rates or misplaces a decimal.\n\nTechnique: percentage growth and absolute growth are different questions, and tests deliberately set up cases where the smaller, faster-growing entity adds more in absolute terms. Whenever a question gives you both a size and a rate, check which one it is actually asking about before calculating.',
-      },
-      {
-        prompt: 'An investment falls 20% in year one, then rises 20% in year two. Overall it is:',
-        options: ['Back to its starting value', 'Down 4%', 'Up 4%', 'Down 2%'],
-        answer: 'Down 4%',
-        explanation: 'Working: start at 100. A 20% fall gives 100 × 0.8 = 80. A 20% rise on that gives 80 × 1.2 = 96. So you end at 96, down 4%.\n\nWhy the wrong answers tempt: "back to its starting value" is the intuitive answer and is wrong because the rise applies to a smaller base than the fall did. "Up 4%" reverses the direction. "Down 2%" is a half-remembered version of the effect.\n\nTechnique: percentage changes are multiplicative, not additive — 0.8 × 1.2 = 0.96, always. This asymmetry is why a 50% loss requires a 100% gain to recover, and it is one of the most frequently tested ideas in both aptitude tests and finance interviews. Generalise it: an equal percentage fall and rise always leaves you down.',
-      },
-      {
-        context: 'Exchange rate: £1 = $1.25. A UK firm invoices a US client $150,000.',
-        prompt: 'How much does the firm receive in pounds?',
-        options: ['£187,500', '£120,000', '£150,000', '£112,500'],
-        answer: '£120,000',
-        explanation: 'Working: the rate is £1 = $1.25, so to convert dollars into pounds you divide: $150,000 ÷ 1.25 = £120,000.\n\nWhy the wrong answers tempt: £187,500 multiplies instead of dividing — the single most common FX error. £150,000 ignores the conversion. £112,500 uses a different rate or compounds an error.\n\nTechnique: before calculating, decide whether the answer should be bigger or smaller. A pound is worth more than a dollar here, so a dollar amount must convert into FEWER pounds. That directional check alone eliminates £187,500 instantly and takes two seconds. Never do an FX conversion without it — direction errors are far more common than arithmetic errors.',
-      },
-      {
-        context: 'A company\'s costs are 70% of revenue. Revenue rises 10% while costs rise only 5%.',
-        prompt: 'If revenue was £100m, what is the new profit?',
-        options: ['£30m', '£33m', '£36.5m', '£40m'],
-        answer: '£36.5m',
-        explanation: 'Working: original costs = 70% × £100m = £70m, so original profit = £30m. New revenue = £100m × 1.10 = £110m. New costs = £70m × 1.05 = £73.5m. New profit = £110m − £73.5m = £36.5m.\n\nWhy the wrong answers tempt: £33m applies the 10% revenue growth to the original profit, ignoring that costs grew more slowly. £30m assumes profit is unchanged. £40m assumes costs were flat.\n\nTechnique: this is operating leverage — profit grew 21.7% from just 10% revenue growth, because costs grew slower than revenue. Whenever revenue and costs grow at different rates, profit growth is amplified relative to revenue growth. The step people skip is converting the 70% cost ratio into an actual pound figure before growing it; work in pounds, not percentages, as soon as you can.',
-      },
-      {
-        prompt: 'A bond pays a £45 annual coupon and trades at £900. Its current yield is:',
-        options: ['4.5%', '5.0%', '5.5%', '9.0%'],
-        answer: '5.0%',
-        explanation: 'Working: current yield = annual coupon ÷ current price = £45 ÷ £900 = 5.0%.\n\nWhy the wrong answers tempt: 4.5% is the COUPON rate (£45 on the £1,000 face value) — correct arithmetic, wrong question. 5.5% overshoots. 9.0% divides by the wrong figure entirely.\n\nTechnique: coupon rate is fixed against face value; current yield floats against the market price. Because this bond trades at a discount to par (£900 versus £1,000), its current yield must exceed its coupon rate — a directional check that tells you the answer is above 4.5% before you calculate. This relationship underpins the whole price-yield seesaw: as price falls, yield rises. Expect it in every fixed income interview.',
-      },
-      {
-        context: 'Team A of 4 analysts completes a model in 6 days.',
-        prompt: 'Working at the same rate, how long would 3 analysts take?',
-        options: ['4.5 days', '7 days', '8 days', '9 days'],
-        answer: '8 days',
-        explanation: 'Working: total work required = 4 analysts × 6 days = 24 analyst-days. With 3 analysts, time = 24 ÷ 3 = 8 days.\n\nWhy the wrong answers tempt: 4.5 days applies direct proportion (fewer people, less time) — the intuition trap. 7 days is a guess between 6 and 8. 9 days over-scales.\n\nTechnique: convert to total work units first — analyst-days, machine-hours, person-weeks. Then divide by the new resource. This is inverse proportion: fewer people means MORE time, so your answer must be greater than 6 days, which eliminates 4.5 instantly. In consulting cases this same unit-conversion logic solves most capacity and staffing questions.',
-      },
-      {
-        context: 'A fund charges a 2% management fee. An investor puts in £250,000 and the gross return is 8%.',
-        prompt: 'Roughly what is the investor\'s net gain after the fee (fee charged on invested capital)?',
-        options: ['£20,000', '£15,000', '£10,000', '£5,000'],
-        answer: '£15,000',
-        explanation: 'Working: gross gain = 8% × £250,000 = £20,000. Management fee = 2% × £250,000 = £5,000. Net gain = £20,000 − £5,000 = £15,000.\n\nWhy the wrong answers tempt: £20,000 ignores the fee. £10,000 double-counts it or applies 4%. £5,000 is the fee itself, selected because it is the last number calculated.\n\nTechnique: note how large the fee is relative to the return — a 2% fee consumed a quarter of an 8% gross return. That ratio is the entire active-versus-passive investing debate in one line, and it compounds brutally over time: the same 2% drag over 20 years costs roughly a third of your final wealth. Expect this framing in asset management interviews.',
-      },
-      {
-        prompt: '£10,000 invested at 10% compound interest for 2 years grows to:',
-        options: ['£12,000', '£12,100', '£11,000', '£12,200'],
-        answer: '£12,100',
-        explanation: 'Working: Year 1 = £10,000 × 1.10 = £11,000. Year 2 = £11,000 × 1.10 = £12,100. Or directly: 10,000 × 1.1² = £12,100.\n\nWhy the wrong answers tempt: £12,000 is simple interest (£1,000 twice) — it misses the interest earned on the first year\'s interest. £11,000 is one year only. £12,200 is a miscalculation.\n\nTechnique: the £100 gap between £12,000 and £12,100 IS compounding, and over long periods that gap becomes enormous — £10,000 at 10% for 30 years is £174,000 compounded versus £40,000 simple. Always multiply by (1 + r) repeatedly rather than adding the interest amount. Related shortcut worth memorising: the rule of 72 says 10% doubles your money in about 7.2 years.',
-      },
-      {
-        context: 'A product sells at £50 with variable costs of £20 per unit. Fixed costs are £120,000.',
-        prompt: 'How many units must be sold to break even?',
-        options: ['2,400', '4,000', '6,000', '3,000'],
-        answer: '4,000',
-        explanation: 'Working: contribution per unit = price − variable cost = £50 − £20 = £30. Breakeven volume = fixed costs ÷ contribution = £120,000 ÷ £30 = 4,000 units.\n\nWhy the wrong answers tempt: 2,400 divides fixed costs by the £50 price, ignoring variable costs — the most common error. 6,000 divides by £20 (the variable cost). 3,000 is a rough guess.\n\nTechnique: only the CONTRIBUTION covers fixed costs, because every unit sold also incurs its own variable cost. Breakeven = fixed ÷ contribution is worth memorising outright — it appears in numerical tests, consulting cases and corporate finance interviews. The powerful follow-up insight: a 10% price cut here drops contribution from £30 to £25, pushing breakeven from 4,000 to 4,800 units, so you need 20% more volume just to stand still.',
-      },
-      {
-        prompt: 'After falling 20%, a share trades at £64. What was its original price?',
-        options: ['£76.80', '£80', '£84', '£78'],
-        answer: '£80',
-        explanation: 'Working: after a 20% fall, £64 represents 80% of the original. So original = £64 ÷ 0.8 = £80. Check: £80 × 0.8 = £64 ✓.\n\nWhy the wrong answers tempt: £76.80 adds 20% back to £64 — the classic and most common trap, because adding 20% to a smaller number does not undo subtracting 20% from a larger one. £84 and £78 are estimates.\n\nTechnique: to reverse ANY percentage change, DIVIDE by (1 ± rate). Never add or subtract the same percentage back. This appears constantly in disguised forms — "headcount is 240 after a 20% rise, what was it before?" is the same question (240 ÷ 1.2 = 200). Always verify by running your answer forward: if it does not reproduce the given figure, you added instead of divided.',
-      },
-      {
-        context: 'A portfolio is 60% in Fund A (returned 5%) and 40% in Fund B (returned 10%).',
-        prompt: 'What is the portfolio\'s overall return?',
-        options: ['7.5%', '7%', '8%', '6.5%'],
-        answer: '7%',
-        explanation: 'Working: weighted average = (60% × 5%) + (40% × 10%) = 3.0% + 4.0% = 7.0%.\n\nWhy the wrong answers tempt: 7.5% is the simple average of 5% and 10%, ignoring that more money sits in the lower-returning fund. 8% over-weights Fund B. 6.5% under-weights it.\n\nTechnique: never average returns without weighting by how much is invested in each. The answer must sit closer to the fund holding more money — since 60% is in the 5% fund, the blend must be below 7.5%, which eliminates the simple average immediately. This same weighted-average logic drives WACC, blended margins and portfolio returns, so it is worth being fast at.',
-      },
-      {
-        context: 'Revenue is £250m with a gross margin of 40%.',
-        prompt: 'What is the cost of goods sold?',
-        options: ['£100m', '£150m', '£40m', '£210m'],
-        answer: '£150m',
-        explanation: 'Working: gross margin 40% means gross profit = 40% × £250m = £100m. Cost of goods sold = revenue − gross profit = £250m − £100m = £150m. Equivalently, COGS is 60% of revenue.\n\nWhy the wrong answers tempt: £100m is the gross PROFIT — right calculation, wrong question, and the most-selected wrong answer. £40m treats the margin as a pound figure. £210m is arithmetic drift.\n\nTechnique: margin and cost ratio are complements that sum to 100%. If margin is 40%, COGS is automatically 60% — you can go straight to 0.6 × 250 = £150m in one step. Whenever a question gives you a margin, immediately write down the complementary cost percentage; it usually saves a step and prevents answering the wrong question.',
-      },
-      {
-        context: 'A company has EBIT of £45m and annual interest expense of £9m.',
-        prompt: 'What is its interest coverage ratio?',
-        options: ['5x', '4x', '9x', '0.2x'],
-        answer: '5x',
-        explanation: 'Working: interest coverage ratio = EBIT ÷ interest expense = £45m ÷ £9m = 5.0x.\n\nWhy the wrong answers tempt: 4x subtracts before dividing (45 − 9 = 36, then a slip). 9x uses the interest figure itself. 0.2x inverts the ratio — dividing interest by EBIT instead.\n\nTechnique: coverage ratios always put the resource ON TOP and the obligation underneath, because you are asking "how many times over can I cover this?" An answer below 1x would mean the company cannot pay its interest at all, so any coverage answer under 1 should trigger a re-check. Context worth knowing: lenders typically want above 3x, below 2x signals distress, and covenants are frequently written against exactly this ratio — so it comes up in both aptitude tests and credit interviews.',
-      },
-      {
-        context: '£1 = $1.25 and €1 = $1.00.',
-        prompt: 'What is the £/€ exchange rate?',
-        options: ['£1 = €0.80', '£1 = €1.25', '£1 = €1.00', '£1 = €2.25'],
-        answer: '£1 = €1.25',
-        explanation: 'Working: £1 buys $1.25. Since €1 = $1.00, those $1.25 buy €1.25. Therefore £1 = €1.25.\n\nWhy the wrong answers tempt: £1 = €0.80 inverts the rate (1 ÷ 1.25) — the most common cross-rate error. £1 = €1.00 ignores the dollar leg. £1 = €2.25 adds the rates instead of chaining them.\n\nTechnique: chain cross rates through the common currency, cancelling units as you go — £ → $ → €, so £1 × (1.25 $/£) × (1 €/$) = €1.25. Then sanity-check the direction: the pound is stronger than the dollar, and the euro equals the dollar, so a pound must be worth MORE than a euro. That alone eliminates 0.80 and 1.00. Writing the units explicitly is what stops you inverting.',
-      },
-      {
-        context: 'Headcount data — Front office: 240, up 20% year-on-year. Operations: 600, down 10% year-on-year.',
-        prompt: 'What was TOTAL headcount one year ago (front office + operations)?',
-        options: ['840', '867', '800', '873'],
-        answer: '867',
-        explanation: 'Working: reverse each segment separately. Front office rose 20%, so last year = 240 ÷ 1.2 = 200. Operations fell 10%, so last year = 600 ÷ 0.9 = 667. Total last year = 200 + 667 = 867.\n\nWhy the wrong answers tempt: 840 applies a single blended percentage to the combined 840 total, which is invalid because the two segments moved in opposite directions. 800 reverses only the front office. 873 uses slightly wrong division.\n\nTechnique: when segments change at different rates, you must reverse each one individually — never apply an average to the total. Note also the two directions: a RISE reverses by dividing by 1.2, a FALL reverses by dividing by 0.9. Both are divisions, which catches people who instinctively multiply for one of them. Sanity-check: front office grew and operations shrank, so the old total should be close to the new one, which 867 versus 840 satisfies.',
-      },
-      {
-        context: 'A fund returns 12% in year 1 and −8% in year 2.',
-        prompt: 'What is the compound (not average) two-year return?',
-        options: ['4.0%', '3.0%', '2.96%', '20.0%'],
-        answer: '3.0%',
-        explanation: 'Working: chain the growth factors. Year 1 turns £1 into 1.12. Year 2 does not take 8% off the original — it takes 8% off the NEW balance: 1.12 × 0.92 = 1.0304. So the two-year compound return is 3.04%, or 3.0% to one decimal.\n\nWhy the wrong answers tempt: 4.0% is the naive (12 − 8) subtraction — it ignores that the 8% loss applies to a bigger base than the 12% gain did. 2.96% is what you get if you compound in the wrong direction (0.88 × 1.12 − 1 = −1.4%, or 1.12 − 1.12×0.08 mis-sequenced) — it looks precise, which is exactly why it is offered. 20.0% is simply 12 + 8, added instead of netted: the answer you pick if you stop reading at “12% and 8%”.\n\nTechnique: percentage changes NEVER add. Convert every move to a multiplier (+12% → 1.12, −8% → 0.92), multiply the chain, subtract 1. Order does not matter for the final figure, so multiply the easy pair first. Permanent sanity check: a gain and a loss of the SAME size always leave you down (1.12 × 0.88 = 0.9856), because the loss hits a bigger base. Here the gain is larger than the loss, so the answer must be positive but smaller than 4% — that single observation eliminates three options in five seconds without any arithmetic.',
-      },
-      {
-        context: 'A company issues 2 million new shares at £4.50 each, raising cash. It previously had 18 million shares outstanding and net income of £27m.',
-        prompt: 'By how much does EPS fall purely from the share issuance (assume net income unchanged)?',
-        options: ['About 10%', 'About 8%', 'About 11%', 'About 5%'],
-        answer: 'About 10%',
-        explanation: 'Working: EPS = net income ÷ share count. Old EPS = £27m ÷ 18m = £1.50. New share count = 18m + 2m = 20m, so new EPS = £27m ÷ 20m = £1.35. The fall is £0.15 ÷ £1.50 = 10%.\n\nWhy the wrong answers tempt: “About 11%” is 2 ÷ 18 = 11.1% — the share count rose by 11.1%, but EPS falls by only 10%, because the denominator ratio is 18/20 = 0.90. “About 8%” comes from dividing the £0.15 fall by the NEW EPS (0.15 ÷ 1.35 = 11%) or from a botched 1.5/18. “About 5%” tempts anyone who assumes the £9m raised offsets half the dilution — it cannot, because the question explicitly holds net income constant.\n\nTechnique: for pure dilution, skip EPS entirely — the percentage fall equals 1 − (old shares ÷ new shares) = 1 − 18/20 = 10%. The £4.50 issue price and the £9m raised are deliberate noise: in a real deal that cash earns a return and partially offsets dilution, and that is the standard interview follow-up, but here the stem ring-fences it. Remember the asymmetry: a rise of x% in the share count causes a fall of x/(1+x) in EPS — always slightly smaller than x. Anyone who answers with the same number as the share-count increase has skipped a step.',
-      },
-      {
-        context: 'A UK investor holds a US stock. The stock rises 8% in USD terms, but the pound strengthens 5% against the dollar over the same period.',
-        prompt: 'Approximately what is the investor\'s return in GBP terms?',
-        options: ['13%', '8%', '3%', '2.9%'],
-        answer: '2.9%',
-        explanation: 'Working: you earn 1.08 in dollars, but each dollar now buys fewer pounds because sterling strengthened 5%. GBP return = 1.08 ÷ 1.05 − 1 = 1.0286 − 1 ≈ 2.9%.\n\nWhy the wrong answers tempt: 3% is the quick subtraction 8 − 5. It is a perfectly good approximation, and in an interview you would say it out loud — but the option set also contains 2.9%, and when a test offers both a rounded and an exact figure, the exact one is the intended answer. 13% ADDS the FX move, which would be right only if sterling had weakened 5%. 8% ignores currency entirely, which is the single most common real-world error in cross-border performance reporting.\n\nTechnique: ask one question before calculating — did my home currency get stronger or weaker? Stronger home currency means foreign assets translate back into less, a drag, so divide. Weaker home currency is a tailwind, so multiply. The subtraction shortcut is accurate to within about 0.2 percentage points for moves under 10%, so use it to eliminate options fast and only do the division if two candidates survive, which is precisely the trap laid here. In practice this is why funds quote returns both “local” and “GBP hedged” — the gap between them is entirely this arithmetic.',
-      },
-      {
-        context: 'An analyst forecasts revenue growing 8% a year for 3 years from a base of £150m.',
-        prompt: 'What is revenue after 3 years (nearest £m)?',
-        options: ['£186m', '£189m', '£195m', '£174m'],
-        answer: '£189m',
-        explanation: 'Working: 1.08³ built in steps — 1.08 × 1.08 = 1.1664, then × 1.08 = 1.2597. Revenue = 150 × 1.2597 = £188.96m ≈ £189m.\n\nWhy the wrong answers tempt: £186m is 150 × 1.24, treating three years of 8% as a flat 24%. That simple-interest error always lands slightly BELOW the true figure, so if you see two close options and one is a touch lower, the lower one is usually the un-compounded trap. £195m over-compounds, roughly 1.30, which is nearer four years. £174m is 150 × 1.16, only two years of growth — an off-by-one on the exponent that happens when you count the base year as year one.\n\nTechnique: memorise the factors that recur constantly in numerical tests — 1.05³ ≈ 1.158, 1.08³ ≈ 1.26, 1.10³ = 1.331, 1.08⁵ ≈ 1.47, and the Rule of 72 (8% doubles in about 9 years). Failing that, use the binomial approximation (1+r)ⁿ ≈ 1 + nr + [n(n−1)/2]r², which here gives 1 + 0.24 + 3 × 0.0064 = 1.2592 — three decimals of accuracy in about four seconds of mental work. Then count the years deliberately: “growing 8% a year for 3 years from a base of £150m” means the exponent is 3.',
-      },
-      {
-        context: 'A company has 400,000 shares outstanding trading at £12.50, and net debt of £1.2m.',
-        prompt: 'What is its enterprise value?',
-        options: ['£5.0m', '£6.2m', '£3.8m', '£4.8m'],
-        answer: '£6.2m',
-        explanation: 'Working: equity value (market cap) = shares × price = 400,000 × £12.50 = £5.0m. Enterprise value = equity value + net debt = £5.0m + £1.2m = £6.2m.\n\nWhy the wrong answers tempt: £5.0m is market cap alone — the answer if you forget that a buyer of the whole business also inherits its debt. £3.8m SUBTRACTS net debt, which is the most common EV error of all: you subtract CASH, but net debt is already debt minus cash, so subtracting it flips the sign and double-counts. £4.8m combines both mistakes.\n\nTechnique: hold the logic, not the formula. EV is what it costs to own the operating business free of its capital structure — you pay the shareholders (market cap), you take on the debt (add it), and you get the cash sitting on the balance sheet (subtract it). Hence EV = market cap + debt − cash = market cap + net debt. If a question hands you gross debt and cash separately, add and subtract them separately. If net debt is negative (a net-cash company), EV is LOWER than market cap — the standard trick with cash-rich technology comparables. Learn the bridge in both directions, because banking interviewers ask it both ways: equity value → +net debt → enterprise value, and EV → −net debt → equity value → ÷ shares → implied share price.',
-      },
-      {
-        context: 'Two funds: Fund X returned 15% with a 20% chance of losing money in any given year. Fund Y returned 9% with a 5% chance of losing money.',
-        prompt: 'An investor prioritising downside protection over raw return would most likely prefer:',
-        options: ['Fund X, for the higher return', 'Fund Y, for the lower loss probability', 'Both are identical', 'Neither — insufficient data on volatility'],
-        answer: 'Fund Y, for the lower loss probability',
-        explanation: 'Working: the stem sets the decision rule for you — the investor prioritises DOWNSIDE PROTECTION over raw return. Fund X: 15% return, 20% chance of a losing year. Fund Y: 9% return, 5% chance of a losing year. On the stated criterion Y wins outright: a one-in-twenty chance of a down year against one-in-five.\n\nWhy the wrong answers tempt: “Fund X, for the higher return” is the trap the whole question is built around — it is the correct answer to a question that was not asked. Test writers deliberately make the rejected option numerically superior so that scanning for the biggest number fails. “Both are identical” is never right when the two funds differ on the stated criterion. “Insufficient data on volatility” is the seductive sophisticated answer: it is true that loss probability is not standard deviation, and in a real risk conversation you would want volatility, Sharpe ratio and maximum drawdown. But the question asks what the investor would MOST LIKELY prefer given what is shown, and loss probability is a direct measure of downside. Over-thinking into “not enough information” is one of the top three causes of lost marks in data-interpretation sections.\n\nTechnique: underline the criterion clause before you look at any numbers — “prioritising X over Y”, “on a per-unit basis”, “excluding one-offs”, “in real terms”. SHL, Cappfinity and Talent Q build whole question banks around inserting a preference that inverts the obvious ranking. Then calibrate your bar for “insufficient data”: pick it only when the stated criterion cannot be evaluated at all from the information given, never merely because you would like more evidence.',
-      },
-      {
-        context: 'A bond with 5 years to maturity and a duration of 4.2 currently yields 5%. Rates are expected to rise by 0.75%.',
-        prompt: 'Approximately what price change should the bondholder expect?',
-        options: ['-3.15%', '+3.15%', '-4.2%', '-0.75%'],
-        answer: '-3.15%',
-        explanation: 'Working: modified duration estimates the percentage price move for a 1% (100bp) change in yield. Price change ≈ −duration × Δyield = −4.2 × 0.75 = −3.15%.\n\nWhy the wrong answers tempt: +3.15% has the right magnitude and the wrong sign — bond prices and yields always move inversely, so the sign is the free mark. −4.2% applies the duration as though yields moved a full 1%. −0.75% is the yield change itself mistaken for the price change; duration is precisely the multiplier that converts one into the other, so ignoring it defeats the question entirely.\n\nTechnique: write the minus sign before you calculate. On the intuition, which you WILL be asked in a rates interview: the bond pays fixed coupons, so when new bonds are issued at higher yields the old one is worth less, and its price falls until its yield-to-maturity matches the market. Duration is roughly the weighted average time to receive the cash flows, which is why longer maturity and lower coupon both raise duration and therefore rate sensitivity. Two follow-ups to have ready. First, this is a first-order estimate only — convexity means the price gain from a fall in yields slightly exceeds the loss from an equal rise, so duration overstates losses and understates gains. Second, sense-check the inputs: duration of 4.2 on a 5-year bond is consistent, because duration is always below maturity for a coupon-paying bond and equals maturity only for a zero-coupon bond.',
-      },
-      {
-        context: 'A retailer\'s like-for-like sales rose 4% while total sales rose 11%, with no store closures.',
-        prompt: 'The gap between these two figures is best explained by:',
-        options: ['Inflation', 'New store openings', 'Currency movements', 'A calculation error — this is impossible'],
-        answer: 'New store openings',
-        explanation: 'Working: like-for-like (same-store) sales count only outlets trading in both periods; total sales count everything. Total (+11%) exceeds LFL (+4%) by seven percentage points, and the stem rules out closures — so the gap must come from stores that exist now and did not before: new openings.\n\nWhy the wrong answers tempt: “Inflation” fails because price rises lift the SAME stores, so inflation flows into the LFL figure too and cannot open a gap between the two measures. “Currency movements” is the strongest distractor and would be a real candidate for an international retailer reporting in sterling — but FX also affects both measures similarly, and nothing in the stem points overseas. “Impossible” is the panic answer; total exceeding LFL is completely routine for any expanding chain, and picking it signals you do not know what the metrics mean.\n\nTechnique: LFL is the most scrutinised metric in retail because it isolates whether the underlying business is improving or merely getting bigger by opening doors. Read the gap as a diagnostic: total above LFL means expansion is carrying growth; total below LFL means the estate is shrinking; LFL near zero while total booms is the classic warning that a roll-out is masking a stale core, which is how several retail collapses looked twelve months out. Analysts then decompose LFL into volume (footfall, basket size) and price — if LFL growth is all price in an inflationary year, real volumes are falling. Expect exactly this chain of questions in a retail-sector interview or a consulting case on a struggling chain.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'A fund reports: Year 1 +18%, Year 2 −12%, Year 3 +7%. Management fees of 1.5% are charged annually on the closing balance after performance.',
-        prompt: 'An investor put in £500,000 at the start. Approximately what is the closing value after three years, net of fees?',
-        options: ['£556,000', '£571,000', '£531,000', '£589,000'],
-        answer: '£531,000',
-        explanation: 'Year 1: 500,000 × 1.18 = 590,000, less 1.5% → 581,150. Year 2: × 0.88 = 511,412, less 1.5% → 503,741. Year 3: × 1.07 = 539,003, less 1.5% → £530,918, so roughly £531,000. Two traps: applying the fee once at the end rather than annually, and averaging the returns (+18−12+7)/3 instead of compounding them sequentially.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'Division A: revenue £180m, operating margin 22%. Division B: revenue £320m, operating margin 9%. The group targets a blended operating margin of 16% next year, with Division B revenue unchanged and its margin improving to 12%.',
-        prompt: 'What revenue must Division A achieve to hit the group target, assuming its margin holds at 22%?',
-        options: ['£213m', '£256m', '£180m', '£310m'],
-        answer: '£213m',
-        explanation: 'Let A revenue = x. Group profit = 0.22x + (320 × 0.12) = 0.22x + 38.4. Group revenue = x + 320. Set the blend to 16%: 0.22x + 38.4 = 0.16(x + 320) = 0.16x + 51.2 → 0.06x = 12.8 → x = £213m. Sanity check: at £213m, group profit = 46.9 + 38.4 = £85.3m on revenue of £533m = 16.0% ✓. A must therefore grow from £180m to about £213m. Multi-division margin questions are algebra, not estimation — define the unknown and write one equation.',
-      },
-      {
-        dataTable: {
-          title: 'Exhibit A — Divisional revenue (£m)',
-          headers: ['Division', 'FY22', 'FY23', 'FY24'],
-          rows: [
-            ['Equities', '420', '455', '486'],
-            ['Fixed Income', '380', '362', '398'],
-            ['Advisory', '290', '338', '352'],
-            ['Wealth Management', '210', '231', '268'],
+    {
+      "id": "numerical",
+      "title": "Numerical Reasoning",
+      "icon": "🔢",
+      "color": "text-blue-400",
+      "border": "border-blue-500/30",
+      "description": "Percentages, ratios and data interpretation — the SHL-style tables and charts banks actually send you.",
+      "secondsPerQuestion": 75,
+      "questionsPerAttempt": 10,
+      "tip": "Real tests allow a calculator — but the winners estimate first, then verify. Learn percentage shortcuts: 15% of 240 = 10% (24) + 5% (12) = 36.",
+      "providers": "SHL Verify, Korn Ferry Talent Q Elements, Cappfinity (gamified), Cut-e/Aon scales",
+      "requiredBy": "Investment banking (Goldman, JPMorgan, Morgan Stanley), sales & trading, asset management, Big 4, consulting — essentially every finance graduate scheme.",
+      "whyUsed": "Finance is a numbers job. Firms use these to screen for speed and accuracy with data under pressure before any human reviews your application — typically cutting 50%+ of candidates at this stage.",
+      "improveTitle": "How to get better at Numerical Reasoning",
+      "improveTips": [
+        "Estimate before you calculate. Round every number hard, get a ballpark answer, and eliminate any option that is not in the right order of magnitude — this alone kills 1-2 of the 4 options in under 10 seconds, before you touch the real arithmetic.",
+        "Master reverse percentages, because it is the single most repeated trap on every provider's numerical test. To undo a percentage change you DIVIDE by (1 ± rate), never add or subtract the same percentage back. \"£64 after a 20% fall\" means original = 64 ÷ 0.8, not 64 × 1.2.",
+        "Never average sequential percentage changes — compound them. +12% then −8% is 1.12 × 0.92, not (12−8)/2. A rise and an equal fall always nets to a loss, because the fall applies to a bigger base.",
+        "Drill the mental-maths shortcuts below (percentages built from 10%/1%, the ×5/×11/×25 tricks, fraction-to-percent conversions) for 5 minutes a day rather than an hour once a week — arithmetic speed is a motor skill and responds to frequency, not one-off volume.",
+        "On table-based questions, total each column ONCE and write it in the margin — most tables carry 2-3 questions off the same exhibit, so that thirty seconds pays for itself immediately, and it stops the classic error of dividing by the wrong year's total.",
+        "Check units before you answer. £m vs £bn, % vs percentage points, and per-unit vs total are where most careless marks are lost — not the arithmetic itself.",
+        "If a single question is taking more than about 40 seconds, you have almost certainly misread it — stop calculating and re-read the question rather than pushing through with the wrong approach."
+      ],
+      "questions": [
+        {
+          "context": "A fund's value grows from £2.4m to £3.0m over one year.",
+          "prompt": "What is the percentage increase?",
+          "options": [
+            "20%",
+            "25%",
+            "30%",
+            "60%"
           ],
-          note: 'Three questions in this test may refer to this exhibit — real numerical tests group questions around shared data.',
+          "answer": "25%",
+          "explanation": "Working: the increase is £3.0m − £2.4m = £0.6m. Percentage change = change ÷ ORIGINAL value = 0.6 ÷ 2.4 = 0.25 = 25%.\n\nWhy the wrong answers tempt: 20% comes from dividing by the NEW value (0.6 ÷ 3.0) — the single most common percentage error. 30% comes from a rough guess without calculating. 60% is the raw increase read as a percentage.\n\nTechnique: percentage change always divides by where you started, never where you ended. If you catch yourself dividing by the bigger number, you have made this mistake. A quick sanity check: a quarter of 2.4 is 0.6, so 25% must be right."
         },
-        prompt: 'Which division grew fastest between FY22 and FY24?',
-        options: ['Equities', 'Advisory', 'Wealth Management', 'Fixed Income'],
-        answer: 'Wealth Management',
-        explanation: 'Two-year growth: Equities 486/420 = +15.7%; Fixed Income 398/380 = +4.7%; Advisory 352/290 = +21.4%; Wealth 268/210 = +27.6%. Wealth grew fastest. The trap is comparing absolute increases — Equities added £66m versus Wealth\'s £58m, but Wealth grew from a much smaller base.',
-      },
-      {
-        dataTable: {
-          title: 'Exhibit A — Divisional revenue (£m)',
-          headers: ['Division', 'FY22', 'FY23', 'FY24'],
-          rows: [
-            ['Equities', '420', '455', '486'],
-            ['Fixed Income', '380', '362', '398'],
-            ['Advisory', '290', '338', '352'],
-            ['Wealth Management', '210', '231', '268'],
+        {
+          "context": "Company revenue: 2021: £480m · 2022: £552m · 2023: £600m.",
+          "prompt": "In which year was percentage growth higher, and what was it?",
+          "options": [
+            "2022, at 15%",
+            "2023, at 15%",
+            "2022, at 13%",
+            "2023, at 8.7%"
           ],
+          "answer": "2022, at 15%",
+          "explanation": "Working: 2022 growth = (552 − 480) ÷ 480 = 72 ÷ 480 = 15%. 2023 growth = (600 − 552) ÷ 552 = 48 ÷ 552 = 8.7%. So 2022 grew faster.\n\nWhy the wrong answers tempt: \"2023, at 15%\" swaps the years — easy to do when scanning quickly. \"2022, at 13%\" comes from dividing 72 by 552 (the wrong base). \"2023, at 8.7%\" has the right arithmetic attached to the wrong year.\n\nTechnique: growth on a larger base requires a larger absolute increase to produce the same percentage. Revenue rose £72m then £48m — the absolute increase actually shrank while the base grew, so the percentage had to fall sharply. Spotting that before calculating tells you the answer is 2022 and you only need to compute one figure precisely."
         },
-        prompt: 'What percentage of FY24 total revenue did Advisory represent?',
-        options: ['21.4%', '23.4%', '25.4%', '19.8%'],
-        answer: '23.4%',
-        explanation: 'Working: total the FY24 column first — 486 + 398 = 884; + 352 = 1,236; + 268 = £1,504m. Advisory share = 352 ÷ 1,504 = 23.40%.\n\nWhy the wrong answers tempt: 25.4% is 352 ÷ 1,386, dividing by the FY23 total — the error your eye makes when it slips one column left mid-addition. 21.4% comes from an inflated total (roughly 1,646) after double-counting a row. 19.8% implies a total near 1,778, which is what you get by highlighting a block of two columns rather than one. Every distractor here is a specific, reproducible reading error rather than a random number — that is how professional test writers build option sets, and it means finding your answer in the list is NOT evidence you read the right cells.\n\nTechnique: on any table question, do three checks before touching the arithmetic — confirm the year, confirm the units (this exhibit is £m, so no zeros to juggle), and confirm whether the question wants a share, a change or a rate. Add the column once, write the total in the margin, and reuse it, because these exhibits almost always carry two or three questions off the same total and the second one then becomes nearly free. Sense-check against an even split: four divisions means 25% each if identical, and Advisory is the third largest, so a shade under a quarter is exactly what you should expect. That benchmark alone flags 19.8% as too low and 21.4% as suspicious before you compute anything.',
-      },
-      {
-        dataTable: {
-          title: 'Exhibit A — Divisional revenue (£m)',
-          headers: ['Division', 'FY22', 'FY23', 'FY24'],
-          rows: [
-            ['Equities', '420', '455', '486'],
-            ['Fixed Income', '380', '362', '398'],
-            ['Advisory', '290', '338', '352'],
-            ['Wealth Management', '210', '231', '268'],
+        {
+          "context": "A portfolio is split equities : bonds : cash in the ratio 5 : 3 : 2. The portfolio is worth £1.8m.",
+          "prompt": "How much is held in bonds?",
+          "options": [
+            "£360,000",
+            "£540,000",
+            "£600,000",
+            "£900,000"
           ],
+          "answer": "£540,000",
+          "explanation": "Working: the ratio 5 : 3 : 2 has 5 + 3 + 2 = 10 parts. One part = £1.8m ÷ 10 = £180,000. Bonds are 3 parts = 3 × £180,000 = £540,000.\n\nWhy the wrong answers tempt: £360,000 is 2 parts (the cash allocation). £900,000 is 5 parts (equities). £600,000 comes from dividing by 3 rather than working out the part value — treating \"3\" as a third rather than three tenths.\n\nTechnique: always sum the ratio parts FIRST, then find the value of one part. Every ratio question in every test reduces to that two-step move. The distractors are almost always the other allocations in the same ratio, so identifying which component was asked for matters as much as the arithmetic."
         },
-        prompt: 'If total revenue grows in FY25 at the same rate as FY23 to FY24, what will FY25 total revenue be?',
-        options: ['£1,632m', '£1,588m', '£1,704m', '£1,552m'],
-        answer: '£1,632m',
-        explanation: 'Working: three steps. First, FY23 total = 455 + 362 + 338 + 231 = £1,386m. Second, FY24 total = £1,504m (already computed for the previous question — reuse it). Third, growth = 1,504 ÷ 1,386 − 1 = 8.51%, applied forward: FY25 = 1,504 × 1.0851 = £1,632m.\n\nWhy the wrong answers tempt: £1,588m applies the growth to the FY23 base rather than FY24 — an off-by-one-year error that feels right because 1,386 and 1,504 are both on screen. £1,704m compounds twice (1,504 × 1.085²), which is FY26, not FY25. £1,552m is what you get by taking one division’s growth rate instead of the total’s: Equities grew 486/455 = 6.8%, and 1,504 × 1.068 lands close to it.\n\nTechnique: chained questions off a single exhibit reward candidates who wrote down intermediate results — two column totals and one growth rate answer everything this table can ask, so the marginal cost of question two should be about fifteen seconds. Sense-check in absolute terms rather than percentages: revenue rose £118m last year, so growth at a similar RATE on a slightly larger base should add a bit more than £118m, roughly £128m, landing near £1,632m. That check kills £1,704m (+£200m, far too big) and £1,552m (+£48m, far too small) instantly. Finally, read the forward period carefully — “grows in FY25 at the same rate as FY23 to FY24” means one further year, and miscounting forward periods is the most expensive error on projection questions.',
-      },
-      {
-        difficulty: 'expert',
-        dataTable: {
-          title: 'Exhibit B — Fund performance (annualised)',
-          headers: ['Fund', 'Gross return', 'Volatility', 'Annual fee'],
-          rows: [
-            ['Alpha', '12.4%', '8.2%', '1.50%'],
-            ['Beta', '9.1%', '5.0%', '1.00%'],
-            ['Gamma', '15.2%', '14.0%', '1.75%'],
-            ['Delta', '7.8%', '4.1%', '0.75%'],
+        {
+          "prompt": "A trader buys shares at £8.00 and sells at £9.20, paying 0.5% commission on each transaction (on transaction value). Approximate net profit per share?",
+          "options": [
+            "£1.20",
+            "£1.11",
+            "£1.16",
+            "£1.03"
           ],
-          note: 'Risk-free rate is 3.0%.',
+          "answer": "£1.11",
+          "explanation": "Working: gross profit = £9.20 − £8.00 = £1.20. Commission is charged on BOTH transactions: 0.5% × £8.00 = 4.0p on the buy, and 0.5% × £9.20 = 4.6p on the sell, totalling 8.6p. Net profit = £1.20 − £0.086 = £1.114, so about £1.11.\n\nWhy the wrong answers tempt: £1.20 ignores commission entirely. £1.16 charges commission only once (a very common slip). £1.03 applies 0.5% to something larger, or double-counts.\n\nTechnique: read carefully for whether a cost applies once or on every transaction — \"on each transaction\" is doing real work in that sentence. In markets questions, round-trip costs are charged on both legs, and test writers rely on candidates forgetting the second one."
         },
-        prompt: 'Which fund delivered the best risk-adjusted return NET of fees (highest Sharpe ratio)?',
-        options: ['Alpha', 'Beta', 'Gamma', 'Delta'],
-        answer: 'Beta',
-        explanation: 'Sharpe = (net return − risk-free) ÷ volatility. Alpha: (10.9−3)/8.2 = 0.96. Beta: (8.1−3)/5.0 = 1.02. Gamma: (13.45−3)/14.0 = 0.75. Delta: (7.05−3)/4.1 = 0.99. Beta wins despite having the second-lowest headline return — and Gamma, with the highest gross return, is worst risk-adjusted. Real tests deliberately reward the candidate who reads which metric was asked for.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'A company buys equipment for £2.4m. It depreciates straight-line over 8 years to a residual value of £400,000. The tax rate is 25%.',
-        prompt: 'What is the annual cash tax saving generated by the depreciation charge?',
-        options: ['£62,500', '£75,000', '£250,000', '£100,000'],
-        answer: '£62,500',
-        explanation: 'Depreciable amount = 2,400,000 − 400,000 residual = £2,000,000. Annual depreciation = 2,000,000 ÷ 8 = £250,000. Tax saving = 250,000 × 25% = £62,500. Two traps: forgetting to deduct residual value before dividing, and confusing the depreciation charge itself with the tax saving it generates.',
-      },
-      {
-            "chart": {
-                  "title": "Exhibit C — Assets under management by region (£bn), FY24",
-                  "type": "bar",
-                  "categories": [
-                        "UK",
-                        "Europe",
-                        "US",
-                        "Asia"
-                  ],
-                  "series": [
-                        {
-                              "label": "AUM (£bn)",
-                              "values": [
-                                    340,
-                                    285,
-                                    512,
-                                    198
-                              ],
-                              "color": "#d4af37"
-                        }
-                  ],
-                  "yLabel": "£bn"
-            },
-            "prompt": "What percentage of total AUM is managed in the US?",
-            "options": [
-                  "38.4%",
-                  "35.2%",
-                  "41.6%",
-                  "33.8%"
-            ],
-            "answer": "38.4%",
-            "explanation": "Working: read the four bars — UK 340, Europe 285, US 512, Asia 198. Total = 340 + 285 = 625; 625 + 512 = 1,137; 1,137 + 198 = £1,335bn. US share = 512 ÷ 1,335 = 38.35%, so 38.4%.\n\nWhy the wrong answers tempt: 41.6% is 512 ÷ 1,231, a total with Asia omitted — the easiest bar to skip because it is shortest and sits at the end. 35.2% divides by an inflated total near 1,455 (double-counting a bar). 33.8% is 512 ÷ 1,515. Every distractor is a specific mis-totalling, not a random number, so finding your answer in the list proves nothing.\n\nTechnique: on a chart exhibit, write every bar value down before calculating anything — reading values off an axis is where the errors happen, not in the arithmetic. Then sense-check the share: four regions means 25% each if equal, and the US bar is clearly the tallest but nowhere near half, so something just under 40% is exactly what you should expect. That single check kills 33.8% and 41.6% before you divide.",
-            "difficulty": "medium"
-      },
-      {
-            "chart": {
-                  "title": "Exhibit C — Assets under management by region (£bn), FY24",
-                  "type": "bar",
-                  "categories": [
-                        "UK",
-                        "Europe",
-                        "US",
-                        "Asia"
-                  ],
-                  "series": [
-                        {
-                              "label": "AUM (£bn)",
-                              "values": [
-                                    340,
-                                    285,
-                                    512,
-                                    198
-                              ],
-                              "color": "#d4af37"
-                        }
-                  ],
-                  "yLabel": "£bn"
-            },
-            "prompt": "If Asian AUM grows 22% next year and all other regions are flat, what is the new total?",
-            "options": [
-                  "£1,379bn",
-                  "£1,357bn",
-                  "£1,404bn",
-                  "£1,629bn"
-            ],
-            "answer": "£1,379bn",
-            "explanation": "Working: Asia grows from 198 to 198 × 1.22 = £241.6bn, an increase of £43.6bn. Everything else is unchanged, so the new total = 1,335 + 43.6 = £1,378.6bn ≈ £1,379bn.\n\nWhy the wrong answers tempt: £1,629bn applies the 22% growth to the WHOLE total (1,335 × 1.22) — the single most common error on this question type, and it ignores the word \"flat\". £1,357bn adds only half the increase, or applies 11%. £1,404bn applies 22% to Asia plus a stray adjustment elsewhere.\n\nTechnique: when only one component changes, work with the CHANGE, not the new totals — compute the increase (£43.6bn) and add it to the existing total. That is faster and far less error-prone than rebuilding the whole sum, and it makes the \"all others flat\" condition impossible to forget. Sense-check the magnitude: Asia is the smallest region at under 15% of the total, so a 22% rise in it can only move the total by around 3%; any option more than about 5% above 1,335 must be wrong.",
-            "difficulty": "medium"
-      },
-      {
-            "chart": {
-                  "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
-                  "type": "line",
-                  "categories": [
-                        "2020",
-                        "2021",
-                        "2022",
-                        "2023",
-                        "2024",
-                        "2025"
-                  ],
-                  "series": [
-                        {
-                              "label": "CPI inflation (%)",
-                              "values": [
-                                    0.9,
-                                    2.6,
-                                    9.1,
-                                    6.8,
-                                    3.2,
-                                    2.1
-                              ],
-                              "color": "#2dd4bf"
-                        }
-                  ],
-                  "yLabel": "Annual inflation rate, %"
-            },
-            "prompt": "By how much did the inflation rate fall from its 2022 peak to 2025?",
-            "options": [
-                  "7.0 percentage points",
-                  "76.9%",
-                  "7.0%",
-                  "4.7 percentage points"
-            ],
-            "answer": "7.0 percentage points",
-            "explanation": "Working: the rate peaked at 9.1% in 2022 and was 2.1% in 2025. The fall is 9.1 − 2.1 = 7.0 PERCENTAGE POINTS.\n\nWhy the wrong answers tempt: this is the single most important distinction in numerical reasoning and the option set is built entirely around it. \"76.9%\" is the RELATIVE fall (7.0 ÷ 9.1 = 76.9%) — a correct calculation of a different quantity, and the answer most candidates pick. \"7.0%\" has the right number with the wrong unit, which in a real report would be simply false: inflation did not fall by 7%, it fell by 7 percentage points to a level of 2.1%. \"4.7 percentage points\" measures from 2023 rather than the 2022 peak.\n\nTechnique: percentage points measure the ARITHMETIC gap between two percentages; a percentage change measures the PROPORTIONAL change between them. Whenever both quantities are themselves percentages — inflation rates, margins, interest rates, market shares, unemployment — check which one is being asked for, because both are computable and only one is right. A margin moving from 20% to 25% rose 5 percentage points or 25%, and confusing the two is a genuine professional error, not just a test trap. If the question says \"percentage points\", subtract. If it says \"by what percentage\", divide by the starting value.",
-            "difficulty": "hard"
-      },
-      {
-            "chart": {
-                  "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
-                  "type": "line",
-                  "categories": [
-                        "2020",
-                        "2021",
-                        "2022",
-                        "2023",
-                        "2024",
-                        "2025"
-                  ],
-                  "series": [
-                        {
-                              "label": "CPI inflation (%)",
-                              "values": [
-                                    0.9,
-                                    2.6,
-                                    9.1,
-                                    6.8,
-                                    3.2,
-                                    2.1
-                              ],
-                              "color": "#2dd4bf"
-                        }
-                  ],
-                  "yLabel": "Annual inflation rate, %"
-            },
-            "prompt": "Were prices falling in 2025?",
-            "options": [
-                  "No — prices were still rising, just more slowly",
-                  "Yes — inflation fell so prices fell",
-                  "Yes — prices fell 2.1%",
-                  "Cannot be determined from the chart"
-            ],
-            "answer": "No — prices were still rising, just more slowly",
-            "explanation": "Working: the chart plots the inflation RATE, not the price level. In 2025 the rate is +2.1%, which is positive — so prices rose 2.1% over the year. The rate falling from 9.1% to 2.1% means prices rose more slowly than before, a process called disinflation. Prices only actually fall when the rate goes BELOW zero, which is deflation, and the line never crosses zero.\n\nWhy the wrong answers tempt: \"inflation fell so prices fell\" conflates the rate with the level and is the intuitive reading of a falling line — the chart slopes down, so surely things are getting cheaper. They are not; they are getting more expensive more slowly. \"Prices fell 2.1%\" reads the value with the sign inverted. \"Cannot be determined\" is wrong because a positive inflation rate is sufficient to establish that prices rose.\n\nTechnique: always identify whether a chart shows a LEVEL or a RATE OF CHANGE, because a falling line means completely different things in each case. This is one of the most consequential misreadings in finance commentary — the gap between \"inflation is falling\" and \"prices are falling\" — and interviewers use it as a quick test of whether a candidate genuinely understands macro data or is pattern-matching on chart shape. The same trap applies to earnings growth slowing versus earnings shrinking.",
-            "difficulty": "hard"
-      },
-      {
-            "dataTable": {
-                  "title": "Exhibit E — Group revenue index (2020 = 100)",
-                  "headers": [
-                        "Year",
-                        "2020",
-                        "2021",
-                        "2022",
-                        "2023",
-                        "2024"
-                  ],
-                  "rows": [
-                        [
-                              "Revenue index",
-                              "100",
-                              "106",
-                              "115",
-                              "121",
-                              "128"
-                        ]
-                  ],
-                  "note": "An index rebases every figure to a starting year set at 100."
-            },
-            "prompt": "By what percentage did revenue grow between 2021 and 2024?",
-            "options": [
-                  "20.8%",
-                  "22.0%",
-                  "28.0%",
-                  "18.1%"
-            ],
-            "answer": "20.8%",
-            "explanation": "Working: index values are proportional to the underlying revenue, so you can work directly with them. Growth = (128 − 106) ÷ 106 = 22 ÷ 106 = 20.75%, so 20.8%.\n\nWhy the wrong answers tempt: 22.0% is the difference in INDEX POINTS (128 − 106 = 22) mistaken for a percentage — the defining error on index questions, because the numbers look like percentages but are not. 28.0% reads the 2024 value as growth from the base year, which is growth since 2020, not since 2021. 18.1% divides by 121 (the wrong starting year) or by 128 (dividing by the end value instead of the start).\n\nTechnique: an index is just a rescaled series where the base year equals 100, so percentage change between ANY two points is (new − old) ÷ old, exactly as with raw figures. Two rules make index questions easy marks. First, index points are not percentages: a move from 106 to 128 is 22 points but 20.8%. Second, only growth measured FROM the base year can be read straight off the index — since 2020 = 100, the 2024 value of 128 means 28% growth since 2020, and that shortcut applies to no other pair. Indices appear constantly in real assessments precisely because they let examiners test whether you understand relative measurement.",
-            "difficulty": "hard"
-      },
-      {
-            "dataTable": {
-                  "title": "Exhibit E — Group revenue index (2020 = 100)",
-                  "headers": [
-                        "Year",
-                        "2020",
-                        "2021",
-                        "2022",
-                        "2023",
-                        "2024"
-                  ],
-                  "rows": [
-                        [
-                              "Revenue index",
-                              "100",
-                              "106",
-                              "115",
-                              "121",
-                              "128"
-                        ]
-                  ],
-                  "note": "An index rebases every figure to a starting year set at 100."
-            },
-            "prompt": "If 2020 revenue was £480m, what was 2024 revenue?",
-            "options": [
-                  "£614.4m",
-                  "£608.0m",
-                  "£560.6m",
-                  "£627.2m"
-            ],
-            "answer": "£614.4m",
-            "explanation": "Working: the base year is 2020 = 100, so the 2024 index of 128 means revenue is 128% of the 2020 level. Revenue = £480m × 1.28 = £614.4m.\n\nWhy the wrong answers tempt: £608.0m applies a flat 28% split evenly across years or uses an index of 126.7. £560.6m applies the 2022 index of 115 (£480m × 1.168) — reading the wrong column. £627.2m uses 130.7, or compounds the index growth a second time on top of itself.\n\nTechnique: converting an index back to real money is a single multiplication, but ONLY from the base year, because that is the only point where the index equals a known absolute value. If a question gave you 2022 revenue instead and asked for 2024, you would need the ratio 128 ÷ 115 = 1.113, not 1.28 — a distinction worth a mark every time it appears. Sense-check the size: 28% growth on £480m is roughly £134m of increase, so an answer near £614m is right and anything below £600m or above £630m should be suspect before you commit to it.",
-            "difficulty": "hard"
-      },
-      {
-            "dataTable": {
-                  "title": "Exhibit F — UK platform market, client accounts (000s)",
-                  "headers": [
-                        "Provider",
-                        "Accounts (000s)"
-                  ],
-                  "rows": [
-                        [
-                              "Firm A",
-                              "2,400"
-                        ],
-                        [
-                              "Firm B",
-                              "1,800"
-                        ],
-                        [
-                              "Firm C",
-                              "1,500"
-                        ],
-                        [
-                              "Firm D",
-                              "900"
-                        ],
-                        [
-                              "All others",
-                              "1,400"
-                        ]
-                  ]
-            },
-            "prompt": "What is Firm A's market share?",
-            "options": [
-                  "30.0%",
-                  "33.3%",
-                  "25.5%",
-                  "27.6%"
-            ],
-            "answer": "30.0%",
-            "explanation": "Working: total the market first — 2,400 + 1,800 = 4,200; + 1,500 = 5,700; + 900 = 6,600; + 1,400 = 8,000 thousand accounts. Firm A's share = 2,400 ÷ 8,000 = 30.0%.\n\nWhy the wrong answers tempt: 33.3% is 2,400 ÷ 7,200, excluding the \"All others\" row — by far the most common market-share error, because that row has no company name and the eye skips it. Market share is always measured against the TOTAL market, including the unnamed tail. 25.5% and 27.6% come from inflated totals after double-counting a row.\n\nTechnique: on any share question, the first move is to define the denominator explicitly and say what it includes. \"All others\", \"Other\", and \"Rest of market\" rows exist precisely to be overlooked, and excluding them systematically overstates every named firm's share. Then sense-check: five entries where the largest is a bit under a third of the total is entirely plausible for a fragmented market, whereas 33.3% would imply the four named firms plus others sum to exactly three times Firm A, which the numbers do not support.",
-            "difficulty": "easy"
-      },
-      {
-            "dataTable": {
-                  "title": "Exhibit F — UK platform market, client accounts (000s)",
-                  "headers": [
-                        "Provider",
-                        "Accounts (000s)"
-                  ],
-                  "rows": [
-                        [
-                              "Firm A",
-                              "2,400"
-                        ],
-                        [
-                              "Firm B",
-                              "1,800"
-                        ],
-                        [
-                              "Firm C",
-                              "1,500"
-                        ],
-                        [
-                              "Firm D",
-                              "900"
-                        ],
-                        [
-                              "All others",
-                              "1,400"
-                        ]
-                  ]
-            },
-            "prompt": "If Firm A acquires Firm D, what would the combined market share be?",
-            "options": [
-                  "41.25%",
-                  "37.5%",
-                  "45.0%",
-                  "50.0%"
-            ],
-            "answer": "41.25%",
-            "explanation": "Working: combined accounts = 2,400 + 900 = 3,300. The total market is unchanged at 8,000, because an acquisition moves accounts between owners without creating or destroying any. Share = 3,300 ÷ 8,000 = 41.25%.\n\nWhy the wrong answers tempt: 45.0% divides 3,300 by 7,333 — the answer you get if you wrongly remove Firm D from the denominator, reasoning that Firm D no longer exists. It does not exist as a competitor, but its accounts remain in the market. 37.5% is 3,000 ÷ 8,000, mis-adding the two firms. 50.0% simply adds the two percentage shares as 30% + 20%, which is wrong on both counts since Firm D holds 11.25%, not 20%.\n\nTechnique: in any consolidation question, ask what happens to the numerator AND the denominator separately. An acquisition within the same market changes only the numerator; the denominator moves only if the combined entity enters a new market or loses customers. A useful check: shares must still sum to 100% across all remaining players afterwards. Note also that you can add the two firms' individual shares directly — 30.00% + 11.25% = 41.25% — which is a faster route and confirms the answer independently.",
-            "difficulty": "medium"
-      },
-    ],
-  },
-  {
-    id: 'verbal',
-    title: 'Verbal Reasoning',
-    icon: '📖',
-    color: 'text-green-400',
-    border: 'border-green-500/30',
-    description: 'Read a passage, then judge statements as True, False, or Cannot Say — using ONLY the passage.',
-    secondsPerQuestion: 60,
-    questionsPerAttempt: 9,
-    tip: 'The #1 trap: using outside knowledge. If the passage doesn\'t state or directly imply it, the answer is Cannot Say — even if you know it\'s true in real life.',
-    providers: 'SHL Verify Verbal, Watson Glaser (critical thinking variant), Korn Ferry Talent Q, Cut-e/Aon',
-    requiredBy: 'Consulting firms, investment banks, asset managers, law-adjacent roles (compliance, risk), and the Big 4. Watson Glaser specifically appears at firms testing critical reasoning.',
-    whyUsed: 'Finance runs on dense documents — research notes, term sheets, regulations. These tests screen whether you extract precisely what a text says without adding assumptions, which is exactly the discipline the job needs.',
-    improveTitle: "How to get better at Verbal Reasoning",
-    improveTips: ["Use ONLY the passage. Outside knowledge — even things you know are true in the real world — must never influence a True/False/Cannot Say answer. If the passage does not state or directly imply it, the answer is Cannot Say, however plausible it feels.","Separate timing words from causation words. \"Following\", \"after\", \"amid\" and \"as\" mark sequence only. \"Because\", \"due to\", \"driven by\" and \"led to\" mark causation. If the passage uses a timing word and the statement claims causation, the answer is almost always Cannot Say.","Watch for sample-to-population swaps — \"funds examined\" versus \"all funds\", \"respondents\" versus \"the public\", \"this quarter\" versus \"always\". Compare the group in the statistic to the group in the statement word for word; if they differ, the answer is Cannot Say.","Scan for absolutes first — never, always, all, none, only, every. They are very easy to contradict (one counter-example is enough) and very hard to support, so check for a counter-example before doing anything else.","Read the statement before hunting in the passage, not after. Identify exactly what is being claimed — is it about the world, or about what a study/survey specifically showed? — then go find the matching clause, rather than re-reading the whole passage hoping the answer surfaces.","A single logical step (e.g. \"definitions vary widely\" therefore \"no single agreed definition\") is fair game and often True. A chain of two or more inferential steps is almost always too far — treat elegant, multi-step explanations with suspicion even when they fit every fact.","Practise against the clock, not just for accuracy. Real verbal tests give roughly 45-60 seconds per statement including reading time, so timed reps matter as much as understanding the traps."],
-    questions: [
-      {
-        context: 'Passage: "The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar."',
-        prompt: 'Statement: The rate rise was larger than analysts expected.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage gives both numbers explicitly — analysts expected 0.25%, the bank delivered 0.5%. 0.5 is larger than 0.25, so the statement is supported by the text alone, with no assumption added.\n\nWhy the other verdicts fail: False would require the passage to say the rise met or undershot expectations; it says the opposite. Cannot Say is the tempting one for over-cautious candidates, who reason “the passage never uses the word larger”. But True does not require the statement to be quoted verbatim — it requires it to follow necessarily from what is written. A one-step numerical comparison between two figures both printed in the passage is exactly that. Refusing to make that comparison is over-correction, and it costs as many marks as careless inference does.\n\nTechnique: calibrate what True means. True = the statement must be so given the passage, including simple arithmetic and direct logical consequence. False = the passage contradicts it. Cannot Say = the passage neither supports nor contradicts it. The mistake most candidates make in the first minute is treating the test as a word-matching exercise; the mistake they make in the last minute, having been burned, is answering Cannot Say to everything. Both fail. Ask instead: could the passage be entirely true and this statement still be false? Here it could not, so the answer is True.',
-      },
-      {
-        context: 'Passage: "The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar."',
-        prompt: 'Statement: The currency strengthened because of the rate rise.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The passage establishes a sequence — “following the announcement, the currency strengthened” — but never asserts that the announcement caused the move. Sequence is not causation.\n\nWhy the other verdicts fail: True is what most candidates pick, because the causal link is genuinely plausible: a larger-than-expected rate rise usually does attract capital and lift a currency. That real-world knowledge is precisely the trap. The test rewards what the text establishes, not what an economics tutorial would predict. False is also wrong — the passage does not deny causation either; some other driver (a data release, a risk-off move, an intervention) could equally have been at work, and the text simply does not say.\n\nTechnique: build a permanent watch-list of causation words and treat them as alarms — “following”, “after”, “amid”, “as”, “alongside”, “coincided with” all denote timing only, whereas “because”, “due to”, “driven by”, “as a result of”, “led to” denote causation. If the passage uses a timing word and the statement uses a causal one, the answer is Cannot Say almost every time. Note how differently the very next passage in this bank behaves: when a text says outflows occurred “as clients shifted towards passive products”, the same construction is doing causal work because the passage presents it as the explanation. Read the function of the clause, not just the connective.',
-      },
-      {
-        context: 'Passage: "Firm X\'s graduate scheme receives over 50,000 applications for roughly 400 places. Successful candidates typically complete three interview rounds and a numerical assessment. The firm states that academic background is only one of several criteria it considers."',
-        prompt: 'Statement: Fewer than 1% of applicants receive a place.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. 400 ÷ 50,000 = 0.008 = 0.8%, which is below 1%. Both figures come straight from the passage, so a single division settles it.\n\nWhy the other verdicts fail: Cannot Say tempts candidates who believe verbal tests forbid calculation. They do not — SHL verbal items routinely require one arithmetic step, and refusing to take it is a guaranteed miss. False would require more than 1% to be offered places, which the numbers contradict. There is a subtler point in favour of True: the passage says “over 50,000 applications” and “roughly 400 places”. A larger denominator only pushes the ratio further below 1%, so the vagueness runs in the direction that strengthens the statement rather than undermining it. That is worth thirty seconds of thought, because on a differently worded item — say “over 400 places for roughly 50,000 applications” — the same vagueness would run the other way and Cannot Say would become defensible.\n\nTechnique: when a passage gives approximate figures, check which direction the approximation pushes the claim before you answer. If every value consistent with the wording still supports the statement, answer True. If some do and some do not, answer Cannot Say. For speed, convert to a benchmark rather than computing exactly: 1% of 50,000 is 500, and 400 is fewer than 500, so the claim holds — no long division required.',
-      },
-      {
-        context: 'Passage: "Firm X\'s graduate scheme receives over 50,000 applications for roughly 400 places. Successful candidates typically complete three interview rounds and a numerical assessment. The firm states that academic background is only one of several criteria it considers."',
-        prompt: 'Statement: Candidates with poor grades are never hired.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The passage says academic background is “only one of several criteria”. That tells you grades are not the sole filter; it says nothing about whether a candidate with poor grades has ever been, or could be, hired.\n\nWhy the other verdicts fail: False is the popular choice, on the reasoning that if academics are only one of several criteria then poor grades clearly cannot be disqualifying — so “never hired” must be contradicted. That is an inference, not a statement. A firm can genuinely weigh several criteria and still operate an academic floor that no applicant clears from below; “one of several criteria” is entirely compatible with it also being a threshold. True is worse still, requiring the passage to confirm a categorical negative it never mentions.\n\nTechnique: absolutes are the highest-yield signal in verbal reasoning. Words such as never, always, all, none, only and every make a statement very hard to support and very easy to contradict, so scan for them first. Then apply the rule: if the passage contains a matching absolute or a direct counter-example, you can answer True or False; if it merely gestures in the same direction, the answer is Cannot Say. Note the contrast with the fraud-rules passage elsewhere in this bank, where “all victims will be reimbursed” IS answerable — because there the text supplies both a hedge (“most”) and an explicit carve-out (claims below £100), which together contradict the absolute outright. Here no such counter-evidence exists, and the difference between False and Cannot Say is exactly whether the passage supplies it.',
-      },
-      {
-        context: 'Passage: "Index funds now account for over half of US equity fund assets. Their fees average below 0.1%, compared with roughly 0.7% for active funds. Some researchers argue this shift reduces the amount of price discovery in markets, though others dispute the effect is significant."',
-        prompt: 'Statement: Researchers agree that index funds harm price discovery.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The passage says some researchers argue the shift reduces price discovery “though others dispute the effect is significant”. Disagreement among researchers is stated outright, so a claim of agreement is contradicted.\n\nWhy the other verdicts fail: Cannot Say is the most common wrong pick here, and the reasoning behind it is superficially disciplined — the passage never counts researchers, so how can we say what the field as a whole thinks? But the statement is not about proportions; it asserts agreement, and the passage explicitly reports two opposing camps. One documented dissent is enough to falsify “researchers agree”. True would require the passage to present a settled consensus, which the word “though” exists precisely to deny.\n\nTechnique: watch the concessive connectives — though, however, while, nonetheless, whereas, on the other hand, critics say. They exist to introduce a counterweight, and questions are built on whether you registered them. A useful habit is to mark every one as you read, because the examiner is almost always testing that specific clause. Then remember the asymmetry that makes this item work: statements of universal agreement need only one counter-example to be False, whereas statements of universal disagreement would need much more. Recognising which side of that asymmetry a statement sits on tells you whether False or Cannot Say is even available.',
-      },
-      {
-        context: 'Passage: "Index funds now account for over half of US equity fund assets. Their fees average below 0.1%, compared with roughly 0.7% for active funds. Some researchers argue this shift reduces the amount of price discovery in markets, though others dispute the effect is significant."',
-        prompt: 'Statement: Active funds charge roughly seven times more than index funds on average.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage gives active fees at roughly 0.7% and index fees at below 0.1%. 0.7 ÷ 0.1 = 7, and since index fees are BELOW 0.1%, the true multiple is at least seven — so “roughly seven times more” is supported.\n\nWhy the other verdicts fail: Cannot Say attracts candidates who notice that “below 0.1%” is imprecise and conclude the ratio is unknowable. Check the direction of that imprecision, as always: a smaller denominator makes the multiple larger, so every value consistent with the passage gives seven times or more. The statement says “roughly seven times”, which that range comfortably supports. False would require the passage to imply a materially different multiple, and it does not.\n\nTechnique: this is the same imprecision test as the 1%-of-applicants item, and it is worth internalising as a single rule — when a passage hedges a figure, ask whether the hedge pushes the claim toward or away from truth, and answer accordingly. Two further habits pay off on fee questions specifically. First, percentages of percentages confuse people under time pressure: the gap here is 0.6 percentage points but a factor of seven, and test writers will offer statements phrased both ways to see whether you know the difference. Second, note that “roughly” in the STATEMENT loosens the bar for True, whereas “roughly” in the PASSAGE loosens what you know — hedges in the two places have opposite effects, and reading which is which decides several items on every real test.',
-      },
-      {
-        context: 'Passage: "The merger was approved by shareholders of both companies in March. Regulators in two of the three required jurisdictions have granted clearance. The companies expect completion by year end, subject to remaining approvals."',
-        prompt: 'Statement: The merger has completed.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The passage says two of three required jurisdictions have cleared and completion is “expected by year end, subject to remaining approvals”. Both halves of that sentence establish the deal is still pending, so “has completed” is contradicted.\n\nWhy the other verdicts fail: Cannot Say is the near-miss, and it is the answer many disciplined candidates give — the passage never says the words “the merger has not completed”, so they treat completion as unaddressed. But it is addressed twice over: an outstanding approval is by definition a condition unmet, and “expected by year end” places completion in the future relative to the text. A statement in the present perfect (“has completed”) is directly incompatible with both. True would require all three clearances plus a completion event, and the passage supplies neither.\n\nTechnique: tense and conditionality are where merger and regulatory passages are won. Train yourself to sort every verb into happened, is happening, is expected to happen, or is required before it can happen — the last two categories are the ones test writers exploit. “Subject to”, “conditional on”, “pending”, “targeted for”, “anticipated” all mark an event as NOT yet done, which is strong enough to make a completion claim False rather than merely unproven. Note the contrast with the sister question about the third regulator: the passage tells you the state of the process, so completion is answerable, but it tells you nothing about the third regulator’s intentions, so its decision is not. Same passage, different answers, because the text covers one and is silent on the other.',
-      },
-      {
-        context: 'Passage: "The merger was approved by shareholders of both companies in March. Regulators in two of the three required jurisdictions have granted clearance. The companies expect completion by year end, subject to remaining approvals."',
-        prompt: 'Statement: The third regulator will block the merger.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The passage tells you the third jurisdiction has not yet granted clearance. It says nothing whatsoever about what that regulator will decide.\n\nWhy the other verdicts fail: False is the popular pick, driven by the passage’s optimistic framing — the companies “expect completion by year end”, so surely a block is ruled out? No. A company’s expectation is a statement about the company, not about the regulator, and deals with confident timetables are blocked regularly. To answer False you would need the passage to indicate the regulator will clear, and it does not. True is worse, requiring evidence of an intended block that appears nowhere in the text.\n\nTechnique: separate three distinct things that passages routinely blur — what has happened, what a party expects, and what will happen. Only the first is fact; the second is attributed opinion; the third is almost never established. When a statement asks you to predict a future decision by a third party, Cannot Say is the default and you should need positive textual evidence to move off it. Also notice the pairing at work here: this passage supports one False (the merger has not completed) and one Cannot Say (what the third regulator will do). Test writers deliberately build both from a single short text to catch candidates who lock into a rhythm and answer the second question with the momentum of the first. Reset your reasoning for every statement, even on a passage you have already read three times.',
-      },
-      {
-        context: 'Passage: "Hedge fund launches fell to a decade low last year, while closures exceeded launches for the third consecutive year. Industry assets nonetheless reached a record high, driven by performance gains at existing funds and inflows to the largest managers."',
-        prompt: 'Statement: The number of hedge funds is shrinking while industry assets are growing.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. Two facts from the passage combine. Closures have exceeded launches for three consecutive years, so the number of funds must be falling. Industry assets nonetheless reached a record high, so assets are growing. The statement asserts exactly that pairing.\n\nWhy the other verdicts fail: Cannot Say tempts anyone who reads “fell to a decade low” as the key clause and misses that the decisive fact is the closures-versus-launches comparison — the launch rate alone would not tell you the fund count is shrinking, but closures exceeding launches necessarily does. False attracts candidates who sense a contradiction between fewer funds and record assets and conclude the statement must be wrong. There is no contradiction: the passage explains it directly, citing performance gains at existing funds and inflows to the largest managers. Fewer, bigger funds is consolidation, and it is one of the most-reported structural stories in the industry.\n\nTechnique: when a statement combines two claims, verify each independently and only then check that the passage permits both simultaneously. A compound statement is True only if every component is supported. Here both are, so it stands. Learn to spot the arithmetic buried in verbal passages too — “closures exceeded launches” is a net-flow statement about a stock, exactly like deaths exceeding births in a population, and recognising that structure gives you the answer before you have finished the sentence. Finally, resist the instinct that surprising equals unsupported: passages often report genuinely counterintuitive facts, and your job is to check the text, not your expectations.',
-      },
-      {
-        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
-        prompt: 'Statement: All fraud victims will be reimbursed under the new rules.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The passage supplies two separate contradictions of “all”. The rules require reimbursement of MOST victims, not all; and claims below £100 are explicitly excluded, which names a category of victims who will not be reimbursed.\n\nWhy the other verdicts fail: Cannot Say is the disciplined-sounding trap — the passage does not enumerate every victim, so how can we be sure? Because “most” is not “all”, and because the carve-out identifies an excluded group outright. Either alone would be enough. True would require the passage to promise universal reimbursement, which the word “most” exists to prevent.\n\nTechnique: this is the item to compare against the “candidates with poor grades are never hired” question, because the two look alike and split. Both statements contain an absolute. This one is False because the passage supplies explicit counter-evidence — a hedge plus a stated exclusion. That one is Cannot Say because the passage supplies no counter-evidence at all, only a related remark. The rule to carry into the test: an absolute statement is False when the text contradicts it, Cannot Say when the text is merely silent, and True only when the text asserts something equally absolute. Then read quantifiers as precisely as numbers — most, many, some, several, a majority and all are not interchangeable, and a swap between any two of them is the single most common way a statement is falsified.',
-      },
-      {
-        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
-        prompt: 'Statement: Industry groups and consumer advocates disagree about the rules.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage presents two positions side by side: industry groups warned the change could encourage complacency, while consumer advocates said firms had for too long avoided responsibility. One criticises the rules, the other endorses their premise. That is disagreement, stated.\n\nWhy the other verdicts fail: Cannot Say attracts candidates who want an explicit clash — the passage never says the two groups argued with each other, so they hold back. But the statement claims they disagree about the rules, and the text gives each group’s stance on the rules in the same sentence, with “while” signalling the contrast. That is sufficient. False would require the passage to show the two groups aligned, which it does not.\n\nTechnique: “while”, “whereas”, “by contrast” and “meanwhile” are structural markers that a passage is setting up two sides, and questions are frequently built on whether you can characterise each side accurately. Read for stance, not vocabulary: neither group is quoted using the words agree or disagree, and the advocates never mention complacency at all, yet their positions are plainly opposed. Beware the mirror-image trap too — a statement claiming both groups OPPOSE the rules would be False, because the advocates’ complaint is that firms avoided responsibility, which supports the rules rather than attacking them. Getting stance direction right matters as much as spotting that a contrast exists.',
-      },
-      {
-        context: 'Passage: "New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100."',
-        prompt: 'Statement: Fraud rates will rise as a result of the new rules.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. Industry groups WARNED the change COULD encourage complacency. That is an attributed prediction, hedged twice over, and consumer complacency is in any case not the same thing as a rise in fraud rates.\n\nWhy the other verdicts fail: True is what you pick if you read the warning as a finding, collapsing “a lobby group says this might happen” into “this will happen”. Two separate leaps are involved: from opinion to fact, and from complacency to actual fraud rates. False is also unavailable — nothing in the passage suggests fraud will fall or stay flat, and the advocates’ counter-argument is about responsibility, not incidence.\n\nTechnique: strip every statement back to who is asserting it and with what confidence. Text of the form “X warned that Y could happen” establishes only that X issued a warning. A statement asserting Y is unsupported; a statement asserting that X warned about Y would be True. Test writers exploit this attribution gap constantly, because it is easy to read a quoted concern as a reported fact when you are moving quickly. Note also that the interested party matters for your reading speed: industry groups are the ones facing the reimbursement bill, so their warning is advocacy, and advocacy is never evidence in this test. And watch modal verbs — could, might, may, is likely to and risks all keep a claim firmly in the unproven column.',
-      },
-      {
-        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
-        prompt: 'Statement: A third of all sustainable funds cannot evidence their claims.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The regulator found that a third of funds EXAMINED could not evidence their claims. The statement generalises that to a third of ALL sustainable funds, which the passage does not support.\n\nWhy the other verdicts fail: True is the trap and it catches most candidates, because the numbers match exactly and the swap of one word feels immaterial. It is not. Nothing tells you how the review selected its sample — regulators typically target funds where they already suspect problems, which would make the reviewed group considerably worse than average, though the passage does not say that either. False is equally unavailable, since the true population figure could plausibly be a third; you simply cannot tell.\n\nTechnique: sample-to-population is one of the three or four highest-frequency traps in verbal reasoning, and it is beatable with a mechanical check — every time a statistic appears, locate the group it describes and compare it word for word with the group in the statement. Examined versus all, surveyed versus employed, respondents versus the public, UK versus global, last quarter versus last year. If those two groups differ at all, the answer is almost always Cannot Say. It is worth noting that this discipline is not merely a test artefact: mistaking a sample for a population is how misleading statistics get into research notes and press releases, which is exactly why assessors screen for it.',
-      },
-      {
-        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
-        prompt: 'Statement: The labelling requirements are already in force.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The passage states the new labelling requirements take effect next year. “Already in force” places them in the present, which the text directly contradicts.\n\nWhy the other verdicts fail: Cannot Say tempts the over-cautious, who note the passage never says “the requirements are not yet in force”. It does not need to: “take effect next year” carries that meaning necessarily, since a rule cannot take effect next year and already be in force. True would require present-tense enforcement, and the future tense rules it out.\n\nTechnique: tense questions are among the most reliable marks on the paper, so bank them quickly and spend the saved time on the causation and sample items where the real difficulty lies. Read the timeline explicitly as you go: what is already true, what changes and when. A sentence like “new rules take effect next year” gives you three answerable statements at once — the rules are not in force now (False if asserted), they will be in force next year (True), and any claim about their effects (Cannot Say, because effects are unobserved). Sorting a passage into that structure on first reading is what lets strong candidates answer three items from one sentence in under a minute.',
-      },
-      {
-        context: 'Passage: "Funds marketed as sustainable attracted record inflows last year, though definitions of \'sustainable\' vary widely between providers. A regulator\'s review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year."',
-        prompt: 'Statement: There is no single agreed definition of a sustainable fund.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage says definitions of sustainable “vary widely between providers”. If providers use widely differing definitions, no single agreed definition exists — the statement restates the passage in negative form.\n\nWhy the other verdicts fail: Cannot Say attracts candidates hunting for a literal phrase; the passage never says “there is no agreed definition”, so they withhold. But True requires necessary consequence, not verbatim repetition, and wide variation and universal agreement cannot both hold. False would need the passage to point to a common standard — and note it gestures at the opposite, since new labelling requirements are being introduced precisely because definitions currently diverge.\n\nTechnique: expect statements phrased as the logical complement of a passage line, since it is a cheap way for examiners to test comprehension rather than pattern-matching. “Definitions vary widely” equals “no agreed definition”; “closures exceeded launches” equals “fund numbers are falling”; “expected by year end” equals “not complete now”. Practise the translation deliberately, because under time pressure candidates default to scanning for shared words, and these items are built to punish exactly that. One caution on how far to push it: a single logical step is fair game, but a chain of two or more usually is not. “Definitions vary, therefore some funds are mislabelled” is a step too far — plausible, and unsupported.',
-      },
-      {
-        context: 'Passage: "The bank\'s trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products."',
-        prompt: 'Statement: The bank\'s overall quarterly profit rose 34%.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The 34% refers to the trading division’s REVENUE. The statement claims the bank’s overall PROFIT rose 34%. Two substitutions are made at once — one division for the whole bank, and revenue for profit — and the passage supports neither.\n\nWhy the other verdicts fail: True is the fast-reader’s answer, grabbing the only percentage in the passage and attaching it to whatever the statement asks about. False is more interesting and catches better candidates: they reason that trading is only part of the bank and wealth management is losing assets, so overall growth must be lower than 34%, making the statement contradicted. That inference is unsound. Outflows are a flow of client assets, not a revenue figure, so their profit impact is unquantified; trading might be large enough to carry the group; and profit depends on costs and provisions the passage never mentions. Plausible reasoning is not textual support, and False requires contradiction, not doubt.\n\nTechnique: run a two-part check on every statement carrying a number — is it the same METRIC, and is it the same ENTITY? Revenue is not profit, group is not division, year-on-year is not quarter-on-quarter, and constant currency is not reported. Swapping any one of them is the standard construction for a Cannot Say item on a financial-results passage, and the pair swapped here is the most common of all. It is also the distinction interviewers probe when they ask why a bank can report record revenue and falling profit — the answer being costs, impairments and compensation, none of which a revenue line tells you about.',
-      },
-      {
-        context: 'Passage: "The bank\'s trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products."',
-        prompt: 'Statement: Wealth management clients are moving towards passive investment products.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage states wealth management saw outflows “as clients shifted towards passive products”. The statement asserts that clients are moving towards passive investment products, which is exactly what the text says.\n\nWhy the other verdicts fail: Cannot Say is the considered wrong answer here, and it comes from correctly remembering that “as” often marks timing rather than cause. Note carefully what the statement actually claims: it does not say passive investing CAUSED the outflows, only that clients are shifting towards passive products. That shift is asserted outright, so the causation question never arises. Candidates who have just been burned by the “following the announcement” item frequently over-apply the lesson and lose this mark. False would require the passage to indicate a move away from passive, which it does not.\n\nTechnique: read the statement before deciding which trap you are in. The causation trap only bites when the STATEMENT makes a causal claim; if the statement merely reports a fact the passage also reports, the connective is irrelevant. A reliable habit is to underline the verb in the statement and find its counterpart in the passage — here “shifted towards” maps one-to-one onto “are moving towards”, with nothing added. This is also why speed on verbal tests comes from statement-first reading: identify precisely what is being claimed, then go hunting in the passage, rather than re-reading the whole text and hoping the answer surfaces.',
-      },
-      {
-        context: 'Passage: "A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used."',
-        prompt: 'Statement: The survey shows ChatGPT is the most-used AI tool among finance professionals.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The passage states the survey “did not ask about which specific tools were used”. The statement claims the survey SHOWS ChatGPT is the most-used tool. A survey that did not collect tool-level data cannot show any such thing, so the claim is contradicted rather than merely unsupported.\n\nWhy the other verdicts fail: Cannot Say is the majority answer and the reasoning is nearly right — we genuinely do not know which tool finance professionals use most. But read the statement precisely: it is a claim about what THE SURVEY SHOWS, not about the world. The passage tells you exactly what the survey did and did not measure, so the claim about the survey is answerable and false. Had the statement read “ChatGPT is the most-used AI tool among finance professionals”, Cannot Say would be correct — the passage would then be silent rather than contradictory. That one-word difference between the two framings is the entire question. True would require tool-level findings the survey never gathered.\n\nTechnique: distinguish claims about the EVIDENCE from claims about the WORLD, because they take different answers from the same passage. When a text specifies a study’s scope, methodology or exclusions, it is arming you to falsify claims about that study, and examiners include such clauses for precisely that purpose. Treat any sentence describing what a study did not do as a loaded gun and expect a question on it. The same reflex is worth having outside the test: “the data does not show X” and “X is false” are different statements, and conflating them is how bad analysis gets written.',
-      },
-      {
-        context: 'Passage: "A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used."',
-        prompt: 'Statement: Perceived reliance on AI tools has grown over the two-year period covered.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: 'Answer: True. The passage reports 68% considering AI tools essential, “up from 41% two years earlier”. A rise from 41% to 68% over the period is stated directly, and the statement asserts exactly that growth in perceived reliance.\n\nWhy the other verdicts fail: Cannot Say attracts candidates worried about the wording “perceived reliance” — the survey asked whether tools were ESSENTIAL, which is not literally the word reliance. But considering a tool essential to daily work is a statement of perceived reliance, and the statement is careful to say perceived, matching the survey’s subjective measure rather than claiming actual usage rose. False would require the figure to have fallen or held flat.\n\nTechnique: note how tightly this statement is drafted — “perceived”, and “over the two-year period covered”. Well-constructed items are often True precisely because every hedge lines up with the passage, whereas False and Cannot Say items usually contain one word that overreaches. So read the modifiers as a checklist: does each one match the text? Here perceived matches “considered”, and the two-year period matches “two years earlier”. Compare with the ChatGPT item on the same passage, where a single word takes the statement beyond the survey’s scope. Same passage, two statements, one True and one False, separated entirely by drafting precision — which is exactly the skill being screened, since misreading a hedged sentence in a research note or a term sheet is a costly professional error.',
-      },
-      {
-        context: 'Passage: "Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both."',
-        prompt: 'Statement: The firm always hires the candidate who performs best in interview.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'False',
-        explanation: 'Answer: False. The statement claims the firm ALWAYS hires the best interviewer. Candidate B impressed most at interview and was not hired; Candidate C was. One counter-example is enough to falsify an always-claim.\n\nWhy the other verdicts fail: Cannot Say is the sophisticated-sounding error — one hiring decision cannot establish a firm’s general policy, so surely we cannot judge an “always” claim from a single case? The logic runs the wrong way. Proving “always” would indeed require every case, but DISPROVING it requires only one exception, and the passage hands you one. That asymmetry is the whole point of the item. True would require the best interviewer to have been hired, which is the opposite of what happened.\n\nTechnique: universal claims are cheap to falsify and expensive to confirm, so when you see always, never, all or every, your first move should be to hunt for a single counter-example rather than to assess the general pattern. Find one and the answer is False immediately, no further reading required. Fail to find one and you are usually in Cannot Say territory, because the passage will rarely cover every case. This mirrors the “poor grades are never hired” item, which stays Cannot Say precisely because no counter-example is available there. Same logical structure, opposite answers, decided solely by whether the text supplies an exception — and being able to see that at a glance is worth several marks and a good deal of time.',
-      },
-      {
-        context: 'Passage: "Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both."',
-        prompt: 'Statement: Candidate C was hired because of consistency across both measures rather than a standout score on either.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Answer: Cannot Say. The passage reports two facts about Candidate C — middling scores on both measures, and being hired. It never states the firm’s reason. The statement supplies a motive (“because of consistency”), and motives are almost never established by a passage that does not state them.\n\nWhy the other verdicts fail: True is extremely tempting because the explanation is genuinely elegant and fits every fact given. That is precisely what makes it dangerous: a plausible story that accommodates the data is still a story you constructed. The firm might equally have chosen C for cultural fit, a strong reference, language skills, salary expectations, or a reason the passage never hints at. False is also wrong — the consistency explanation is not contradicted either, merely unevidenced.\n\nTechnique: separate WHAT happened from WHY it happened. Passages report outcomes freely and reasons rarely, and any statement offering a rationale for a decision should trigger an immediate hunt for explicit causal language — “because”, “on the grounds that”, “citing”, “the firm said it valued”. Absent that, answer Cannot Say however satisfying the inference feels. The elegance of an explanation is not evidence for it, and the better the story fits, the more carefully you should check whether the text actually asserts it. This is the highest-value habit the test screens for: in a research note, an investment committee or a client recommendation, presenting a well-fitting hypothesis as an established cause is the error that does real damage.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'Passage: "The regulator stated that firms which failed to evidence adequate controls would face enforcement action. Of the 40 firms reviewed, 12 could not produce the required documentation within the deadline, though 5 of those subsequently supplied it during the extended window. The regulator has not yet announced any enforcement decisions."',
-        prompt: 'Statement: At most 7 firms remain exposed to enforcement action on documentation grounds.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'True',
-        explanation: '12 failed within the deadline, 5 later supplied it, leaving 7 that never produced documentation. Since only firms failing to evidence controls face action on these grounds, at most 7 remain exposed — "at most" is satisfied even if the regulator ultimately pursues fewer. This tests whether you handle qualified quantifiers precisely rather than defaulting to Cannot Say whenever a passage feels uncertain.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'Passage: "The regulator stated that firms which failed to evidence adequate controls would face enforcement action. Of the 40 firms reviewed, 12 could not produce the required documentation within the deadline, though 5 of those subsequently supplied it during the extended window. The regulator has not yet announced any enforcement decisions."',
-        prompt: 'Statement: The 28 firms that met the original deadline had adequate controls.',
-        options: ['True', 'False', 'Cannot Say'],
-        answer: 'Cannot Say',
-        explanation: 'Producing documentation on time is not the same as having adequate controls — the passage links enforcement to failing to EVIDENCE controls, but never confirms that documented firms were actually compliant. Conflating "provided paperwork" with "was adequate" is exactly the inferential leap these questions punish.',
-      },
-    ],
-  },
-  {
-    id: 'logical',
-    title: 'Logical & Abstract Reasoning',
-    icon: '🔷',
-    color: 'text-purple-400',
-    border: 'border-purple-500/30',
-    description: 'The infamous shape-sequence tests: find the pattern, predict what comes next.',
-    secondsPerQuestion: 45,
-    questionsPerAttempt: 10,
-    tip: 'Check patterns systematically: count of shapes, rotation, alternation, size, position, and combinations. If stuck, eliminate options that break an obvious rule and guess — never leave blanks.',
-    providers: 'SHL Inductive Reasoning, Cut-e/Aon scales cls & ix (used heavily by trading firms), Korn Ferry logical, Raven\'s Progressive Matrices',
-    requiredBy: 'Trading firms (Optiver, IMC, Flow Traders famously use cut-e), quant funds, tech divisions, consulting and most bank graduate schemes.',
-    whyUsed: 'Abstract reasoning is the closest proxy for raw pattern-recognition and learning speed — trading and quant firms weight it heavily because spotting patterns fast IS the job. It\'s also degree-agnostic, so firms use it to compare candidates fairly.',
-    improveTitle: "How to get better at Logical & Abstract Reasoning",
-    improveTips: ["Name the attributes before you hunt for a rule: shape, fill, count, position, size, rotation, orientation. State which are moving and which are fixed — this alone eliminates options that vary an attribute the sequence holds constant.","For any accelerating or unusual number sequence, write the differences underneath, and if those are not constant, write the differences of the differences. Two rows of subtraction resolve almost every numeric progression you will see.","For rotating or cyclic sequences, find the period first (how many steps until it repeats), then answer by position MOD period rather than tracing every single step — this is the only way to answer items that ask for position 6 or 7 inside a strict time limit.","When two attributes change at once, isolate and track them completely separately. Most marks are lost on multi-attribute items not because the rule is hard, but because both attributes are tracked together and one gets dropped.","Never assume a sequence bounces, wraps, or reverses at a boundary unless it has already shown you that behaviour. Extend the demonstrated pattern; only change behaviour when the sequence or the question explicitly tells you to.","If you are stuck, eliminate options that break an obvious rule (wrong shape, wrong count, wrong direction) and guess from what remains rather than leaving it blank — there is no penalty for a wrong answer on almost every real provider's test.","Trading and quant firms in particular (cut-e/Aon \"scales\") run these adaptively with very short per-item timers, sometimes under 15 seconds — if you are targeting those firms specifically, practise faster than this page's default timer to build real margin."],
-    questions: [
-      {
-        shapes: '●  ○  ●  ○  ●  ?',
-        prompt: 'What comes next in the sequence?',
-        options: ['●', '○', '◆', '■'],
-        answer: '○',
-        explanation: 'Working: the only attribute changing is fill, and it flips every step — ● ○ ● ○ ●. Position 6 must therefore be ○. Equivalently, odd positions are filled and even positions are empty; 6 is even, so ○.\n\nWhy the wrong answers tempt: ● is what you pick by copying the item you just looked at rather than continuing the rule — the single most common careless error on the easy items, because your eye rests on the last symbol. ◆ and ■ introduce a shape change that never appears anywhere in the sequence; abstract tests routinely offer an option that varies an attribute the sequence holds constant, precisely to catch candidates who are pattern-hunting rather than pattern-reading.\n\nTechnique: on inductive tests the opening two or three items are deliberately trivial, and they exist to be banked in under ten seconds each so you have time for the multi-attribute items later. Build the habit now that will carry you through the hard ones — name the attributes present (here: shape, fill, count, position, size, orientation), then state which are moving and which are fixed. Here only fill moves, so any option changing shape is eliminated before you even reason about parity. That elimination-first reflex is what turns a 45-second item into a 10-second one, and cut-e style tests are scored on speed as much as accuracy.',
-      },
-      {
-        shapes: '▲  ▲▲  ▲▲▲  ▲▲▲▲  ?',
-        prompt: 'What comes next?',
-        options: ['▲▲▲', '▲▲▲▲', '▲▲▲▲▲', '▲'],
-        answer: '▲▲▲▲▲',
-        explanation: 'Working: the shape never changes; only the count moves — 1, 2, 3, 4. The differences are all +1, so the fifth term is 5 triangles.\n\nWhy the wrong answers tempt: ▲▲▲▲ repeats the previous term, the copying error again. ▲▲▲ goes backwards. ▲ resets to the start, which would be right only if the sequence were cyclic, and nothing here suggests a cycle — the count has risen monotonically with no boundary in sight. That distinction between a progression and a cycle is worth holding onto, because later items in this bank hinge on it.\n\nTechnique: counting sequences are the foundation for the harder second-order ones, so practise writing the counts as a number line underneath the shapes rather than judging by eye. Under time pressure candidates miscount clusters of five or more identical symbols surprisingly often, and a written 1, 2, 3, 4 removes the risk entirely. Then look at the differences: all equal means linear (this item), rising means accelerating (the triangular-number and 1, 2, 4, 7 items), and a constant ratio means geometric (the doubling-stars item). Those three shapes cover the large majority of count-based questions you will see, and identifying which one you are in should take a single glance at the difference row.',
-      },
-      {
-        shapes: '◐  ◓  ◑  ◒  ?',
-        prompt: 'The half-filled circle rotates each step. What comes next?',
-        options: ['◐', '◓', '◑', '◒'],
-        answer: '◐',
-        explanation: 'Working: the shaded half moves left → top → right → bottom, a 90° clockwise turn each step. That completes a full revolution in four steps, so the fifth item returns to the starting orientation: ◐.\n\nWhy the wrong answers tempt: ◒ repeats the previous item. ◓ and ◑ are simply the wrong points in the cycle — and because all four options are the same four symbols you have just been staring at, there is no shortcut through elimination here; you must actually track the rotation. This is why examiners like rotation items: every distractor is equally plausible to a candidate who has not identified the direction.\n\nTechnique: for any rotational sequence, settle two things immediately — the direction and the period. Direction is easiest to fix by picking one feature and asking where it went; here the shaded side moves from the 9 o’clock position to 12 o’clock, which is clockwise. Period is the number of distinct states, four in this case, after which everything repeats. With both known you can jump straight to any position using position mod period rather than tracing every step: item 5 has the same state as item 1. That modular shortcut is what makes the expert-level ●○◐ rotation item tractable inside 45 seconds, so it is worth practising on the easy ones where you can check yourself.',
-      },
-      {
-        shapes: '■ ●  |  ● ■  |  ■ ●  |  ?',
-        prompt: 'What comes next?',
-        options: ['■ ●', '● ■', '■ ■', '● ●'],
-        answer: '● ■',
-        explanation: 'Working: two elements exchange places every step — ■● then ●■ then ■● and so on, a period-2 cycle. Since item 3 is ■●, item 4 must be ●■.\n\nWhy the wrong answers tempt: ■● repeats the current item, which is the answer you give if you lose your place in a sequence of near-identical groups. ■■ and ●● are the interesting distractors: they abandon the swap rule and change the CONTENTS of the pair instead of its order. Nothing in the sequence ever alters which two shapes are present, and options that change the cast rather than the arrangement should be eliminated on sight.\n\nTechnique: separate arrangement from composition. Some sequences permute a fixed set (this one, and the ◆■● cyclic-shift item); others change what is in the set (the filling ○○○○ item). Ask which kind you are in before hunting for a rule, because that single classification halves the option list immediately. When the sequence permutes, count the period: a two-element swap has period 2, a three-element cyclic shift has period 3, and knowing that lets you answer by parity rather than by tracing. Here position 4 is even, and even positions are ●■ — an answer you can reach without looking at the intervening items at all.',
-      },
-      {
-        shapes: '○  ◔  ◑  ◕  ?',
-        prompt: 'The circle fills progressively. What comes next?',
-        options: ['●', '○', '◔', '◑'],
-        answer: '●',
-        explanation: 'Working: the shaded proportion grows in equal steps of one quarter — 0, ¼, ½, ¾ — so the fifth item is completely filled: ●.\n\nWhy the wrong answers tempt: ◔ and ◑ are earlier stages of the same sequence, offered to catch anyone who loses their place; ○ is the starting state, which would be correct only if the pattern cycled back rather than continuing. That is a genuine judgement call rather than a trick, and it is the heart of this item — a progression that reaches a boundary can either stop, reverse, or wrap round to the beginning, and you have to decide which on the evidence available. Here nothing indicates a cycle, and a quarter-by-quarter fill has an obvious natural endpoint at full, so ● is the reading with the fewest assumptions.\n\nTechnique: when a monotonic progression is one step from its limit, prefer the option that simply completes it. Only choose a reversal or a reset when the sequence has already demonstrated one — as the ■□□□ item in this bank does by explicitly telling you the pattern reverses. This is the same discipline as the travelling-dot item, where the filled circle has not yet hit the end of the row and so no bounce may be assumed. Stated as one rule to carry into the test: never invent a boundary behaviour the sequence has not shown you.',
-      },
-      {
-        shapes: '△ △ ▲  |  □ □ ■  |  ○ ○ ?',
-        prompt: 'Each group follows the same rule. What completes the third group?',
-        options: ['○', '●', '△', '■'],
-        answer: '●',
-        explanation: 'Working: read each group as a unit. Group 1 is triangle, triangle, filled triangle. Group 2 is square, square, filled square. Both follow the rule “two outlines then the filled version of the same shape”, so group 3 must be circle, circle, filled circle: ●.\n\nWhy the wrong answers tempt: ○ continues with an outline and ignores the fill step that defines the rule. △ and ■ import shapes from the other groups, which is the error of treating the sequence as one long chain rather than three parallel groups — a distinction the vertical bars are there to signal. Notice that the shape identity is constant WITHIN a group and varies BETWEEN groups, while the fill pattern is constant BETWEEN groups and varies within. Recognising which attribute does which is the whole question.\n\nTechnique: whenever separators appear, decode the completed groups first and treat the rule as a template to apply, not a sequence to extend. Then check the attributes on both axes — down the groups and across each group — because the interesting rules almost always live on one axis while the other holds an attribute fixed. This grouped structure is the bridge to matrix-style questions such as Raven’s Progressive Matrices, where you must read a rule across rows and a different one down columns simultaneously. Practising the two-axis read on simple grouped items like this one is the cheapest preparation for the harder matrix formats.',
-      },
-      {
-        shapes: '★ 1  |  ★★ 2  |  ★★★★ 3  |  ★★★★★★★★ 4  |  ? 5',
-        prompt: 'How many stars are in the 5th group?',
-        options: ['10', '12', '16', '9'],
-        answer: '16',
-        explanation: 'Working: the counts are 1, 2, 4, 8. The differences (1, 2, 4) are not constant, but the ratios are — each term is twice the last. So the fifth term is 8 × 2 = 16.\n\nWhy the wrong answers tempt: 10 is 8 + 2, applying the most recent difference as though the sequence were arithmetic. 12 is 8 + 4, applying the difference before that. 9 is 8 + 1, using the first difference. Every wrong option comes from treating a geometric sequence as arithmetic, which tells you something useful about how these papers are built: the distractors map the specific misreadings the examiner expects, so an answer landing on one of them is a warning rather than a reassurance.\n\nTechnique: run two checks on every numeric sequence, in this order. Take the differences; if they are constant you are done. If not, take the ratios; if those are constant it is geometric. Only if neither is constant do you look for something more exotic — second-order differences (the 1, 2, 4, 7 item), Fibonacci-style addition of the previous two terms, or squares. That checklist takes about eight seconds and covers nearly every numeric progression on a graduate test. Doubling in particular is worth recognising instantly from the sequence 1, 2, 4, 8, 16, 32, 64, because it appears constantly, and confusing 2ⁿ growth with linear growth is exactly the intuition failure that trading firms screen for when they test inductive reasoning.',
-      },
-      {
-        shapes: '◆ ■ ●  |  ■ ● ◆  |  ● ◆ ■  |  ?',
-        prompt: 'What comes next?',
-        options: ['◆ ■ ●', '● ■ ◆', '■ ◆ ●', '◆ ● ■'],
-        answer: '◆ ■ ●',
-        explanation: 'Working: each group is the previous one shifted one place left, with the leftmost element wrapping round to the end — ◆■● becomes ■●◆ becomes ●◆■. Three elements means the cycle has period 3, so the fourth group returns to the original arrangement: ◆■●.\n\nWhy the wrong answers tempt: ●■◆ is the original reversed, not shifted — reversal and rotation produce identical results for two elements but diverge for three, which is exactly why the examiner moved from a pair to a triple. ■◆● and ◆●■ are the other permutations of the same three symbols, filling out the option set so that recognising the shapes gets you nowhere. With three items there are six possible orderings and four are offered, so guessing is worth little.\n\nTechnique: identify the period, then use position mod period. Here period 3 means groups 1 and 4 match, as do 2 and 5, and 3 and 6. That reasoning is what makes the expert ●○◐ item in this bank answerable in seconds rather than by laborious tracing, and it generalises to any cyclic structure. Also fix the direction explicitly by tracking ONE element rather than the whole group: follow ◆ alone and you see it move from position 1 to position 3 to position 2 to position 1. Tracking a single element through a permutation is far more reliable under time pressure than trying to hold three simultaneous movements in your head.',
-      },
-      {
-        shapes: 'A1   C2   E3   G4   ?',
-        prompt: 'Letters and numbers each follow their own rule. What comes next?',
-        options: ['I5', 'H5', 'I6', 'J5'],
-        answer: 'I5',
-        explanation: 'Two independent progressions: the letters skip one each time (A, C, E, G → I) while the numbers simply count up (1, 2, 3, 4 → 5). Alphanumeric sequences are a cut-e/Aon staple — write the letter positions out as numbers (A=1, C=3, E=5, G=7) if the pattern is not obvious.',
-      },
-      {
-        shapes: '●○○  ○●○  ○○●  ○●○  ?',
-        prompt: 'The filled circle moves. What comes next?',
-        options: ['●○○', '○●○', '○○●', '●●●'],
-        answer: '●○○',
-        explanation: 'Working: track the filled circle’s position — 1, 2, 3, then 2. It reached the right-hand end and turned round. Continuing that reversal, the next position is 1: ●○○.\n\nWhy the wrong answers tempt: ○○● assumes the dot wraps around to the start and continues rightward, which is the natural first guess and is wrong only because item 4 already shows the dot moving back. That fourth item is the entire question — without it, wrap and bounce are indistinguishable. ○●○ repeats the current item. ●●● abandons the single-dot structure altogether.\n\nTechnique: a travelling element that hits a boundary can do one of three things — wrap to the other end, bounce back, or stop — and you cannot tell which until the sequence shows you. So find the item immediately after the boundary and read the answer off it. Compare this directly with the five-cell travelling-dot item elsewhere in this bank, where the dot has reached position 4 of 5 and has NOT yet touched the end: there, assuming a bounce is unjustified and the answer is simply position 5. The two items are deliberate mirror images, and together they teach the rule worth carrying in: look for evidence of the boundary behaviour, and if the sequence has not demonstrated one, do not invent it.',
-      },
-      {
-        shapes: '△   □   ⬠   ⬡   ●',
-        prompt: 'Which shape does NOT belong with the others?',
-        options: ['△', '⬠', '⬡', '●'],
-        answer: '●',
-        explanation: 'Every other shape is a polygon with straight edges and corners (3, 4, 5 and 6 sides). The circle has no straight edges or vertices at all. Odd-one-out questions test whether you can find the rule the group shares — check edges, corners, symmetry and fill before guessing.',
-      },
-      {
-        shapes: '① ▲  |  ② ▲▲  |  ③ ▲▲▲▲  |  ④ ▲▲▲▲▲▲▲',
-        prompt: 'Triangles added each step: +1, +2, +3... How many triangles at step ⑤?',
-        options: ['9', '10', '11', '12'],
-        answer: '11',
-        explanation: 'Working: the counts are 1, 2, 4, 7. First differences: 1, 2, 3 — not constant, so this is not linear. Second differences: 1, 1 — constant, so the sequence is accelerating steadily. The next first difference is 4, giving 7 + 4 = 11.\n\nWhy the wrong answers tempt: 9 applies the most recent difference of 2 (or reads the differences as 1, 2, 2). 10 applies a difference of 3, repeating the last gap instead of increasing it — the most common error, because holding the increment constant feels like continuing the pattern. 12 over-shoots with a difference of 5, which is the answer you get by counting the differences as 1, 2, 3, 4, 5 and taking the wrong one. Note that all four options sit within three of each other, so there is no sense-checking your way out: only the difference table gives the answer.\n\nTechnique: write the differences underneath the sequence, always, and if those are not constant write the differences of the differences. Two rows of subtraction resolve almost every accelerating sequence in about ten seconds. Learn to recognise the classic second-order families by sight too — 1, 3, 6, 10, 15 (triangular), 1, 4, 9, 16 (squares), 2, 6, 12, 20 (n(n+1)) — because spotting one instantly is worth thirty seconds you can spend on a harder item. This particular sequence, 1, 2, 4, 7, 11, is the triangular numbers plus one, and it appears often enough to be worth memorising outright.',
-      },
-      {
-        shapes: '↑  →  ↓  ←  ?',
-        prompt: 'The arrow rotates. What comes next?',
-        options: ['↑', '→', '↓', '←'],
-        answer: '↑',
-        explanation: 'Working: the arrow turns 90° clockwise each step — up, right, down, left. Four steps complete a full revolution, so the fifth item returns to up: ↑.\n\nWhy the wrong answers tempt: ← repeats the previous item. → and ↓ are other points in the cycle. As with the half-filled circle item, all four options are the four symbols already on screen, so elimination gives you nothing and you must genuinely track the rotation. What you can do quickly is fix the direction from the first two items alone — up to right is unambiguously clockwise — and then count positions rather than re-reading the whole sequence.\n\nTechnique: rotation items reduce to modular arithmetic once you know the period. Four orientations means period 4, so item 5 matches item 1, item 6 matches item 2, and so on. Where these get harder is when the step is 45° instead of 90°, giving a period of 8 and eight possible symbols, or when rotation is combined with a second attribute such as fill or count — the multi-attribute versions are where marks are actually lost. Build the habit on the easy version: state the direction, state the period, compute the position, then read off the answer. Doing that consistently on simple items is what makes it automatic when an item combines rotation with something else under time pressure.',
-      },
-      {
-        shapes: '▲▲▲▲▲  ▲▲▲▲  ▲▲▲  ▲▲  ?',
-        prompt: 'What comes next?',
-        options: ['▲▲', '▲', 'Nothing', '▲▲▲'],
-        answer: '▲',
-        explanation: 'Working: the counts run 5, 4, 3, 2 — a constant difference of −1. The next term is 1 triangle.\n\nWhy the wrong answers tempt: ▲▲ repeats the previous item. ▲▲▲ goes back up. “Nothing” is the genuinely interesting distractor: the sequence is heading towards zero, so why not continue to an empty item? Because it has not reached zero yet — the next term after 2 is 1, not 0. Choosing “nothing” means running the rule one step too far, and examiners include an empty or null option precisely to catch over-extrapolation. If the sequence had shown 5, 4, 3, 2, 1 and asked for the sixth term, the answer would be different and much more debatable.\n\nTechnique: apply the rule exactly once. Under time pressure candidates frequently answer the question one step ahead, especially when the sequence is obviously heading somewhere — you see where it is going and jump to the destination rather than the next stop. A cheap defence is to number the items as you read, so you know precisely which position you are being asked for. This item also pairs with the increasing-triangles question earlier in the bank: the same structure run backwards, and worth noting because inductive tests often present a rule and its inverse in the same paper, on the assumption that recognising a pattern is not the same skill as recognising it reversed.',
-      },
-      {
-        shapes: 'A△  B□  C⬠  D⬡  E?',
-        prompt: 'Letters advance and shapes gain sides. What shape pairs with E?',
-        options: ['A triangle (3 sides)', 'A hexagon (6 sides)', 'A heptagon (7 sides)', 'A square (4 sides)'],
-        answer: 'A heptagon (7 sides)',
-        explanation: 'Working: two attributes progress in parallel. The letters advance one at a time (A, B, C, D, E) and the shapes gain one side at a time (3, 4, 5, 6). E is the fifth letter, so it pairs with the fifth shape, which has 7 sides: a heptagon.\n\nWhy the wrong answers tempt: “A hexagon (6 sides)” repeats the shape from D — the copying error, and here it is especially attractive because a hexagon is the last shape you actually saw drawn. “A square (4 sides)” and “A triangle (3 sides)” come from misaligning the two progressions, for instance by pairing the letter’s position with a shape one or two steps back, or from assuming the shapes cycle after the hexagon.\n\nTechnique: when two attributes move together, check whether they are genuinely independent or whether one is a distractor tracking the other. Here they are locked in step, so either one alone gives the answer. Compare with the expert △1 □4 ⬠9 ⬡16 item elsewhere in this bank: there the numbers appear to track the shapes but are actually the SQUARES OF THE POSITION, and the shape progression is deliberate noise designed to make you compute 7² instead of 5². The lesson is to identify what each attribute is a function of — position, or the other attribute — before you extrapolate. Writing the position index above each item (1, 2, 3, 4, 5) takes three seconds and makes that distinction obvious.',
-      },
-      {
-        shapes: '■□■  □■□  ■□■  ?',
-        prompt: 'What comes next?',
-        options: ['■□■', '□■□', '■■■', '□□□'],
-        answer: '□■□',
-        explanation: 'Working: each item is the previous one with every cell’s fill flipped — filled becomes empty and empty becomes filled. ■□■ inverts to □■□, which inverts back to ■□■. Item 3 is ■□■, so item 4 is □■□.\n\nWhy the wrong answers tempt: ■□■ repeats the current item. ■■■ and □□□ are the distractors worth thinking about — they represent “everything fills” or “everything empties”, which is a different and perfectly plausible rule for a sequence about fill. What rules them out is that both items shown alternate cell by cell rather than moving towards uniformity; the rule is inversion, not accumulation. Compare the ○○○○ item, where fill genuinely does accumulate one cell at a time towards ●●●●.\n\nTechnique: fill-based sequences use a small and learnable set of rules — inversion (this item), progressive filling (the four-circle item), rotation of the filled region (the half-circle item), and translation of a single filled cell (the travelling-dot items). Run through that list rather than staring at the symbols, and you will usually identify the rule in a couple of seconds. A second useful habit for inversion items specifically is to check the period: any pure inversion has period 2, so odd positions match item 1 and even positions match item 2. That parity check gives the answer without tracing, and it scales to longer sequences where tracing would burn the clock.',
-      },
-      {
-        shapes: '★ 1  |  ★ 1  |  ★★ 2  |  ★★★ 3  |  ★★★★★ 5  |  ? ',
-        prompt: 'How many stars come next?',
-        options: ['6', '7', '8', '10'],
-        answer: '8',
-        explanation: 'Working: the counts are 1, 1, 2, 3, 5. Neither the differences nor the ratios are constant, but each term equals the sum of the previous two: 1+1=2, 1+2=3, 2+3=5. Continuing, 3+5=8.\n\nWhy the wrong answers tempt: 6 is 5 + 1, using the wrong pair or reading the differences as though they repeated. 7 is 5 + 2, one term too far back. 10 doubles the last term, applying the geometric rule from the stars item — a good illustration of why you should test rules rather than pattern-match against a question you did the minute before. The three wrong options are all plausible arithmetic on the visible numbers, so the only defence is identifying the actual rule.\n\nTechnique: Fibonacci is the standard third answer when differences and ratios both fail, and its opening — 1, 1, 2, 3, 5, 8, 13, 21, 34 — is worth committing to memory outright, along with the repeated 1 at the start that makes it recognisable at a glance. More broadly, add “is each term a function of the two before it?” to your checklist as step three, after differences and ratios. That covers Fibonacci, Lucas sequences and their variants, and it is the last general-purpose test before you have to start looking for squares, primes or something bespoke. Knowing the order of the checks matters as much as knowing the checks, because time spent hunting exotic rules is time taken from items you could actually finish.',
-      },
-      {
-        shapes: '◢  ◣  ◤  ◥  ?',
-        prompt: 'The corner triangle rotates. What comes next?',
-        options: ['◢', '◣', '◤', '◥'],
-        answer: '◢',
-        explanation: 'Working: track where the shaded triangle sits — bottom-right, then bottom-left, then top-left, then top-right. That is a clockwise circuit of the four corners. Four positions means period 4, so the fifth item returns to the start: ◢.\n\nWhy the wrong answers tempt: ◥ repeats the previous item. ◣ and ◤ are earlier points in the cycle. As with the other rotation items, every option is a symbol already on screen, so you have to establish the direction rather than eliminate. The specific difficulty here is that these glyphs are easy to misread at speed — ◢ and ◣ differ only in which side the right angle sits on — and a single misidentification sends the whole rotation the wrong way.\n\nTechnique: for corner-based rotations, name each position aloud in words as you read (bottom-right, bottom-left, top-left, top-right) rather than trying to hold the glyphs visually. Words are far more robust than shapes under time pressure, and they make the direction unambiguous — moving along the bottom from right to left and then up the left side is clockwise, whatever your eye tells you about the symbols. This verbalising habit is worth applying to any item where the symbols are visually similar, including the half-filled circles and the diagonal arrows in this bank. It costs two seconds and eliminates the most expensive error type on the section, which is not failing to see the rule but misreading the sequence you are applying it to.',
-      },
-      {
-        shapes: '△▲  ▲△  ▲▲  △△   |   ○●  ●○  ●●  ?',
-        prompt: 'The second group follows the same rule as the first. What completes it?',
-        options: ['○○', '●●', '○●', '●○'],
-        answer: '○○',
-        explanation: 'The completed first group runs: empty+filled, filled+empty (swapped), both filled, both empty. Applying that identical four-step rule to circles, the missing item is both empty: ○○. When a puzzle gives you one complete group and one incomplete group, always decode the complete one first — it is handing you the rule.',
-      },
-      {
-        shapes: '○○○○  ●○○○  ●●○○  ●●●○  ?',
-        prompt: 'What comes next?',
-        options: ['●●●●', '○○○○', '●●○○', '○●●●'],
-        answer: '●●●●',
-        explanation: 'Working: count the filled circles — 0, 1, 2, 3 — and note they fill strictly from the left. The next item has 4 filled: ●●●●.\n\nWhy the wrong answers tempt: ●●○○ goes backwards. ○○○○ resets to the start, which would only be right if the pattern cycled, and nothing has yet shown a cycle. ○●●● is the subtle one: it has the right COUNT of filled circles for a different rule — three filled — but also changes the direction of filling, moving the empty cell to the left. It is there to catch candidates who track the count but not the position, and that combination of a plausible count with a broken spatial rule is a standard construction on these papers.\n\nTechnique: when cells fill progressively, verify both the count and the direction on every item, because examiners build distractors that satisfy one and violate the other. More generally this item sits at a boundary, like the quarter-filling circle: the sequence is one step from full, and you must decide whether it completes, reverses or resets. Completion is the default because it requires no extra assumption. Contrast the ■□□□ item later in the bank, where the stem explicitly states the pattern reverses and the answer therefore unwinds to three filled. The rule to carry: extend the demonstrated behaviour, and change behaviour only when the sequence or the stem tells you to.',
-      },
-      {
-        shapes: '○△   ●△   ○□   ●□   ○⬠   ?',
-        prompt: 'Two things change independently here. What comes next?',
-        options: ['●⬠', '○⬠', '●⬡', '○△'],
-        answer: '●⬠',
-        explanation: 'Track the two attributes separately: the fill alternates every step (empty, filled, empty, filled…), while the shape advances every two steps (triangle, square, pentagon). Position 6 is a filled pentagon: ●⬠. Multi-attribute questions are where most candidates lose marks — always isolate one attribute at a time.',
-      },
-      {
-        shapes: '◇  ◈  ◆  ◈  ◇  ◈  ?',
-        prompt: 'What comes next?',
-        options: ['◇', '◈', '◆', 'None of these'],
-        answer: '◆',
-        explanation: 'Working: the states run outline, half, solid, half, outline, half — a ping-pong between three states with the middle state visited on every other step. The full cycle ◇ ◈ ◆ ◈ has period 4, so item 7 matches item 3: ◆.\n\nWhy the wrong answers tempt: ◈ repeats the current item and is also what you would answer if you thought the sequence alternated between just two states. ◇ is what you get by assuming a period of 3 (◇ ◈ ◆ repeating), which fits the first three items perfectly and only breaks at item 4 — this is the heart of the question, since a rule that explains the opening but not the whole sequence is the classic inductive-reasoning trap. “None of these” is offered for candidates who cannot make any rule fit and panic; on graduate tests that option is almost never correct, and choosing it should be a last resort rather than a hedge.\n\nTechnique: always test a candidate rule against EVERY item, not just the first few. The cheapest way to do that here is to count the period rather than describe the motion: write the position numbers 1 to 6 under the symbols, notice the sequence repeats every 4, then compute 7 mod 4 = 3 and read off item 3. Bounce patterns have a period of 2(n−1) for n states — three states give a period of 4, four states give 6 — which is worth knowing because it lets you jump far ahead in a sequence without tracing, and examiners set these items at positions deliberately too distant to trace comfortably.',
-      },
-      {
-        shapes: '3+4=7  |  5+2=7  |  6+1=7  |  2+?=7',
-        prompt: 'What number completes the pattern?',
-        options: ['3', '4', '5', '9'],
-        answer: '5',
-        explanation: 'Working: check each complete pair — 3+4, 5+2, 6+1 — and every one totals 7. The rule is a fixed sum, not a progression, so the missing value is 7 − 2 = 5.\n\nWhy the wrong answers tempt: 3 comes from continuing the left-hand numbers as a sequence (3, 5, 6, 2) or from pairing 2 with the next number down. 4 repeats a value already used on the right-hand side. 9 adds instead of subtracting, treating the 7 as something to build on rather than a total — the answer you get from reading the equals sign as the start of an operation. The presence of 9 is a hint in itself: it is only reachable by ignoring the equation structure entirely.\n\nTechnique: not every inductive item is a sequence. Some encode a constant relationship that holds independently within each group — a fixed sum here, a squaring relationship in the 5△ 25□ item, a shared shape rule in the △△▲ item. When items are separated by bars and each is self-contained, look for the invariant rather than the progression, and test it on every group before using it. The diagnostic question is simply whether the groups depend on each other: if scrambling their order would change nothing, you are looking at an invariant, and the numbers running down the left are decoration rather than a sequence.',
-      },
-      {
-        shapes: '⬡⬡⬡  |  ⬡⬡●  |  ⬡●●  |  ?',
-        prompt: 'What comes next?',
-        options: ['●●●', '⬡⬡⬡', '⬡●●', '●⬡⬡'],
-        answer: '●●●',
-        explanation: 'Working: count the converted cells — 0, then 1, then 2, always converting from the right-hand end inward. The next item has all three converted: ●●●.\n\nWhy the wrong answers tempt: ⬡●● repeats the current item. ⬡⬡⬡ resets to the start. ●⬡⬡ is the pointed distractor: it has one filled cell, so it satisfies neither the count nor the direction, but it looks like a plausible “continuation” to anyone reading the sequence as a single travelling dot rather than an accumulating fill. Distinguishing accumulation from translation is exactly what the option is testing, and it is the same distinction that separates this item from the travelling-dot questions elsewhere in the bank.\n\nTechnique: with only three cells the sequence exhausts itself quickly, which is a useful clue in its own right — when a pattern is one step from completion, the completed state is nearly always the answer, because the alternatives (reset or reverse) require assuming behaviour the sequence has not shown. Note also how short this item is: three visible terms is the minimum from which a rule can be induced, and examiners use short sequences to test whether you can commit to the simplest rule that fits rather than hunting for something more elaborate. The principle worth carrying is parsimony — when several rules fit the visible items, choose the simplest, because that is the one the test was built around.',
-      },
-      {
-        shapes: '↖  ↗  ↘  ↙  ?',
-        prompt: 'The diagonal arrow rotates. What comes next?',
-        options: ['↖', '↗', '↘', '↙'],
-        answer: '↖',
-        explanation: 'Working: the arrow points up-left, up-right, down-right, down-left — each step a 90° clockwise turn, just displaced 45° from the cardinal directions. Four steps complete the circuit, so the fifth returns to the start: ↖.\n\nWhy the wrong answers tempt: ↙ repeats the previous item, and ↗ and ↘ are other points in the same cycle. The real difficulty is visual rather than logical — diagonal arrows are harder to read at a glance than cardinal ones, and under a 45-second clock candidates misidentify one symbol and derive the wrong direction from a correct method. Note also that this item is the diagonal twin of the ↑→↓← question earlier in the bank, and examiners include such pairs to check that you have learned the underlying rotation rule rather than memorised a particular symbol sequence.\n\nTechnique: convert symbols to words or numbers before reasoning. Label the diagonals 1 to 4 clockwise from up-left and the sequence becomes 1, 2, 3, 4, ? — trivially 1 again. This numbering trick generalises to any rotational item and removes the visual-confusion risk entirely, which matters because on these tests the expensive errors are misreadings rather than misreasonings. If a test lets you make notes, writing the position numbers under the symbols is almost always worth the few seconds it costs, particularly on items combining rotation with a second changing attribute where holding everything visually becomes genuinely difficult.',
-      },
-      {
-        shapes: '1 shape  |  3 shapes  |  6 shapes  |  10 shapes  |  ? shapes',
-        prompt: 'This is the triangular number sequence. How many shapes come next?',
-        options: ['13', '14', '15', '16'],
-        answer: '15',
-        explanation: 'Working: the counts are 1, 3, 6, 10. First differences: 2, 3, 4 — rising by one each time. The next difference is 5, giving 10 + 5 = 15. These are the triangular numbers, n(n+1)/2, so the fifth term is 5 × 6 ÷ 2 = 15.\n\nWhy the wrong answers tempt: 13 applies a difference of 3, repeating an earlier gap. 14 applies 4, repeating the most recent gap — the standard error of holding the increment constant when it is itself increasing, and the most popular wrong answer on any accelerating sequence. 16 applies 6, over-shooting by taking the difference one step too far ahead. All four options lie within three of each other, so there is no sense-check available; only the difference row settles it.\n\nTechnique: learn the triangular numbers by sight — 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 — because they turn up constantly in inductive tests, in probability questions about handshakes and pairings, and in the classic “how many connections between n people” brainteaser that trading and consulting interviewers still ask. The formula n(n+1)/2 is worth knowing alongside the list, since it lets you jump to the tenth or twentieth term without building the whole sequence. Note the relationship to the 1, 2, 4, 7, 11 item in this bank: that is the triangular sequence shifted by one, which is why the same two-row difference method cracks both.',
-      },
-      {
-        shapes: '■▲  ▲■  ■▲  ▲■  ■▲  ?',
-        prompt: 'What comes next?',
-        options: ['■▲', '▲■', '■■', '▲▲'],
-        answer: '▲■',
-        explanation: 'Working: the pair alternates between ■▲ and ▲■ every step. Odd positions are ■▲ and even positions are ▲■. Item 5 is ■▲, confirming the parity, so item 6 is ▲■.\n\nWhy the wrong answers tempt: ■▲ repeats the current item, which here is a particularly easy mistake because five near-identical groups make it genuinely hard to keep your place — that is precisely why the examiner used five rather than three. ■■ and ▲▲ break the composition of the pair, which never changes; only the order does.\n\nTechnique: for any two-state alternation, answer by parity rather than by tracing. Establish which state sits on odd positions, count the position you are asked for, and read the answer off — no re-reading required, and no risk of losing your place however long the sequence runs. That approach scales directly to the harder cyclic items in this bank: a three-state cycle is answered by position mod 3, a four-state rotation by position mod 4, and a bounce between three states by position mod 4 as well. Notice too the deliberate design here — a trivial rule stretched over five items to test bookkeeping rather than insight. Recognising when an item is testing care rather than cleverness tells you where to spend your attention, which under a strict per-question clock is most of the skill.',
-      },
-      {
-        shapes: '5△ 25□  |  4△ 16□  |  3△ 9□  |  2△ ?□',
-        prompt: 'The square count relates to the triangle count. What replaces the ?',
-        options: ['4', '6', '8', '2'],
-        answer: '4',
-        explanation: 'Working: compare the two numbers within each group rather than across groups. 5 and 25, 4 and 16, 3 and 9 — the square count is always the triangle count squared. So 2 gives 2² = 4.\n\nWhy the wrong answers tempt: 6 comes from continuing the square counts as their own sequence (25, 16, 9, then subtracting 3 or following the differences 9, 7, 5 to reach 4... and mis-landing) or from doubling and adding. 8 is 2 × 4, taking a doubling relationship from the earlier stars item. 2 simply repeats the triangle count, treating the relationship as identity — the answer you give if you notice the two numbers are linked but never establish how. Every distractor represents a different plausible relationship, which is the point: identifying that a relationship exists is easy, and specifying it is the actual test.\n\nTechnique: within-group relationships are read vertically, not horizontally. The diagnostic is whether the groups depend on each other — here they do not, since each group is self-contained and scrambling their order would change nothing, exactly as with the fixed-sum 3+4=7 item. When you spot an invariant, verify it on every group before applying it, because a rule that fits two groups and fails the third is the standard trap. It is also worth noting the falling triangle counts (5, 4, 3, 2) are decoration: they give the groups a plausible order and tempt you into reading a sequence where there is only a rule.',
-      },
-      {
-        shapes: '●○○○○   ○●○○○   ○○●○○   ○○○●○   ?',
-        prompt: 'The filled circle travels. What comes next?',
-        options: ['○○○○●', '●○○○○', '○○●○○', '○○○●○'],
-        answer: '○○○○●',
-        explanation: 'The filled position moves one step right each time (1, 2, 3, 4 → 5) and has not yet reached the end, so there is no bounce or wrap yet. Do not assume a pattern reverses until the sequence actually shows it hitting a boundary.',
-      },
-      {
-        shapes: '△   △△   △   △△△   △   △△△△   ?',
-        prompt: 'Two alternating sequences are interleaved here. What comes next?',
-        options: ['△', '△△△△△', '△△△△', '△△'],
-        answer: '△',
-        explanation: 'Read every other item. The odd positions are constant at one triangle; the even positions grow 2, 3, 4. Position 7 is odd, so it is a single triangle. Interleaved sequences look chaotic until you split them into two separate lists — always try this when a sequence seems to jump around.',
-      },
-      {
-        shapes: '◐◑   ◑◐   ◒◓   ◓◒   ◔◕   ?',
-        prompt: 'What comes next?',
-        options: ['◕◔', '◔◕', '◐◑', '◑◐'],
-        answer: '◕◔',
-        explanation: 'The items come in pairs: each pair shows a symbol combination and then the same combination reversed. ◔◕ has appeared, so its reversal ◕◔ follows. Spotting the grouping (pairs, triples) before hunting for a rule saves time on harder items.',
-      },
-      {
-        shapes: '■□□□   ■■□□   ■■■□   ■■■■   ?',
-        prompt: 'The sequence has reached full. What comes next if the pattern reverses?',
-        options: ['■■■□', '■■■■', '□□□□', '■□□□'],
-        answer: '■■■□',
-        explanation: 'The fill grew 1, 2, 3, 4 and has hit the maximum, so a reversing pattern unwinds symmetrically: the next item drops back to 3 filled. Boundary questions test whether you notice a sequence physically cannot continue in the same direction.',
-      },
-      {
-        shapes: '△□  □⬠  ⬠⬡  ⬡?',
-        prompt: 'Each item overlaps with the next. What completes the final pair?',
-        options: ['A heptagon (7 sides)', 'A triangle', 'A square', 'A pentagon'],
-        answer: 'A heptagon (7 sides)',
-        explanation: 'Each pair starts with the shape that ended the previous pair, and the second shape always gains one side: triangle(3)→square(4)→pentagon(5)→hexagon(6)→heptagon(7). Chain-overlap patterns are common — check whether consecutive groups share an element before treating them as independent.',
-      },
-      {
-        difficulty: 'expert',
-        shapes: '△1   □4   ⬠9   ⬡16   ?',
-        prompt: 'The numbers relate to the shapes. What number accompanies a heptagon (7 sides)?',
-        options: ['25', '36', '49', '21'],
-        answer: '25',
-        explanation: 'Do not match the number to the side count directly — the numbers are 1, 4, 9, 16, which are the squares of 1, 2, 3, 4 (the position in the sequence, not the sides). Position 5 gives 5² = 25. The shape gaining a side each step is a deliberate distractor running in parallel. When two attributes both progress, check whether the number tracks POSITION rather than the other attribute.',
-      },
-      {
-        difficulty: 'expert',
-        shapes: '●○◐   ○◐●   ◐●○   ●○◐   ○◐●   ?',
-        prompt: 'What comes next?',
-        options: ['◐●○', '●○◐', '○◐●', '◐○●'],
-        answer: '◐●○',
-        explanation: 'The triple rotates one position left each step, cycling with period 3: positions 1, 4 are ●○◐; positions 2, 5 are ○◐●; positions 3, 6 are ◐●○. Position 6 is therefore ◐●○. With cyclic patterns, find the period first (here 3) then use position mod period — far more reliable than tracing every step under time pressure.',
-      },
-      {
-        difficulty: 'expert',
-        shapes: '2△   6□   12⬠   20⬡   ?',
-        prompt: 'What number comes next in the sequence?',
-        options: ['30', '28', '32', '25'],
-        answer: '30',
-        explanation: 'Differences are 4, 6, 8 — increasing by 2, so the next difference is 10: 20 + 10 = 30. Equivalently these are n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6 = 30. Second-order sequences are invisible until you write the differences underneath — always do that before guessing.',
-      },
-    ],
-  },
-  {
-    id: 'sjt',
-    title: 'Situational Judgement',
-    icon: '🤔',
-    color: 'text-orange-400',
-    border: 'border-orange-500/30',
-    description: 'Workplace scenarios — choose the MOST effective response. Tests judgement, integrity and professionalism.',
-    secondsPerQuestion: 90,
-    questionsPerAttempt: 8,
-    tip: 'Firms score against their values: integrity first, escalate appropriately, communicate early, never hide mistakes, and don\'t throw colleagues under the bus. Pick what a calm professional would actually do.',
-    providers: 'Cappfinity (strengths-based), HireVue (video + SJT hybrid), firm-custom assessments (e.g. JPMorgan\'s "insight" games, HSBC job simulations), SHL SJQ',
-    requiredBy: 'Virtually every graduate scheme — banks, Big 4, consulting, insurers. Often combined with a recorded video interview in the same sitting.',
-    whyUsed: 'Firms lose money and reputation when juniors show poor judgement — hiding errors, breaching confidentiality, mishandling clients. SJTs cheaply screen thousands of applicants for alignment with the firm\'s stated values before assessment centres.',
-    improveTitle: "How to get better at Situational Judgement",
-    improveTips: ["Learn the standard escalation ladder and apply it by default: raise it directly with the person involved first, escalate to your manager if it continues, HR only after that — skipping straight to the top rung (or never leaving the bottom rung) both score poorly.","Never conceal a mistake and never freelance outside your authority. The two failure modes SJTs screen hardest for are hiding errors and taking unilateral action you are not empowered to take (contacting a client directly, overriding a senior's work, editing a shared record without telling anyone).","Speed of disclosure is usually the biggest driver of the score on any \"should I flag this\" scenario. The earlier a problem is surfaced, the more options exist to fix it — flag on day one of a two-week project is a non-event, flagging the night before a deadline is a crisis.","For \"I disagree with someone senior\" scenarios, the answer is almost always about CHANNEL, not content — raise it privately and respectfully with reasoning and an alternative, never publicly and never by silently overriding them.","On rating-format items (\"how effective is this response?\"), resist the pull to the extremes. Reserve \"very ineffective\" for responses that breach a control, conceal something, or create real risk; reserve \"very effective\" for responses with no real downside. Genuinely mixed responses should get a middle rating.","Firms score against their stated values, not against what feels emotionally satisfying — integrity first, escalate appropriately, communicate early, never hide mistakes, never throw colleagues under the bus. When two options both seem reasonable, pick the one a calm, values-led professional would actually do.","Answer as the person you want to become, not as you might act under real stress on your worst day — SJTs measure judgement about the ideal response, and firms know nobody is perfect, but they are screening for what you know the right move is."],
-    questions: [
-      {
-        context: 'You\'re an intern and you notice a significant error in a spreadsheet your manager already sent to a client.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Say nothing — it\'s your manager\'s responsibility now',
-          'Tell your manager immediately and suggest a corrected version',
-          'Email the client directly with a correction',
-          'Fix it quietly in the file for next time',
-        ],
-        answer: 'Tell your manager immediately and suggest a corrected version',
-        explanation: 'Why this is best: your manager owns the client relationship and needs to control what the client hears and when. Telling them immediately, with a corrected version ready, lets them decide how to handle the client conversation while showing you can spot errors and fix them, not just flag problems.\n\nWhy the others fail: saying nothing leaves a client acting on wrong numbers, and if it surfaces later you knew and stayed silent — far worse than the original error. Emailing the client directly bypasses your manager entirely, which undermines their relationship and may contradict something they have already told the client verbally. Fixing it quietly in the file helps nobody, since the flawed version is already in the client\'s hands.\n\nThe underlying principle: as an intern or junior, you are rarely the right person to manage a client relationship, but you are always the right person to surface a problem fast. "Escalate immediately, propose a fix" beats both silent concealment and unauthorised direct action in almost every SJT scenario — the two failure modes firms screen hardest for are hiding mistakes and freelancing outside your authority.',
-      },
-      {
-        context: 'You have three urgent tasks from three different senior people, and you cannot finish all of them today.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Work through the night without telling anyone',
-          'Do them in the order they were received',
-          'Quickly clarify deadlines and priorities with the requesters, then flag the conflict',
-          'Choose the task from the most senior person and ignore the others',
-        ],
-        answer: 'Quickly clarify deadlines and priorities with the requesters, then flag the conflict',
-        explanation: 'Why this is best: the three seniors almost certainly don\'t know about each other\'s requests, so you are the only person who can see the conflict. Surfacing it quickly, after first checking real deadlines and priority, lets them resolve it between themselves in seconds — something they can do easily but you cannot.\n\nWhy the others fail: working through the night without telling anyone is "silent heroics" — it might work once, but it is unsustainable, invisible to the people who need to know, and fails badly the moment you cannot pull it off. Doing tasks in the order received ignores that urgency and importance are not the same as arrival time. Picking the most senior person\'s task and ignoring the others assumes seniority always trumps urgency, which is often false — a mid-level manager\'s client-facing deadline may matter more than a director\'s internal request.\n\nThe underlying principle: juniors are almost never expected to silently absorb conflicting demands. Firms would much rather you surface a scheduling conflict in thirty seconds than burn out solving it invisibly or guess wrong about priority. "Flag and let seniors decide" is the answer whenever a conflict exists that you don\'t have the authority or visibility to resolve alone.',
-      },
-      {
-        context: 'A colleague tells you confidential information about an upcoming deal that you are not part of, and suggests you could "make some money" trading the stock.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Trade a small amount so it isn\'t noticeable',
-          'Decline, and report the conversation to compliance',
-          'Decline but keep the conversation to yourself',
-          'Ask a friend outside the firm to trade instead',
-        ],
-        answer: 'Decline, and report the conversation to compliance',
-        explanation: 'Why this is best: declining alone is not enough, because staying silent about a colleague soliciting insider dealing makes you a witness who said nothing — a position that looks very bad in any subsequent investigation and may itself breach your regulatory obligations. Reporting to compliance protects you, protects the firm, and stops your colleague before real harm is done.\n\nWhy the others fail: trading a small amount is still insider dealing, a criminal offence in essentially every jurisdiction, regardless of size — "small" is not a legal defence. Declining but staying silent leaves the colleague free to approach someone else, or to act themselves, while you carry undisclosed knowledge of a crime. Asking a friend outside the firm to trade is a second, distinct offence (tipping) layered on top of the first.\n\nThe underlying principle: SJTs use insider dealing scenarios specifically because they have a uniquely unambiguous right answer — unlike most workplace judgement calls, this one has a clear legal line, and any option that stops short of reporting to compliance is wrong regardless of how reasonable it sounds. Recognise these "bright line" scenarios (market abuse, fraud, conflicts of interest, confidentiality breaches) and answer them as legal questions, not judgement calls.',
-      },
-      {
-        context: 'You realise you made a mistake in your own analysis two days ago. Nobody has noticed, and the presentation using it is tomorrow.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Tell your manager now, with the corrected numbers and impact',
-          'Hope nobody notices — it may not matter',
-          'Correct it silently and say nothing',
-          'Mention it casually after the presentation',
-        ],
-        answer: 'Tell your manager now, with the corrected numbers and impact',
-        explanation: 'Why this is best: telling your manager now, with the corrected numbers and the impact already worked out, gives them everything they need to decide how to handle tomorrow\'s presentation — reprint slides, caveat verbally, or push the meeting. Doing this before the deadline, rather than after, is what separates a manageable correction from a crisis.\n\nWhy the others fail: hoping nobody notices is a bet you don\'t control, and if a client or senior does spot it, your manager is blindsided in the room with no time to react. Correcting it silently might fix the number but leaves your manager unable to explain the change if anyone asks why the figures moved, and it deprives them of the chance to decide whether the fix even needs mentioning. Mentioning it casually after the presentation means it was presented wrong knowingly by you, which is a much bigger problem than the original error.\n\nThe underlying principle: the value of surfacing a mistake decays fast with time, and it decays completely the moment the flawed work is used publicly. "Tell me now, with a fix" is what every manager wants to hear, and firms explicitly train assessors to reward candidates who own errors proactively rather than ones who never seem to make any — nobody believes the second type, and everybody distrusts the ones who hide them.',
-      },
-      {
-        context: 'A client asks you a technical question in a meeting and you don\'t know the answer.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Give your best guess confidently',
-          'Say you\'ll confirm the detail and follow up today — then do it',
-          'Change the subject',
-          'Refer them to your competitor',
-        ],
-        answer: 'Say you\'ll confirm the detail and follow up today — then do it',
-        explanation: 'Why this is best: admitting you don\'t know a specific detail, while committing to a same-day follow-up, protects your credibility far more than a guess would — and clients respect precision over false confidence, especially on technical points where a wrong answer could cause real harm if acted on.\n\nWhy the others fail: a confident guess risks giving materially wrong information that the client might act on, and if it\'s later found to be incorrect, it damages trust in everything else you\'ve told them, not just that one answer. Changing the subject is transparently evasive and clients notice immediately — it reads as either incompetence or dishonesty. Referring them to a competitor actively loses the firm business over a single unanswered question, which is a wildly disproportionate response.\n\nThe underlying principle: the promise "I\'ll confirm and come back to you" is only a good answer if you actually do it — the follow-through is the real test, not the deflection itself. In client-facing SJTs, examiners are checking whether you understand that credibility is built cumulatively across many small interactions, and that one honest "I don\'t know, but I\'ll find out" costs you nothing while one confident wrong answer can cost the relationship.',
-      },
-      {
-        context: 'Your team is celebrating a deal, but you notice a junior colleague has been excluded and looks upset — they did significant work on it.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'It\'s not your problem — enjoy the celebration',
-          'Publicly criticise the team lead for excluding them',
-          'Invite them along and make a point of crediting their work to the team',
-          'Privately tell them office politics are just like that',
-        ],
-        answer: 'Invite them along and make a point of crediting their work to the team',
-        explanation: 'Why this is best: inviting the colleague along and crediting their work fixes the actual problem — their exclusion and the loss of recognition — without creating a confrontation that could embarrass the team lead or escalate an already awkward moment. It\'s a concrete, low-risk action that directly addresses both issues at once.\n\nWhy the others fail: treating it as not your problem is passive in a situation where a small, costless action would clearly help — SJTs consistently penalise bystander responses to visible unfairness. Publicly criticising the team lead turns a fixable oversight into a confrontation, likely embarrassing the excluded colleague further and damaging your relationship with the lead over what may have been a simple mistake, not malice. Privately telling them "office politics are just like that" normalises exclusion and offers no actual support.\n\nThe underlying principle: when you witness a minor injustice you have the standing to fix directly, the best response is usually the smallest action that actually solves it — not escalation, and not passivity. Reserve confrontation and escalation for situations where a quiet fix genuinely isn\'t available, which this one is.',
-      },
-      {
-        context: 'It\'s 7pm, your work is done, but the rest of your team is staying late on a deadline that doesn\'t involve you.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Leave quietly — it\'s not your project',
-          'Ask the team if you can help with anything before deciding',
-          'Stay and look busy so you\'re seen at your desk',
-          'Announce loudly that you\'ve finished everything',
-        ],
-        answer: 'Ask the team if you can help with anything before deciding',
-        explanation: 'Why this is best: asking whether you can help shows genuine team spirit and gives the team the option to use your time productively if they need it — and if they say no, you have a clean, low-guilt reason to leave, because you offered.\n\nWhy the others fail: leaving quietly without asking can look indifferent to a team under pressure, even though it\'s honestly not your project — the cost of a thirty-second check-in is far lower than the risk of appearing unsupportive. Staying and looking busy ("presenteeism") is widely recognised as counterproductive: it wastes your evening, fools nobody who\'s actually paying attention, and signals that you value visibility over genuine usefulness. Announcing loudly that you\'ve finished draws attention to your own productivity at a moment when colleagues are stressed, which reads as tone-deaf rather than helpful.\n\nThe underlying principle: presenteeism — staying late purely to be seen, without adding value — is explicitly called out as a red flag by many firms\' graduate assessors, because it signals a culture problem (juniors afraid to leave) rather than genuine commitment. The behaviour that actually reads well is offering real help and then leaving guilt-free once you\'ve made the offer, whichever way it\'s answered.',
-      },
-      {
-        context: 'A senior colleague repeatedly takes sole credit for analysis you produced. It\'s now affecting how others perceive your contribution.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Raise it directly but professionally with the colleague first',
-          'Complain about them to other team members',
-          'Stop producing good work for them',
-          'Immediately escalate to HR',
-        ],
-        answer: 'Raise it directly but professionally with the colleague first',
-        explanation: 'Why this is best: raising it directly and professionally gives the colleague a chance to correct the behaviour — possibly unintentional, possibly a shorthand from a rushed meeting — before you escalate. It\'s the lowest-conflict route that could resolve the issue in a single conversation, and firms note that candidates who default to escalation without trying the direct route first are seen as unable to handle interpersonal friction themselves.\n\nWhy the others fail: complaining to other team members turns a solvable one-on-one issue into office politics, damages your reputation as someone who gossips, and does nothing to actually fix the credit problem. Withholding good work as a passive protest punishes the team and the client, not just the colleague, and is easily read as unprofessional sulking if it\'s ever noticed. Escalating immediately to HR is disproportionate for a first occurrence and burns a relationship that a five-minute conversation might have fixed — HR routes are for patterns that persist after direct and management-level attempts, not a first resort.\n\nThe underlying principle: workplace conflict resolution has a standard escalation ladder — direct conversation, then your manager, then HR — and skipping straight to the top rung (or never leaving the bottom rung when it isn\'t working) both score poorly. Match your response to how many times the problem has actually occurred.',
-      },
-      {
-        context: 'A long-standing client asks you to process a request that slightly bends firm policy, saying "we always did it this way with your predecessor".',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Process it — client relationships come first',
-          'Politely explain you need to check the policy, then confirm the compliant route with your manager',
-          'Refuse bluntly and end the call',
-          'Process it but keep no record',
-        ],
-        answer: 'Politely explain you need to check the policy, then confirm the compliant route with your manager',
-        explanation: 'Why this is best: pausing to check policy and confirming the compliant route with your manager protects both the client relationship and the firm — you\'re not refusing the client outright, you\'re finding the correct way to help them, which is usually possible even when the exact shortcut they\'re asking for isn\'t.\n\nWhy the others fail: processing it immediately because "client relationships come first" ignores that policies exist for reasons (often regulatory) that a relationship, however valuable, doesn\'t override — and "my predecessor did it" is not a defence if the request breaches a rule. Refusing bluntly and ending the call is needlessly damaging to a long-standing relationship when a compliant alternative might well exist. Processing it while keeping no record compounds the original policy issue with a second, worse one — concealment — which turns a grey-area request into a clear breach.\n\nThe underlying principle: "the client wants it" and "a predecessor did it this way" are both social pressure, not policy authority, and SJTs use this framing constantly because junior staff are the ones most exposed to it in practice. The professional response to social pressure that conflicts with policy is always to pause and verify through the proper channel — never to bend the rule quietly to keep someone happy, and never to end the relationship over a request that might have a compliant version.',
-      },
-      {
-        context: 'You are falling seriously behind on a project and realise you won\'t hit Friday\'s deadline.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Tell your manager now, with a realistic revised plan and what you need',
-          'Say nothing and hope to catch up over the weekend',
-          'Deliver something half-finished on Friday without comment',
-          'Blame the workload publicly in the team meeting',
-        ],
-        answer: 'Tell your manager now, with a realistic revised plan and what you need',
-        explanation: 'Why this is best: flagging it now, with a realistic revised plan and a specific ask (more time, extra help, reduced scope), gives your manager options while there is still time to use them — they might reallocate resources, negotiate the deadline, or decide the current scope was unrealistic from the start.\n\nWhy the others fail: hoping to catch up over the weekend is a bet with no fallback if it doesn\'t work — you\'ll arrive at Friday in exactly the same position, just later and with less credibility. Delivering something half-finished without comment lets your manager discover the problem at the worst possible moment, with zero time to react, and looks like either poor judgement or an attempt to hide the shortfall. Blaming the workload publicly in a team meeting is defensive and unprofessional — it may even be true, but the venue and framing make it look like an excuse rather than a solution.\n\nThe underlying principle: this is the single most-tested scenario type in junior SJTs, because "surprise failure on deadline day" is the exact outcome every manager fears most from a junior hire. The earlier you flag a slipping deadline, the more options exist to fix it — flagging on day one of a two-week project is a non-event, flagging at 5pm the day before is a crisis. Speed of disclosure is the single biggest driver of how this type of scenario is scored.',
-      },
-      {
-        context: 'A teammate has become withdrawn, is missing small deadlines, and mentioned they\'re "not sleeping much". Your team lead hasn\'t noticed.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Check in with them privately and genuinely, and encourage them to seek support',
-          'Report their missed deadlines to the team lead immediately',
-          'Ignore it — everyone has rough patches',
-          'Tell the whole team to give them space',
-        ],
-        answer: 'Check in with them privately and genuinely, and encourage them to seek support',
-        explanation: 'Why this is best: a private, genuine check-in treats a colleague as a person first, not a performance problem — and "not sleeping much" alongside withdrawal and missed deadlines is a pattern worth taking seriously as a wellbeing concern, which a caring conversation addresses directly.\n\nWhy the others fail: reporting their missed deadlines to the team lead immediately, without speaking to the colleague first, frames a possible wellbeing issue as a performance issue and could feel like being reported on behind their back — damaging trust exactly when they may need support most. Ignoring it as "everyone has rough patches" dismisses signs (sleep, withdrawal, missed deadlines together) that, taken together, are more than a normal bad week. Telling the whole team to give them space is well-intentioned but passive and public — it signals the issue to everyone without anyone actually reaching out, which can deepen isolation rather than relieve it.\n\nThe underlying principle: SJTs increasingly test wellbeing awareness alongside pure work-process judgement, reflecting genuine industry concern about burnout in junior roles. The pattern firms reward is direct, private, human concern first, with escalation reserved for cases where the person needs more support than a colleague can provide or where the work risk becomes serious — never surveillance, gossip, or public performance management as a first move.',
-      },
-      {
-        context: 'You believe your manager\'s chosen approach to a client analysis contains a methodological flaw.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Raise it privately with your manager, explaining your reasoning and proposing an alternative',
-          'Say nothing — they outrank you',
-          'Use your own approach secretly instead',
-          'Point out the flaw in front of the client',
-        ],
-        answer: 'Raise it privately with your manager, explaining your reasoning and proposing an alternative',
-        explanation: 'Why this is best: raising the concern privately, with your reasoning and a proposed alternative, respects the hierarchy while still surfacing a genuine risk — this is precisely what McKinsey\'s well-known "obligation to dissent" principle describes: junior staff are expected to voice disagreement through proper channels, not suppress it out of deference.\n\nWhy the others fail: saying nothing because "they outrank you" risks a flawed analysis reaching the client, and if the flaw is later discovered, "I noticed but didn\'t say anything" is a far worse position than having raised it and been overruled. Secretly using your own approach instead is a serious breach of trust — you\'re not empowered to unilaterally override your manager\'s methodology, and if it\'s discovered, it looks like insubordination regardless of whether you were right. Pointing out the flaw in front of the client is the worst option of all: it embarrasses your manager publicly, undermines the firm\'s credibility in the room, and there was no need to do it there rather than beforehand.\n\nThe underlying principle: the distinction the question is testing is channel, not content — raising a genuine concern is always encouraged, but WHERE and HOW you raise it is what separates constructive dissent from either cowardice (staying silent) or insubordination (acting unilaterally or publicly). Private, reasoned, solution-oriented challenge is the answer to almost every "I disagree with someone senior" scenario.',
-      },
-      {
-        context: 'At a networking event, a senior director from another division gives you their card and says "email me". A week later you still haven\'t.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Email now with a brief, specific message referencing your conversation',
-          'Don\'t bother — the moment has passed',
-          'Wait until you need a favour from them',
-          'Add them on every social platform simultaneously',
-        ],
-        answer: 'Email now with a brief, specific message referencing your conversation',
-        explanation: 'Why this is best: emailing now, briefly and specifically referencing your actual conversation, is far better than not following up at all — a week\'s delay is a minor lapse, easily excused with a one-line acknowledgement, and the relationship value doesn\'t expire on a strict deadline.\n\nWhy the others fail: deciding the moment has passed guarantees you get nothing from an opportunity that cost you nothing to pursue further — a week is a normal, forgivable gap in a busy person\'s inbox, not a closed door. Waiting until you need a favour makes the eventual email transparently transactional, and senior people notice when the first contact in months arrives attached to a request — it reads as using the relationship rather than building it. Adding them on every social platform simultaneously is overfamiliar and slightly alarming on a first follow-up; it signals enthusiasm has tipped into a lack of judgement about professional boundaries.\n\nThe underlying principle: good networking is built on low-pressure, specific, well-timed contact — not on perfect timing, and not on multi-channel intensity. A short email that references something specific from the actual conversation (not a generic "great to meet you") shows you were genuinely listening, which matters far more than whether it arrived in 24 hours or seven days.',
-      },
-      {
-        context: 'Mid-project, you spot a news report that your client is under regulatory investigation — nobody on your team has mentioned it.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Flag it to your project lead immediately',
-          'Assume someone senior already knows',
-          'Post about it in the team group chat with speculation',
-          'Contact the client directly to ask about it',
-        ],
-        answer: 'Flag it to your project lead immediately',
-        explanation: 'Why this is best: flagging it to your project lead immediately ensures material information reaches the person best placed to judge its relevance and decide next steps — and doing it fast, before speculating or acting on it yourself, is exactly the right balance of urgency and restraint.\n\nWhy the others fail: assuming someone senior already knows is a dangerous default — it is precisely how firms get blindsided by information that everyone assumed someone else had seen, and "I assumed you knew" is never an acceptable explanation after the fact. Posting it in the team group chat with speculation spreads unverified, sensitive information informally and invites uninformed commentary that could leak or distort the picture before anyone senior has assessed it properly. Contacting the client directly to ask about it is well beyond a junior\'s authority — it could be seen as improper, could damage the relationship, and pre-empts decisions that should be made by people who understand the full context of the engagement.\n\nThe underlying principle: information about material risk to a client relationship should travel up, fast, through the proper channel, and nowhere else — not sideways into a group chat, not outward to the client, and never assumed to already be known. This is one of the clearest "escalate, don\'t freelance" scenarios in the whole SJT category.',
-      },
-      {
-        context: 'You\'re asked in an interview about a weakness. You genuinely struggle with public speaking, but worry admitting it will cost you the offer.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Claim you have no real weaknesses',
-          'Describe a fake, trivial weakness like "I work too hard"',
-          'Honestly name the weakness and describe concrete steps you\'re taking to improve it',
-          'Deflect by criticising a past employer instead',
-        ],
-        answer: 'Honestly name the weakness and describe concrete steps you\'re taking to improve it',
-        explanation: 'Why this is best: naming a real weakness alongside concrete steps you\'re taking to address it demonstrates exactly the self-awareness and growth mindset the question is designed to surface — interviewers aren\'t looking for perfection, they\'re checking whether you can honestly assess yourself and act on it.\n\nWhy the others fail: claiming to have no real weaknesses is transparently evasive and reads as either a lack of self-awareness or an unwillingness to engage honestly with the question — experienced interviewers have heard it hundreds of times and it actively counts against you. The fake trivial weakness ("I work too hard") is such a well-known dodge that it has become a cliché interviewers specifically screen out; using it signals you either haven\'t prepared thoughtfully or are trying to game the question rather than answer it. Deflecting by criticising a past employer is a red flag regardless of the question — it suggests you might speak about THIS firm the same way one day, and it dodges the self-reflection the question is actually asking for.\n\nThe underlying principle: "tell me a weakness" questions are never really about the weakness itself — they\'re testing whether you can be honestly self-critical under mild social pressure, a skill directly relevant to giving and receiving feedback on the job. The winning formula is always: real weakness, brief and non-catastrophic, plus a specific, ongoing action you\'re taking about it — for public speaking that might be "I\'ve been taking every opportunity to present at team meetings and got structured feedback on my last two."',
-      },
-      {
-        context: 'You accidentally cc\'d an external client on an internal email discussing a sensitive negotiating position.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Say nothing and hope they don\'t read it',
-          'Immediately tell your manager and discuss how to handle it with the client',
-          'Send a follow-up asking the client to delete the email, without telling your manager',
-          'Blame the email system'],
-        answer: 'Immediately tell your manager and discuss how to handle it with the client',
-        explanation: 'Why this is best: telling your manager immediately gives them the chance to control how the client conversation happens — they may want to call the client directly, frame it a certain way, or assess whether any real harm was done before it becomes a bigger issue. Speed matters because the window to manage the situation proactively closes fast.\n\nWhy the others fail: saying nothing and hoping the client doesn\'t read it is a bet on someone else\'s inattention, and if they do read it and later realise it wasn\'t disclosed, a manageable slip becomes a serious trust breach involving concealment. Asking the client to delete the email without telling your manager oversteps your authority twice over — you\'re making a unilateral decision about how to handle a client-facing incident, and you\'re doing it without your manager even knowing it happened, which removes their ability to manage the fallout if the client mentions it later. Blaming the email system doesn\'t address the substance and looks evasive.\n\nThe underlying principle: accidental disclosure incidents are a distinct SJT category from ordinary mistakes, because they carry regulatory and confidentiality dimensions beyond the immediate embarrassment. The correct instinct is always immediate, full disclosure to your manager — never a unilateral quiet fix, however tempting it is to make the problem disappear yourself before anyone notices.',
-      },
-      {
-        context: 'Two junior colleagues are in open conflict, and it\'s starting to affect team output. You are not their manager.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Take a side to resolve it faster',
-          'Ignore it entirely — it\'s not your role',
-          'Encourage them to address it directly, and flag the impact on output to your manager if it continues',
-          'Discuss the conflict with other colleagues'],
-        answer: 'Encourage them to address it directly, and flag the impact on output to your manager if it continues',
-        explanation: 'Why this is best: encouraging the two colleagues to address it directly respects that it isn\'t your role to referee a peer dispute, while flagging the impact on output to your actual manager if it continues ensures someone with real authority steps in before the team\'s work suffers further — you\'re neither overstepping nor turning a blind eye.\n\nWhy the others fail: taking a side, even to "resolve it faster", draws you into a conflict that isn\'t yours and likely worsens it — now there are three people involved instead of two, and you\'ve damaged your neutrality with whichever colleague you didn\'t back. Ignoring it entirely because "it\'s not your role" is only defensible if there\'s no impact on shared work — here the prompt states it\'s affecting team output, which makes it everyone\'s problem, not just theirs. Discussing the conflict with other colleagues spreads it further without doing anything to resolve it, and easily tips into gossip.\n\nThe underlying principle: peer conflicts sit in a genuine grey zone — you have no authority to mediate, but you\'re not exempt from the consequences either. The consistent SJT answer for "conflict between others that affects shared outcomes" is to encourage direct resolution first and escalate to the person who DOES have authority only if the impact continues, rather than either inserting yourself as judge or staying silent indefinitely.',
-      },
-      {
-        context: 'You\'re given a task by a senior colleague that you believe is a poor use of your time given other priorities, but they outrank you significantly.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Do the task without question, however long it takes',
-          'Politely explain your current priorities and ask them to help you sequence the work',
-          'Quietly deprioritise it without telling anyone',
-          'Refuse and explain why you think it\'s a bad idea'],
-        answer: 'Politely explain your current priorities and ask them to help you sequence the work',
-        explanation: 'Why this is best: explaining your current priorities and asking the senior colleague to help you sequence the work is honest about the real conflict without refusing outright — it respects their seniority by asking them to make the call, while making sure they have the information (your other commitments) needed to make it well.\n\nWhy the others fail: doing the task without question, however long it takes, means your actual priorities silently slip with nobody aware it\'s happening — which looks like poor time management on your part later, even though the real cause was an unmanaged conflict you never surfaced. Quietly deprioritising it without telling anyone risks the senior colleague assuming it\'s progressing when it isn\'t, which is worse for them than knowing upfront and worse for you if they ask for an update. Refusing outright and explaining why you think it\'s a bad idea is presumptuous from a junior position — you may not have visibility into why they consider it a priority, and framing it as a refusal rather than a request for guidance reads as insubordinate rather than collaborative.\n\nThe underlying principle: when instructions conflict, juniors are rarely expected to silently comply at any cost or to unilaterally refuse — they\'re expected to surface the conflict transparently and let someone with more context and authority resolve it. Framing matters enormously here: "help me sequence this against my other work" gets a completely different reception than "I don\'t think I should do this."',
-      },
-      {
-        context: 'During onboarding, you notice the training materials contain outdated information that could mislead new starters.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Say nothing — it\'s not your job to fix training materials',
-          'Flag it constructively to whoever owns the materials, with the specific correction',
-          'Tell other new starters privately to ignore that section',
-          'Post publicly on the company intranet criticising the materials'],
-        answer: 'Flag it constructively to whoever owns the materials, with the specific correction',
-        explanation: 'Why this is best: flagging the specific correction to whoever owns the materials fixes the actual problem — new starters being misled — while doing it constructively and through the right channel means it\'s likely to be acted on rather than dismissed or resented.\n\nWhy the others fail: saying nothing because "it\'s not your job" is a missed opportunity to improve something at essentially no cost to you, and every future new starter is misled by the same outdated information you could have flagged. Telling other new starters privately to ignore that section fixes nothing structurally — it only helps the people you happen to tell, the materials remain wrong for everyone else, and it does nothing to get the actual error corrected. Posting publicly on the intranet criticising the materials embarrasses whoever created them, likely for an honest oversight, and makes you look like someone who escalates loudly rather than fixes things quietly and effectively.\n\nThe underlying principle: proactive, low-drama, specific feedback through the right channel is one of the most consistently rewarded behaviours across SJT categories, because it signals exactly the kind of employee who improves things around them without needing to be asked or without making a show of it. "Flag it constructively, to the right person, with the fix already worked out" is close to a universal template for these scenarios.',
-      },
-      {
-        context: 'You\'re offered a role at a competing firm with a modest pay rise while mid-way through an important project at your current firm.',
-        prompt: 'What is the MOST effective response regarding your CURRENT employer?',
-        options: [
-          'Leave immediately without notice',
-          'Say nothing until your last day',
-          'Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving',
-          'Tell colleagues your new pay to make a point'],
-        answer: 'Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving',
-        explanation: 'Why this is best: giving proper notice, offering a clean handover, and staying professional throughout protects your reputation, your reference, and your relationships in an industry small enough that people you worked with as a junior will reappear as clients, colleagues or hiring managers years later.\n\nWhy the others fail: leaving immediately without notice, mid-project, damages the team you\'re leaving behind and burns a bridge you may well need later — references and informal reputation checks matter enormously in finance recruiting, and this is exactly the kind of exit that gets mentioned when someone calls a former colleague to ask "what were they like to work with?" Saying nothing until your last day denies your current employer any chance to plan a transition, which is unnecessarily disruptive when a normal notice period exists for precisely this reason. Telling colleagues your new pay to make a point is petty and unprofessional, and it can also make colleagues who remain feel undervalued or resentful, which reflects on you rather than the firm.\n\nThe underlying principle: this question isn\'t really about resignations — it\'s testing whether you understand that professional reputation is cumulative and durable, particularly in a small, relationship-driven industry where the same names recur across firms for an entire career. How you handle the moments that cost you nothing to handle well (an exit where you\'re already leaving) is a strong signal of how you\'ll handle moments that cost you more.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'You are asked to finalise an analysis for a client meeting tomorrow. You spot that a key assumption, set by a well-regarded VP months ago, now looks clearly outdated and materially changes the conclusion. The VP is on annual leave and uncontactable. Your manager is available but has not been close to this workstream.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Present it as-is — the VP set the assumption and owns it',
-          'Quietly update the assumption yourself, since you are confident it is now wrong',
-          'Flag it to your manager now with both versions and your recommendation, so they can decide before the meeting',
-          'Delay the meeting until the VP returns',
-        ],
-        answer: 'Flag it to your manager now with both versions and your recommendation, so they can decide before the meeting',
-        explanation: 'This tests judgement where several answers are defensible. Presenting knowingly outdated analysis to a client is the worst outcome. Silently changing a senior colleague\'s assumption oversteps your authority and leaves nobody able to defend the change. Delaying is disproportionate and usually not yours to decide. Escalating with both versions plus a recommendation gives the decision-maker what they need while showing you did the thinking — the pattern firms consistently reward.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'A senior client contact makes a comment to you over dinner that is clearly inappropriate about a junior colleague of yours who is also present. Other clients are at the table. Your colleague looks visibly uncomfortable but says nothing.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Say nothing at dinner, then check on your colleague privately afterwards and report it internally',
-          'Confront the client publicly at the table immediately',
-          'Say nothing at all — the client relationship is too commercially important',
-          'Tell your colleague privately to let it go, since clients behave like this sometimes',
-        ],
-        answer: 'Say nothing at dinner, then check on your colleague privately afterwards and report it internally',
-        explanation: 'A genuinely difficult one with no comfortable answer. Public confrontation escalates in front of other clients and may expose your colleague to more attention, though calmly redirecting the conversation in the moment is also defensible. What is NOT acceptable is treating it as normal or asking your colleague to absorb it. Firms expect you to support the colleague directly and report through proper channels — commercial importance never justifies leaving it unreported.',
-      },
-      {
-        difficulty: 'expert',
-        context: 'You are close to the end of a long project. You discover an error you made three weeks ago that has flowed into work already shared with the client. Correcting it will not change the final recommendation, but will require the team to redo several days of work during an already brutal week.',
-        prompt: 'What is the MOST effective response?',
-        options: [
-          'Tell your manager immediately with the error, its impact, and options for correcting it',
-          'Say nothing — the recommendation does not change, so the client is not harmed',
-          'Fix it silently going forward without mentioning the earlier version',
-          'Mention it after the project ends to avoid disrupting a difficult week',
-        ],
-        answer: 'Tell your manager immediately with the error, its impact, and options for correcting it',
-        explanation: 'The tempting logic — "the conclusion is unchanged, so why cause pain?" — is exactly the reasoning firms most want to screen out. Client-facing work carries a record; if the error surfaces later, the concealment becomes far more serious than the mistake. Reporting immediately WITH an assessment of impact and options lets your manager make a proportionate call, which may well be to correct it quietly. Never make the disclosure decision alone.',
-      },
-      {
-        context: 'RATING FORMAT — Many real SJTs ask you to rate a single response rather than pick the best of four.\n\nScenario: A colleague asks you to sign off their work as reviewed, saying they are under time pressure and it is "definitely fine". You have not actually reviewed it.\n\nProposed response: "Sign it off to help them out, and review it properly afterwards when you have time."',
-        prompt: 'How effective is this response?',
-        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
-        answer: 'Very ineffective',
-        explanation: 'A sign-off is a control, and signing off work you have not reviewed defeats the control entirely — regardless of intention to check later. In regulated environments this can be a disciplinary matter. Rating-format SJTs test the same judgement as the multiple-choice version, but you must calibrate degree rather than pick a winner. Reserve "very ineffective" for responses that breach a control, conceal something, or create risk for others.',
-      },
-      {
-        context: 'RATING FORMAT\n\nScenario: You are three weeks into your internship. In a team meeting, a senior person states a figure about a market you have researched extensively, and you are fairly confident it is out of date.\n\nProposed response: "Say nothing in the meeting, then message them privately afterwards with the updated figure and your source."',
-        prompt: 'How effective is this response?',
-        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
-        answer: 'Somewhat effective',
-        explanation: 'This is deliberately not a clear-cut case, which is what makes it realistic. Correcting privately with a source is respectful and low-risk, so it is genuinely effective. But it is only "somewhat" — if the meeting is making a decision on that figure, staying silent lets a wrong number drive an outcome, and a brief, humble in-meeting flag ("I may have seen a more recent figure, shall I check?") would be better. Rating SJTs frequently include defensible-but-imperfect options; resist the urge to rate everything at the extremes.',
-      },
-      {
-        context: 'RATING FORMAT\n\nScenario: A client asks you directly for your personal opinion on whether they should proceed with a transaction. You are a junior analyst and this is well outside your remit.\n\nProposed response: "Give them your honest personal view, since they asked you directly and deserve a straight answer."',
-        prompt: 'How effective is this response?',
-        options: ['Very effective', 'Somewhat effective', 'Somewhat ineffective', 'Very ineffective'],
-        answer: 'Somewhat ineffective',
-        explanation: 'Honesty is a good instinct, so this is not "very ineffective" — but a junior giving unmandated advice to a client can constitute an unauthorised recommendation, may conflict with the firm\'s formal position, and exposes both you and the firm. The effective response acknowledges the question warmly and redirects: "That is really a question for [senior], let me bring them in." Note how the rating scale rewards recognising that a well-intentioned action can still be wrong.',
-      },
-    ],
-  },
-  {
-    "id": "critical-thinking",
-    "title": "Watson Glaser Critical Thinking",
-    "icon": "🧭",
-    "color": "text-cyan-400",
-    "border": "border-cyan-500/30",
-    "description": "The proper 5-part critical thinking format: inference, assumptions, deduction, interpretation, argument evaluation.",
-    "secondsPerQuestion": 40,
-    "questionsPerAttempt": 10,
-    "tip": "Each of the five sub-types has ONE specific job. Answer the question type actually asked, not a generic \"is this true\" instinct — inference wants likelihood, deduction wants logical necessity, and they are not the same thing.",
-    "providers": "Watson Glaser II (Pearson) — the market-standard critical thinking test",
-    "requiredBy": "Magic/Silver Circle law firms, the Big 4 (audit, tax, advisory), consulting firms, and compliance/risk functions at investment banks. Also used in many training-contract and internship applications alongside finance ones.",
-    "whyUsed": "It measures whether you can reason carefully about information rather than jump to conclusions — the exact skill needed to read a term sheet, assess a client claim, or evaluate a deal argument without over- or under-reading the evidence.",
-    improveTitle: "How to get better at Watson Glaser Critical Thinking",
-    improveTips: ["Learn what each of the five sub-types actually asks, because they are not interchangeable: Inference wants a likelihood rating, Assumptions wants whether something is silently required, Deduction wants pure logical necessity, Interpretation wants \"beyond reasonable doubt\", Evaluation of Arguments wants relevance plus importance to the specific question.","For Assumptions, always apply the negation test: negate the candidate assumption and check whether the argument still holds. If negating it destroys the argument, the assumption was being made; if the argument survives, it was not.","For Deduction, treat the premises as definitely true even if they contradict what you know about the real world, and reason ONLY from the stated structure — this is the one sub-test where being right about reality can make you wrong about the answer.","For Interpretation, ask whether a sceptical reader could construct a credible alternative explanation consistent with every stated fact. If yes, the conclusion does not clear the beyond-reasonable-doubt bar, however plausible the causal story sounds.","For Evaluation of Arguments, remember truth is not the test — relevance is. A completely true statement can still be a weak argument if it does not actually address the SPECIFIC question asked. Restate the exact question before judging any argument.","For Inference specifically, calibrate the five-point scale deliberately: ask first whether the evidence points a direction at all, then how strongly — do not collapse \"well-supported\" and \"proven\" into the same answer, and do not treat every unconfirmed pattern as automatically \"insufficient\".","This format rewards slow, deliberate reading far more than the other test types — resist the urge to speed through on instinct, since the traps are specifically built to catch fast, confident, real-world pattern-matching."],
-    "questions": [
-      {
-        "context": "INFERENCE — judge how likely a conclusion is GIVEN the facts, on a scale from definitely true to definitely false.\n\nStatement: \"Sales of the company's flagship product fell 15% this quarter, the third consecutive quarterly decline. The CFO resigned during the quarter, citing personal reasons.\"",
-        "prompt": "Inference: \"The CFO's resignation was linked to the declining sales.\"",
-        "options": [
-          "True",
-          "Probably True",
-          "Insufficient Data",
-          "Probably False",
-          "False"
-        ],
-        "answer": "Insufficient Data",
-        "explanation": "Working: an inference is a conclusion drawn beyond what is directly stated, and Watson Glaser asks you to rate how strongly the facts support it — not whether it feels plausible in the real world.\n\nWhy the wrong answers tempt: \"Probably True\" is the instinctive real-world read — CFOs resigning during a sales slump often ARE connected, and if you were reading this in the FT you would assume a link. But the passage gives an explicit alternative reason (\"personal reasons\") and no evidence tying the two events together beyond timing. \"Probably False\" over-corrects, treating the stated reason as proof of no link, when resignation announcements routinely cite \"personal reasons\" as a face-saving cover regardless of the truth. \"True\" and \"False\" are both too strong for a single, unconfirmed inference either way.\n\nTechnique: Watson Glaser deliberately builds inference items where real-world intuition and textual support diverge. Two unrelated facts appearing in the same paragraph is not evidence of a causal link — it is coincidence in timing, and coincidence is the single most common inference trap on this test. \"Insufficient Data\" is correct whenever the facts could support several different, contradictory explanations equally well, which is exactly the case here: sales fell for any number of reasons, and executives leave for any number of reasons, and the passage supplies no bridge between them."
-      },
-      {
-        "context": "INFERENCE\n\nStatement: \"In a survey of 500 graduate applicants, 82% said they had used AI tools to help prepare their CVs. Recruiters at three major banks reported a rise in CVs with near-identical phrasing this year.\"",
-        "prompt": "Inference: \"AI tools are causing some CVs to look similar to each other.\"",
-        "options": [
-          "True",
-          "Probably True",
-          "Insufficient Data",
-          "Probably False",
-          "False"
-        ],
-        "answer": "Probably True",
-        "explanation": "Working: two facts are given — heavy AI usage in CV writing, and recruiters independently noticing more similar phrasing. The two are consistent and mutually reinforcing, even though no formal causal study is cited, so the inference is well-supported without being proven.\n\nWhy the wrong answers tempt: \"True\" over-states the certainty — recruiter impressions are anecdotal, not a controlled study, so \"definitely\" is too strong a claim from this evidence. \"Insufficient Data\" undersells a genuinely strong circumstantial link — this is the mirror-image trap of the previous item: here the two facts DO point the same direction, and treating every unconfirmed pattern as \"insufficient\" is as much an error as reading causation into pure coincidence. \"Probably False\" and \"False\" both contradict the direction the evidence actually points.\n\nTechnique: the inference scale exists to force you to distinguish PROVEN from WELL-SUPPORTED from UNSUPPORTED from CONTRADICTED — five genuinely different positions, not a binary. Ask two questions: does the evidence point this way at all, and if so, how strongly? Here it points clearly one way (unlike the CFO item, where it could point either way), but falls short of proof because there is no controlled comparison — hence \"Probably True\" rather than \"True\". Comparing this item against the previous one is the fastest way to internalise the difference between \"insufficient\" and \"probable\"."
-      },
-      {
-        "context": "ASSUMPTIONS — decide whether an unstated assumption is actually being made in the argument.\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
-        "prompt": "Assumption made: \"The lower-cost location has staff capable of performing the work to the required standard.\"",
-        "options": [
-          "Assumption Made",
-          "Assumption Not Made"
-        ],
-        "answer": "Assumption Made",
-        "explanation": "Working: an assumption is something the speaker must be taking for granted for their argument to make sense, even though they never say it. The proposal only protects margins if the new location can actually do the work properly — if the staff there could not perform the work, moving would not protect margins, it would create losses through errors and rework. So the argument silently depends on this being true.\n\nWhy the wrong answer tempts: candidates who mark \"Assumption Not Made\" are usually reasoning that the statement never mentions staff quality at all, so how can it be assuming something about them? But that misunderstands what an assumption is — it is precisely the thing that is NOT said but MUST be true for the stated conclusion to follow. If you can construct a scenario where the stated premise is true but the assumption is false, and the argument then falls apart, the assumption is being made.\n\nTechnique: apply the negation test. Negate the candidate assumption (\"staff at the new location CANNOT perform the work to standard\") and ask whether the original argument still holds. Here it collapses instantly — cheap processing done badly does not protect margins, it destroys them through errors, rework and reputational cost. When negating a statement destroys the argument, the assumption was being made. When negating it leaves the argument standing, it was not — that second case is what the sister question below tests."
-      },
-      {
-        "context": "ASSUMPTIONS\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
-        "prompt": "Assumption made: \"The lower-cost location is outside the company's home country.\"",
-        "options": [
-          "Assumption Made",
-          "Assumption Not Made"
-        ],
-        "answer": "Assumption Not Made",
-        "explanation": "Working: apply the negation test again. Negate the candidate assumption — \"the lower-cost location is INSIDE the home country\" — and check whether the argument still works. It does: many countries have regions with materially lower costs than a head-office city, so relocating processing domestically could protect margins just as well as relocating it abroad.\n\nWhy the wrong answer tempts: \"offshoring\" is the almost automatic mental image that \"lower-cost location\" conjures for anyone who has read about outsourcing in the news, and it is very easy to import that assumption from real-world pattern-matching rather than from the actual text. The statement never says overseas, never says offshore, and the argument logic (lower cost protects margins) works identically whether the new location is in the next region over or a different continent.\n\nTechnique: this pair of questions is deliberately built to expose the difference between an assumption the ARGUMENT needs and a detail your BACKGROUND KNOWLEDGE fills in automatically. Real assumptions are structurally necessary — remove them and the logic breaks. Imported details are just the first mental picture that comes to mind and are usually not necessary at all. Whenever a candidate assumption feels obvious because that is usually how it works in practice, stop and run the negation test explicitly rather than trusting the feeling — the feeling is exactly what this sub-test is designed to catch out."
-      },
-      {
-        "context": "DEDUCTION — decide whether a conclusion follows with LOGICAL NECESSITY from the given statements, treating them as definitely true even if they seem odd.\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
-        "prompt": "Conclusion: \"None of the fund's top-five holdings has paid a dividend in the last three years.\"",
-        "options": [
-          "Conclusion Follows",
-          "Conclusion Does Not Follow"
-        ],
-        "answer": "Conclusion Follows",
-        "explanation": "Working: this is a syllogism. Premise 1: top-five holdings sit inside technology companies. Premise 2: no technology company in the fund has paid a dividend. Combining them, every top-five holding is a technology company, and no technology company has paid a dividend — so no top-five holding has paid a dividend. The logic is airtight regardless of whether it happens to match reality.\n\nWhy the wrong answer tempts: some candidates hesitate because they know in real life that some large tech companies DO pay dividends, and that outside knowledge creates doubt. Deduction questions explicitly instruct you to treat the premises as true and reason ONLY from them — the test is measuring logical validity, not real-world accuracy, and bringing in outside facts is exactly the error this section is built to catch.\n\nTechnique: draw the sets. Top-five holdings sit entirely inside technology companies in the fund (premise 1). Technology companies in the fund sit entirely inside companies that have not paid a dividend (premise 2, restated). Therefore top-five holdings sit entirely inside not paid a dividend — the conclusion is forced. When a conclusion follows purely from the logical structure, mark it as following even if you personally doubt the premises; when it does not follow from the structure, mark it as not following even if you believe it is probably true in reality. Deduction is the one sub-test where being right about the world can make you wrong about the answer."
-      },
-      {
-        "context": "DEDUCTION\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
-        "prompt": "Conclusion: \"The fund holds no dividend-paying companies at all.\"",
-        "options": [
-          "Conclusion Follows",
-          "Conclusion Does Not Follow"
-        ],
-        "answer": "Conclusion Does Not Follow",
-        "explanation": "Working: the premises only describe the fund top-five holdings and technology companies within the fund. They say nothing about the fund other holdings, which could easily include non-technology, dividend-paying companies further down the portfolio. The conclusion generalises far beyond what the premises cover.\n\nWhy the wrong answer tempts: this is placed immediately after a nearly identical, correctly-following conclusion, and the surface similarity is deliberate — both conclusions are about dividends and the fund, and a candidate moving quickly can carry the follows verdict over from the previous item without re-checking the scope. The premises talk about a SUBSET (top-five holdings, technology companies) while this conclusion claims something about the WHOLE fund — a scope expansion that breaks the logical chain.\n\nTechnique: always check what the premises actually cover versus what the conclusion claims. A conclusion that stays within the scope of the premises can follow with necessity; a conclusion that quietly widens the scope — from top five to all, from technology companies to every company, from this quarter to always — almost never follows, however plausible it sounds. Pairing a valid and an invalid conclusion from the same premises, as this bank does deliberately, is the standard Watson Glaser construction, and re-reading the premises exact scope before each conclusion is the only reliable defence."
-      },
-      {
-        "context": "INTERPRETATION — decide whether a conclusion follows BEYOND REASONABLE DOUBT from the passage, treating \"beyond reasonable doubt\" as a stricter bar than \"plausible\" but not as strict as pure logical deduction.\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
-        "prompt": "Conclusion: \"The regulator's fine directly caused the compliance leadership changes.\"",
-        "options": [
-          "Conclusion Follows",
-          "Conclusion Does Not Follow"
-        ],
-        "answer": "Conclusion Does Not Follow",
-        "explanation": "Working: the passage establishes a fine and, separately, leadership changes at two of the three banks. It never states a causal mechanism connecting them, and there are ordinary alternative explanations — the changes might reflect a broader reshuffle, planned succession, or reputational pressure from the underlying failures rather than the fine specifically. Beyond reasonable doubt requires the passage to rule out credible alternatives, which it does not.\n\nWhy the wrong answer tempts: causally connecting a fine to a subsequent leadership change is an entirely reasonable real-world inference and a journalist would likely frame the story that way — this is exactly why interpretation questions use financial-news-style passages, where causal narrative is the default reading style. But beyond reasonable doubt is a higher bar than reasonable interpretation, and the passage supplies correlation (fine, then changes) without ruling out alternative causes.\n\nTechnique: interpretation sits between inference (probabilistic) and deduction (logically forced), and the deciding question is: could a sceptical, careful reader construct a credible alternative explanation consistent with every stated fact? Here, yes — several alternative explanations survive the passage untouched, so the conclusion does not clear the beyond-reasonable-doubt bar. Only when the passage closes off realistic alternatives, typically through explicit causal language such as \"in response to the fine, the bank replaced...\", does an interpretation conclusion follow."
-      },
-      {
-        "context": "INTERPRETATION\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
-        "prompt": "Conclusion: \"At least one of the three fined banks still has the same head of compliance as before the fine.\"",
-        "options": [
-          "Conclusion Follows",
-          "Conclusion Does Not Follow"
-        ],
-        "answer": "Conclusion Follows",
-        "explanation": "Working: the passage states two of the three banks have replaced their heads of compliance. By straightforward arithmetic, the third bank has not been stated to have replaced theirs, meaning at least one of the three retains their pre-fine head of compliance (absent any information suggesting otherwise).\n\nWhy the wrong answer tempts: some candidates hesitate here purely on principle, having just marked the previous conclusion as does not follow and expecting a section to alternate or continue a pattern of doubt — a form of momentum error, not a reasoning error. Others mistakenly read two of the three as approximate or as implying at least two, possibly all three, which the wording does not support.\n\nTechnique: interpretation conclusions that are just precise restatements of a stated fact — including the simple arithmetic implication of a stated fact — clear the beyond-reasonable-doubt bar easily, because there is no room for a credible alternative reading. This is the counterpart to the previous item: do not let a run of does-not-follow answers create a false sense that the passage is generally unreliable — assess every conclusion strictly on its own relationship to the stated facts, including obvious arithmetic ones like two of three leaving one of three unaccounted for."
-      },
-      {
-        "context": "EVALUATION OF ARGUMENTS — judge whether an argument is STRONG (directly relevant and important to the issue) or WEAK (irrelevant, trivial, or based on unsupported assertion), for the stated question.\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"Yes, because analysts who cannot navigate Bloomberg efficiently take significantly longer to complete basic market data tasks, slowing down the whole team's output.\"",
-        "prompt": "Is this argument strong or weak?",
-        "options": [
-          "Strong",
-          "Weak"
-        ],
-        "answer": "Strong",
-        "explanation": "Working: a strong argument must be both relevant to the specific question asked and important, not merely true in passing. This one directly addresses whether certification should be REQUIRED, gives a concrete mechanism (slower task completion) and a real organisational cost (team-wide slowdown) — exactly the kind of practical, on-point reasoning the question calls for.\n\nWhy weak arguments get mistaken for strong ones (and vice versa here): the trap in this sub-test usually runs the other way — a TRUE but irrelevant or trivial statement gets mistaken for a strong argument because it sounds like an authoritative fact. This argument avoids that trap: it is not just true, it is directly load-bearing for the specific policy question (mandatory certification), which is what strong actually requires.\n\nTechnique: strength requires passing two tests, not one — relevance (does it actually address the specific question, not just the general topic) and importance (does it carry real practical weight, not a minor or already-obvious point). An argument can be completely true and still be weak if it is a triviality such as \"Bloomberg is widely used in finance\" or addresses a nearby but different question. Practise stating, in one sentence, exactly what the question is asking, then check whether the argument substance would actually move a reasonable decision-maker on that specific question."
-      },
-      {
-        "context": "EVALUATION OF ARGUMENTS\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"No, because Bloomberg terminals are extremely expensive to license.\"",
-        "prompt": "Is this argument strong or weak?",
-        "options": [
-          "Strong",
-          "Weak"
-        ],
-        "answer": "Weak",
-        "explanation": "Working: the argument is factually true — Bloomberg terminal licences are genuinely expensive — but it is irrelevant to the specific question asked. The question is about REQUIRING CERTIFICATION for analysts, not about whether to license terminals at all; the firm has, by the question own framing, presumably already decided to have Bloomberg terminals in the office. The cost of the terminals themselves is a sunk consideration unrelated to whether staff should be certified to use them well.\n\nWhy the wrong answer tempts: this is the classic evaluation-of-arguments trap — a statement that is completely true and sounds like a serious, weighty business consideration such as cost gets waved through as strong simply because it is factual and financially framed. But truth is not the test; relevance to the SPECIFIC question is. \"Bloomberg is expensive\" is a strong argument against buying terminals in the first place, and a weak one against training staff to use terminals the firm already has.\n\nTechnique: build the habit of restating the exact question before judging any argument, and check whether the argument conclusion, if accepted, would actually change your answer to THAT question. Here, even a firm believer that Bloomberg is expensive gains nothing by refusing to certify staff — the terminals are being paid for either way, and certification only affects how well the existing investment is used. Any argument that would be equally true whether the specific proposal passed or failed is weak by definition, however true or serious it sounds."
-      }
-    ]
-  },
-  {
-    "id": "checking",
-    "title": "Checking & Attention to Detail",
-    "icon": "🔍",
-    "color": "text-pink-400",
-    "border": "border-pink-500/30",
-    "description": "Fast comparison and error-spotting tests — the format used to screen for operations, settlements and data-heavy junior roles.",
-    "secondsPerQuestion": 20,
-    "questionsPerAttempt": 10,
-    "tip": "Work systematically left to right or field by field — never eyeball the whole line at once and guess it \"looks the same\". These tests are won on method, not on being naturally observant.",
-    "providers": "SHL Checking Test, Talent Q Elements Checking, Cut-e/Aon scales cch, bespoke back-office screening tools",
-    "requiredBy": "Operations, settlements, trade support, fund administration, KYC/onboarding teams, and increasingly as a fast initial screen even for some analyst schemes at banks and asset managers.",
-    "whyUsed": "A single mistyped account number or transposed figure in a trade confirmation or client record can cause a real financial loss or a regulatory breach. Firms use checking tests because they are a direct, low-cost proxy for exactly that risk — can you reliably catch a small discrepancy under time pressure, again and again, without fatigue causing you to miss one.",
-    improveTitle: "How to get better at Checking & Attention to Detail",
-    improveTips: ["Never compare two long strings by overall shape or \"does it look right\" — split every field into chunks (thousands/hundreds/tens/units for money, groups of 4 for IBANs, day/month/year for dates) and compare chunk by chunk.","Handle letters and digits as two separate passes on any alphanumeric code (passport numbers, references, SWIFT/BIC codes) — the eye tends to verify a distinctive letter prefix carefully while skimming the digit string, which is exactly where transposition errors hide.","For free-text fields (names, addresses), read for CHARACTERS, not meaning — your brain auto-corrects familiar words on sight, silently \"fixing\" a missing or swapped letter before you consciously notice it. Reading a word backwards, end to start, defeats this auto-correction.","Recompute percentage-based fields (VAT, fees, rates) independently from their base figure rather than only checking that the components sum correctly — a total can be internally consistent while still applying the wrong rate.","Expect roughly a third to half of real checking-test items to be genuine matches. Do not let a run of \"discrepancy found\" answers create momentum toward assuming every remaining item has an error too — false positives are graded as wrong, exactly like missed real errors.","Work at a fixed, sustainable pace rather than rushing the easy-looking items — these tests are usually scored on accuracy under a tight but even time budget, and fatigue-driven misses cluster in the last third of a long test far more than the first.","Practise on real numbers you have to actually compute, not just visual \"spot the difference\" puzzles — the highest-value checking questions (like the VAT-rate item in this bank) require you to verify a calculation is correct, not just that two records match."],
-    "questions": [
-      {
-        "context": "Compare the two records. They should be identical.",
-        "dataTable": {
-          "title": "Record A vs Record B",
-          "headers": [
-            "Field",
-            "Record A",
-            "Record B"
+        {
+          "context": "An analyst's bonus is 40% of base salary. Base salary is £65,000.",
+          "prompt": "What is total compensation?",
+          "options": [
+            "£91,000",
+            "£105,000",
+            "£26,000",
+            "£89,000"
           ],
-          "rows": [
-            [
-              "Account No.",
-              "GB29 NWBK 6016 1331 9268 19",
-              "GB29 NWBK 6016 1331 9268 19"
+          "answer": "£91,000",
+          "explanation": "Working: bonus = 40% × £65,000 = £26,000. Total compensation = base + bonus = £65,000 + £26,000 = £91,000.\n\nWhy the wrong answers tempt: £26,000 is the bonus alone — answering the wrong question. £105,000 treats the bonus as 40% of an already-grossed-up figure, or simply guesses. £89,000 is arithmetic drift.\n\nTechnique: this one is easy, which is exactly the risk. Under time pressure candidates select the bonus figure because it is the number they just calculated. Before selecting, re-read what was asked — \"total compensation\" not \"bonus\". Test writers always include the intermediate value as a distractor."
+        },
+        {
+          "context": "GDP data: Country A: $2.0tn growing at 3%. Country B: $1.6tn growing at 5%.",
+          "prompt": "Approximately how much does each economy add next year?",
+          "options": [
+            "A: $60bn, B: $80bn",
+            "A: $80bn, B: $60bn",
+            "A: $60bn, B: $60bn",
+            "A: $30bn, B: $50bn"
+          ],
+          "answer": "A: $60bn, B: $80bn",
+          "explanation": "Working: Country A adds 3% × $2,000bn = $60bn. Country B adds 5% × $1,600bn = $80bn.\n\nWhy the wrong answers tempt: \"A: $80bn, B: $60bn\" swaps them, which is easy when the larger economy intuitively feels like it should add more. \"A: $60bn, B: $60bn\" comes from applying A's figure to both. \"A: $30bn, B: $50bn\" halves the rates or misplaces a decimal.\n\nTechnique: percentage growth and absolute growth are different questions, and tests deliberately set up cases where the smaller, faster-growing entity adds more in absolute terms. Whenever a question gives you both a size and a rate, check which one it is actually asking about before calculating."
+        },
+        {
+          "prompt": "An investment falls 20% in year one, then rises 20% in year two. Overall it is:",
+          "options": [
+            "Back to its starting value",
+            "Down 4%",
+            "Up 4%",
+            "Down 2%"
+          ],
+          "answer": "Down 4%",
+          "explanation": "Working: start at 100. A 20% fall gives 100 × 0.8 = 80. A 20% rise on that gives 80 × 1.2 = 96. So you end at 96, down 4%.\n\nWhy the wrong answers tempt: \"back to its starting value\" is the intuitive answer and is wrong because the rise applies to a smaller base than the fall did. \"Up 4%\" reverses the direction. \"Down 2%\" is a half-remembered version of the effect.\n\nTechnique: percentage changes are multiplicative, not additive — 0.8 × 1.2 = 0.96, always. This asymmetry is why a 50% loss requires a 100% gain to recover, and it is one of the most frequently tested ideas in both aptitude tests and finance interviews. Generalise it: an equal percentage fall and rise always leaves you down."
+        },
+        {
+          "context": "Exchange rate: £1 = $1.25. A UK firm invoices a US client $150,000.",
+          "prompt": "How much does the firm receive in pounds?",
+          "options": [
+            "£187,500",
+            "£120,000",
+            "£150,000",
+            "£112,500"
+          ],
+          "answer": "£120,000",
+          "explanation": "Working: the rate is £1 = $1.25, so to convert dollars into pounds you divide: $150,000 ÷ 1.25 = £120,000.\n\nWhy the wrong answers tempt: £187,500 multiplies instead of dividing — the single most common FX error. £150,000 ignores the conversion. £112,500 uses a different rate or compounds an error.\n\nTechnique: before calculating, decide whether the answer should be bigger or smaller. A pound is worth more than a dollar here, so a dollar amount must convert into FEWER pounds. That directional check alone eliminates £187,500 instantly and takes two seconds. Never do an FX conversion without it — direction errors are far more common than arithmetic errors."
+        },
+        {
+          "context": "A company's costs are 70% of revenue. Revenue rises 10% while costs rise only 5%.",
+          "prompt": "If revenue was £100m, what is the new profit?",
+          "options": [
+            "£30m",
+            "£33m",
+            "£36.5m",
+            "£40m"
+          ],
+          "answer": "£36.5m",
+          "explanation": "Working: original costs = 70% × £100m = £70m, so original profit = £30m. New revenue = £100m × 1.10 = £110m. New costs = £70m × 1.05 = £73.5m. New profit = £110m − £73.5m = £36.5m.\n\nWhy the wrong answers tempt: £33m applies the 10% revenue growth to the original profit, ignoring that costs grew more slowly. £30m assumes profit is unchanged. £40m assumes costs were flat.\n\nTechnique: this is operating leverage — profit grew 21.7% from just 10% revenue growth, because costs grew slower than revenue. Whenever revenue and costs grow at different rates, profit growth is amplified relative to revenue growth. The step people skip is converting the 70% cost ratio into an actual pound figure before growing it; work in pounds, not percentages, as soon as you can."
+        },
+        {
+          "prompt": "A bond pays a £45 annual coupon and trades at £900. Its current yield is:",
+          "options": [
+            "4.5%",
+            "5.0%",
+            "5.5%",
+            "9.0%"
+          ],
+          "answer": "5.0%",
+          "explanation": "Working: current yield = annual coupon ÷ current price = £45 ÷ £900 = 5.0%.\n\nWhy the wrong answers tempt: 4.5% is the COUPON rate (£45 on the £1,000 face value) — correct arithmetic, wrong question. 5.5% overshoots. 9.0% divides by the wrong figure entirely.\n\nTechnique: coupon rate is fixed against face value; current yield floats against the market price. Because this bond trades at a discount to par (£900 versus £1,000), its current yield must exceed its coupon rate — a directional check that tells you the answer is above 4.5% before you calculate. This relationship underpins the whole price-yield seesaw: as price falls, yield rises. Expect it in every fixed income interview."
+        },
+        {
+          "context": "Team A of 4 analysts completes a model in 6 days.",
+          "prompt": "Working at the same rate, how long would 3 analysts take?",
+          "options": [
+            "4.5 days",
+            "7 days",
+            "8 days",
+            "9 days"
+          ],
+          "answer": "8 days",
+          "explanation": "Working: total work required = 4 analysts × 6 days = 24 analyst-days. With 3 analysts, time = 24 ÷ 3 = 8 days.\n\nWhy the wrong answers tempt: 4.5 days applies direct proportion (fewer people, less time) — the intuition trap. 7 days is a guess between 6 and 8. 9 days over-scales.\n\nTechnique: convert to total work units first — analyst-days, machine-hours, person-weeks. Then divide by the new resource. This is inverse proportion: fewer people means MORE time, so your answer must be greater than 6 days, which eliminates 4.5 instantly. In consulting cases this same unit-conversion logic solves most capacity and staffing questions."
+        },
+        {
+          "context": "A fund charges a 2% management fee. An investor puts in £250,000 and the gross return is 8%.",
+          "prompt": "Roughly what is the investor's net gain after the fee (fee charged on invested capital)?",
+          "options": [
+            "£20,000",
+            "£15,000",
+            "£10,000",
+            "£5,000"
+          ],
+          "answer": "£15,000",
+          "explanation": "Working: gross gain = 8% × £250,000 = £20,000. Management fee = 2% × £250,000 = £5,000. Net gain = £20,000 − £5,000 = £15,000.\n\nWhy the wrong answers tempt: £20,000 ignores the fee. £10,000 double-counts it or applies 4%. £5,000 is the fee itself, selected because it is the last number calculated.\n\nTechnique: note how large the fee is relative to the return — a 2% fee consumed a quarter of an 8% gross return. That ratio is the entire active-versus-passive investing debate in one line, and it compounds brutally over time: the same 2% drag over 20 years costs roughly a third of your final wealth. Expect this framing in asset management interviews."
+        },
+        {
+          "prompt": "£10,000 invested at 10% compound interest for 2 years grows to:",
+          "options": [
+            "£12,000",
+            "£12,100",
+            "£11,000",
+            "£12,200"
+          ],
+          "answer": "£12,100",
+          "explanation": "Working: Year 1 = £10,000 × 1.10 = £11,000. Year 2 = £11,000 × 1.10 = £12,100. Or directly: 10,000 × 1.1² = £12,100.\n\nWhy the wrong answers tempt: £12,000 is simple interest (£1,000 twice) — it misses the interest earned on the first year's interest. £11,000 is one year only. £12,200 is a miscalculation.\n\nTechnique: the £100 gap between £12,000 and £12,100 IS compounding, and over long periods that gap becomes enormous — £10,000 at 10% for 30 years is £174,000 compounded versus £40,000 simple. Always multiply by (1 + r) repeatedly rather than adding the interest amount. Related shortcut worth memorising: the rule of 72 says 10% doubles your money in about 7.2 years."
+        },
+        {
+          "context": "A product sells at £50 with variable costs of £20 per unit. Fixed costs are £120,000.",
+          "prompt": "How many units must be sold to break even?",
+          "options": [
+            "2,400",
+            "4,000",
+            "6,000",
+            "3,000"
+          ],
+          "answer": "4,000",
+          "explanation": "Working: contribution per unit = price − variable cost = £50 − £20 = £30. Breakeven volume = fixed costs ÷ contribution = £120,000 ÷ £30 = 4,000 units.\n\nWhy the wrong answers tempt: 2,400 divides fixed costs by the £50 price, ignoring variable costs — the most common error. 6,000 divides by £20 (the variable cost). 3,000 is a rough guess.\n\nTechnique: only the CONTRIBUTION covers fixed costs, because every unit sold also incurs its own variable cost. Breakeven = fixed ÷ contribution is worth memorising outright — it appears in numerical tests, consulting cases and corporate finance interviews. The powerful follow-up insight: a 10% price cut here drops contribution from £30 to £25, pushing breakeven from 4,000 to 4,800 units, so you need 20% more volume just to stand still."
+        },
+        {
+          "prompt": "After falling 20%, a share trades at £64. What was its original price?",
+          "options": [
+            "£76.80",
+            "£80",
+            "£84",
+            "£78"
+          ],
+          "answer": "£80",
+          "explanation": "Working: after a 20% fall, £64 represents 80% of the original. So original = £64 ÷ 0.8 = £80. Check: £80 × 0.8 = £64 ✓.\n\nWhy the wrong answers tempt: £76.80 adds 20% back to £64 — the classic and most common trap, because adding 20% to a smaller number does not undo subtracting 20% from a larger one. £84 and £78 are estimates.\n\nTechnique: to reverse ANY percentage change, DIVIDE by (1 ± rate). Never add or subtract the same percentage back. This appears constantly in disguised forms — \"headcount is 240 after a 20% rise, what was it before?\" is the same question (240 ÷ 1.2 = 200). Always verify by running your answer forward: if it does not reproduce the given figure, you added instead of divided."
+        },
+        {
+          "context": "A portfolio is 60% in Fund A (returned 5%) and 40% in Fund B (returned 10%).",
+          "prompt": "What is the portfolio's overall return?",
+          "options": [
+            "7.5%",
+            "7%",
+            "8%",
+            "6.5%"
+          ],
+          "answer": "7%",
+          "explanation": "Working: weighted average = (60% × 5%) + (40% × 10%) = 3.0% + 4.0% = 7.0%.\n\nWhy the wrong answers tempt: 7.5% is the simple average of 5% and 10%, ignoring that more money sits in the lower-returning fund. 8% over-weights Fund B. 6.5% under-weights it.\n\nTechnique: never average returns without weighting by how much is invested in each. The answer must sit closer to the fund holding more money — since 60% is in the 5% fund, the blend must be below 7.5%, which eliminates the simple average immediately. This same weighted-average logic drives WACC, blended margins and portfolio returns, so it is worth being fast at."
+        },
+        {
+          "context": "Revenue is £250m with a gross margin of 40%.",
+          "prompt": "What is the cost of goods sold?",
+          "options": [
+            "£100m",
+            "£150m",
+            "£40m",
+            "£210m"
+          ],
+          "answer": "£150m",
+          "explanation": "Working: gross margin 40% means gross profit = 40% × £250m = £100m. Cost of goods sold = revenue − gross profit = £250m − £100m = £150m. Equivalently, COGS is 60% of revenue.\n\nWhy the wrong answers tempt: £100m is the gross PROFIT — right calculation, wrong question, and the most-selected wrong answer. £40m treats the margin as a pound figure. £210m is arithmetic drift.\n\nTechnique: margin and cost ratio are complements that sum to 100%. If margin is 40%, COGS is automatically 60% — you can go straight to 0.6 × 250 = £150m in one step. Whenever a question gives you a margin, immediately write down the complementary cost percentage; it usually saves a step and prevents answering the wrong question."
+        },
+        {
+          "context": "A company has EBIT of £45m and annual interest expense of £9m.",
+          "prompt": "What is its interest coverage ratio?",
+          "options": [
+            "5x",
+            "4x",
+            "9x",
+            "0.2x"
+          ],
+          "answer": "5x",
+          "explanation": "Working: interest coverage ratio = EBIT ÷ interest expense = £45m ÷ £9m = 5.0x.\n\nWhy the wrong answers tempt: 4x subtracts before dividing (45 − 9 = 36, then a slip). 9x uses the interest figure itself. 0.2x inverts the ratio — dividing interest by EBIT instead.\n\nTechnique: coverage ratios always put the resource ON TOP and the obligation underneath, because you are asking \"how many times over can I cover this?\" An answer below 1x would mean the company cannot pay its interest at all, so any coverage answer under 1 should trigger a re-check. Context worth knowing: lenders typically want above 3x, below 2x signals distress, and covenants are frequently written against exactly this ratio — so it comes up in both aptitude tests and credit interviews."
+        },
+        {
+          "context": "£1 = $1.25 and €1 = $1.00.",
+          "prompt": "What is the £/€ exchange rate?",
+          "options": [
+            "£1 = €0.80",
+            "£1 = €1.25",
+            "£1 = €1.00",
+            "£1 = €2.25"
+          ],
+          "answer": "£1 = €1.25",
+          "explanation": "Working: £1 buys $1.25. Since €1 = $1.00, those $1.25 buy €1.25. Therefore £1 = €1.25.\n\nWhy the wrong answers tempt: £1 = €0.80 inverts the rate (1 ÷ 1.25) — the most common cross-rate error. £1 = €1.00 ignores the dollar leg. £1 = €2.25 adds the rates instead of chaining them.\n\nTechnique: chain cross rates through the common currency, cancelling units as you go — £ → $ → €, so £1 × (1.25 $/£) × (1 €/$) = €1.25. Then sanity-check the direction: the pound is stronger than the dollar, and the euro equals the dollar, so a pound must be worth MORE than a euro. That alone eliminates 0.80 and 1.00. Writing the units explicitly is what stops you inverting."
+        },
+        {
+          "context": "Headcount data — Front office: 240, up 20% year-on-year. Operations: 600, down 10% year-on-year.",
+          "prompt": "What was TOTAL headcount one year ago (front office + operations)?",
+          "options": [
+            "840",
+            "867",
+            "800",
+            "873"
+          ],
+          "answer": "867",
+          "explanation": "Working: reverse each segment separately. Front office rose 20%, so last year = 240 ÷ 1.2 = 200. Operations fell 10%, so last year = 600 ÷ 0.9 = 667. Total last year = 200 + 667 = 867.\n\nWhy the wrong answers tempt: 840 applies a single blended percentage to the combined 840 total, which is invalid because the two segments moved in opposite directions. 800 reverses only the front office. 873 uses slightly wrong division.\n\nTechnique: when segments change at different rates, you must reverse each one individually — never apply an average to the total. Note also the two directions: a RISE reverses by dividing by 1.2, a FALL reverses by dividing by 0.9. Both are divisions, which catches people who instinctively multiply for one of them. Sanity-check: front office grew and operations shrank, so the old total should be close to the new one, which 867 versus 840 satisfies."
+        },
+        {
+          "context": "A fund returns 12% in year 1 and −8% in year 2.",
+          "prompt": "What is the compound (not average) two-year return?",
+          "options": [
+            "4.0%",
+            "3.0%",
+            "2.96%",
+            "20.0%"
+          ],
+          "answer": "3.0%",
+          "explanation": "Working: chain the growth factors. Year 1 turns £1 into 1.12. Year 2 does not take 8% off the original — it takes 8% off the NEW balance: 1.12 × 0.92 = 1.0304. So the two-year compound return is 3.04%, or 3.0% to one decimal.\n\nWhy the wrong answers tempt: 4.0% is the naive (12 − 8) subtraction — it ignores that the 8% loss applies to a bigger base than the 12% gain did. 2.96% is what you get if you compound in the wrong direction (0.88 × 1.12 − 1 = −1.4%, or 1.12 − 1.12×0.08 mis-sequenced) — it looks precise, which is exactly why it is offered. 20.0% is simply 12 + 8, added instead of netted: the answer you pick if you stop reading at “12% and 8%”.\n\nTechnique: percentage changes NEVER add. Convert every move to a multiplier (+12% → 1.12, −8% → 0.92), multiply the chain, subtract 1. Order does not matter for the final figure, so multiply the easy pair first. Permanent sanity check: a gain and a loss of the SAME size always leave you down (1.12 × 0.88 = 0.9856), because the loss hits a bigger base. Here the gain is larger than the loss, so the answer must be positive but smaller than 4% — that single observation eliminates three options in five seconds without any arithmetic."
+        },
+        {
+          "context": "A company issues 2 million new shares at £4.50 each, raising cash. It previously had 18 million shares outstanding and net income of £27m.",
+          "prompt": "By how much does EPS fall purely from the share issuance (assume net income unchanged)?",
+          "options": [
+            "About 10%",
+            "About 8%",
+            "About 11%",
+            "About 5%"
+          ],
+          "answer": "About 10%",
+          "explanation": "Working: EPS = net income ÷ share count. Old EPS = £27m ÷ 18m = £1.50. New share count = 18m + 2m = 20m, so new EPS = £27m ÷ 20m = £1.35. The fall is £0.15 ÷ £1.50 = 10%.\n\nWhy the wrong answers tempt: “About 11%” is 2 ÷ 18 = 11.1% — the share count rose by 11.1%, but EPS falls by only 10%, because the denominator ratio is 18/20 = 0.90. “About 8%” comes from dividing the £0.15 fall by the NEW EPS (0.15 ÷ 1.35 = 11%) or from a botched 1.5/18. “About 5%” tempts anyone who assumes the £9m raised offsets half the dilution — it cannot, because the question explicitly holds net income constant.\n\nTechnique: for pure dilution, skip EPS entirely — the percentage fall equals 1 − (old shares ÷ new shares) = 1 − 18/20 = 10%. The £4.50 issue price and the £9m raised are deliberate noise: in a real deal that cash earns a return and partially offsets dilution, and that is the standard interview follow-up, but here the stem ring-fences it. Remember the asymmetry: a rise of x% in the share count causes a fall of x/(1+x) in EPS — always slightly smaller than x. Anyone who answers with the same number as the share-count increase has skipped a step."
+        },
+        {
+          "context": "A UK investor holds a US stock. The stock rises 8% in USD terms, but the pound strengthens 5% against the dollar over the same period.",
+          "prompt": "Approximately what is the investor's return in GBP terms?",
+          "options": [
+            "13%",
+            "8%",
+            "3%",
+            "2.9%"
+          ],
+          "answer": "2.9%",
+          "explanation": "Working: you earn 1.08 in dollars, but each dollar now buys fewer pounds because sterling strengthened 5%. GBP return = 1.08 ÷ 1.05 − 1 = 1.0286 − 1 ≈ 2.9%.\n\nWhy the wrong answers tempt: 3% is the quick subtraction 8 − 5. It is a perfectly good approximation, and in an interview you would say it out loud — but the option set also contains 2.9%, and when a test offers both a rounded and an exact figure, the exact one is the intended answer. 13% ADDS the FX move, which would be right only if sterling had weakened 5%. 8% ignores currency entirely, which is the single most common real-world error in cross-border performance reporting.\n\nTechnique: ask one question before calculating — did my home currency get stronger or weaker? Stronger home currency means foreign assets translate back into less, a drag, so divide. Weaker home currency is a tailwind, so multiply. The subtraction shortcut is accurate to within about 0.2 percentage points for moves under 10%, so use it to eliminate options fast and only do the division if two candidates survive, which is precisely the trap laid here. In practice this is why funds quote returns both “local” and “GBP hedged” — the gap between them is entirely this arithmetic."
+        },
+        {
+          "context": "An analyst forecasts revenue growing 8% a year for 3 years from a base of £150m.",
+          "prompt": "What is revenue after 3 years (nearest £m)?",
+          "options": [
+            "£186m",
+            "£189m",
+            "£195m",
+            "£174m"
+          ],
+          "answer": "£189m",
+          "explanation": "Working: 1.08³ built in steps — 1.08 × 1.08 = 1.1664, then × 1.08 = 1.2597. Revenue = 150 × 1.2597 = £188.96m ≈ £189m.\n\nWhy the wrong answers tempt: £186m is 150 × 1.24, treating three years of 8% as a flat 24%. That simple-interest error always lands slightly BELOW the true figure, so if you see two close options and one is a touch lower, the lower one is usually the un-compounded trap. £195m over-compounds, roughly 1.30, which is nearer four years. £174m is 150 × 1.16, only two years of growth — an off-by-one on the exponent that happens when you count the base year as year one.\n\nTechnique: memorise the factors that recur constantly in numerical tests — 1.05³ ≈ 1.158, 1.08³ ≈ 1.26, 1.10³ = 1.331, 1.08⁵ ≈ 1.47, and the Rule of 72 (8% doubles in about 9 years). Failing that, use the binomial approximation (1+r)ⁿ ≈ 1 + nr + [n(n−1)/2]r², which here gives 1 + 0.24 + 3 × 0.0064 = 1.2592 — three decimals of accuracy in about four seconds of mental work. Then count the years deliberately: “growing 8% a year for 3 years from a base of £150m” means the exponent is 3."
+        },
+        {
+          "context": "A company has 400,000 shares outstanding trading at £12.50, and net debt of £1.2m.",
+          "prompt": "What is its enterprise value?",
+          "options": [
+            "£5.0m",
+            "£6.2m",
+            "£3.8m",
+            "£4.8m"
+          ],
+          "answer": "£6.2m",
+          "explanation": "Working: equity value (market cap) = shares × price = 400,000 × £12.50 = £5.0m. Enterprise value = equity value + net debt = £5.0m + £1.2m = £6.2m.\n\nWhy the wrong answers tempt: £5.0m is market cap alone — the answer if you forget that a buyer of the whole business also inherits its debt. £3.8m SUBTRACTS net debt, which is the most common EV error of all: you subtract CASH, but net debt is already debt minus cash, so subtracting it flips the sign and double-counts. £4.8m combines both mistakes.\n\nTechnique: hold the logic, not the formula. EV is what it costs to own the operating business free of its capital structure — you pay the shareholders (market cap), you take on the debt (add it), and you get the cash sitting on the balance sheet (subtract it). Hence EV = market cap + debt − cash = market cap + net debt. If a question hands you gross debt and cash separately, add and subtract them separately. If net debt is negative (a net-cash company), EV is LOWER than market cap — the standard trick with cash-rich technology comparables. Learn the bridge in both directions, because banking interviewers ask it both ways: equity value → +net debt → enterprise value, and EV → −net debt → equity value → ÷ shares → implied share price."
+        },
+        {
+          "context": "Two funds: Fund X returned 15% with a 20% chance of losing money in any given year. Fund Y returned 9% with a 5% chance of losing money.",
+          "prompt": "An investor prioritising downside protection over raw return would most likely prefer:",
+          "options": [
+            "Fund X, for the higher return",
+            "Fund Y, for the lower loss probability",
+            "Both are identical",
+            "Neither — insufficient data on volatility"
+          ],
+          "answer": "Fund Y, for the lower loss probability",
+          "explanation": "Working: the stem sets the decision rule for you — the investor prioritises DOWNSIDE PROTECTION over raw return. Fund X: 15% return, 20% chance of a losing year. Fund Y: 9% return, 5% chance of a losing year. On the stated criterion Y wins outright: a one-in-twenty chance of a down year against one-in-five.\n\nWhy the wrong answers tempt: “Fund X, for the higher return” is the trap the whole question is built around — it is the correct answer to a question that was not asked. Test writers deliberately make the rejected option numerically superior so that scanning for the biggest number fails. “Both are identical” is never right when the two funds differ on the stated criterion. “Insufficient data on volatility” is the seductive sophisticated answer: it is true that loss probability is not standard deviation, and in a real risk conversation you would want volatility, Sharpe ratio and maximum drawdown. But the question asks what the investor would MOST LIKELY prefer given what is shown, and loss probability is a direct measure of downside. Over-thinking into “not enough information” is one of the top three causes of lost marks in data-interpretation sections.\n\nTechnique: underline the criterion clause before you look at any numbers — “prioritising X over Y”, “on a per-unit basis”, “excluding one-offs”, “in real terms”. SHL, Cappfinity and Talent Q build whole question banks around inserting a preference that inverts the obvious ranking. Then calibrate your bar for “insufficient data”: pick it only when the stated criterion cannot be evaluated at all from the information given, never merely because you would like more evidence."
+        },
+        {
+          "context": "A bond with 5 years to maturity and a duration of 4.2 currently yields 5%. Rates are expected to rise by 0.75%.",
+          "prompt": "Approximately what price change should the bondholder expect?",
+          "options": [
+            "-3.15%",
+            "+3.15%",
+            "-4.2%",
+            "-0.75%"
+          ],
+          "answer": "-3.15%",
+          "explanation": "Working: modified duration estimates the percentage price move for a 1% (100bp) change in yield. Price change ≈ −duration × Δyield = −4.2 × 0.75 = −3.15%.\n\nWhy the wrong answers tempt: +3.15% has the right magnitude and the wrong sign — bond prices and yields always move inversely, so the sign is the free mark. −4.2% applies the duration as though yields moved a full 1%. −0.75% is the yield change itself mistaken for the price change; duration is precisely the multiplier that converts one into the other, so ignoring it defeats the question entirely.\n\nTechnique: write the minus sign before you calculate. On the intuition, which you WILL be asked in a rates interview: the bond pays fixed coupons, so when new bonds are issued at higher yields the old one is worth less, and its price falls until its yield-to-maturity matches the market. Duration is roughly the weighted average time to receive the cash flows, which is why longer maturity and lower coupon both raise duration and therefore rate sensitivity. Two follow-ups to have ready. First, this is a first-order estimate only — convexity means the price gain from a fall in yields slightly exceeds the loss from an equal rise, so duration overstates losses and understates gains. Second, sense-check the inputs: duration of 4.2 on a 5-year bond is consistent, because duration is always below maturity for a coupon-paying bond and equals maturity only for a zero-coupon bond."
+        },
+        {
+          "context": "A retailer's like-for-like sales rose 4% while total sales rose 11%, with no store closures.",
+          "prompt": "The gap between these two figures is best explained by:",
+          "options": [
+            "Inflation",
+            "New store openings",
+            "Currency movements",
+            "A calculation error — this is impossible"
+          ],
+          "answer": "New store openings",
+          "explanation": "Working: like-for-like (same-store) sales count only outlets trading in both periods; total sales count everything. Total (+11%) exceeds LFL (+4%) by seven percentage points, and the stem rules out closures — so the gap must come from stores that exist now and did not before: new openings.\n\nWhy the wrong answers tempt: “Inflation” fails because price rises lift the SAME stores, so inflation flows into the LFL figure too and cannot open a gap between the two measures. “Currency movements” is the strongest distractor and would be a real candidate for an international retailer reporting in sterling — but FX also affects both measures similarly, and nothing in the stem points overseas. “Impossible” is the panic answer; total exceeding LFL is completely routine for any expanding chain, and picking it signals you do not know what the metrics mean.\n\nTechnique: LFL is the most scrutinised metric in retail because it isolates whether the underlying business is improving or merely getting bigger by opening doors. Read the gap as a diagnostic: total above LFL means expansion is carrying growth; total below LFL means the estate is shrinking; LFL near zero while total booms is the classic warning that a roll-out is masking a stale core, which is how several retail collapses looked twelve months out. Analysts then decompose LFL into volume (footfall, basket size) and price — if LFL growth is all price in an inflationary year, real volumes are falling. Expect exactly this chain of questions in a retail-sector interview or a consulting case on a struggling chain."
+        },
+        {
+          "difficulty": "expert",
+          "context": "A fund reports: Year 1 +18%, Year 2 −12%, Year 3 +7%. Management fees of 1.5% are charged annually on the closing balance after performance.",
+          "prompt": "An investor put in £500,000 at the start. Approximately what is the closing value after three years, net of fees?",
+          "options": [
+            "£556,000",
+            "£571,000",
+            "£531,000",
+            "£589,000"
+          ],
+          "answer": "£531,000",
+          "explanation": "Year 1: 500,000 × 1.18 = 590,000, less 1.5% → 581,150. Year 2: × 0.88 = 511,412, less 1.5% → 503,741. Year 3: × 1.07 = 539,003, less 1.5% → £530,918, so roughly £531,000. Two traps: applying the fee once at the end rather than annually, and averaging the returns (+18−12+7)/3 instead of compounding them sequentially."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Division A: revenue £180m, operating margin 22%. Division B: revenue £320m, operating margin 9%. The group targets a blended operating margin of 16% next year, with Division B revenue unchanged and its margin improving to 12%.",
+          "prompt": "What revenue must Division A achieve to hit the group target, assuming its margin holds at 22%?",
+          "options": [
+            "£213m",
+            "£256m",
+            "£180m",
+            "£310m"
+          ],
+          "answer": "£213m",
+          "explanation": "Let A revenue = x. Group profit = 0.22x + (320 × 0.12) = 0.22x + 38.4. Group revenue = x + 320. Set the blend to 16%: 0.22x + 38.4 = 0.16(x + 320) = 0.16x + 51.2 → 0.06x = 12.8 → x = £213m. Sanity check: at £213m, group profit = 46.9 + 38.4 = £85.3m on revenue of £533m = 16.0% ✓. A must therefore grow from £180m to about £213m. Multi-division margin questions are algebra, not estimation — define the unknown and write one equation."
+        },
+        {
+          "dataTable": {
+            "title": "Exhibit A — Divisional revenue (£m)",
+            "headers": [
+              "Division",
+              "FY22",
+              "FY23",
+              "FY24"
             ],
-            [
-              "Sort Code",
-              "60-16-13",
-              "60-16-13"
+            "rows": [
+              [
+                "Equities",
+                "420",
+                "455",
+                "486"
+              ],
+              [
+                "Fixed Income",
+                "380",
+                "362",
+                "398"
+              ],
+              [
+                "Advisory",
+                "290",
+                "338",
+                "352"
+              ],
+              [
+                "Wealth Management",
+                "210",
+                "231",
+                "268"
+              ]
             ],
-            [
-              "Amount",
-              "£128,450.00",
-              "£128,405.00"
+            "note": "Three questions in this test may refer to this exhibit — real numerical tests group questions around shared data."
+          },
+          "prompt": "Which division grew fastest between FY22 and FY24?",
+          "options": [
+            "Equities",
+            "Advisory",
+            "Wealth Management",
+            "Fixed Income"
+          ],
+          "answer": "Wealth Management",
+          "explanation": "Two-year growth: Equities 486/420 = +15.7%; Fixed Income 398/380 = +4.7%; Advisory 352/290 = +21.4%; Wealth 268/210 = +27.6%. Wealth grew fastest. The trap is comparing absolute increases — Equities added £66m versus Wealth's £58m, but Wealth grew from a much smaller base."
+        },
+        {
+          "dataTable": {
+            "title": "Exhibit A — Divisional revenue (£m)",
+            "headers": [
+              "Division",
+              "FY22",
+              "FY23",
+              "FY24"
             ],
-            [
-              "Value Date",
-              "14/03/2026",
-              "14/03/2026"
+            "rows": [
+              [
+                "Equities",
+                "420",
+                "455",
+                "486"
+              ],
+              [
+                "Fixed Income",
+                "380",
+                "362",
+                "398"
+              ],
+              [
+                "Advisory",
+                "290",
+                "338",
+                "352"
+              ],
+              [
+                "Wealth Management",
+                "210",
+                "231",
+                "268"
+              ]
             ]
-          ]
-        },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "Account No.",
-          "Sort Code",
-          "Amount",
-          "Value Date"
-        ],
-        "answer": "Amount",
-        "explanation": "Working: check each field independently, character by character where the strings are long. Account No. and Sort Code match exactly on inspection. Value Date matches. Amount does not: Record A reads £128,450.00 and Record B reads £128,405.00 — the tens and units digits of the last three digits are transposed, \"50\" versus \"05\", so 450 becomes 405.\n\nWhy this specific error is the standard trap: a transposed pair of digits (450 vs 405) is the single most common real-world data entry error, because both numbers look right at a glance — the digit count matches, the surrounding text matches, and the eye tends to register \"starts with 128,4\" as a match without checking the final three digits individually. This is precisely the error type checking tests are designed around, because it is also the error type that causes real payment failures.\n\nTechnique: never compare two long strings by overall shape. Split any numeric field into chunks (thousands, hundreds, tens, units for money; groups of four for IBANs) and compare chunk by chunk, out loud or under your breath if you are practising alone. For account numbers and IBANs specifically, compare in groups of 4 characters as they are formatted — the space-separated groups exist for exactly this reason, to make transposition errors easier to catch."
-      },
-      {
-        "context": "Compare the two client name records. They should be identical.",
-        "dataTable": {
-          "title": "System A vs System B",
-          "headers": [
-            "Field",
-            "System A",
-            "System B"
+          },
+          "prompt": "What percentage of FY24 total revenue did Advisory represent?",
+          "options": [
+            "21.4%",
+            "23.4%",
+            "25.4%",
+            "19.8%"
           ],
-          "rows": [
-            [
-              "Client Name",
-              "Fairweather Holdings Ltd",
-              "Fairweather Holdings Ltd"
-            ],
-            [
-              "Reference",
-              "FWH-2024-0091",
-              "FWH-2024-0091"
-            ],
-            [
-              "Address Line 1",
-              "14 Grosvenor Street",
-              "14 Grosvenor Steet"
-            ],
-            [
-              "Postcode",
-              "W1K 4QQ",
-              "W1K 4QQ"
-            ]
-          ]
+          "answer": "23.4%",
+          "explanation": "Working: total the FY24 column first — 486 + 398 = 884; + 352 = 1,236; + 268 = £1,504m. Advisory share = 352 ÷ 1,504 = 23.40%.\n\nWhy the wrong answers tempt: 25.4% is 352 ÷ 1,386, dividing by the FY23 total — the error your eye makes when it slips one column left mid-addition. 21.4% comes from an inflated total (roughly 1,646) after double-counting a row. 19.8% implies a total near 1,778, which is what you get by highlighting a block of two columns rather than one. Every distractor here is a specific, reproducible reading error rather than a random number — that is how professional test writers build option sets, and it means finding your answer in the list is NOT evidence you read the right cells.\n\nTechnique: on any table question, do three checks before touching the arithmetic — confirm the year, confirm the units (this exhibit is £m, so no zeros to juggle), and confirm whether the question wants a share, a change or a rate. Add the column once, write the total in the margin, and reuse it, because these exhibits almost always carry two or three questions off the same total and the second one then becomes nearly free. Sense-check against an even split: four divisions means 25% each if identical, and Advisory is the third largest, so a shade under a quarter is exactly what you should expect. That benchmark alone flags 19.8% as too low and 21.4% as suspicious before you compute anything."
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "Client Name",
-          "Reference",
-          "Address Line 1",
-          "Postcode"
-        ],
-        "answer": "Address Line 1",
-        "explanation": "Working: check each field. Client Name, Reference and Postcode all match exactly. Address Line 1 does not — System A reads \"Grosvenor Street\" and System B reads \"Grosvenor Steet\", missing the first \"r\" in Street.\n\nWhy this specific error is the standard trap: a single missing letter inside a long, familiar word is very hard to catch by pattern recognition, because the brain auto-corrects familiar words on sight — you read \"Steet\" and your brain silently supplies \"Street\" before you consciously register the missing letter. This is a well-documented reading phenomenon, and it is exactly why free-text fields (names, addresses) are more error-prone to check than structured numeric fields, despite feeling easier to read.\n\nTechnique: for free-text fields, do not read for MEANING — read for CHARACTERS. Slow down and trace the word letter by letter rather than recognising it as a whole, particularly for longer or less common words (street names, foreign company names, compound surnames). A practical trick: read the two versions in reverse, end to start; this defeats the brain tendency to auto-complete a familiar word from its first few letters, because reversed text has no learned pattern to pattern-match against."
-      },
-      {
-        "context": "Compare the two trade confirmation records. They should be identical.",
-        "dataTable": {
-          "title": "Confirmation A vs Confirmation B",
-          "headers": [
-            "Field",
-            "Confirmation A",
-            "Confirmation B"
+        {
+          "dataTable": {
+            "title": "Exhibit A — Divisional revenue (£m)",
+            "headers": [
+              "Division",
+              "FY22",
+              "FY23",
+              "FY24"
+            ],
+            "rows": [
+              [
+                "Equities",
+                "420",
+                "455",
+                "486"
+              ],
+              [
+                "Fixed Income",
+                "380",
+                "362",
+                "398"
+              ],
+              [
+                "Advisory",
+                "290",
+                "338",
+                "352"
+              ],
+              [
+                "Wealth Management",
+                "210",
+                "231",
+                "268"
+              ]
+            ]
+          },
+          "prompt": "If total revenue grows in FY25 at the same rate as FY23 to FY24, what will FY25 total revenue be?",
+          "options": [
+            "£1,632m",
+            "£1,588m",
+            "£1,704m",
+            "£1,552m"
           ],
-          "rows": [
-            [
-              "ISIN",
-              "GB0007980591",
-              "GB0007980591"
-            ],
-            [
-              "Quantity",
-              "15,000",
-              "15,000"
-            ],
-            [
-              "Price",
-              "412.75",
-              "412.75"
-            ],
-            [
-              "Trade Date",
-              "11/03/2026",
-              "11/03/2026"
-            ],
-            [
-              "Settlement Date",
-              "13/03/2026",
-              "14/03/2026"
-            ]
-          ]
+          "answer": "£1,632m",
+          "explanation": "Working: three steps. First, FY23 total = 455 + 362 + 338 + 231 = £1,386m. Second, FY24 total = £1,504m (already computed for the previous question — reuse it). Third, growth = 1,504 ÷ 1,386 − 1 = 8.51%, applied forward: FY25 = 1,504 × 1.0851 = £1,632m.\n\nWhy the wrong answers tempt: £1,588m applies the growth to the FY23 base rather than FY24 — an off-by-one-year error that feels right because 1,386 and 1,504 are both on screen. £1,704m compounds twice (1,504 × 1.085²), which is FY26, not FY25. £1,552m is what you get by taking one division’s growth rate instead of the total’s: Equities grew 486/455 = 6.8%, and 1,504 × 1.068 lands close to it.\n\nTechnique: chained questions off a single exhibit reward candidates who wrote down intermediate results — two column totals and one growth rate answer everything this table can ask, so the marginal cost of question two should be about fifteen seconds. Sense-check in absolute terms rather than percentages: revenue rose £118m last year, so growth at a similar RATE on a slightly larger base should add a bit more than £118m, roughly £128m, landing near £1,632m. That check kills £1,704m (+£200m, far too big) and £1,552m (+£48m, far too small) instantly. Finally, read the forward period carefully — “grows in FY25 at the same rate as FY23 to FY24” means one further year, and miscounting forward periods is the most expensive error on projection questions."
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "ISIN",
-          "Quantity",
-          "Price",
-          "Settlement Date"
-        ],
-        "answer": "Settlement Date",
-        "explanation": "Working: ISIN, Quantity and Price all match on careful comparison. Settlement Date does not — Confirmation A reads 13/03/2026, Confirmation B reads 14/03/2026, a one-day difference.\n\nWhy this specific error is the standard trap: dates are compared casually far more often than numbers, because the format is familiar and short, so the eye tends to confirm \"yes, both are dates in March 2026\" without checking the day digit precisely. A one-day settlement discrepancy is also a realistic and consequential real-world error: standard equity settlement is T+2, so a one-day slip here would actually put one of the two records outside the normal settlement cycle entirely — exactly the kind of error a checking test is a proxy for catching before it reaches a real trade.\n\nTechnique: never let a field format familiarity substitute for checking its CONTENT. Dates, times and reference codes all look instantly comparable because you recognise the pattern (DD/MM/YYYY) at a glance, but recognising the pattern is not the same as verifying the digits. Isolate the day, month and year as three separate two-to-four digit checks, the same discipline you would apply to a long number, rather than treating \"it is a date, so it is probably fine\" as a shortcut."
-      },
-      {
-        "context": "Compare the two employee record entries. They should be identical.",
-        "dataTable": {
-          "title": "HR System vs Payroll System",
-          "headers": [
-            "Field",
-            "HR System",
-            "Payroll System"
+        {
+          "difficulty": "expert",
+          "dataTable": {
+            "title": "Exhibit B — Fund performance (annualised)",
+            "headers": [
+              "Fund",
+              "Gross return",
+              "Volatility",
+              "Annual fee"
+            ],
+            "rows": [
+              [
+                "Alpha",
+                "12.4%",
+                "8.2%",
+                "1.50%"
+              ],
+              [
+                "Beta",
+                "9.1%",
+                "5.0%",
+                "1.00%"
+              ],
+              [
+                "Gamma",
+                "15.2%",
+                "14.0%",
+                "1.75%"
+              ],
+              [
+                "Delta",
+                "7.8%",
+                "4.1%",
+                "0.75%"
+              ]
+            ],
+            "note": "Risk-free rate is 3.0%."
+          },
+          "prompt": "Which fund delivered the best risk-adjusted return NET of fees (highest Sharpe ratio)?",
+          "options": [
+            "Alpha",
+            "Beta",
+            "Gamma",
+            "Delta"
           ],
-          "rows": [
-            [
-              "Employee ID",
-              "EMP-88213",
-              "EMP-88213"
-            ],
-            [
-              "National Insurance No.",
-              "QQ 12 34 56 C",
-              "QQ 12 34 56 C"
-            ],
-            [
-              "Annual Salary",
-              "£42,500",
-              "£42,500"
-            ],
-            [
-              "Start Date",
-              "03/09/2025",
-              "03/09/2025"
-            ]
-          ]
+          "answer": "Beta",
+          "explanation": "Sharpe = (net return − risk-free) ÷ volatility. Alpha: (10.9−3)/8.2 = 0.96. Beta: (8.1−3)/5.0 = 1.02. Gamma: (13.45−3)/14.0 = 0.75. Delta: (7.05−3)/4.1 = 0.99. Beta wins despite having the second-lowest headline return — and Gamma, with the highest gross return, is worst risk-adjusted. Real tests deliberately reward the candidate who reads which metric was asked for."
         },
-        "prompt": "Do these two records match exactly?",
-        "options": [
-          "Yes, they match exactly",
-          "No, there is a discrepancy"
-        ],
-        "answer": "Yes, they match exactly",
-        "explanation": "Working: check every field methodically — Employee ID, National Insurance number (in its 2-2-2-2-1 grouped format), Annual Salary, and Start Date. Every field is identical between the two systems.\n\nWhy this item matters: checking tests always include genuinely matching pairs, usually around a third to half of all items, and they exist specifically to test whether you will manufacture a discrepancy that is not there under time pressure. Candidates primed by several consecutive spot-the-error items sometimes talk themselves into seeing a difference that does not exist, especially in a long alphanumeric string like a National Insurance number, simply because they expect one to be there.\n\nTechnique: apply exactly the same rigour to confirming a match as to finding a discrepancy — a false positive (flagging an error that is not there) is graded as wrong just as a missed real error is. Do not let the item number or the run of previous questions bias your expectation. If you have checked every field methodically and found nothing, trust the process and answer that they match — resist the urge to search harder for something that must be there."
-      },
-      {
-        "context": "Compare the two fund pricing records. They should be identical.",
-        "dataTable": {
-          "title": "Custodian Feed vs Administrator Feed",
-          "headers": [
-            "Field",
-            "Custodian Feed",
-            "Administrator Feed"
+        {
+          "difficulty": "expert",
+          "context": "A company buys equipment for £2.4m. It depreciates straight-line over 8 years to a residual value of £400,000. The tax rate is 25%.",
+          "prompt": "What is the annual cash tax saving generated by the depreciation charge?",
+          "options": [
+            "£62,500",
+            "£75,000",
+            "£250,000",
+            "£100,000"
           ],
-          "rows": [
-            [
-              "Fund Code",
-              "FND-7734",
-              "FND-7734"
-            ],
-            [
-              "NAV per Share",
-              "1.2456",
-              "1.2465"
-            ],
-            [
-              "Total Fund Value",
-              "£184,320,000",
-              "£184,320,000"
-            ],
-            [
-              "Shares in Issue",
-              "147,981,342",
-              "147,981,342"
-            ]
-          ]
+          "answer": "£62,500",
+          "explanation": "Depreciable amount = 2,400,000 − 400,000 residual = £2,000,000. Annual depreciation = 2,000,000 ÷ 8 = £250,000. Tax saving = 250,000 × 25% = £62,500. Two traps: forgetting to deduct residual value before dividing, and confusing the depreciation charge itself with the tax saving it generates."
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "Fund Code",
-          "NAV per Share",
-          "Total Fund Value",
-          "Shares in Issue"
-        ],
-        "answer": "NAV per Share",
-        "explanation": "Working: Fund Code, Total Fund Value and Shares in Issue all match. NAV per Share does not — 1.2456 versus 1.2465, the same four digits (2, 4, 5, 6) in a different order, a transposition of the last two decimal places.\n\nWhy this specific error is the standard trap: this is the hardest variant of the discrepancy type, because the two numbers share every digit — nothing is added, removed or substituted, only reordered. A quick glance at digit COUNT and digit SET both pass, so any check less rigorous than position-by-position comparison will miss it. This exact error type is also a realistic and serious one: a NAV discrepancy of this size, uncaught, would misprice every unit of the fund traded that day, which is precisely why fund administrators run automated tolerance checks for exactly this scenario in practice.\n\nTechnique: for decimal numbers especially, compare position by position rather than as a whole value — first decimal place, second, third, fourth, treating each as an independent check. A useful test-day habit: cover one number with a finger or your other hand, read the visible number digits aloud in order, then reveal and check the other number digit by digit against what you just said, rather than trying to hold both numbers in view and compare them as gestalt shapes."
-      },
-      {
-        "context": "Compare the two invoice records. They should be identical.",
-        "dataTable": {
-          "title": "Invoice A vs Invoice B",
-          "headers": [
-            "Field",
-            "Invoice A",
-            "Invoice B"
+        {
+          "chart": {
+            "title": "Exhibit C — Assets under management by region (£bn), FY24",
+            "type": "bar",
+            "categories": [
+              "UK",
+              "Europe",
+              "US",
+              "Asia"
+            ],
+            "series": [
+              {
+                "label": "AUM (£bn)",
+                "values": [
+                  340,
+                  285,
+                  512,
+                  198
+                ],
+                "color": "#d4af37"
+              }
+            ],
+            "yLabel": "£bn"
+          },
+          "prompt": "What percentage of total AUM is managed in the US?",
+          "options": [
+            "38.4%",
+            "35.2%",
+            "41.6%",
+            "33.8%"
           ],
-          "rows": [
-            [
-              "Invoice No.",
-              "INV-2026-4471",
-              "INV-2026-4471"
-            ],
-            [
-              "Vendor",
-              "Hartley & Marsh Associates",
-              "Hartley & Marsh Associates"
-            ],
-            [
-              "Net Amount",
-              "£9,840.00",
-              "£9,840.00"
-            ],
-            [
-              "VAT (20%)",
-              "£1,868.00",
-              "£1,868.00"
-            ],
-            [
-              "Gross Amount",
-              "£11,708.00",
-              "£11,708.00"
-            ]
-          ]
+          "answer": "38.4%",
+          "explanation": "Working: read the four bars — UK 340, Europe 285, US 512, Asia 198. Total = 340 + 285 = 625; 625 + 512 = 1,137; 1,137 + 198 = £1,335bn. US share = 512 ÷ 1,335 = 38.35%, so 38.4%.\n\nWhy the wrong answers tempt: 41.6% is 512 ÷ 1,231, a total with Asia omitted — the easiest bar to skip because it is shortest and sits at the end. 35.2% divides by an inflated total near 1,455 (double-counting a bar). 33.8% is 512 ÷ 1,515. Every distractor is a specific mis-totalling, not a random number, so finding your answer in the list proves nothing.\n\nTechnique: on a chart exhibit, write every bar value down before calculating anything — reading values off an axis is where the errors happen, not in the arithmetic. Then sense-check the share: four regions means 25% each if equal, and the US bar is clearly the tallest but nowhere near half, so something just under 40% is exactly what you should expect. That single check kills 33.8% and 41.6% before you divide.",
+          "difficulty": "medium"
         },
-        "prompt": "Do these two records match exactly, or is there a discrepancy — and separately, is the arithmetic on the invoice itself correct?",
-        "options": [
-          "The two records match, and the arithmetic is correct",
-          "The two records match, but the arithmetic is wrong",
-          "The two records do not match"
-        ],
-        "answer": "The two records match, but the arithmetic is wrong",
-        "explanation": "Working: this question has two independent checks. First, do Invoice A and Invoice B match each other — yes, every field is identical between the two copies. Second, is the arithmetic on the invoice itself internally consistent — check the VAT rate against the net amount, not just whether the total adds up. 20% of £9,840.00 should be £1,968.00 (9,840 times 0.2 equals 1,968), but the invoice shows VAT of £1,868.00 — £100 short of what a genuine 20% charge would be. The addition itself is self-consistent (9,840 plus 1,868 equals 11,708, matching the stated gross), which is exactly what makes the error easy to miss: the invoice adds up while still charging the wrong rate.\n\nWhy this specific error is the standard trap: an invoice where the total is internally consistent feels checked once you have confirmed Net plus VAT equals Gross, which is the natural first thing anyone verifies. But that check only confirms the three numbers are consistent WITH EACH OTHER — it says nothing about whether the VAT was calculated correctly from the net amount in the first place. A candidate who stops at \"the sum adds up\" misses a genuine mispriced invoice.\n\nTechnique: when a question asks you to check both a cross-reference AND an internal calculation, do them as two fully separate passes — field matching first, arithmetic second — and within the arithmetic pass, independently recompute any percentage-based field from its base figure rather than only checking that the components sum correctly. A consistent-looking total can still hide an incorrectly applied rate, because addition consistency and rate correctness are two different facts that a single does-it-add-up glance conflates."
-      },
-      {
-        "context": "Compare the two counterparty records. They should be identical.",
-        "dataTable": {
-          "title": "Internal System vs SWIFT Message",
-          "headers": [
-            "Field",
-            "Internal System",
-            "SWIFT Message"
+        {
+          "chart": {
+            "title": "Exhibit C — Assets under management by region (£bn), FY24",
+            "type": "bar",
+            "categories": [
+              "UK",
+              "Europe",
+              "US",
+              "Asia"
+            ],
+            "series": [
+              {
+                "label": "AUM (£bn)",
+                "values": [
+                  340,
+                  285,
+                  512,
+                  198
+                ],
+                "color": "#d4af37"
+              }
+            ],
+            "yLabel": "£bn"
+          },
+          "prompt": "If Asian AUM grows 22% next year and all other regions are flat, what is the new total?",
+          "options": [
+            "£1,379bn",
+            "£1,357bn",
+            "£1,404bn",
+            "£1,629bn"
           ],
-          "rows": [
-            [
-              "SWIFT/BIC",
-              "DEUTDEFF",
-              "DEUTDEFF"
-            ],
-            [
-              "Counterparty",
-              "Deutsche Bank AG",
-              "Deutsche Bank AG"
-            ],
-            [
-              "Currency",
-              "EUR",
-              "EUR"
-            ],
-            [
-              "Amount",
-              "2,450,000.00",
-              "2,540,000.00"
-            ]
-          ]
+          "answer": "£1,379bn",
+          "explanation": "Working: Asia grows from 198 to 198 × 1.22 = £241.6bn, an increase of £43.6bn. Everything else is unchanged, so the new total = 1,335 + 43.6 = £1,378.6bn ≈ £1,379bn.\n\nWhy the wrong answers tempt: £1,629bn applies the 22% growth to the WHOLE total (1,335 × 1.22) — the single most common error on this question type, and it ignores the word \"flat\". £1,357bn adds only half the increase, or applies 11%. £1,404bn applies 22% to Asia plus a stray adjustment elsewhere.\n\nTechnique: when only one component changes, work with the CHANGE, not the new totals — compute the increase (£43.6bn) and add it to the existing total. That is faster and far less error-prone than rebuilding the whole sum, and it makes the \"all others flat\" condition impossible to forget. Sense-check the magnitude: Asia is the smallest region at under 15% of the total, so a 22% rise in it can only move the total by around 3%; any option more than about 5% above 1,335 must be wrong.",
+          "difficulty": "medium"
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "SWIFT/BIC",
-          "Counterparty",
-          "Currency",
-          "Amount"
-        ],
-        "answer": "Amount",
-        "explanation": "Working: SWIFT/BIC, Counterparty and Currency all match exactly. Amount does not — 2,450,000.00 versus 2,540,000.00, a transposition of the 4 and 5 in the hundred-thousands and ten-thousands positions.\n\nWhy this specific error is the standard trap: this is a payments scenario, and a transposed pair of digits of this size (a swing of £90,000) is precisely the kind of error that causes real settlement failures and, in the worst case, funds being sent with a technically valid but wrong amount, triggering a costly unwind. Test writers use payments and SWIFT-style contexts specifically because the stakes make the format realistic, not decorative — this is close to the actual daily task of a payments or settlements analyst.\n\nTechnique: for any large numeric amount, mentally group digits in threes from the right (as the commas already do) and compare group by group: 2,450,000 breaks into 2 / 450 / 000; 2,540,000 breaks into 2 / 540 / 000. The millions group matches, the thousands group does not. This groups the comparison into small, verifiable chunks rather than one long unwieldy number, which is exactly how the comma formatting is designed to be read in the first place."
-      },
-      {
-        "context": "Compare the two client onboarding (KYC) records. They should be identical.",
-        "dataTable": {
-          "title": "Application Form vs System Record",
-          "headers": [
-            "Field",
-            "Application Form",
-            "System Record"
+        {
+          "chart": {
+            "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
+            "type": "line",
+            "categories": [
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024",
+              "2025"
+            ],
+            "series": [
+              {
+                "label": "CPI inflation (%)",
+                "values": [
+                  0.9,
+                  2.6,
+                  9.1,
+                  6.8,
+                  3.2,
+                  2.1
+                ],
+                "color": "#2dd4bf"
+              }
+            ],
+            "yLabel": "Annual inflation rate, %"
+          },
+          "prompt": "By how much did the inflation rate fall from its 2022 peak to 2025?",
+          "options": [
+            "7.0 percentage points",
+            "76.9%",
+            "7.0%",
+            "4.7 percentage points"
           ],
-          "rows": [
-            [
-              "Full Legal Name",
-              "Alexander James Whitfield",
-              "Alexander James Whitfield"
-            ],
-            [
-              "Date of Birth",
-              "22/07/1991",
-              "22/07/1991"
-            ],
-            [
-              "Nationality",
-              "British",
-              "British"
-            ],
-            [
-              "Passport No.",
-              "PX4471983",
-              "PX4417983"
-            ]
-          ]
+          "answer": "7.0 percentage points",
+          "explanation": "Working: the rate peaked at 9.1% in 2022 and was 2.1% in 2025. The fall is 9.1 − 2.1 = 7.0 PERCENTAGE POINTS.\n\nWhy the wrong answers tempt: this is the single most important distinction in numerical reasoning and the option set is built entirely around it. \"76.9%\" is the RELATIVE fall (7.0 ÷ 9.1 = 76.9%) — a correct calculation of a different quantity, and the answer most candidates pick. \"7.0%\" has the right number with the wrong unit, which in a real report would be simply false: inflation did not fall by 7%, it fell by 7 percentage points to a level of 2.1%. \"4.7 percentage points\" measures from 2023 rather than the 2022 peak.\n\nTechnique: percentage points measure the ARITHMETIC gap between two percentages; a percentage change measures the PROPORTIONAL change between them. Whenever both quantities are themselves percentages — inflation rates, margins, interest rates, market shares, unemployment — check which one is being asked for, because both are computable and only one is right. A margin moving from 20% to 25% rose 5 percentage points or 25%, and confusing the two is a genuine professional error, not just a test trap. If the question says \"percentage points\", subtract. If it says \"by what percentage\", divide by the starting value.",
+          "difficulty": "hard"
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "Full Legal Name",
-          "Date of Birth",
-          "Nationality",
-          "Passport No."
-        ],
-        "answer": "Passport No.",
-        "explanation": "Working: Full Legal Name, Date of Birth and Nationality all match. Passport No. does not — PX4471983 versus PX4417983, digits 7 and 1 transposed — the digit string reads 4-4-7-1-9-8-3 versus 4-4-1-7-9-8-3, with the third and fourth digits swapped.\n\nWhy this specific error is the standard trap: alphanumeric identifiers like passport numbers combine letters and digits, and the eye tends to verify the letter prefix carefully (because it looks distinctive) while skimming the digit string as \"a number, probably fine\" — the opposite of where the actual risk sits. In a real KYC context, a passport number mismatch is precisely the kind of error that causes a client onboarding to be flagged, delayed or, if uncaught, creates a compliance record that does not actually match the verified identity document.\n\nTechnique: for mixed alphanumeric codes, split the check into two separate passes — verify the letters as a group first, then verify the digits as a group, digit by digit, rather than reading the whole string as one unit. Long, unfamiliar digit strings (as opposed to numbers with real-world meaning like amounts or dates) are the ones most likely to be skimmed rather than checked, precisely because they carry no intuitive \"does this look right\" signal to catch you — which means they need the most mechanical, position-by-position discipline, not less."
-      },
-      {
-        "context": "Compare the two order records. They should be identical.",
-        "dataTable": {
-          "title": "Order Ticket vs Execution Report",
-          "headers": [
-            "Field",
-            "Order Ticket",
-            "Execution Report"
+        {
+          "chart": {
+            "title": "Exhibit D — UK CPI inflation rate (%), 2020-2025",
+            "type": "line",
+            "categories": [
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024",
+              "2025"
+            ],
+            "series": [
+              {
+                "label": "CPI inflation (%)",
+                "values": [
+                  0.9,
+                  2.6,
+                  9.1,
+                  6.8,
+                  3.2,
+                  2.1
+                ],
+                "color": "#2dd4bf"
+              }
+            ],
+            "yLabel": "Annual inflation rate, %"
+          },
+          "prompt": "Were prices falling in 2025?",
+          "options": [
+            "No — prices were still rising, just more slowly",
+            "Yes — inflation fell so prices fell",
+            "Yes — prices fell 2.1%",
+            "Cannot be determined from the chart"
           ],
-          "rows": [
-            [
-              "Ticker",
-              "BARC.L",
-              "BARC.L"
-            ],
-            [
-              "Side",
-              "BUY",
-              "BUY"
-            ],
-            [
-              "Quantity",
-              "25,000",
-              "25,000"
-            ],
-            [
-              "Limit Price",
-              "198.50p",
-              "198.50p"
-            ],
-            [
-              "Executed Price",
-              "198.42p",
-              "198.24p"
-            ]
-          ]
+          "answer": "No — prices were still rising, just more slowly",
+          "explanation": "Working: the chart plots the inflation RATE, not the price level. In 2025 the rate is +2.1%, which is positive — so prices rose 2.1% over the year. The rate falling from 9.1% to 2.1% means prices rose more slowly than before, a process called disinflation. Prices only actually fall when the rate goes BELOW zero, which is deflation, and the line never crosses zero.\n\nWhy the wrong answers tempt: \"inflation fell so prices fell\" conflates the rate with the level and is the intuitive reading of a falling line — the chart slopes down, so surely things are getting cheaper. They are not; they are getting more expensive more slowly. \"Prices fell 2.1%\" reads the value with the sign inverted. \"Cannot be determined\" is wrong because a positive inflation rate is sufficient to establish that prices rose.\n\nTechnique: always identify whether a chart shows a LEVEL or a RATE OF CHANGE, because a falling line means completely different things in each case. This is one of the most consequential misreadings in finance commentary — the gap between \"inflation is falling\" and \"prices are falling\" — and interviewers use it as a quick test of whether a candidate genuinely understands macro data or is pattern-matching on chart shape. The same trap applies to earnings growth slowing versus earnings shrinking.",
+          "difficulty": "hard"
         },
-        "prompt": "Which field contains a discrepancy?",
-        "options": [
-          "Ticker",
-          "Quantity",
-          "Limit Price",
-          "Executed Price"
-        ],
-        "answer": "Executed Price",
-        "explanation": "Working: Ticker, Side, Quantity and Limit Price all match. Executed Price does not — 198.42p versus 198.24p, a transposition of the two decimal digits.\n\nWhy this specific error is the standard trap: this item sits right next to a correctly matching Limit Price of 198.50p, and the visual similarity between 198.42, 198.24 and 198.50 — three numbers starting identically and differing only in the last two digits — is exactly the pattern that causes real trade breaks. It is also worth noting the executed price beats the limit on both readings (either is a valid buy fill below the 198.50p limit), so there is no logical inconsistency to alert you; only a direct digit-by-digit comparison catches it.\n\nTechnique: when several numbers in the same table share a long common prefix (here, all four prices start \"198.\"), do not rely on the prefix matching as reassurance — it is specifically the SUFFIX that test-writers vary, because that is where real transcription errors cluster (the start of a number is typically read and typed first and most carefully; the end is rushed). Always isolate and compare the final two or three digits of similar-looking numbers as their own explicit check, especially when, as here, multiple numbers in the same row family look almost identical."
-      },
-      {
-        "context": "Compare the two static data records. They should be identical.",
-        "dataTable": {
-          "title": "Trading System vs Risk System",
-          "headers": [
-            "Field",
-            "Trading System",
-            "Risk System"
+        {
+          "dataTable": {
+            "title": "Exhibit E — Group revenue index (2020 = 100)",
+            "headers": [
+              "Year",
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024"
+            ],
+            "rows": [
+              [
+                "Revenue index",
+                "100",
+                "106",
+                "115",
+                "121",
+                "128"
+              ]
+            ],
+            "note": "An index rebases every figure to a starting year set at 100."
+          },
+          "prompt": "By what percentage did revenue grow between 2021 and 2024?",
+          "options": [
+            "20.8%",
+            "22.0%",
+            "28.0%",
+            "18.1%"
           ],
-          "rows": [
-            [
-              "Instrument",
-              "US Treasury 10Y",
-              "US Treasury 10Y"
-            ],
-            [
-              "CUSIP",
-              "912828YY0",
-              "912828YY0"
-            ],
-            [
-              "Coupon",
-              "4.125%",
-              "4.125%"
-            ],
-            [
-              "Maturity Date",
-              "15/08/2035",
-              "15/08/2035"
-            ],
-            [
-              "Currency",
-              "USD",
-              "USD"
-            ]
-          ]
+          "answer": "20.8%",
+          "explanation": "Working: index values are proportional to the underlying revenue, so you can work directly with them. Growth = (128 − 106) ÷ 106 = 22 ÷ 106 = 20.75%, so 20.8%.\n\nWhy the wrong answers tempt: 22.0% is the difference in INDEX POINTS (128 − 106 = 22) mistaken for a percentage — the defining error on index questions, because the numbers look like percentages but are not. 28.0% reads the 2024 value as growth from the base year, which is growth since 2020, not since 2021. 18.1% divides by 121 (the wrong starting year) or by 128 (dividing by the end value instead of the start).\n\nTechnique: an index is just a rescaled series where the base year equals 100, so percentage change between ANY two points is (new − old) ÷ old, exactly as with raw figures. Two rules make index questions easy marks. First, index points are not percentages: a move from 106 to 128 is 22 points but 20.8%. Second, only growth measured FROM the base year can be read straight off the index — since 2020 = 100, the 2024 value of 128 means 28% growth since 2020, and that shortcut applies to no other pair. Indices appear constantly in real assessments precisely because they let examiners test whether you understand relative measurement.",
+          "difficulty": "hard"
         },
-        "prompt": "Do these two records match exactly?",
-        "options": [
-          "Yes, they match exactly",
-          "No, there is a discrepancy"
-        ],
-        "answer": "Yes, they match exactly",
-        "explanation": "Working: check every field — Instrument, CUSIP (character by character), Coupon, Maturity Date, Currency. All five fields are identical between the two systems.\n\nWhy this item matters: this is the second true-match item in the bank, deliberately placed later once the pattern of \"there is always a discrepancy\" has had time to set in from the earlier items. Real checking tests are typically 30-50% genuine matches, precisely because a candidate who has learned to expect an error every time — and starts finding one whether it exists or not — fails the test just as surely as one who misses real discrepancies.\n\nTechnique: reset your expectation before every single item; do not let a run of discrepancy-found answers create momentum toward assuming the next one has an error too. Discipline here means finishing your full field-by-field check even when nothing has jumped out, and being willing to answer match with the same confidence as discrepancy when that is what the methodical check actually shows. If you find yourself inventing a reason something might be different without being able to point to the specific differing character, that is a signal you are pattern-matching against expectation rather than actually checking."
-      }
-    ]
-  },
-]
+        {
+          "dataTable": {
+            "title": "Exhibit E — Group revenue index (2020 = 100)",
+            "headers": [
+              "Year",
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024"
+            ],
+            "rows": [
+              [
+                "Revenue index",
+                "100",
+                "106",
+                "115",
+                "121",
+                "128"
+              ]
+            ],
+            "note": "An index rebases every figure to a starting year set at 100."
+          },
+          "prompt": "If 2020 revenue was £480m, what was 2024 revenue?",
+          "options": [
+            "£614.4m",
+            "£608.0m",
+            "£560.6m",
+            "£627.2m"
+          ],
+          "answer": "£614.4m",
+          "explanation": "Working: the base year is 2020 = 100, so the 2024 index of 128 means revenue is 128% of the 2020 level. Revenue = £480m × 1.28 = £614.4m.\n\nWhy the wrong answers tempt: £608.0m applies a flat 28% split evenly across years or uses an index of 126.7. £560.6m applies the 2022 index of 115 (£480m × 1.168) — reading the wrong column. £627.2m uses 130.7, or compounds the index growth a second time on top of itself.\n\nTechnique: converting an index back to real money is a single multiplication, but ONLY from the base year, because that is the only point where the index equals a known absolute value. If a question gave you 2022 revenue instead and asked for 2024, you would need the ratio 128 ÷ 115 = 1.113, not 1.28 — a distinction worth a mark every time it appears. Sense-check the size: 28% growth on £480m is roughly £134m of increase, so an answer near £614m is right and anything below £600m or above £630m should be suspect before you commit to it.",
+          "difficulty": "hard"
+        },
+        {
+          "dataTable": {
+            "title": "Exhibit F — UK platform market, client accounts (000s)",
+            "headers": [
+              "Provider",
+              "Accounts (000s)"
+            ],
+            "rows": [
+              [
+                "Firm A",
+                "2,400"
+              ],
+              [
+                "Firm B",
+                "1,800"
+              ],
+              [
+                "Firm C",
+                "1,500"
+              ],
+              [
+                "Firm D",
+                "900"
+              ],
+              [
+                "All others",
+                "1,400"
+              ]
+            ]
+          },
+          "prompt": "What is Firm A's market share?",
+          "options": [
+            "30.0%",
+            "33.3%",
+            "25.5%",
+            "27.6%"
+          ],
+          "answer": "30.0%",
+          "explanation": "Working: total the market first — 2,400 + 1,800 = 4,200; + 1,500 = 5,700; + 900 = 6,600; + 1,400 = 8,000 thousand accounts. Firm A's share = 2,400 ÷ 8,000 = 30.0%.\n\nWhy the wrong answers tempt: 33.3% is 2,400 ÷ 7,200, excluding the \"All others\" row — by far the most common market-share error, because that row has no company name and the eye skips it. Market share is always measured against the TOTAL market, including the unnamed tail. 25.5% and 27.6% come from inflated totals after double-counting a row.\n\nTechnique: on any share question, the first move is to define the denominator explicitly and say what it includes. \"All others\", \"Other\", and \"Rest of market\" rows exist precisely to be overlooked, and excluding them systematically overstates every named firm's share. Then sense-check: five entries where the largest is a bit under a third of the total is entirely plausible for a fragmented market, whereas 33.3% would imply the four named firms plus others sum to exactly three times Firm A, which the numbers do not support.",
+          "difficulty": "easy"
+        },
+        {
+          "dataTable": {
+            "title": "Exhibit F — UK platform market, client accounts (000s)",
+            "headers": [
+              "Provider",
+              "Accounts (000s)"
+            ],
+            "rows": [
+              [
+                "Firm A",
+                "2,400"
+              ],
+              [
+                "Firm B",
+                "1,800"
+              ],
+              [
+                "Firm C",
+                "1,500"
+              ],
+              [
+                "Firm D",
+                "900"
+              ],
+              [
+                "All others",
+                "1,400"
+              ]
+            ]
+          },
+          "prompt": "If Firm A acquires Firm D, what would the combined market share be?",
+          "options": [
+            "41.25%",
+            "37.5%",
+            "45.0%",
+            "50.0%"
+          ],
+          "answer": "41.25%",
+          "explanation": "Working: combined accounts = 2,400 + 900 = 3,300. The total market is unchanged at 8,000, because an acquisition moves accounts between owners without creating or destroying any. Share = 3,300 ÷ 8,000 = 41.25%.\n\nWhy the wrong answers tempt: 45.0% divides 3,300 by 7,333 — the answer you get if you wrongly remove Firm D from the denominator, reasoning that Firm D no longer exists. It does not exist as a competitor, but its accounts remain in the market. 37.5% is 3,000 ÷ 8,000, mis-adding the two firms. 50.0% simply adds the two percentage shares as 30% + 20%, which is wrong on both counts since Firm D holds 11.25%, not 20%.\n\nTechnique: in any consolidation question, ask what happens to the numerator AND the denominator separately. An acquisition within the same market changes only the numerator; the denominator moves only if the combined entity enters a new market or loses customers. A useful check: shares must still sum to 100% across all remaining players afterwards. Note also that you can add the two firms' individual shares directly — 30.00% + 11.25% = 41.25% — which is a faster route and confirms the answer independently.",
+          "difficulty": "medium"
+        }
+      ]
+    },
+    {
+      "id": "verbal",
+      "title": "Verbal Reasoning",
+      "icon": "📖",
+      "color": "text-green-400",
+      "border": "border-green-500/30",
+      "description": "Read a passage, then judge statements as True, False, or Cannot Say — using ONLY the passage.",
+      "secondsPerQuestion": 60,
+      "questionsPerAttempt": 9,
+      "tip": "The #1 trap: using outside knowledge. If the passage doesn't state or directly imply it, the answer is Cannot Say — even if you know it's true in real life.",
+      "providers": "SHL Verify Verbal, Watson Glaser (critical thinking variant), Korn Ferry Talent Q, Cut-e/Aon",
+      "requiredBy": "Consulting firms, investment banks, asset managers, law-adjacent roles (compliance, risk), and the Big 4. Watson Glaser specifically appears at firms testing critical reasoning.",
+      "whyUsed": "Finance runs on dense documents — research notes, term sheets, regulations. These tests screen whether you extract precisely what a text says without adding assumptions, which is exactly the discipline the job needs.",
+      "improveTitle": "How to get better at Verbal Reasoning",
+      "improveTips": [
+        "Use ONLY the passage. Outside knowledge — even things you know are true in the real world — must never influence a True/False/Cannot Say answer. If the passage does not state or directly imply it, the answer is Cannot Say, however plausible it feels.",
+        "Separate timing words from causation words. \"Following\", \"after\", \"amid\" and \"as\" mark sequence only. \"Because\", \"due to\", \"driven by\" and \"led to\" mark causation. If the passage uses a timing word and the statement claims causation, the answer is almost always Cannot Say.",
+        "Watch for sample-to-population swaps — \"funds examined\" versus \"all funds\", \"respondents\" versus \"the public\", \"this quarter\" versus \"always\". Compare the group in the statistic to the group in the statement word for word; if they differ, the answer is Cannot Say.",
+        "Scan for absolutes first — never, always, all, none, only, every. They are very easy to contradict (one counter-example is enough) and very hard to support, so check for a counter-example before doing anything else.",
+        "Read the statement before hunting in the passage, not after. Identify exactly what is being claimed — is it about the world, or about what a study/survey specifically showed? — then go find the matching clause, rather than re-reading the whole passage hoping the answer surfaces.",
+        "A single logical step (e.g. \"definitions vary widely\" therefore \"no single agreed definition\") is fair game and often True. A chain of two or more inferential steps is almost always too far — treat elegant, multi-step explanations with suspicion even when they fit every fact.",
+        "Practise against the clock, not just for accuracy. Real verbal tests give roughly 45-60 seconds per statement including reading time, so timed reps matter as much as understanding the traps."
+      ],
+      "questions": [
+        {
+          "context": "Passage: \"The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar.\"",
+          "prompt": "Statement: The rate rise was larger than analysts expected.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage gives both numbers explicitly — analysts expected 0.25%, the bank delivered 0.5%. 0.5 is larger than 0.25, so the statement is supported by the text alone, with no assumption added.\n\nWhy the other verdicts fail: False would require the passage to say the rise met or undershot expectations; it says the opposite. Cannot Say is the tempting one for over-cautious candidates, who reason “the passage never uses the word larger”. But True does not require the statement to be quoted verbatim — it requires it to follow necessarily from what is written. A one-step numerical comparison between two figures both printed in the passage is exactly that. Refusing to make that comparison is over-correction, and it costs as many marks as careless inference does.\n\nTechnique: calibrate what True means. True = the statement must be so given the passage, including simple arithmetic and direct logical consequence. False = the passage contradicts it. Cannot Say = the passage neither supports nor contradicts it. The mistake most candidates make in the first minute is treating the test as a word-matching exercise; the mistake they make in the last minute, having been burned, is answering Cannot Say to everything. Both fail. Ask instead: could the passage be entirely true and this statement still be false? Here it could not, so the answer is True."
+        },
+        {
+          "context": "Passage: \"The central bank raised interest rates by 0.5% in response to inflation reaching 8%. Analysts had expected a smaller rise of 0.25%. Following the announcement, the currency strengthened against the dollar.\"",
+          "prompt": "Statement: The currency strengthened because of the rate rise.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The passage establishes a sequence — “following the announcement, the currency strengthened” — but never asserts that the announcement caused the move. Sequence is not causation.\n\nWhy the other verdicts fail: True is what most candidates pick, because the causal link is genuinely plausible: a larger-than-expected rate rise usually does attract capital and lift a currency. That real-world knowledge is precisely the trap. The test rewards what the text establishes, not what an economics tutorial would predict. False is also wrong — the passage does not deny causation either; some other driver (a data release, a risk-off move, an intervention) could equally have been at work, and the text simply does not say.\n\nTechnique: build a permanent watch-list of causation words and treat them as alarms — “following”, “after”, “amid”, “as”, “alongside”, “coincided with” all denote timing only, whereas “because”, “due to”, “driven by”, “as a result of”, “led to” denote causation. If the passage uses a timing word and the statement uses a causal one, the answer is Cannot Say almost every time. Note how differently the very next passage in this bank behaves: when a text says outflows occurred “as clients shifted towards passive products”, the same construction is doing causal work because the passage presents it as the explanation. Read the function of the clause, not just the connective."
+        },
+        {
+          "context": "Passage: \"Firm X's graduate scheme receives over 50,000 applications for roughly 400 places. Successful candidates typically complete three interview rounds and a numerical assessment. The firm states that academic background is only one of several criteria it considers.\"",
+          "prompt": "Statement: Fewer than 1% of applicants receive a place.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. 400 ÷ 50,000 = 0.008 = 0.8%, which is below 1%. Both figures come straight from the passage, so a single division settles it.\n\nWhy the other verdicts fail: Cannot Say tempts candidates who believe verbal tests forbid calculation. They do not — SHL verbal items routinely require one arithmetic step, and refusing to take it is a guaranteed miss. False would require more than 1% to be offered places, which the numbers contradict. There is a subtler point in favour of True: the passage says “over 50,000 applications” and “roughly 400 places”. A larger denominator only pushes the ratio further below 1%, so the vagueness runs in the direction that strengthens the statement rather than undermining it. That is worth thirty seconds of thought, because on a differently worded item — say “over 400 places for roughly 50,000 applications” — the same vagueness would run the other way and Cannot Say would become defensible.\n\nTechnique: when a passage gives approximate figures, check which direction the approximation pushes the claim before you answer. If every value consistent with the wording still supports the statement, answer True. If some do and some do not, answer Cannot Say. For speed, convert to a benchmark rather than computing exactly: 1% of 50,000 is 500, and 400 is fewer than 500, so the claim holds — no long division required."
+        },
+        {
+          "context": "Passage: \"Firm X's graduate scheme receives over 50,000 applications for roughly 400 places. Successful candidates typically complete three interview rounds and a numerical assessment. The firm states that academic background is only one of several criteria it considers.\"",
+          "prompt": "Statement: Candidates with poor grades are never hired.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The passage says academic background is “only one of several criteria”. That tells you grades are not the sole filter; it says nothing about whether a candidate with poor grades has ever been, or could be, hired.\n\nWhy the other verdicts fail: False is the popular choice, on the reasoning that if academics are only one of several criteria then poor grades clearly cannot be disqualifying — so “never hired” must be contradicted. That is an inference, not a statement. A firm can genuinely weigh several criteria and still operate an academic floor that no applicant clears from below; “one of several criteria” is entirely compatible with it also being a threshold. True is worse still, requiring the passage to confirm a categorical negative it never mentions.\n\nTechnique: absolutes are the highest-yield signal in verbal reasoning. Words such as never, always, all, none, only and every make a statement very hard to support and very easy to contradict, so scan for them first. Then apply the rule: if the passage contains a matching absolute or a direct counter-example, you can answer True or False; if it merely gestures in the same direction, the answer is Cannot Say. Note the contrast with the fraud-rules passage elsewhere in this bank, where “all victims will be reimbursed” IS answerable — because there the text supplies both a hedge (“most”) and an explicit carve-out (claims below £100), which together contradict the absolute outright. Here no such counter-evidence exists, and the difference between False and Cannot Say is exactly whether the passage supplies it."
+        },
+        {
+          "context": "Passage: \"Index funds now account for over half of US equity fund assets. Their fees average below 0.1%, compared with roughly 0.7% for active funds. Some researchers argue this shift reduces the amount of price discovery in markets, though others dispute the effect is significant.\"",
+          "prompt": "Statement: Researchers agree that index funds harm price discovery.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The passage says some researchers argue the shift reduces price discovery “though others dispute the effect is significant”. Disagreement among researchers is stated outright, so a claim of agreement is contradicted.\n\nWhy the other verdicts fail: Cannot Say is the most common wrong pick here, and the reasoning behind it is superficially disciplined — the passage never counts researchers, so how can we say what the field as a whole thinks? But the statement is not about proportions; it asserts agreement, and the passage explicitly reports two opposing camps. One documented dissent is enough to falsify “researchers agree”. True would require the passage to present a settled consensus, which the word “though” exists precisely to deny.\n\nTechnique: watch the concessive connectives — though, however, while, nonetheless, whereas, on the other hand, critics say. They exist to introduce a counterweight, and questions are built on whether you registered them. A useful habit is to mark every one as you read, because the examiner is almost always testing that specific clause. Then remember the asymmetry that makes this item work: statements of universal agreement need only one counter-example to be False, whereas statements of universal disagreement would need much more. Recognising which side of that asymmetry a statement sits on tells you whether False or Cannot Say is even available."
+        },
+        {
+          "context": "Passage: \"Index funds now account for over half of US equity fund assets. Their fees average below 0.1%, compared with roughly 0.7% for active funds. Some researchers argue this shift reduces the amount of price discovery in markets, though others dispute the effect is significant.\"",
+          "prompt": "Statement: Active funds charge roughly seven times more than index funds on average.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage gives active fees at roughly 0.7% and index fees at below 0.1%. 0.7 ÷ 0.1 = 7, and since index fees are BELOW 0.1%, the true multiple is at least seven — so “roughly seven times more” is supported.\n\nWhy the other verdicts fail: Cannot Say attracts candidates who notice that “below 0.1%” is imprecise and conclude the ratio is unknowable. Check the direction of that imprecision, as always: a smaller denominator makes the multiple larger, so every value consistent with the passage gives seven times or more. The statement says “roughly seven times”, which that range comfortably supports. False would require the passage to imply a materially different multiple, and it does not.\n\nTechnique: this is the same imprecision test as the 1%-of-applicants item, and it is worth internalising as a single rule — when a passage hedges a figure, ask whether the hedge pushes the claim toward or away from truth, and answer accordingly. Two further habits pay off on fee questions specifically. First, percentages of percentages confuse people under time pressure: the gap here is 0.6 percentage points but a factor of seven, and test writers will offer statements phrased both ways to see whether you know the difference. Second, note that “roughly” in the STATEMENT loosens the bar for True, whereas “roughly” in the PASSAGE loosens what you know — hedges in the two places have opposite effects, and reading which is which decides several items on every real test."
+        },
+        {
+          "context": "Passage: \"The merger was approved by shareholders of both companies in March. Regulators in two of the three required jurisdictions have granted clearance. The companies expect completion by year end, subject to remaining approvals.\"",
+          "prompt": "Statement: The merger has completed.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The passage says two of three required jurisdictions have cleared and completion is “expected by year end, subject to remaining approvals”. Both halves of that sentence establish the deal is still pending, so “has completed” is contradicted.\n\nWhy the other verdicts fail: Cannot Say is the near-miss, and it is the answer many disciplined candidates give — the passage never says the words “the merger has not completed”, so they treat completion as unaddressed. But it is addressed twice over: an outstanding approval is by definition a condition unmet, and “expected by year end” places completion in the future relative to the text. A statement in the present perfect (“has completed”) is directly incompatible with both. True would require all three clearances plus a completion event, and the passage supplies neither.\n\nTechnique: tense and conditionality are where merger and regulatory passages are won. Train yourself to sort every verb into happened, is happening, is expected to happen, or is required before it can happen — the last two categories are the ones test writers exploit. “Subject to”, “conditional on”, “pending”, “targeted for”, “anticipated” all mark an event as NOT yet done, which is strong enough to make a completion claim False rather than merely unproven. Note the contrast with the sister question about the third regulator: the passage tells you the state of the process, so completion is answerable, but it tells you nothing about the third regulator’s intentions, so its decision is not. Same passage, different answers, because the text covers one and is silent on the other."
+        },
+        {
+          "context": "Passage: \"The merger was approved by shareholders of both companies in March. Regulators in two of the three required jurisdictions have granted clearance. The companies expect completion by year end, subject to remaining approvals.\"",
+          "prompt": "Statement: The third regulator will block the merger.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The passage tells you the third jurisdiction has not yet granted clearance. It says nothing whatsoever about what that regulator will decide.\n\nWhy the other verdicts fail: False is the popular pick, driven by the passage’s optimistic framing — the companies “expect completion by year end”, so surely a block is ruled out? No. A company’s expectation is a statement about the company, not about the regulator, and deals with confident timetables are blocked regularly. To answer False you would need the passage to indicate the regulator will clear, and it does not. True is worse, requiring evidence of an intended block that appears nowhere in the text.\n\nTechnique: separate three distinct things that passages routinely blur — what has happened, what a party expects, and what will happen. Only the first is fact; the second is attributed opinion; the third is almost never established. When a statement asks you to predict a future decision by a third party, Cannot Say is the default and you should need positive textual evidence to move off it. Also notice the pairing at work here: this passage supports one False (the merger has not completed) and one Cannot Say (what the third regulator will do). Test writers deliberately build both from a single short text to catch candidates who lock into a rhythm and answer the second question with the momentum of the first. Reset your reasoning for every statement, even on a passage you have already read three times."
+        },
+        {
+          "context": "Passage: \"Hedge fund launches fell to a decade low last year, while closures exceeded launches for the third consecutive year. Industry assets nonetheless reached a record high, driven by performance gains at existing funds and inflows to the largest managers.\"",
+          "prompt": "Statement: The number of hedge funds is shrinking while industry assets are growing.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. Two facts from the passage combine. Closures have exceeded launches for three consecutive years, so the number of funds must be falling. Industry assets nonetheless reached a record high, so assets are growing. The statement asserts exactly that pairing.\n\nWhy the other verdicts fail: Cannot Say tempts anyone who reads “fell to a decade low” as the key clause and misses that the decisive fact is the closures-versus-launches comparison — the launch rate alone would not tell you the fund count is shrinking, but closures exceeding launches necessarily does. False attracts candidates who sense a contradiction between fewer funds and record assets and conclude the statement must be wrong. There is no contradiction: the passage explains it directly, citing performance gains at existing funds and inflows to the largest managers. Fewer, bigger funds is consolidation, and it is one of the most-reported structural stories in the industry.\n\nTechnique: when a statement combines two claims, verify each independently and only then check that the passage permits both simultaneously. A compound statement is True only if every component is supported. Here both are, so it stands. Learn to spot the arithmetic buried in verbal passages too — “closures exceeded launches” is a net-flow statement about a stock, exactly like deaths exceeding births in a population, and recognising that structure gives you the answer before you have finished the sentence. Finally, resist the instinct that surprising equals unsupported: passages often report genuinely counterintuitive facts, and your job is to check the text, not your expectations."
+        },
+        {
+          "context": "Passage: \"New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100.\"",
+          "prompt": "Statement: All fraud victims will be reimbursed under the new rules.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The passage supplies two separate contradictions of “all”. The rules require reimbursement of MOST victims, not all; and claims below £100 are explicitly excluded, which names a category of victims who will not be reimbursed.\n\nWhy the other verdicts fail: Cannot Say is the disciplined-sounding trap — the passage does not enumerate every victim, so how can we be sure? Because “most” is not “all”, and because the carve-out identifies an excluded group outright. Either alone would be enough. True would require the passage to promise universal reimbursement, which the word “most” exists to prevent.\n\nTechnique: this is the item to compare against the “candidates with poor grades are never hired” question, because the two look alike and split. Both statements contain an absolute. This one is False because the passage supplies explicit counter-evidence — a hedge plus a stated exclusion. That one is Cannot Say because the passage supplies no counter-evidence at all, only a related remark. The rule to carry into the test: an absolute statement is False when the text contradicts it, Cannot Say when the text is merely silent, and True only when the text asserts something equally absolute. Then read quantifiers as precisely as numbers — most, many, some, several, a majority and all are not interchangeable, and a swap between any two of them is the single most common way a statement is falsified."
+        },
+        {
+          "context": "Passage: \"New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100.\"",
+          "prompt": "Statement: Industry groups and consumer advocates disagree about the rules.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage presents two positions side by side: industry groups warned the change could encourage complacency, while consumer advocates said firms had for too long avoided responsibility. One criticises the rules, the other endorses their premise. That is disagreement, stated.\n\nWhy the other verdicts fail: Cannot Say attracts candidates who want an explicit clash — the passage never says the two groups argued with each other, so they hold back. But the statement claims they disagree about the rules, and the text gives each group’s stance on the rules in the same sentence, with “while” signalling the contrast. That is sufficient. False would require the passage to show the two groups aligned, which it does not.\n\nTechnique: “while”, “whereas”, “by contrast” and “meanwhile” are structural markers that a passage is setting up two sides, and questions are frequently built on whether you can characterise each side accurately. Read for stance, not vocabulary: neither group is quoted using the words agree or disagree, and the advocates never mention complacency at all, yet their positions are plainly opposed. Beware the mirror-image trap too — a statement claiming both groups OPPOSE the rules would be False, because the advocates’ complaint is that firms avoided responsibility, which supports the rules rather than attacking them. Getting stance direction right matters as much as spotting that a contrast exists."
+        },
+        {
+          "context": "Passage: \"New rules require payment firms to reimburse most victims of authorised fraud within five business days. Industry groups warned the change could encourage complacency among consumers, while consumer advocates said firms had for too long avoided responsibility. The rules exclude claims below £100.\"",
+          "prompt": "Statement: Fraud rates will rise as a result of the new rules.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. Industry groups WARNED the change COULD encourage complacency. That is an attributed prediction, hedged twice over, and consumer complacency is in any case not the same thing as a rise in fraud rates.\n\nWhy the other verdicts fail: True is what you pick if you read the warning as a finding, collapsing “a lobby group says this might happen” into “this will happen”. Two separate leaps are involved: from opinion to fact, and from complacency to actual fraud rates. False is also unavailable — nothing in the passage suggests fraud will fall or stay flat, and the advocates’ counter-argument is about responsibility, not incidence.\n\nTechnique: strip every statement back to who is asserting it and with what confidence. Text of the form “X warned that Y could happen” establishes only that X issued a warning. A statement asserting Y is unsupported; a statement asserting that X warned about Y would be True. Test writers exploit this attribution gap constantly, because it is easy to read a quoted concern as a reported fact when you are moving quickly. Note also that the interested party matters for your reading speed: industry groups are the ones facing the reimbursement bill, so their warning is advocacy, and advocacy is never evidence in this test. And watch modal verbs — could, might, may, is likely to and risks all keep a claim firmly in the unproven column."
+        },
+        {
+          "context": "Passage: \"Funds marketed as sustainable attracted record inflows last year, though definitions of 'sustainable' vary widely between providers. A regulator's review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year.\"",
+          "prompt": "Statement: A third of all sustainable funds cannot evidence their claims.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The regulator found that a third of funds EXAMINED could not evidence their claims. The statement generalises that to a third of ALL sustainable funds, which the passage does not support.\n\nWhy the other verdicts fail: True is the trap and it catches most candidates, because the numbers match exactly and the swap of one word feels immaterial. It is not. Nothing tells you how the review selected its sample — regulators typically target funds where they already suspect problems, which would make the reviewed group considerably worse than average, though the passage does not say that either. False is equally unavailable, since the true population figure could plausibly be a third; you simply cannot tell.\n\nTechnique: sample-to-population is one of the three or four highest-frequency traps in verbal reasoning, and it is beatable with a mechanical check — every time a statistic appears, locate the group it describes and compare it word for word with the group in the statement. Examined versus all, surveyed versus employed, respondents versus the public, UK versus global, last quarter versus last year. If those two groups differ at all, the answer is almost always Cannot Say. It is worth noting that this discipline is not merely a test artefact: mistaking a sample for a population is how misleading statistics get into research notes and press releases, which is exactly why assessors screen for it."
+        },
+        {
+          "context": "Passage: \"Funds marketed as sustainable attracted record inflows last year, though definitions of 'sustainable' vary widely between providers. A regulator's review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year.\"",
+          "prompt": "Statement: The labelling requirements are already in force.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The passage states the new labelling requirements take effect next year. “Already in force” places them in the present, which the text directly contradicts.\n\nWhy the other verdicts fail: Cannot Say tempts the over-cautious, who note the passage never says “the requirements are not yet in force”. It does not need to: “take effect next year” carries that meaning necessarily, since a rule cannot take effect next year and already be in force. True would require present-tense enforcement, and the future tense rules it out.\n\nTechnique: tense questions are among the most reliable marks on the paper, so bank them quickly and spend the saved time on the causation and sample items where the real difficulty lies. Read the timeline explicitly as you go: what is already true, what changes and when. A sentence like “new rules take effect next year” gives you three answerable statements at once — the rules are not in force now (False if asserted), they will be in force next year (True), and any claim about their effects (Cannot Say, because effects are unobserved). Sorting a passage into that structure on first reading is what lets strong candidates answer three items from one sentence in under a minute."
+        },
+        {
+          "context": "Passage: \"Funds marketed as sustainable attracted record inflows last year, though definitions of 'sustainable' vary widely between providers. A regulator's review found that a third of funds examined could not adequately evidence their sustainability claims. New labelling requirements take effect next year.\"",
+          "prompt": "Statement: There is no single agreed definition of a sustainable fund.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage says definitions of sustainable “vary widely between providers”. If providers use widely differing definitions, no single agreed definition exists — the statement restates the passage in negative form.\n\nWhy the other verdicts fail: Cannot Say attracts candidates hunting for a literal phrase; the passage never says “there is no agreed definition”, so they withhold. But True requires necessary consequence, not verbatim repetition, and wide variation and universal agreement cannot both hold. False would need the passage to point to a common standard — and note it gestures at the opposite, since new labelling requirements are being introduced precisely because definitions currently diverge.\n\nTechnique: expect statements phrased as the logical complement of a passage line, since it is a cheap way for examiners to test comprehension rather than pattern-matching. “Definitions vary widely” equals “no agreed definition”; “closures exceeded launches” equals “fund numbers are falling”; “expected by year end” equals “not complete now”. Practise the translation deliberately, because under time pressure candidates default to scanning for shared words, and these items are built to punish exactly that. One caution on how far to push it: a single logical step is fair game, but a chain of two or more usually is not. “Definitions vary, therefore some funds are mislabelled” is a step too far — plausible, and unsupported."
+        },
+        {
+          "context": "Passage: \"The bank's trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products.\"",
+          "prompt": "Statement: The bank's overall quarterly profit rose 34%.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The 34% refers to the trading division’s REVENUE. The statement claims the bank’s overall PROFIT rose 34%. Two substitutions are made at once — one division for the whole bank, and revenue for profit — and the passage supports neither.\n\nWhy the other verdicts fail: True is the fast-reader’s answer, grabbing the only percentage in the passage and attaching it to whatever the statement asks about. False is more interesting and catches better candidates: they reason that trading is only part of the bank and wealth management is losing assets, so overall growth must be lower than 34%, making the statement contradicted. That inference is unsound. Outflows are a flow of client assets, not a revenue figure, so their profit impact is unquantified; trading might be large enough to carry the group; and profit depends on costs and provisions the passage never mentions. Plausible reasoning is not textual support, and False requires contradiction, not doubt.\n\nTechnique: run a two-part check on every statement carrying a number — is it the same METRIC, and is it the same ENTITY? Revenue is not profit, group is not division, year-on-year is not quarter-on-quarter, and constant currency is not reported. Swapping any one of them is the standard construction for a Cannot Say item on a financial-results passage, and the pair swapped here is the most common of all. It is also the distinction interviewers probe when they ask why a bank can report record revenue and falling profit — the answer being costs, impairments and compensation, none of which a revenue line tells you about."
+        },
+        {
+          "context": "Passage: \"The bank's trading division reported a record quarter, with revenue up 34% year-on-year, driven primarily by fixed income volatility. However, the wealth management division saw outflows for the second consecutive quarter as clients shifted towards passive products.\"",
+          "prompt": "Statement: Wealth management clients are moving towards passive investment products.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage states wealth management saw outflows “as clients shifted towards passive products”. The statement asserts that clients are moving towards passive investment products, which is exactly what the text says.\n\nWhy the other verdicts fail: Cannot Say is the considered wrong answer here, and it comes from correctly remembering that “as” often marks timing rather than cause. Note carefully what the statement actually claims: it does not say passive investing CAUSED the outflows, only that clients are shifting towards passive products. That shift is asserted outright, so the causation question never arises. Candidates who have just been burned by the “following the announcement” item frequently over-apply the lesson and lose this mark. False would require the passage to indicate a move away from passive, which it does not.\n\nTechnique: read the statement before deciding which trap you are in. The causation trap only bites when the STATEMENT makes a causal claim; if the statement merely reports a fact the passage also reports, the connective is irrelevant. A reliable habit is to underline the verb in the statement and find its counterpart in the passage — here “shifted towards” maps one-to-one onto “are moving towards”, with nothing added. This is also why speed on verbal tests comes from statement-first reading: identify precisely what is being claimed, then go hunting in the passage, rather than re-reading the whole text and hoping the answer surfaces."
+        },
+        {
+          "context": "Passage: \"A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used.\"",
+          "prompt": "Statement: The survey shows ChatGPT is the most-used AI tool among finance professionals.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The passage states the survey “did not ask about which specific tools were used”. The statement claims the survey SHOWS ChatGPT is the most-used tool. A survey that did not collect tool-level data cannot show any such thing, so the claim is contradicted rather than merely unsupported.\n\nWhy the other verdicts fail: Cannot Say is the majority answer and the reasoning is nearly right — we genuinely do not know which tool finance professionals use most. But read the statement precisely: it is a claim about what THE SURVEY SHOWS, not about the world. The passage tells you exactly what the survey did and did not measure, so the claim about the survey is answerable and false. Had the statement read “ChatGPT is the most-used AI tool among finance professionals”, Cannot Say would be correct — the passage would then be silent rather than contradictory. That one-word difference between the two framings is the entire question. True would require tool-level findings the survey never gathered.\n\nTechnique: distinguish claims about the EVIDENCE from claims about the WORLD, because they take different answers from the same passage. When a text specifies a study’s scope, methodology or exclusions, it is arming you to falsify claims about that study, and examiners include such clauses for precisely that purpose. Treat any sentence describing what a study did not do as a loaded gun and expect a question on it. The same reflex is worth having outside the test: “the data does not show X” and “X is false” are different statements, and conflating them is how bad analysis gets written."
+        },
+        {
+          "context": "Passage: \"A survey of 2,000 finance professionals found that 68% considered AI tools essential to their daily work, up from 41% two years earlier. Younger respondents were more likely to report daily AI use, though the survey did not ask about which specific tools were used.\"",
+          "prompt": "Statement: Perceived reliance on AI tools has grown over the two-year period covered.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage reports 68% considering AI tools essential, “up from 41% two years earlier”. A rise from 41% to 68% over the period is stated directly, and the statement asserts exactly that growth in perceived reliance.\n\nWhy the other verdicts fail: Cannot Say attracts candidates worried about the wording “perceived reliance” — the survey asked whether tools were ESSENTIAL, which is not literally the word reliance. But considering a tool essential to daily work is a statement of perceived reliance, and the statement is careful to say perceived, matching the survey’s subjective measure rather than claiming actual usage rose. False would require the figure to have fallen or held flat.\n\nTechnique: note how tightly this statement is drafted — “perceived”, and “over the two-year period covered”. Well-constructed items are often True precisely because every hedge lines up with the passage, whereas False and Cannot Say items usually contain one word that overreaches. So read the modifiers as a checklist: does each one match the text? Here perceived matches “considered”, and the two-year period matches “two years earlier”. Compare with the ChatGPT item on the same passage, where a single word takes the statement beyond the survey’s scope. Same passage, two statements, one True and one False, separated entirely by drafting precision — which is exactly the skill being screened, since misreading a hedged sentence in a research note or a term sheet is a costly professional error."
+        },
+        {
+          "context": "Passage: \"Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both.\"",
+          "prompt": "Statement: The firm always hires the candidate who performs best in interview.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "False",
+          "explanation": "Answer: False. The statement claims the firm ALWAYS hires the best interviewer. Candidate B impressed most at interview and was not hired; Candidate C was. One counter-example is enough to falsify an always-claim.\n\nWhy the other verdicts fail: Cannot Say is the sophisticated-sounding error — one hiring decision cannot establish a firm’s general policy, so surely we cannot judge an “always” claim from a single case? The logic runs the wrong way. Proving “always” would indeed require every case, but DISPROVING it requires only one exception, and the passage hands you one. That asymmetry is the whole point of the item. True would require the best interviewer to have been hired, which is the opposite of what happened.\n\nTechnique: universal claims are cheap to falsify and expensive to confirm, so when you see always, never, all or every, your first move should be to hunt for a single counter-example rather than to assess the general pattern. Find one and the answer is False immediately, no further reading required. Fail to find one and you are usually in Cannot Say territory, because the passage will rarely cover every case. This mirrors the “poor grades are never hired” item, which stays Cannot Say precisely because no counter-example is available there. Same logical structure, opposite answers, decided solely by whether the text supplies an exception — and being able to see that at a glance is worth several marks and a good deal of time."
+        },
+        {
+          "context": "Passage: \"Three candidates were shortlisted for the analyst role. Candidate A scored highest on the numerical test but was rated weakest at interview. Candidate B scored lowest on the numerical test but impressed most at interview. The firm ultimately hired Candidate C, who scored in the middle on both.\"",
+          "prompt": "Statement: Candidate C was hired because of consistency across both measures rather than a standout score on either.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The passage reports two facts about Candidate C — middling scores on both measures, and being hired. It never states the firm’s reason. The statement supplies a motive (“because of consistency”), and motives are almost never established by a passage that does not state them.\n\nWhy the other verdicts fail: True is extremely tempting because the explanation is genuinely elegant and fits every fact given. That is precisely what makes it dangerous: a plausible story that accommodates the data is still a story you constructed. The firm might equally have chosen C for cultural fit, a strong reference, language skills, salary expectations, or a reason the passage never hints at. False is also wrong — the consistency explanation is not contradicted either, merely unevidenced.\n\nTechnique: separate WHAT happened from WHY it happened. Passages report outcomes freely and reasons rarely, and any statement offering a rationale for a decision should trigger an immediate hunt for explicit causal language — “because”, “on the grounds that”, “citing”, “the firm said it valued”. Absent that, answer Cannot Say however satisfying the inference feels. The elegance of an explanation is not evidence for it, and the better the story fits, the more carefully you should check whether the text actually asserts it. This is the highest-value habit the test screens for: in a research note, an investment committee or a client recommendation, presenting a well-fitting hypothesis as an established cause is the error that does real damage."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"The regulator stated that firms which failed to evidence adequate controls would face enforcement action. Of the 40 firms reviewed, 12 could not produce the required documentation within the deadline, though 5 of those subsequently supplied it during the extended window. The regulator has not yet announced any enforcement decisions.\"",
+          "prompt": "Statement: At most 7 firms remain exposed to enforcement action on documentation grounds.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "12 failed within the deadline, 5 later supplied it, leaving 7 that never produced documentation. Since only firms failing to evidence controls face action on these grounds, at most 7 remain exposed — \"at most\" is satisfied even if the regulator ultimately pursues fewer. This tests whether you handle qualified quantifiers precisely rather than defaulting to Cannot Say whenever a passage feels uncertain."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"The regulator stated that firms which failed to evidence adequate controls would face enforcement action. Of the 40 firms reviewed, 12 could not produce the required documentation within the deadline, though 5 of those subsequently supplied it during the extended window. The regulator has not yet announced any enforcement decisions.\"",
+          "prompt": "Statement: The 28 firms that met the original deadline had adequate controls.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Producing documentation on time is not the same as having adequate controls — the passage links enforcement to failing to EVIDENCE controls, but never confirms that documented firms were actually compliant. Conflating \"provided paperwork\" with \"was adequate\" is exactly the inferential leap these questions punish."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"The regulator's review found no evidence that the firm's charging structure disadvantaged retail clients. The review examined a sample of 200 client files drawn from the firm's execution-only division. The firm also operates advisory and discretionary divisions.\"",
+          "prompt": "Statement: The firm's charging structure did not disadvantage retail clients.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. Two separate gaps prevent this from being True. First, the sample covered only the execution-only division, while the firm also runs advisory and discretionary divisions whose charging was never examined. Second, and more subtly, \"no evidence of X\" is not the same claim as \"not X\" — a review can fail to find something that is nevertheless present.\n\nWhy the other verdicts fail: True is the intended trap and it is very well disguised, because the passage's opening clause reads like a clean exoneration and the statement appears to restate it almost word for word. It does not: the passage reports what a limited review found, and the statement asserts a fact about the firm as a whole. False is equally unavailable — nothing indicates the structure DID disadvantage anyone; the review simply did not look everywhere.\n\nTechnique: absence of evidence is not evidence of absence, and this distinction is tested constantly because it slips past almost everyone under time pressure. Train yourself to flag three phrasings as automatic Cannot Say candidates: \"no evidence that\", \"the review did not identify\", and \"we are not aware of\". Then run the scope check as a second, independent test — here, even if the wording had been stronger, the sample covered one division out of three. When a passage bothers to tell you what a sample covered, that detail is load-bearing and is almost always the point of the item."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"The regulator's review found no evidence that the firm's charging structure disadvantaged retail clients. The review examined a sample of 200 client files drawn from the firm's execution-only division. The firm also operates advisory and discretionary divisions.\"",
+          "prompt": "Statement: The review did not examine any advisory division client files.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "True",
+          "explanation": "Answer: True. The passage states the 200 files were drawn from the execution-only division. Files drawn from execution-only are, by definition, not advisory files, so no advisory files were among those examined.\n\nWhy the other verdicts fail: Cannot Say attracts candidates who have just correctly answered Cannot Say on the companion question and carry that caution forward — a momentum error rather than a reasoning one. Others hesitate because the passage never uses the words \"did not examine the advisory division\", but True requires necessary consequence, not verbatim wording, and \"drawn from the execution-only division\" fully determines the composition of the sample. False would need evidence that advisory files were included, which would contradict the stated source of the sample.\n\nTechnique: this pairing is the whole lesson. The same sentence supports a confident True about what the review COVERED and only a Cannot Say about what the review PROVED. Sample-scope statements are precise and therefore answerable; conclusions drawn beyond that scope are not. When a passage defines a population explicitly, statements about the composition of that population are usually True, and statements generalising from it are usually Cannot Say. Reset your reasoning for each statement rather than letting the previous verdict set your prior."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"Following the acquisition, the combined group reported revenue of £2.4bn, compared with £1.9bn reported by the acquirer alone in the prior year. The acquisition completed four months into the financial year.\"",
+          "prompt": "Statement: The acquirer's own revenue grew during the year.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The £2.4bn is the COMBINED group including eight months of the acquired business; the £1.9bn is the acquirer standalone. The two figures are not comparable, so the increase tells you nothing about whether the acquirer's own underlying revenue grew, shrank or held flat. The acquirer could have declined to £1.7bn while an acquisition contributing £700m still produced a higher combined total.\n\nWhy the other verdicts fail: True is what the arithmetic invites — £2.4bn is plainly larger than £1.9bn — and it is the answer most candidates give, because the passage presents the two numbers side by side using the word \"compared with\", which implies they are like for like. They are not, and the third sentence exists solely to tell you so. False overcorrects: the acquirer's revenue may well have grown; we simply cannot separate it from the acquisition contribution.\n\nTechnique: whenever a comparison spans a corporate action — an acquisition, a disposal, a demerger, a change in accounting basis — check that both sides of the comparison cover the same entity for the same period. This is precisely why companies report \"organic\" or \"like-for-like\" growth alongside reported growth, and why analysts distrust reported figures in a deal year. A passage that supplies a completion date mid-year is handing you the reason the comparison fails; treat any such date as a deliberate signal rather than background detail."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Passage: \"A study of 40 listed companies found those with more diverse boards reported higher average returns on equity over the period. The study's authors noted they did not control for company size, and that larger companies in the sample tended to have both more diverse boards and higher returns.\"",
+          "prompt": "Statement: Board diversity caused the higher returns on equity in the companies studied.",
+          "options": [
+            "True",
+            "False",
+            "Cannot Say"
+          ],
+          "answer": "Cannot Say",
+          "explanation": "Answer: Cannot Say. The study found an association, and the authors explicitly flag a confounding variable: company size correlates with both board diversity and returns. Size could therefore be driving both, which would produce exactly the observed pattern with no causal link between diversity and returns at all. The passage does not establish causation, and equally does not rule it out.\n\nWhy the other verdicts fail: True reads a correlation as a cause, which the authors themselves caution against in the second sentence — the item is essentially testing whether you read past the headline finding. False is the more interesting error and catches stronger candidates: they spot the confounder and conclude the causal claim is therefore refuted. It is not. A confounder means the study cannot support the claim; it does not demonstrate the claim is wrong. Diversity might genuinely improve returns, and this study simply cannot show it.\n\nTechnique: hold three states distinctly — supported, unsupported, and contradicted. An acknowledged confounder moves a claim from supported to unsupported, never to contradicted, so the answer is Cannot Say rather than False. When a passage volunteers a methodological limitation, that sentence is the entire item: authors flagging what they did not control for are telling you exactly which inference is unavailable. The same structure recurs across research-summary passages, and recognising it is worth several marks on a real test."
+        }
+      ]
+    },
+    {
+      "id": "logical",
+      "title": "Logical & Abstract Reasoning",
+      "icon": "🔷",
+      "color": "text-purple-400",
+      "border": "border-purple-500/30",
+      "description": "The infamous shape-sequence tests: find the pattern, predict what comes next.",
+      "secondsPerQuestion": 45,
+      "questionsPerAttempt": 10,
+      "tip": "Check patterns systematically: count of shapes, rotation, alternation, size, position, and combinations. If stuck, eliminate options that break an obvious rule and guess — never leave blanks.",
+      "providers": "SHL Inductive Reasoning, Cut-e/Aon scales cls & ix (used heavily by trading firms), Korn Ferry logical, Raven's Progressive Matrices",
+      "requiredBy": "Trading firms (Optiver, IMC, Flow Traders famously use cut-e), quant funds, tech divisions, consulting and most bank graduate schemes.",
+      "whyUsed": "Abstract reasoning is the closest proxy for raw pattern-recognition and learning speed — trading and quant firms weight it heavily because spotting patterns fast IS the job. It's also degree-agnostic, so firms use it to compare candidates fairly.",
+      "improveTitle": "How to get better at Logical & Abstract Reasoning",
+      "improveTips": [
+        "Name the attributes before you hunt for a rule: shape, fill, count, position, size, rotation, orientation. State which are moving and which are fixed — this alone eliminates options that vary an attribute the sequence holds constant.",
+        "For any accelerating or unusual number sequence, write the differences underneath, and if those are not constant, write the differences of the differences. Two rows of subtraction resolve almost every numeric progression you will see.",
+        "For rotating or cyclic sequences, find the period first (how many steps until it repeats), then answer by position MOD period rather than tracing every single step — this is the only way to answer items that ask for position 6 or 7 inside a strict time limit.",
+        "When two attributes change at once, isolate and track them completely separately. Most marks are lost on multi-attribute items not because the rule is hard, but because both attributes are tracked together and one gets dropped.",
+        "Never assume a sequence bounces, wraps, or reverses at a boundary unless it has already shown you that behaviour. Extend the demonstrated pattern; only change behaviour when the sequence or the question explicitly tells you to.",
+        "If you are stuck, eliminate options that break an obvious rule (wrong shape, wrong count, wrong direction) and guess from what remains rather than leaving it blank — there is no penalty for a wrong answer on almost every real provider's test.",
+        "Trading and quant firms in particular (cut-e/Aon \"scales\") run these adaptively with very short per-item timers, sometimes under 15 seconds — if you are targeting those firms specifically, practise faster than this page's default timer to build real margin."
+      ],
+      "questions": [
+        {
+          "shapes": "●  ○  ●  ○  ●  ?",
+          "prompt": "What comes next in the sequence?",
+          "options": [
+            "●",
+            "○",
+            "◆",
+            "■"
+          ],
+          "answer": "○",
+          "explanation": "Working: the only attribute changing is fill, and it flips every step — ● ○ ● ○ ●. Position 6 must therefore be ○. Equivalently, odd positions are filled and even positions are empty; 6 is even, so ○.\n\nWhy the wrong answers tempt: ● is what you pick by copying the item you just looked at rather than continuing the rule — the single most common careless error on the easy items, because your eye rests on the last symbol. ◆ and ■ introduce a shape change that never appears anywhere in the sequence; abstract tests routinely offer an option that varies an attribute the sequence holds constant, precisely to catch candidates who are pattern-hunting rather than pattern-reading.\n\nTechnique: on inductive tests the opening two or three items are deliberately trivial, and they exist to be banked in under ten seconds each so you have time for the multi-attribute items later. Build the habit now that will carry you through the hard ones — name the attributes present (here: shape, fill, count, position, size, orientation), then state which are moving and which are fixed. Here only fill moves, so any option changing shape is eliminated before you even reason about parity. That elimination-first reflex is what turns a 45-second item into a 10-second one, and cut-e style tests are scored on speed as much as accuracy."
+        },
+        {
+          "shapes": "▲  ▲▲  ▲▲▲  ▲▲▲▲  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "▲▲▲",
+            "▲▲▲▲",
+            "▲▲▲▲▲",
+            "▲"
+          ],
+          "answer": "▲▲▲▲▲",
+          "explanation": "Working: the shape never changes; only the count moves — 1, 2, 3, 4. The differences are all +1, so the fifth term is 5 triangles.\n\nWhy the wrong answers tempt: ▲▲▲▲ repeats the previous term, the copying error again. ▲▲▲ goes backwards. ▲ resets to the start, which would be right only if the sequence were cyclic, and nothing here suggests a cycle — the count has risen monotonically with no boundary in sight. That distinction between a progression and a cycle is worth holding onto, because later items in this bank hinge on it.\n\nTechnique: counting sequences are the foundation for the harder second-order ones, so practise writing the counts as a number line underneath the shapes rather than judging by eye. Under time pressure candidates miscount clusters of five or more identical symbols surprisingly often, and a written 1, 2, 3, 4 removes the risk entirely. Then look at the differences: all equal means linear (this item), rising means accelerating (the triangular-number and 1, 2, 4, 7 items), and a constant ratio means geometric (the doubling-stars item). Those three shapes cover the large majority of count-based questions you will see, and identifying which one you are in should take a single glance at the difference row."
+        },
+        {
+          "shapes": "◐  ◓  ◑  ◒  ?",
+          "prompt": "The half-filled circle rotates each step. What comes next?",
+          "options": [
+            "◐",
+            "◓",
+            "◑",
+            "◒"
+          ],
+          "answer": "◐",
+          "explanation": "Working: the shaded half moves left → top → right → bottom, a 90° clockwise turn each step. That completes a full revolution in four steps, so the fifth item returns to the starting orientation: ◐.\n\nWhy the wrong answers tempt: ◒ repeats the previous item. ◓ and ◑ are simply the wrong points in the cycle — and because all four options are the same four symbols you have just been staring at, there is no shortcut through elimination here; you must actually track the rotation. This is why examiners like rotation items: every distractor is equally plausible to a candidate who has not identified the direction.\n\nTechnique: for any rotational sequence, settle two things immediately — the direction and the period. Direction is easiest to fix by picking one feature and asking where it went; here the shaded side moves from the 9 o’clock position to 12 o’clock, which is clockwise. Period is the number of distinct states, four in this case, after which everything repeats. With both known you can jump straight to any position using position mod period rather than tracing every step: item 5 has the same state as item 1. That modular shortcut is what makes the expert-level ●○◐ rotation item tractable inside 45 seconds, so it is worth practising on the easy ones where you can check yourself."
+        },
+        {
+          "shapes": "■ ●  |  ● ■  |  ■ ●  |  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "■ ●",
+            "● ■",
+            "■ ■",
+            "● ●"
+          ],
+          "answer": "● ■",
+          "explanation": "Working: two elements exchange places every step — ■● then ●■ then ■● and so on, a period-2 cycle. Since item 3 is ■●, item 4 must be ●■.\n\nWhy the wrong answers tempt: ■● repeats the current item, which is the answer you give if you lose your place in a sequence of near-identical groups. ■■ and ●● are the interesting distractors: they abandon the swap rule and change the CONTENTS of the pair instead of its order. Nothing in the sequence ever alters which two shapes are present, and options that change the cast rather than the arrangement should be eliminated on sight.\n\nTechnique: separate arrangement from composition. Some sequences permute a fixed set (this one, and the ◆■● cyclic-shift item); others change what is in the set (the filling ○○○○ item). Ask which kind you are in before hunting for a rule, because that single classification halves the option list immediately. When the sequence permutes, count the period: a two-element swap has period 2, a three-element cyclic shift has period 3, and knowing that lets you answer by parity rather than by tracing. Here position 4 is even, and even positions are ●■ — an answer you can reach without looking at the intervening items at all."
+        },
+        {
+          "shapes": "○  ◔  ◑  ◕  ?",
+          "prompt": "The circle fills progressively. What comes next?",
+          "options": [
+            "●",
+            "○",
+            "◔",
+            "◑"
+          ],
+          "answer": "●",
+          "explanation": "Working: the shaded proportion grows in equal steps of one quarter — 0, ¼, ½, ¾ — so the fifth item is completely filled: ●.\n\nWhy the wrong answers tempt: ◔ and ◑ are earlier stages of the same sequence, offered to catch anyone who loses their place; ○ is the starting state, which would be correct only if the pattern cycled back rather than continuing. That is a genuine judgement call rather than a trick, and it is the heart of this item — a progression that reaches a boundary can either stop, reverse, or wrap round to the beginning, and you have to decide which on the evidence available. Here nothing indicates a cycle, and a quarter-by-quarter fill has an obvious natural endpoint at full, so ● is the reading with the fewest assumptions.\n\nTechnique: when a monotonic progression is one step from its limit, prefer the option that simply completes it. Only choose a reversal or a reset when the sequence has already demonstrated one — as the ■□□□ item in this bank does by explicitly telling you the pattern reverses. This is the same discipline as the travelling-dot item, where the filled circle has not yet hit the end of the row and so no bounce may be assumed. Stated as one rule to carry into the test: never invent a boundary behaviour the sequence has not shown you."
+        },
+        {
+          "shapes": "△ △ ▲  |  □ □ ■  |  ○ ○ ?",
+          "prompt": "Each group follows the same rule. What completes the third group?",
+          "options": [
+            "○",
+            "●",
+            "△",
+            "■"
+          ],
+          "answer": "●",
+          "explanation": "Working: read each group as a unit. Group 1 is triangle, triangle, filled triangle. Group 2 is square, square, filled square. Both follow the rule “two outlines then the filled version of the same shape”, so group 3 must be circle, circle, filled circle: ●.\n\nWhy the wrong answers tempt: ○ continues with an outline and ignores the fill step that defines the rule. △ and ■ import shapes from the other groups, which is the error of treating the sequence as one long chain rather than three parallel groups — a distinction the vertical bars are there to signal. Notice that the shape identity is constant WITHIN a group and varies BETWEEN groups, while the fill pattern is constant BETWEEN groups and varies within. Recognising which attribute does which is the whole question.\n\nTechnique: whenever separators appear, decode the completed groups first and treat the rule as a template to apply, not a sequence to extend. Then check the attributes on both axes — down the groups and across each group — because the interesting rules almost always live on one axis while the other holds an attribute fixed. This grouped structure is the bridge to matrix-style questions such as Raven’s Progressive Matrices, where you must read a rule across rows and a different one down columns simultaneously. Practising the two-axis read on simple grouped items like this one is the cheapest preparation for the harder matrix formats."
+        },
+        {
+          "shapes": "★ 1  |  ★★ 2  |  ★★★★ 3  |  ★★★★★★★★ 4  |  ? 5",
+          "prompt": "How many stars are in the 5th group?",
+          "options": [
+            "10",
+            "12",
+            "16",
+            "9"
+          ],
+          "answer": "16",
+          "explanation": "Working: the counts are 1, 2, 4, 8. The differences (1, 2, 4) are not constant, but the ratios are — each term is twice the last. So the fifth term is 8 × 2 = 16.\n\nWhy the wrong answers tempt: 10 is 8 + 2, applying the most recent difference as though the sequence were arithmetic. 12 is 8 + 4, applying the difference before that. 9 is 8 + 1, using the first difference. Every wrong option comes from treating a geometric sequence as arithmetic, which tells you something useful about how these papers are built: the distractors map the specific misreadings the examiner expects, so an answer landing on one of them is a warning rather than a reassurance.\n\nTechnique: run two checks on every numeric sequence, in this order. Take the differences; if they are constant you are done. If not, take the ratios; if those are constant it is geometric. Only if neither is constant do you look for something more exotic — second-order differences (the 1, 2, 4, 7 item), Fibonacci-style addition of the previous two terms, or squares. That checklist takes about eight seconds and covers nearly every numeric progression on a graduate test. Doubling in particular is worth recognising instantly from the sequence 1, 2, 4, 8, 16, 32, 64, because it appears constantly, and confusing 2ⁿ growth with linear growth is exactly the intuition failure that trading firms screen for when they test inductive reasoning."
+        },
+        {
+          "shapes": "◆ ■ ●  |  ■ ● ◆  |  ● ◆ ■  |  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "◆ ■ ●",
+            "● ■ ◆",
+            "■ ◆ ●",
+            "◆ ● ■"
+          ],
+          "answer": "◆ ■ ●",
+          "explanation": "Working: each group is the previous one shifted one place left, with the leftmost element wrapping round to the end — ◆■● becomes ■●◆ becomes ●◆■. Three elements means the cycle has period 3, so the fourth group returns to the original arrangement: ◆■●.\n\nWhy the wrong answers tempt: ●■◆ is the original reversed, not shifted — reversal and rotation produce identical results for two elements but diverge for three, which is exactly why the examiner moved from a pair to a triple. ■◆● and ◆●■ are the other permutations of the same three symbols, filling out the option set so that recognising the shapes gets you nowhere. With three items there are six possible orderings and four are offered, so guessing is worth little.\n\nTechnique: identify the period, then use position mod period. Here period 3 means groups 1 and 4 match, as do 2 and 5, and 3 and 6. That reasoning is what makes the expert ●○◐ item in this bank answerable in seconds rather than by laborious tracing, and it generalises to any cyclic structure. Also fix the direction explicitly by tracking ONE element rather than the whole group: follow ◆ alone and you see it move from position 1 to position 3 to position 2 to position 1. Tracking a single element through a permutation is far more reliable under time pressure than trying to hold three simultaneous movements in your head."
+        },
+        {
+          "shapes": "A1   C2   E3   G4   ?",
+          "prompt": "Letters and numbers each follow their own rule. What comes next?",
+          "options": [
+            "I5",
+            "H5",
+            "I6",
+            "J5"
+          ],
+          "answer": "I5",
+          "explanation": "Two independent progressions: the letters skip one each time (A, C, E, G → I) while the numbers simply count up (1, 2, 3, 4 → 5). Alphanumeric sequences are a cut-e/Aon staple — write the letter positions out as numbers (A=1, C=3, E=5, G=7) if the pattern is not obvious."
+        },
+        {
+          "shapes": "●○○  ○●○  ○○●  ○●○  ?",
+          "prompt": "The filled circle moves. What comes next?",
+          "options": [
+            "●○○",
+            "○●○",
+            "○○●",
+            "●●●"
+          ],
+          "answer": "●○○",
+          "explanation": "Working: track the filled circle’s position — 1, 2, 3, then 2. It reached the right-hand end and turned round. Continuing that reversal, the next position is 1: ●○○.\n\nWhy the wrong answers tempt: ○○● assumes the dot wraps around to the start and continues rightward, which is the natural first guess and is wrong only because item 4 already shows the dot moving back. That fourth item is the entire question — without it, wrap and bounce are indistinguishable. ○●○ repeats the current item. ●●● abandons the single-dot structure altogether.\n\nTechnique: a travelling element that hits a boundary can do one of three things — wrap to the other end, bounce back, or stop — and you cannot tell which until the sequence shows you. So find the item immediately after the boundary and read the answer off it. Compare this directly with the five-cell travelling-dot item elsewhere in this bank, where the dot has reached position 4 of 5 and has NOT yet touched the end: there, assuming a bounce is unjustified and the answer is simply position 5. The two items are deliberate mirror images, and together they teach the rule worth carrying in: look for evidence of the boundary behaviour, and if the sequence has not demonstrated one, do not invent it."
+        },
+        {
+          "shapes": "△   □   ⬠   ⬡   ●",
+          "prompt": "Which shape does NOT belong with the others?",
+          "options": [
+            "△",
+            "⬠",
+            "⬡",
+            "●"
+          ],
+          "answer": "●",
+          "explanation": "Every other shape is a polygon with straight edges and corners (3, 4, 5 and 6 sides). The circle has no straight edges or vertices at all. Odd-one-out questions test whether you can find the rule the group shares — check edges, corners, symmetry and fill before guessing."
+        },
+        {
+          "shapes": "① ▲  |  ② ▲▲  |  ③ ▲▲▲▲  |  ④ ▲▲▲▲▲▲▲",
+          "prompt": "Triangles added each step: +1, +2, +3... How many triangles at step ⑤?",
+          "options": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "answer": "11",
+          "explanation": "Working: the counts are 1, 2, 4, 7. First differences: 1, 2, 3 — not constant, so this is not linear. Second differences: 1, 1 — constant, so the sequence is accelerating steadily. The next first difference is 4, giving 7 + 4 = 11.\n\nWhy the wrong answers tempt: 9 applies the most recent difference of 2 (or reads the differences as 1, 2, 2). 10 applies a difference of 3, repeating the last gap instead of increasing it — the most common error, because holding the increment constant feels like continuing the pattern. 12 over-shoots with a difference of 5, which is the answer you get by counting the differences as 1, 2, 3, 4, 5 and taking the wrong one. Note that all four options sit within three of each other, so there is no sense-checking your way out: only the difference table gives the answer.\n\nTechnique: write the differences underneath the sequence, always, and if those are not constant write the differences of the differences. Two rows of subtraction resolve almost every accelerating sequence in about ten seconds. Learn to recognise the classic second-order families by sight too — 1, 3, 6, 10, 15 (triangular), 1, 4, 9, 16 (squares), 2, 6, 12, 20 (n(n+1)) — because spotting one instantly is worth thirty seconds you can spend on a harder item. This particular sequence, 1, 2, 4, 7, 11, is the triangular numbers plus one, and it appears often enough to be worth memorising outright."
+        },
+        {
+          "shapes": "↑  →  ↓  ←  ?",
+          "prompt": "The arrow rotates. What comes next?",
+          "options": [
+            "↑",
+            "→",
+            "↓",
+            "←"
+          ],
+          "answer": "↑",
+          "explanation": "Working: the arrow turns 90° clockwise each step — up, right, down, left. Four steps complete a full revolution, so the fifth item returns to up: ↑.\n\nWhy the wrong answers tempt: ← repeats the previous item. → and ↓ are other points in the cycle. As with the half-filled circle item, all four options are the four symbols already on screen, so elimination gives you nothing and you must genuinely track the rotation. What you can do quickly is fix the direction from the first two items alone — up to right is unambiguously clockwise — and then count positions rather than re-reading the whole sequence.\n\nTechnique: rotation items reduce to modular arithmetic once you know the period. Four orientations means period 4, so item 5 matches item 1, item 6 matches item 2, and so on. Where these get harder is when the step is 45° instead of 90°, giving a period of 8 and eight possible symbols, or when rotation is combined with a second attribute such as fill or count — the multi-attribute versions are where marks are actually lost. Build the habit on the easy version: state the direction, state the period, compute the position, then read off the answer. Doing that consistently on simple items is what makes it automatic when an item combines rotation with something else under time pressure."
+        },
+        {
+          "shapes": "▲▲▲▲▲  ▲▲▲▲  ▲▲▲  ▲▲  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "▲▲",
+            "▲",
+            "Nothing",
+            "▲▲▲"
+          ],
+          "answer": "▲",
+          "explanation": "Working: the counts run 5, 4, 3, 2 — a constant difference of −1. The next term is 1 triangle.\n\nWhy the wrong answers tempt: ▲▲ repeats the previous item. ▲▲▲ goes back up. “Nothing” is the genuinely interesting distractor: the sequence is heading towards zero, so why not continue to an empty item? Because it has not reached zero yet — the next term after 2 is 1, not 0. Choosing “nothing” means running the rule one step too far, and examiners include an empty or null option precisely to catch over-extrapolation. If the sequence had shown 5, 4, 3, 2, 1 and asked for the sixth term, the answer would be different and much more debatable.\n\nTechnique: apply the rule exactly once. Under time pressure candidates frequently answer the question one step ahead, especially when the sequence is obviously heading somewhere — you see where it is going and jump to the destination rather than the next stop. A cheap defence is to number the items as you read, so you know precisely which position you are being asked for. This item also pairs with the increasing-triangles question earlier in the bank: the same structure run backwards, and worth noting because inductive tests often present a rule and its inverse in the same paper, on the assumption that recognising a pattern is not the same skill as recognising it reversed."
+        },
+        {
+          "shapes": "A△  B□  C⬠  D⬡  E?",
+          "prompt": "Letters advance and shapes gain sides. What shape pairs with E?",
+          "options": [
+            "A triangle (3 sides)",
+            "A hexagon (6 sides)",
+            "A heptagon (7 sides)",
+            "A square (4 sides)"
+          ],
+          "answer": "A heptagon (7 sides)",
+          "explanation": "Working: two attributes progress in parallel. The letters advance one at a time (A, B, C, D, E) and the shapes gain one side at a time (3, 4, 5, 6). E is the fifth letter, so it pairs with the fifth shape, which has 7 sides: a heptagon.\n\nWhy the wrong answers tempt: “A hexagon (6 sides)” repeats the shape from D — the copying error, and here it is especially attractive because a hexagon is the last shape you actually saw drawn. “A square (4 sides)” and “A triangle (3 sides)” come from misaligning the two progressions, for instance by pairing the letter’s position with a shape one or two steps back, or from assuming the shapes cycle after the hexagon.\n\nTechnique: when two attributes move together, check whether they are genuinely independent or whether one is a distractor tracking the other. Here they are locked in step, so either one alone gives the answer. Compare with the expert △1 □4 ⬠9 ⬡16 item elsewhere in this bank: there the numbers appear to track the shapes but are actually the SQUARES OF THE POSITION, and the shape progression is deliberate noise designed to make you compute 7² instead of 5². The lesson is to identify what each attribute is a function of — position, or the other attribute — before you extrapolate. Writing the position index above each item (1, 2, 3, 4, 5) takes three seconds and makes that distinction obvious."
+        },
+        {
+          "shapes": "■□■  □■□  ■□■  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "■□■",
+            "□■□",
+            "■■■",
+            "□□□"
+          ],
+          "answer": "□■□",
+          "explanation": "Working: each item is the previous one with every cell’s fill flipped — filled becomes empty and empty becomes filled. ■□■ inverts to □■□, which inverts back to ■□■. Item 3 is ■□■, so item 4 is □■□.\n\nWhy the wrong answers tempt: ■□■ repeats the current item. ■■■ and □□□ are the distractors worth thinking about — they represent “everything fills” or “everything empties”, which is a different and perfectly plausible rule for a sequence about fill. What rules them out is that both items shown alternate cell by cell rather than moving towards uniformity; the rule is inversion, not accumulation. Compare the ○○○○ item, where fill genuinely does accumulate one cell at a time towards ●●●●.\n\nTechnique: fill-based sequences use a small and learnable set of rules — inversion (this item), progressive filling (the four-circle item), rotation of the filled region (the half-circle item), and translation of a single filled cell (the travelling-dot items). Run through that list rather than staring at the symbols, and you will usually identify the rule in a couple of seconds. A second useful habit for inversion items specifically is to check the period: any pure inversion has period 2, so odd positions match item 1 and even positions match item 2. That parity check gives the answer without tracing, and it scales to longer sequences where tracing would burn the clock."
+        },
+        {
+          "shapes": "★ 1  |  ★ 1  |  ★★ 2  |  ★★★ 3  |  ★★★★★ 5  |  ? ",
+          "prompt": "How many stars come next?",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "10"
+          ],
+          "answer": "8",
+          "explanation": "Working: the counts are 1, 1, 2, 3, 5. Neither the differences nor the ratios are constant, but each term equals the sum of the previous two: 1+1=2, 1+2=3, 2+3=5. Continuing, 3+5=8.\n\nWhy the wrong answers tempt: 6 is 5 + 1, using the wrong pair or reading the differences as though they repeated. 7 is 5 + 2, one term too far back. 10 doubles the last term, applying the geometric rule from the stars item — a good illustration of why you should test rules rather than pattern-match against a question you did the minute before. The three wrong options are all plausible arithmetic on the visible numbers, so the only defence is identifying the actual rule.\n\nTechnique: Fibonacci is the standard third answer when differences and ratios both fail, and its opening — 1, 1, 2, 3, 5, 8, 13, 21, 34 — is worth committing to memory outright, along with the repeated 1 at the start that makes it recognisable at a glance. More broadly, add “is each term a function of the two before it?” to your checklist as step three, after differences and ratios. That covers Fibonacci, Lucas sequences and their variants, and it is the last general-purpose test before you have to start looking for squares, primes or something bespoke. Knowing the order of the checks matters as much as knowing the checks, because time spent hunting exotic rules is time taken from items you could actually finish."
+        },
+        {
+          "shapes": "◢  ◣  ◤  ◥  ?",
+          "prompt": "The corner triangle rotates. What comes next?",
+          "options": [
+            "◢",
+            "◣",
+            "◤",
+            "◥"
+          ],
+          "answer": "◢",
+          "explanation": "Working: track where the shaded triangle sits — bottom-right, then bottom-left, then top-left, then top-right. That is a clockwise circuit of the four corners. Four positions means period 4, so the fifth item returns to the start: ◢.\n\nWhy the wrong answers tempt: ◥ repeats the previous item. ◣ and ◤ are earlier points in the cycle. As with the other rotation items, every option is a symbol already on screen, so you have to establish the direction rather than eliminate. The specific difficulty here is that these glyphs are easy to misread at speed — ◢ and ◣ differ only in which side the right angle sits on — and a single misidentification sends the whole rotation the wrong way.\n\nTechnique: for corner-based rotations, name each position aloud in words as you read (bottom-right, bottom-left, top-left, top-right) rather than trying to hold the glyphs visually. Words are far more robust than shapes under time pressure, and they make the direction unambiguous — moving along the bottom from right to left and then up the left side is clockwise, whatever your eye tells you about the symbols. This verbalising habit is worth applying to any item where the symbols are visually similar, including the half-filled circles and the diagonal arrows in this bank. It costs two seconds and eliminates the most expensive error type on the section, which is not failing to see the rule but misreading the sequence you are applying it to."
+        },
+        {
+          "shapes": "△▲  ▲△  ▲▲  △△   |   ○●  ●○  ●●  ?",
+          "prompt": "The second group follows the same rule as the first. What completes it?",
+          "options": [
+            "○○",
+            "●●",
+            "○●",
+            "●○"
+          ],
+          "answer": "○○",
+          "explanation": "The completed first group runs: empty+filled, filled+empty (swapped), both filled, both empty. Applying that identical four-step rule to circles, the missing item is both empty: ○○. When a puzzle gives you one complete group and one incomplete group, always decode the complete one first — it is handing you the rule."
+        },
+        {
+          "shapes": "○○○○  ●○○○  ●●○○  ●●●○  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "●●●●",
+            "○○○○",
+            "●●○○",
+            "○●●●"
+          ],
+          "answer": "●●●●",
+          "explanation": "Working: count the filled circles — 0, 1, 2, 3 — and note they fill strictly from the left. The next item has 4 filled: ●●●●.\n\nWhy the wrong answers tempt: ●●○○ goes backwards. ○○○○ resets to the start, which would only be right if the pattern cycled, and nothing has yet shown a cycle. ○●●● is the subtle one: it has the right COUNT of filled circles for a different rule — three filled — but also changes the direction of filling, moving the empty cell to the left. It is there to catch candidates who track the count but not the position, and that combination of a plausible count with a broken spatial rule is a standard construction on these papers.\n\nTechnique: when cells fill progressively, verify both the count and the direction on every item, because examiners build distractors that satisfy one and violate the other. More generally this item sits at a boundary, like the quarter-filling circle: the sequence is one step from full, and you must decide whether it completes, reverses or resets. Completion is the default because it requires no extra assumption. Contrast the ■□□□ item later in the bank, where the stem explicitly states the pattern reverses and the answer therefore unwinds to three filled. The rule to carry: extend the demonstrated behaviour, and change behaviour only when the sequence or the stem tells you to."
+        },
+        {
+          "shapes": "○△   ●△   ○□   ●□   ○⬠   ?",
+          "prompt": "Two things change independently here. What comes next?",
+          "options": [
+            "●⬠",
+            "○⬠",
+            "●⬡",
+            "○△"
+          ],
+          "answer": "●⬠",
+          "explanation": "Track the two attributes separately: the fill alternates every step (empty, filled, empty, filled…), while the shape advances every two steps (triangle, square, pentagon). Position 6 is a filled pentagon: ●⬠. Multi-attribute questions are where most candidates lose marks — always isolate one attribute at a time."
+        },
+        {
+          "shapes": "◇  ◈  ◆  ◈  ◇  ◈  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "◇",
+            "◈",
+            "◆",
+            "None of these"
+          ],
+          "answer": "◆",
+          "explanation": "Working: the states run outline, half, solid, half, outline, half — a ping-pong between three states with the middle state visited on every other step. The full cycle ◇ ◈ ◆ ◈ has period 4, so item 7 matches item 3: ◆.\n\nWhy the wrong answers tempt: ◈ repeats the current item and is also what you would answer if you thought the sequence alternated between just two states. ◇ is what you get by assuming a period of 3 (◇ ◈ ◆ repeating), which fits the first three items perfectly and only breaks at item 4 — this is the heart of the question, since a rule that explains the opening but not the whole sequence is the classic inductive-reasoning trap. “None of these” is offered for candidates who cannot make any rule fit and panic; on graduate tests that option is almost never correct, and choosing it should be a last resort rather than a hedge.\n\nTechnique: always test a candidate rule against EVERY item, not just the first few. The cheapest way to do that here is to count the period rather than describe the motion: write the position numbers 1 to 6 under the symbols, notice the sequence repeats every 4, then compute 7 mod 4 = 3 and read off item 3. Bounce patterns have a period of 2(n−1) for n states — three states give a period of 4, four states give 6 — which is worth knowing because it lets you jump far ahead in a sequence without tracing, and examiners set these items at positions deliberately too distant to trace comfortably."
+        },
+        {
+          "shapes": "3+4=7  |  5+2=7  |  6+1=7  |  2+?=7",
+          "prompt": "What number completes the pattern?",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "9"
+          ],
+          "answer": "5",
+          "explanation": "Working: check each complete pair — 3+4, 5+2, 6+1 — and every one totals 7. The rule is a fixed sum, not a progression, so the missing value is 7 − 2 = 5.\n\nWhy the wrong answers tempt: 3 comes from continuing the left-hand numbers as a sequence (3, 5, 6, 2) or from pairing 2 with the next number down. 4 repeats a value already used on the right-hand side. 9 adds instead of subtracting, treating the 7 as something to build on rather than a total — the answer you get from reading the equals sign as the start of an operation. The presence of 9 is a hint in itself: it is only reachable by ignoring the equation structure entirely.\n\nTechnique: not every inductive item is a sequence. Some encode a constant relationship that holds independently within each group — a fixed sum here, a squaring relationship in the 5△ 25□ item, a shared shape rule in the △△▲ item. When items are separated by bars and each is self-contained, look for the invariant rather than the progression, and test it on every group before using it. The diagnostic question is simply whether the groups depend on each other: if scrambling their order would change nothing, you are looking at an invariant, and the numbers running down the left are decoration rather than a sequence."
+        },
+        {
+          "shapes": "⬡⬡⬡  |  ⬡⬡●  |  ⬡●●  |  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "●●●",
+            "⬡⬡⬡",
+            "⬡●●",
+            "●⬡⬡"
+          ],
+          "answer": "●●●",
+          "explanation": "Working: count the converted cells — 0, then 1, then 2, always converting from the right-hand end inward. The next item has all three converted: ●●●.\n\nWhy the wrong answers tempt: ⬡●● repeats the current item. ⬡⬡⬡ resets to the start. ●⬡⬡ is the pointed distractor: it has one filled cell, so it satisfies neither the count nor the direction, but it looks like a plausible “continuation” to anyone reading the sequence as a single travelling dot rather than an accumulating fill. Distinguishing accumulation from translation is exactly what the option is testing, and it is the same distinction that separates this item from the travelling-dot questions elsewhere in the bank.\n\nTechnique: with only three cells the sequence exhausts itself quickly, which is a useful clue in its own right — when a pattern is one step from completion, the completed state is nearly always the answer, because the alternatives (reset or reverse) require assuming behaviour the sequence has not shown. Note also how short this item is: three visible terms is the minimum from which a rule can be induced, and examiners use short sequences to test whether you can commit to the simplest rule that fits rather than hunting for something more elaborate. The principle worth carrying is parsimony — when several rules fit the visible items, choose the simplest, because that is the one the test was built around."
+        },
+        {
+          "shapes": "↖  ↗  ↘  ↙  ?",
+          "prompt": "The diagonal arrow rotates. What comes next?",
+          "options": [
+            "↖",
+            "↗",
+            "↘",
+            "↙"
+          ],
+          "answer": "↖",
+          "explanation": "Working: the arrow points up-left, up-right, down-right, down-left — each step a 90° clockwise turn, just displaced 45° from the cardinal directions. Four steps complete the circuit, so the fifth returns to the start: ↖.\n\nWhy the wrong answers tempt: ↙ repeats the previous item, and ↗ and ↘ are other points in the same cycle. The real difficulty is visual rather than logical — diagonal arrows are harder to read at a glance than cardinal ones, and under a 45-second clock candidates misidentify one symbol and derive the wrong direction from a correct method. Note also that this item is the diagonal twin of the ↑→↓← question earlier in the bank, and examiners include such pairs to check that you have learned the underlying rotation rule rather than memorised a particular symbol sequence.\n\nTechnique: convert symbols to words or numbers before reasoning. Label the diagonals 1 to 4 clockwise from up-left and the sequence becomes 1, 2, 3, 4, ? — trivially 1 again. This numbering trick generalises to any rotational item and removes the visual-confusion risk entirely, which matters because on these tests the expensive errors are misreadings rather than misreasonings. If a test lets you make notes, writing the position numbers under the symbols is almost always worth the few seconds it costs, particularly on items combining rotation with a second changing attribute where holding everything visually becomes genuinely difficult."
+        },
+        {
+          "shapes": "1 shape  |  3 shapes  |  6 shapes  |  10 shapes  |  ? shapes",
+          "prompt": "This is the triangular number sequence. How many shapes come next?",
+          "options": [
+            "13",
+            "14",
+            "15",
+            "16"
+          ],
+          "answer": "15",
+          "explanation": "Working: the counts are 1, 3, 6, 10. First differences: 2, 3, 4 — rising by one each time. The next difference is 5, giving 10 + 5 = 15. These are the triangular numbers, n(n+1)/2, so the fifth term is 5 × 6 ÷ 2 = 15.\n\nWhy the wrong answers tempt: 13 applies a difference of 3, repeating an earlier gap. 14 applies 4, repeating the most recent gap — the standard error of holding the increment constant when it is itself increasing, and the most popular wrong answer on any accelerating sequence. 16 applies 6, over-shooting by taking the difference one step too far ahead. All four options lie within three of each other, so there is no sense-check available; only the difference row settles it.\n\nTechnique: learn the triangular numbers by sight — 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 — because they turn up constantly in inductive tests, in probability questions about handshakes and pairings, and in the classic “how many connections between n people” brainteaser that trading and consulting interviewers still ask. The formula n(n+1)/2 is worth knowing alongside the list, since it lets you jump to the tenth or twentieth term without building the whole sequence. Note the relationship to the 1, 2, 4, 7, 11 item in this bank: that is the triangular sequence shifted by one, which is why the same two-row difference method cracks both."
+        },
+        {
+          "shapes": "■▲  ▲■  ■▲  ▲■  ■▲  ?",
+          "prompt": "What comes next?",
+          "options": [
+            "■▲",
+            "▲■",
+            "■■",
+            "▲▲"
+          ],
+          "answer": "▲■",
+          "explanation": "Working: the pair alternates between ■▲ and ▲■ every step. Odd positions are ■▲ and even positions are ▲■. Item 5 is ■▲, confirming the parity, so item 6 is ▲■.\n\nWhy the wrong answers tempt: ■▲ repeats the current item, which here is a particularly easy mistake because five near-identical groups make it genuinely hard to keep your place — that is precisely why the examiner used five rather than three. ■■ and ▲▲ break the composition of the pair, which never changes; only the order does.\n\nTechnique: for any two-state alternation, answer by parity rather than by tracing. Establish which state sits on odd positions, count the position you are asked for, and read the answer off — no re-reading required, and no risk of losing your place however long the sequence runs. That approach scales directly to the harder cyclic items in this bank: a three-state cycle is answered by position mod 3, a four-state rotation by position mod 4, and a bounce between three states by position mod 4 as well. Notice too the deliberate design here — a trivial rule stretched over five items to test bookkeeping rather than insight. Recognising when an item is testing care rather than cleverness tells you where to spend your attention, which under a strict per-question clock is most of the skill."
+        },
+        {
+          "shapes": "5△ 25□  |  4△ 16□  |  3△ 9□  |  2△ ?□",
+          "prompt": "The square count relates to the triangle count. What replaces the ?",
+          "options": [
+            "4",
+            "6",
+            "8",
+            "2"
+          ],
+          "answer": "4",
+          "explanation": "Working: compare the two numbers within each group rather than across groups. 5 and 25, 4 and 16, 3 and 9 — the square count is always the triangle count squared. So 2 gives 2² = 4.\n\nWhy the wrong answers tempt: 6 comes from continuing the square counts as their own sequence (25, 16, 9, then subtracting 3 or following the differences 9, 7, 5 to reach 4... and mis-landing) or from doubling and adding. 8 is 2 × 4, taking a doubling relationship from the earlier stars item. 2 simply repeats the triangle count, treating the relationship as identity — the answer you give if you notice the two numbers are linked but never establish how. Every distractor represents a different plausible relationship, which is the point: identifying that a relationship exists is easy, and specifying it is the actual test.\n\nTechnique: within-group relationships are read vertically, not horizontally. The diagnostic is whether the groups depend on each other — here they do not, since each group is self-contained and scrambling their order would change nothing, exactly as with the fixed-sum 3+4=7 item. When you spot an invariant, verify it on every group before applying it, because a rule that fits two groups and fails the third is the standard trap. It is also worth noting the falling triangle counts (5, 4, 3, 2) are decoration: they give the groups a plausible order and tempt you into reading a sequence where there is only a rule."
+        },
+        {
+          "shapes": "●○○○○   ○●○○○   ○○●○○   ○○○●○   ?",
+          "prompt": "The filled circle travels. What comes next?",
+          "options": [
+            "○○○○●",
+            "●○○○○",
+            "○○●○○",
+            "○○○●○"
+          ],
+          "answer": "○○○○●",
+          "explanation": "The filled position moves one step right each time (1, 2, 3, 4 → 5) and has not yet reached the end, so there is no bounce or wrap yet. Do not assume a pattern reverses until the sequence actually shows it hitting a boundary."
+        },
+        {
+          "shapes": "△   △△   △   △△△   △   △△△△   ?",
+          "prompt": "Two alternating sequences are interleaved here. What comes next?",
+          "options": [
+            "△",
+            "△△△△△",
+            "△△△△",
+            "△△"
+          ],
+          "answer": "△",
+          "explanation": "Read every other item. The odd positions are constant at one triangle; the even positions grow 2, 3, 4. Position 7 is odd, so it is a single triangle. Interleaved sequences look chaotic until you split them into two separate lists — always try this when a sequence seems to jump around."
+        },
+        {
+          "shapes": "◐◑   ◑◐   ◒◓   ◓◒   ◔◕   ?",
+          "prompt": "What comes next?",
+          "options": [
+            "◕◔",
+            "◔◕",
+            "◐◑",
+            "◑◐"
+          ],
+          "answer": "◕◔",
+          "explanation": "The items come in pairs: each pair shows a symbol combination and then the same combination reversed. ◔◕ has appeared, so its reversal ◕◔ follows. Spotting the grouping (pairs, triples) before hunting for a rule saves time on harder items."
+        },
+        {
+          "shapes": "■□□□   ■■□□   ■■■□   ■■■■   ?",
+          "prompt": "The sequence has reached full. What comes next if the pattern reverses?",
+          "options": [
+            "■■■□",
+            "■■■■",
+            "□□□□",
+            "■□□□"
+          ],
+          "answer": "■■■□",
+          "explanation": "The fill grew 1, 2, 3, 4 and has hit the maximum, so a reversing pattern unwinds symmetrically: the next item drops back to 3 filled. Boundary questions test whether you notice a sequence physically cannot continue in the same direction."
+        },
+        {
+          "shapes": "△□  □⬠  ⬠⬡  ⬡?",
+          "prompt": "Each item overlaps with the next. What completes the final pair?",
+          "options": [
+            "A heptagon (7 sides)",
+            "A triangle",
+            "A square",
+            "A pentagon"
+          ],
+          "answer": "A heptagon (7 sides)",
+          "explanation": "Each pair starts with the shape that ended the previous pair, and the second shape always gains one side: triangle(3)→square(4)→pentagon(5)→hexagon(6)→heptagon(7). Chain-overlap patterns are common — check whether consecutive groups share an element before treating them as independent."
+        },
+        {
+          "difficulty": "expert",
+          "shapes": "△1   □4   ⬠9   ⬡16   ?",
+          "prompt": "The numbers relate to the shapes. What number accompanies a heptagon (7 sides)?",
+          "options": [
+            "25",
+            "36",
+            "49",
+            "21"
+          ],
+          "answer": "25",
+          "explanation": "Do not match the number to the side count directly — the numbers are 1, 4, 9, 16, which are the squares of 1, 2, 3, 4 (the position in the sequence, not the sides). Position 5 gives 5² = 25. The shape gaining a side each step is a deliberate distractor running in parallel. When two attributes both progress, check whether the number tracks POSITION rather than the other attribute."
+        },
+        {
+          "difficulty": "expert",
+          "shapes": "●○◐   ○◐●   ◐●○   ●○◐   ○◐●   ?",
+          "prompt": "What comes next?",
+          "options": [
+            "◐●○",
+            "●○◐",
+            "○◐●",
+            "◐○●"
+          ],
+          "answer": "◐●○",
+          "explanation": "The triple rotates one position left each step, cycling with period 3: positions 1, 4 are ●○◐; positions 2, 5 are ○◐●; positions 3, 6 are ◐●○. Position 6 is therefore ◐●○. With cyclic patterns, find the period first (here 3) then use position mod period — far more reliable than tracing every step under time pressure."
+        },
+        {
+          "difficulty": "expert",
+          "shapes": "2△   6□   12⬠   20⬡   ?",
+          "prompt": "What number comes next in the sequence?",
+          "options": [
+            "30",
+            "28",
+            "32",
+            "25"
+          ],
+          "answer": "30",
+          "explanation": "Differences are 4, 6, 8 — increasing by 2, so the next difference is 10: 20 + 10 = 30. Equivalently these are n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6 = 30. Second-order sequences are invisible until you write the differences underneath — always do that before guessing."
+        }
+      ]
+    },
+    {
+      "id": "sjt",
+      "title": "Situational Judgement",
+      "icon": "🤔",
+      "color": "text-orange-400",
+      "border": "border-orange-500/30",
+      "description": "Workplace scenarios — choose the MOST effective response. Tests judgement, integrity and professionalism.",
+      "secondsPerQuestion": 90,
+      "questionsPerAttempt": 8,
+      "tip": "Firms score against their values: integrity first, escalate appropriately, communicate early, never hide mistakes, and don't throw colleagues under the bus. Pick what a calm professional would actually do.",
+      "providers": "Cappfinity (strengths-based), HireVue (video + SJT hybrid), firm-custom assessments (e.g. JPMorgan's \"insight\" games, HSBC job simulations), SHL SJQ",
+      "requiredBy": "Virtually every graduate scheme — banks, Big 4, consulting, insurers. Often combined with a recorded video interview in the same sitting.",
+      "whyUsed": "Firms lose money and reputation when juniors show poor judgement — hiding errors, breaching confidentiality, mishandling clients. SJTs cheaply screen thousands of applicants for alignment with the firm's stated values before assessment centres.",
+      "improveTitle": "How to get better at Situational Judgement",
+      "improveTips": [
+        "Learn the standard escalation ladder and apply it by default: raise it directly with the person involved first, escalate to your manager if it continues, HR only after that — skipping straight to the top rung (or never leaving the bottom rung) both score poorly.",
+        "Never conceal a mistake and never freelance outside your authority. The two failure modes SJTs screen hardest for are hiding errors and taking unilateral action you are not empowered to take (contacting a client directly, overriding a senior's work, editing a shared record without telling anyone).",
+        "Speed of disclosure is usually the biggest driver of the score on any \"should I flag this\" scenario. The earlier a problem is surfaced, the more options exist to fix it — flag on day one of a two-week project is a non-event, flagging the night before a deadline is a crisis.",
+        "For \"I disagree with someone senior\" scenarios, the answer is almost always about CHANNEL, not content — raise it privately and respectfully with reasoning and an alternative, never publicly and never by silently overriding them.",
+        "On rating-format items (\"how effective is this response?\"), resist the pull to the extremes. Reserve \"very ineffective\" for responses that breach a control, conceal something, or create real risk; reserve \"very effective\" for responses with no real downside. Genuinely mixed responses should get a middle rating.",
+        "Firms score against their stated values, not against what feels emotionally satisfying — integrity first, escalate appropriately, communicate early, never hide mistakes, never throw colleagues under the bus. When two options both seem reasonable, pick the one a calm, values-led professional would actually do.",
+        "Answer as the person you want to become, not as you might act under real stress on your worst day — SJTs measure judgement about the ideal response, and firms know nobody is perfect, but they are screening for what you know the right move is."
+      ],
+      "questions": [
+        {
+          "context": "You're an intern and you notice a significant error in a spreadsheet your manager already sent to a client.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Say nothing — it's your manager's responsibility now",
+            "Tell your manager immediately and suggest a corrected version",
+            "Email the client directly with a correction",
+            "Fix it quietly in the file for next time"
+          ],
+          "answer": "Tell your manager immediately and suggest a corrected version",
+          "explanation": "Why this is best: your manager owns the client relationship and needs to control what the client hears and when. Telling them immediately, with a corrected version ready, lets them decide how to handle the client conversation while showing you can spot errors and fix them, not just flag problems.\n\nWhy the others fail: saying nothing leaves a client acting on wrong numbers, and if it surfaces later you knew and stayed silent — far worse than the original error. Emailing the client directly bypasses your manager entirely, which undermines their relationship and may contradict something they have already told the client verbally. Fixing it quietly in the file helps nobody, since the flawed version is already in the client's hands.\n\nThe underlying principle: as an intern or junior, you are rarely the right person to manage a client relationship, but you are always the right person to surface a problem fast. \"Escalate immediately, propose a fix\" beats both silent concealment and unauthorised direct action in almost every SJT scenario — the two failure modes firms screen hardest for are hiding mistakes and freelancing outside your authority."
+        },
+        {
+          "context": "You have three urgent tasks from three different senior people, and you cannot finish all of them today.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Work through the night without telling anyone",
+            "Do them in the order they were received",
+            "Quickly clarify deadlines and priorities with the requesters, then flag the conflict",
+            "Choose the task from the most senior person and ignore the others"
+          ],
+          "answer": "Quickly clarify deadlines and priorities with the requesters, then flag the conflict",
+          "explanation": "Why this is best: the three seniors almost certainly don't know about each other's requests, so you are the only person who can see the conflict. Surfacing it quickly, after first checking real deadlines and priority, lets them resolve it between themselves in seconds — something they can do easily but you cannot.\n\nWhy the others fail: working through the night without telling anyone is \"silent heroics\" — it might work once, but it is unsustainable, invisible to the people who need to know, and fails badly the moment you cannot pull it off. Doing tasks in the order received ignores that urgency and importance are not the same as arrival time. Picking the most senior person's task and ignoring the others assumes seniority always trumps urgency, which is often false — a mid-level manager's client-facing deadline may matter more than a director's internal request.\n\nThe underlying principle: juniors are almost never expected to silently absorb conflicting demands. Firms would much rather you surface a scheduling conflict in thirty seconds than burn out solving it invisibly or guess wrong about priority. \"Flag and let seniors decide\" is the answer whenever a conflict exists that you don't have the authority or visibility to resolve alone."
+        },
+        {
+          "context": "A colleague tells you confidential information about an upcoming deal that you are not part of, and suggests you could \"make some money\" trading the stock.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Trade a small amount so it isn't noticeable",
+            "Decline, and report the conversation to compliance",
+            "Decline but keep the conversation to yourself",
+            "Ask a friend outside the firm to trade instead"
+          ],
+          "answer": "Decline, and report the conversation to compliance",
+          "explanation": "Why this is best: declining alone is not enough, because staying silent about a colleague soliciting insider dealing makes you a witness who said nothing — a position that looks very bad in any subsequent investigation and may itself breach your regulatory obligations. Reporting to compliance protects you, protects the firm, and stops your colleague before real harm is done.\n\nWhy the others fail: trading a small amount is still insider dealing, a criminal offence in essentially every jurisdiction, regardless of size — \"small\" is not a legal defence. Declining but staying silent leaves the colleague free to approach someone else, or to act themselves, while you carry undisclosed knowledge of a crime. Asking a friend outside the firm to trade is a second, distinct offence (tipping) layered on top of the first.\n\nThe underlying principle: SJTs use insider dealing scenarios specifically because they have a uniquely unambiguous right answer — unlike most workplace judgement calls, this one has a clear legal line, and any option that stops short of reporting to compliance is wrong regardless of how reasonable it sounds. Recognise these \"bright line\" scenarios (market abuse, fraud, conflicts of interest, confidentiality breaches) and answer them as legal questions, not judgement calls."
+        },
+        {
+          "context": "You realise you made a mistake in your own analysis two days ago. Nobody has noticed, and the presentation using it is tomorrow.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Tell your manager now, with the corrected numbers and impact",
+            "Hope nobody notices — it may not matter",
+            "Correct it silently and say nothing",
+            "Mention it casually after the presentation"
+          ],
+          "answer": "Tell your manager now, with the corrected numbers and impact",
+          "explanation": "Why this is best: telling your manager now, with the corrected numbers and the impact already worked out, gives them everything they need to decide how to handle tomorrow's presentation — reprint slides, caveat verbally, or push the meeting. Doing this before the deadline, rather than after, is what separates a manageable correction from a crisis.\n\nWhy the others fail: hoping nobody notices is a bet you don't control, and if a client or senior does spot it, your manager is blindsided in the room with no time to react. Correcting it silently might fix the number but leaves your manager unable to explain the change if anyone asks why the figures moved, and it deprives them of the chance to decide whether the fix even needs mentioning. Mentioning it casually after the presentation means it was presented wrong knowingly by you, which is a much bigger problem than the original error.\n\nThe underlying principle: the value of surfacing a mistake decays fast with time, and it decays completely the moment the flawed work is used publicly. \"Tell me now, with a fix\" is what every manager wants to hear, and firms explicitly train assessors to reward candidates who own errors proactively rather than ones who never seem to make any — nobody believes the second type, and everybody distrusts the ones who hide them."
+        },
+        {
+          "context": "A client asks you a technical question in a meeting and you don't know the answer.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Give your best guess confidently",
+            "Say you'll confirm the detail and follow up today — then do it",
+            "Change the subject",
+            "Refer them to your competitor"
+          ],
+          "answer": "Say you'll confirm the detail and follow up today — then do it",
+          "explanation": "Why this is best: admitting you don't know a specific detail, while committing to a same-day follow-up, protects your credibility far more than a guess would — and clients respect precision over false confidence, especially on technical points where a wrong answer could cause real harm if acted on.\n\nWhy the others fail: a confident guess risks giving materially wrong information that the client might act on, and if it's later found to be incorrect, it damages trust in everything else you've told them, not just that one answer. Changing the subject is transparently evasive and clients notice immediately — it reads as either incompetence or dishonesty. Referring them to a competitor actively loses the firm business over a single unanswered question, which is a wildly disproportionate response.\n\nThe underlying principle: the promise \"I'll confirm and come back to you\" is only a good answer if you actually do it — the follow-through is the real test, not the deflection itself. In client-facing SJTs, examiners are checking whether you understand that credibility is built cumulatively across many small interactions, and that one honest \"I don't know, but I'll find out\" costs you nothing while one confident wrong answer can cost the relationship."
+        },
+        {
+          "context": "Your team is celebrating a deal, but you notice a junior colleague has been excluded and looks upset — they did significant work on it.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "It's not your problem — enjoy the celebration",
+            "Publicly criticise the team lead for excluding them",
+            "Invite them along and make a point of crediting their work to the team",
+            "Privately tell them office politics are just like that"
+          ],
+          "answer": "Invite them along and make a point of crediting their work to the team",
+          "explanation": "Why this is best: inviting the colleague along and crediting their work fixes the actual problem — their exclusion and the loss of recognition — without creating a confrontation that could embarrass the team lead or escalate an already awkward moment. It's a concrete, low-risk action that directly addresses both issues at once.\n\nWhy the others fail: treating it as not your problem is passive in a situation where a small, costless action would clearly help — SJTs consistently penalise bystander responses to visible unfairness. Publicly criticising the team lead turns a fixable oversight into a confrontation, likely embarrassing the excluded colleague further and damaging your relationship with the lead over what may have been a simple mistake, not malice. Privately telling them \"office politics are just like that\" normalises exclusion and offers no actual support.\n\nThe underlying principle: when you witness a minor injustice you have the standing to fix directly, the best response is usually the smallest action that actually solves it — not escalation, and not passivity. Reserve confrontation and escalation for situations where a quiet fix genuinely isn't available, which this one is."
+        },
+        {
+          "context": "It's 7pm, your work is done, but the rest of your team is staying late on a deadline that doesn't involve you.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Leave quietly — it's not your project",
+            "Ask the team if you can help with anything before deciding",
+            "Stay and look busy so you're seen at your desk",
+            "Announce loudly that you've finished everything"
+          ],
+          "answer": "Ask the team if you can help with anything before deciding",
+          "explanation": "Why this is best: asking whether you can help shows genuine team spirit and gives the team the option to use your time productively if they need it — and if they say no, you have a clean, low-guilt reason to leave, because you offered.\n\nWhy the others fail: leaving quietly without asking can look indifferent to a team under pressure, even though it's honestly not your project — the cost of a thirty-second check-in is far lower than the risk of appearing unsupportive. Staying and looking busy (\"presenteeism\") is widely recognised as counterproductive: it wastes your evening, fools nobody who's actually paying attention, and signals that you value visibility over genuine usefulness. Announcing loudly that you've finished draws attention to your own productivity at a moment when colleagues are stressed, which reads as tone-deaf rather than helpful.\n\nThe underlying principle: presenteeism — staying late purely to be seen, without adding value — is explicitly called out as a red flag by many firms' graduate assessors, because it signals a culture problem (juniors afraid to leave) rather than genuine commitment. The behaviour that actually reads well is offering real help and then leaving guilt-free once you've made the offer, whichever way it's answered."
+        },
+        {
+          "context": "A senior colleague repeatedly takes sole credit for analysis you produced. It's now affecting how others perceive your contribution.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Raise it directly but professionally with the colleague first",
+            "Complain about them to other team members",
+            "Stop producing good work for them",
+            "Immediately escalate to HR"
+          ],
+          "answer": "Raise it directly but professionally with the colleague first",
+          "explanation": "Why this is best: raising it directly and professionally gives the colleague a chance to correct the behaviour — possibly unintentional, possibly a shorthand from a rushed meeting — before you escalate. It's the lowest-conflict route that could resolve the issue in a single conversation, and firms note that candidates who default to escalation without trying the direct route first are seen as unable to handle interpersonal friction themselves.\n\nWhy the others fail: complaining to other team members turns a solvable one-on-one issue into office politics, damages your reputation as someone who gossips, and does nothing to actually fix the credit problem. Withholding good work as a passive protest punishes the team and the client, not just the colleague, and is easily read as unprofessional sulking if it's ever noticed. Escalating immediately to HR is disproportionate for a first occurrence and burns a relationship that a five-minute conversation might have fixed — HR routes are for patterns that persist after direct and management-level attempts, not a first resort.\n\nThe underlying principle: workplace conflict resolution has a standard escalation ladder — direct conversation, then your manager, then HR — and skipping straight to the top rung (or never leaving the bottom rung when it isn't working) both score poorly. Match your response to how many times the problem has actually occurred."
+        },
+        {
+          "context": "A long-standing client asks you to process a request that slightly bends firm policy, saying \"we always did it this way with your predecessor\".",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Process it — client relationships come first",
+            "Politely explain you need to check the policy, then confirm the compliant route with your manager",
+            "Refuse bluntly and end the call",
+            "Process it but keep no record"
+          ],
+          "answer": "Politely explain you need to check the policy, then confirm the compliant route with your manager",
+          "explanation": "Why this is best: pausing to check policy and confirming the compliant route with your manager protects both the client relationship and the firm — you're not refusing the client outright, you're finding the correct way to help them, which is usually possible even when the exact shortcut they're asking for isn't.\n\nWhy the others fail: processing it immediately because \"client relationships come first\" ignores that policies exist for reasons (often regulatory) that a relationship, however valuable, doesn't override — and \"my predecessor did it\" is not a defence if the request breaches a rule. Refusing bluntly and ending the call is needlessly damaging to a long-standing relationship when a compliant alternative might well exist. Processing it while keeping no record compounds the original policy issue with a second, worse one — concealment — which turns a grey-area request into a clear breach.\n\nThe underlying principle: \"the client wants it\" and \"a predecessor did it this way\" are both social pressure, not policy authority, and SJTs use this framing constantly because junior staff are the ones most exposed to it in practice. The professional response to social pressure that conflicts with policy is always to pause and verify through the proper channel — never to bend the rule quietly to keep someone happy, and never to end the relationship over a request that might have a compliant version."
+        },
+        {
+          "context": "You are falling seriously behind on a project and realise you won't hit Friday's deadline.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Tell your manager now, with a realistic revised plan and what you need",
+            "Say nothing and hope to catch up over the weekend",
+            "Deliver something half-finished on Friday without comment",
+            "Blame the workload publicly in the team meeting"
+          ],
+          "answer": "Tell your manager now, with a realistic revised plan and what you need",
+          "explanation": "Why this is best: flagging it now, with a realistic revised plan and a specific ask (more time, extra help, reduced scope), gives your manager options while there is still time to use them — they might reallocate resources, negotiate the deadline, or decide the current scope was unrealistic from the start.\n\nWhy the others fail: hoping to catch up over the weekend is a bet with no fallback if it doesn't work — you'll arrive at Friday in exactly the same position, just later and with less credibility. Delivering something half-finished without comment lets your manager discover the problem at the worst possible moment, with zero time to react, and looks like either poor judgement or an attempt to hide the shortfall. Blaming the workload publicly in a team meeting is defensive and unprofessional — it may even be true, but the venue and framing make it look like an excuse rather than a solution.\n\nThe underlying principle: this is the single most-tested scenario type in junior SJTs, because \"surprise failure on deadline day\" is the exact outcome every manager fears most from a junior hire. The earlier you flag a slipping deadline, the more options exist to fix it — flagging on day one of a two-week project is a non-event, flagging at 5pm the day before is a crisis. Speed of disclosure is the single biggest driver of how this type of scenario is scored."
+        },
+        {
+          "context": "A teammate has become withdrawn, is missing small deadlines, and mentioned they're \"not sleeping much\". Your team lead hasn't noticed.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Check in with them privately and genuinely, and encourage them to seek support",
+            "Report their missed deadlines to the team lead immediately",
+            "Ignore it — everyone has rough patches",
+            "Tell the whole team to give them space"
+          ],
+          "answer": "Check in with them privately and genuinely, and encourage them to seek support",
+          "explanation": "Why this is best: a private, genuine check-in treats a colleague as a person first, not a performance problem — and \"not sleeping much\" alongside withdrawal and missed deadlines is a pattern worth taking seriously as a wellbeing concern, which a caring conversation addresses directly.\n\nWhy the others fail: reporting their missed deadlines to the team lead immediately, without speaking to the colleague first, frames a possible wellbeing issue as a performance issue and could feel like being reported on behind their back — damaging trust exactly when they may need support most. Ignoring it as \"everyone has rough patches\" dismisses signs (sleep, withdrawal, missed deadlines together) that, taken together, are more than a normal bad week. Telling the whole team to give them space is well-intentioned but passive and public — it signals the issue to everyone without anyone actually reaching out, which can deepen isolation rather than relieve it.\n\nThe underlying principle: SJTs increasingly test wellbeing awareness alongside pure work-process judgement, reflecting genuine industry concern about burnout in junior roles. The pattern firms reward is direct, private, human concern first, with escalation reserved for cases where the person needs more support than a colleague can provide or where the work risk becomes serious — never surveillance, gossip, or public performance management as a first move."
+        },
+        {
+          "context": "You believe your manager's chosen approach to a client analysis contains a methodological flaw.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Raise it privately with your manager, explaining your reasoning and proposing an alternative",
+            "Say nothing — they outrank you",
+            "Use your own approach secretly instead",
+            "Point out the flaw in front of the client"
+          ],
+          "answer": "Raise it privately with your manager, explaining your reasoning and proposing an alternative",
+          "explanation": "Why this is best: raising the concern privately, with your reasoning and a proposed alternative, respects the hierarchy while still surfacing a genuine risk — this is precisely what McKinsey's well-known \"obligation to dissent\" principle describes: junior staff are expected to voice disagreement through proper channels, not suppress it out of deference.\n\nWhy the others fail: saying nothing because \"they outrank you\" risks a flawed analysis reaching the client, and if the flaw is later discovered, \"I noticed but didn't say anything\" is a far worse position than having raised it and been overruled. Secretly using your own approach instead is a serious breach of trust — you're not empowered to unilaterally override your manager's methodology, and if it's discovered, it looks like insubordination regardless of whether you were right. Pointing out the flaw in front of the client is the worst option of all: it embarrasses your manager publicly, undermines the firm's credibility in the room, and there was no need to do it there rather than beforehand.\n\nThe underlying principle: the distinction the question is testing is channel, not content — raising a genuine concern is always encouraged, but WHERE and HOW you raise it is what separates constructive dissent from either cowardice (staying silent) or insubordination (acting unilaterally or publicly). Private, reasoned, solution-oriented challenge is the answer to almost every \"I disagree with someone senior\" scenario."
+        },
+        {
+          "context": "At a networking event, a senior director from another division gives you their card and says \"email me\". A week later you still haven't.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Email now with a brief, specific message referencing your conversation",
+            "Don't bother — the moment has passed",
+            "Wait until you need a favour from them",
+            "Add them on every social platform simultaneously"
+          ],
+          "answer": "Email now with a brief, specific message referencing your conversation",
+          "explanation": "Why this is best: emailing now, briefly and specifically referencing your actual conversation, is far better than not following up at all — a week's delay is a minor lapse, easily excused with a one-line acknowledgement, and the relationship value doesn't expire on a strict deadline.\n\nWhy the others fail: deciding the moment has passed guarantees you get nothing from an opportunity that cost you nothing to pursue further — a week is a normal, forgivable gap in a busy person's inbox, not a closed door. Waiting until you need a favour makes the eventual email transparently transactional, and senior people notice when the first contact in months arrives attached to a request — it reads as using the relationship rather than building it. Adding them on every social platform simultaneously is overfamiliar and slightly alarming on a first follow-up; it signals enthusiasm has tipped into a lack of judgement about professional boundaries.\n\nThe underlying principle: good networking is built on low-pressure, specific, well-timed contact — not on perfect timing, and not on multi-channel intensity. A short email that references something specific from the actual conversation (not a generic \"great to meet you\") shows you were genuinely listening, which matters far more than whether it arrived in 24 hours or seven days."
+        },
+        {
+          "context": "Mid-project, you spot a news report that your client is under regulatory investigation — nobody on your team has mentioned it.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Flag it to your project lead immediately",
+            "Assume someone senior already knows",
+            "Post about it in the team group chat with speculation",
+            "Contact the client directly to ask about it"
+          ],
+          "answer": "Flag it to your project lead immediately",
+          "explanation": "Why this is best: flagging it to your project lead immediately ensures material information reaches the person best placed to judge its relevance and decide next steps — and doing it fast, before speculating or acting on it yourself, is exactly the right balance of urgency and restraint.\n\nWhy the others fail: assuming someone senior already knows is a dangerous default — it is precisely how firms get blindsided by information that everyone assumed someone else had seen, and \"I assumed you knew\" is never an acceptable explanation after the fact. Posting it in the team group chat with speculation spreads unverified, sensitive information informally and invites uninformed commentary that could leak or distort the picture before anyone senior has assessed it properly. Contacting the client directly to ask about it is well beyond a junior's authority — it could be seen as improper, could damage the relationship, and pre-empts decisions that should be made by people who understand the full context of the engagement.\n\nThe underlying principle: information about material risk to a client relationship should travel up, fast, through the proper channel, and nowhere else — not sideways into a group chat, not outward to the client, and never assumed to already be known. This is one of the clearest \"escalate, don't freelance\" scenarios in the whole SJT category."
+        },
+        {
+          "context": "You're asked in an interview about a weakness. You genuinely struggle with public speaking, but worry admitting it will cost you the offer.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Claim you have no real weaknesses",
+            "Describe a fake, trivial weakness like \"I work too hard\"",
+            "Honestly name the weakness and describe concrete steps you're taking to improve it",
+            "Deflect by criticising a past employer instead"
+          ],
+          "answer": "Honestly name the weakness and describe concrete steps you're taking to improve it",
+          "explanation": "Why this is best: naming a real weakness alongside concrete steps you're taking to address it demonstrates exactly the self-awareness and growth mindset the question is designed to surface — interviewers aren't looking for perfection, they're checking whether you can honestly assess yourself and act on it.\n\nWhy the others fail: claiming to have no real weaknesses is transparently evasive and reads as either a lack of self-awareness or an unwillingness to engage honestly with the question — experienced interviewers have heard it hundreds of times and it actively counts against you. The fake trivial weakness (\"I work too hard\") is such a well-known dodge that it has become a cliché interviewers specifically screen out; using it signals you either haven't prepared thoughtfully or are trying to game the question rather than answer it. Deflecting by criticising a past employer is a red flag regardless of the question — it suggests you might speak about THIS firm the same way one day, and it dodges the self-reflection the question is actually asking for.\n\nThe underlying principle: \"tell me a weakness\" questions are never really about the weakness itself — they're testing whether you can be honestly self-critical under mild social pressure, a skill directly relevant to giving and receiving feedback on the job. The winning formula is always: real weakness, brief and non-catastrophic, plus a specific, ongoing action you're taking about it — for public speaking that might be \"I've been taking every opportunity to present at team meetings and got structured feedback on my last two.\""
+        },
+        {
+          "context": "You accidentally cc'd an external client on an internal email discussing a sensitive negotiating position.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Say nothing and hope they don't read it",
+            "Immediately tell your manager and discuss how to handle it with the client",
+            "Send a follow-up asking the client to delete the email, without telling your manager",
+            "Blame the email system"
+          ],
+          "answer": "Immediately tell your manager and discuss how to handle it with the client",
+          "explanation": "Why this is best: telling your manager immediately gives them the chance to control how the client conversation happens — they may want to call the client directly, frame it a certain way, or assess whether any real harm was done before it becomes a bigger issue. Speed matters because the window to manage the situation proactively closes fast.\n\nWhy the others fail: saying nothing and hoping the client doesn't read it is a bet on someone else's inattention, and if they do read it and later realise it wasn't disclosed, a manageable slip becomes a serious trust breach involving concealment. Asking the client to delete the email without telling your manager oversteps your authority twice over — you're making a unilateral decision about how to handle a client-facing incident, and you're doing it without your manager even knowing it happened, which removes their ability to manage the fallout if the client mentions it later. Blaming the email system doesn't address the substance and looks evasive.\n\nThe underlying principle: accidental disclosure incidents are a distinct SJT category from ordinary mistakes, because they carry regulatory and confidentiality dimensions beyond the immediate embarrassment. The correct instinct is always immediate, full disclosure to your manager — never a unilateral quiet fix, however tempting it is to make the problem disappear yourself before anyone notices."
+        },
+        {
+          "context": "Two junior colleagues are in open conflict, and it's starting to affect team output. You are not their manager.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Take a side to resolve it faster",
+            "Ignore it entirely — it's not your role",
+            "Encourage them to address it directly, and flag the impact on output to your manager if it continues",
+            "Discuss the conflict with other colleagues"
+          ],
+          "answer": "Encourage them to address it directly, and flag the impact on output to your manager if it continues",
+          "explanation": "Why this is best: encouraging the two colleagues to address it directly respects that it isn't your role to referee a peer dispute, while flagging the impact on output to your actual manager if it continues ensures someone with real authority steps in before the team's work suffers further — you're neither overstepping nor turning a blind eye.\n\nWhy the others fail: taking a side, even to \"resolve it faster\", draws you into a conflict that isn't yours and likely worsens it — now there are three people involved instead of two, and you've damaged your neutrality with whichever colleague you didn't back. Ignoring it entirely because \"it's not your role\" is only defensible if there's no impact on shared work — here the prompt states it's affecting team output, which makes it everyone's problem, not just theirs. Discussing the conflict with other colleagues spreads it further without doing anything to resolve it, and easily tips into gossip.\n\nThe underlying principle: peer conflicts sit in a genuine grey zone — you have no authority to mediate, but you're not exempt from the consequences either. The consistent SJT answer for \"conflict between others that affects shared outcomes\" is to encourage direct resolution first and escalate to the person who DOES have authority only if the impact continues, rather than either inserting yourself as judge or staying silent indefinitely."
+        },
+        {
+          "context": "You're given a task by a senior colleague that you believe is a poor use of your time given other priorities, but they outrank you significantly.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Do the task without question, however long it takes",
+            "Politely explain your current priorities and ask them to help you sequence the work",
+            "Quietly deprioritise it without telling anyone",
+            "Refuse and explain why you think it's a bad idea"
+          ],
+          "answer": "Politely explain your current priorities and ask them to help you sequence the work",
+          "explanation": "Why this is best: explaining your current priorities and asking the senior colleague to help you sequence the work is honest about the real conflict without refusing outright — it respects their seniority by asking them to make the call, while making sure they have the information (your other commitments) needed to make it well.\n\nWhy the others fail: doing the task without question, however long it takes, means your actual priorities silently slip with nobody aware it's happening — which looks like poor time management on your part later, even though the real cause was an unmanaged conflict you never surfaced. Quietly deprioritising it without telling anyone risks the senior colleague assuming it's progressing when it isn't, which is worse for them than knowing upfront and worse for you if they ask for an update. Refusing outright and explaining why you think it's a bad idea is presumptuous from a junior position — you may not have visibility into why they consider it a priority, and framing it as a refusal rather than a request for guidance reads as insubordinate rather than collaborative.\n\nThe underlying principle: when instructions conflict, juniors are rarely expected to silently comply at any cost or to unilaterally refuse — they're expected to surface the conflict transparently and let someone with more context and authority resolve it. Framing matters enormously here: \"help me sequence this against my other work\" gets a completely different reception than \"I don't think I should do this.\""
+        },
+        {
+          "context": "During onboarding, you notice the training materials contain outdated information that could mislead new starters.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Say nothing — it's not your job to fix training materials",
+            "Flag it constructively to whoever owns the materials, with the specific correction",
+            "Tell other new starters privately to ignore that section",
+            "Post publicly on the company intranet criticising the materials"
+          ],
+          "answer": "Flag it constructively to whoever owns the materials, with the specific correction",
+          "explanation": "Why this is best: flagging the specific correction to whoever owns the materials fixes the actual problem — new starters being misled — while doing it constructively and through the right channel means it's likely to be acted on rather than dismissed or resented.\n\nWhy the others fail: saying nothing because \"it's not your job\" is a missed opportunity to improve something at essentially no cost to you, and every future new starter is misled by the same outdated information you could have flagged. Telling other new starters privately to ignore that section fixes nothing structurally — it only helps the people you happen to tell, the materials remain wrong for everyone else, and it does nothing to get the actual error corrected. Posting publicly on the intranet criticising the materials embarrasses whoever created them, likely for an honest oversight, and makes you look like someone who escalates loudly rather than fixes things quietly and effectively.\n\nThe underlying principle: proactive, low-drama, specific feedback through the right channel is one of the most consistently rewarded behaviours across SJT categories, because it signals exactly the kind of employee who improves things around them without needing to be asked or without making a show of it. \"Flag it constructively, to the right person, with the fix already worked out\" is close to a universal template for these scenarios."
+        },
+        {
+          "context": "You're offered a role at a competing firm with a modest pay rise while mid-way through an important project at your current firm.",
+          "prompt": "What is the MOST effective response regarding your CURRENT employer?",
+          "options": [
+            "Leave immediately without notice",
+            "Say nothing until your last day",
+            "Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving",
+            "Tell colleagues your new pay to make a point"
+          ],
+          "answer": "Give proper notice, offer a clean handover, and be professional regardless of how you feel about leaving",
+          "explanation": "Why this is best: giving proper notice, offering a clean handover, and staying professional throughout protects your reputation, your reference, and your relationships in an industry small enough that people you worked with as a junior will reappear as clients, colleagues or hiring managers years later.\n\nWhy the others fail: leaving immediately without notice, mid-project, damages the team you're leaving behind and burns a bridge you may well need later — references and informal reputation checks matter enormously in finance recruiting, and this is exactly the kind of exit that gets mentioned when someone calls a former colleague to ask \"what were they like to work with?\" Saying nothing until your last day denies your current employer any chance to plan a transition, which is unnecessarily disruptive when a normal notice period exists for precisely this reason. Telling colleagues your new pay to make a point is petty and unprofessional, and it can also make colleagues who remain feel undervalued or resentful, which reflects on you rather than the firm.\n\nThe underlying principle: this question isn't really about resignations — it's testing whether you understand that professional reputation is cumulative and durable, particularly in a small, relationship-driven industry where the same names recur across firms for an entire career. How you handle the moments that cost you nothing to handle well (an exit where you're already leaving) is a strong signal of how you'll handle moments that cost you more."
+        },
+        {
+          "difficulty": "expert",
+          "context": "You are asked to finalise an analysis for a client meeting tomorrow. You spot that a key assumption, set by a well-regarded VP months ago, now looks clearly outdated and materially changes the conclusion. The VP is on annual leave and uncontactable. Your manager is available but has not been close to this workstream.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Present it as-is — the VP set the assumption and owns it",
+            "Quietly update the assumption yourself, since you are confident it is now wrong",
+            "Flag it to your manager now with both versions and your recommendation, so they can decide before the meeting",
+            "Delay the meeting until the VP returns"
+          ],
+          "answer": "Flag it to your manager now with both versions and your recommendation, so they can decide before the meeting",
+          "explanation": "This tests judgement where several answers are defensible. Presenting knowingly outdated analysis to a client is the worst outcome. Silently changing a senior colleague's assumption oversteps your authority and leaves nobody able to defend the change. Delaying is disproportionate and usually not yours to decide. Escalating with both versions plus a recommendation gives the decision-maker what they need while showing you did the thinking — the pattern firms consistently reward."
+        },
+        {
+          "difficulty": "expert",
+          "context": "A senior client contact makes a comment to you over dinner that is clearly inappropriate about a junior colleague of yours who is also present. Other clients are at the table. Your colleague looks visibly uncomfortable but says nothing.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Say nothing at dinner, then check on your colleague privately afterwards and report it internally",
+            "Confront the client publicly at the table immediately",
+            "Say nothing at all — the client relationship is too commercially important",
+            "Tell your colleague privately to let it go, since clients behave like this sometimes"
+          ],
+          "answer": "Say nothing at dinner, then check on your colleague privately afterwards and report it internally",
+          "explanation": "A genuinely difficult one with no comfortable answer. Public confrontation escalates in front of other clients and may expose your colleague to more attention, though calmly redirecting the conversation in the moment is also defensible. What is NOT acceptable is treating it as normal or asking your colleague to absorb it. Firms expect you to support the colleague directly and report through proper channels — commercial importance never justifies leaving it unreported."
+        },
+        {
+          "difficulty": "expert",
+          "context": "You are close to the end of a long project. You discover an error you made three weeks ago that has flowed into work already shared with the client. Correcting it will not change the final recommendation, but will require the team to redo several days of work during an already brutal week.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Tell your manager immediately with the error, its impact, and options for correcting it",
+            "Say nothing — the recommendation does not change, so the client is not harmed",
+            "Fix it silently going forward without mentioning the earlier version",
+            "Mention it after the project ends to avoid disrupting a difficult week"
+          ],
+          "answer": "Tell your manager immediately with the error, its impact, and options for correcting it",
+          "explanation": "The tempting logic — \"the conclusion is unchanged, so why cause pain?\" — is exactly the reasoning firms most want to screen out. Client-facing work carries a record; if the error surfaces later, the concealment becomes far more serious than the mistake. Reporting immediately WITH an assessment of impact and options lets your manager make a proportionate call, which may well be to correct it quietly. Never make the disclosure decision alone."
+        },
+        {
+          "context": "RATING FORMAT — Many real SJTs ask you to rate a single response rather than pick the best of four.\n\nScenario: A colleague asks you to sign off their work as reviewed, saying they are under time pressure and it is \"definitely fine\". You have not actually reviewed it.\n\nProposed response: \"Sign it off to help them out, and review it properly afterwards when you have time.\"",
+          "prompt": "How effective is this response?",
+          "options": [
+            "Very effective",
+            "Somewhat effective",
+            "Somewhat ineffective",
+            "Very ineffective"
+          ],
+          "answer": "Very ineffective",
+          "explanation": "A sign-off is a control, and signing off work you have not reviewed defeats the control entirely — regardless of intention to check later. In regulated environments this can be a disciplinary matter. Rating-format SJTs test the same judgement as the multiple-choice version, but you must calibrate degree rather than pick a winner. Reserve \"very ineffective\" for responses that breach a control, conceal something, or create risk for others."
+        },
+        {
+          "context": "RATING FORMAT\n\nScenario: You are three weeks into your internship. In a team meeting, a senior person states a figure about a market you have researched extensively, and you are fairly confident it is out of date.\n\nProposed response: \"Say nothing in the meeting, then message them privately afterwards with the updated figure and your source.\"",
+          "prompt": "How effective is this response?",
+          "options": [
+            "Very effective",
+            "Somewhat effective",
+            "Somewhat ineffective",
+            "Very ineffective"
+          ],
+          "answer": "Somewhat effective",
+          "explanation": "This is deliberately not a clear-cut case, which is what makes it realistic. Correcting privately with a source is respectful and low-risk, so it is genuinely effective. But it is only \"somewhat\" — if the meeting is making a decision on that figure, staying silent lets a wrong number drive an outcome, and a brief, humble in-meeting flag (\"I may have seen a more recent figure, shall I check?\") would be better. Rating SJTs frequently include defensible-but-imperfect options; resist the urge to rate everything at the extremes."
+        },
+        {
+          "context": "RATING FORMAT\n\nScenario: A client asks you directly for your personal opinion on whether they should proceed with a transaction. You are a junior analyst and this is well outside your remit.\n\nProposed response: \"Give them your honest personal view, since they asked you directly and deserve a straight answer.\"",
+          "prompt": "How effective is this response?",
+          "options": [
+            "Very effective",
+            "Somewhat effective",
+            "Somewhat ineffective",
+            "Very ineffective"
+          ],
+          "answer": "Somewhat ineffective",
+          "explanation": "Honesty is a good instinct, so this is not \"very ineffective\" — but a junior giving unmandated advice to a client can constitute an unauthorised recommendation, may conflict with the firm's formal position, and exposes both you and the firm. The effective response acknowledges the question warmly and redirects: \"That is really a question for [senior], let me bring them in.\" Note how the rating scale rewards recognising that a well-intentioned action can still be wrong."
+        },
+        {
+          "difficulty": "expert",
+          "context": "You are the most junior person on a deal team. In a client meeting, your MD confidently states a figure you are almost certain is wrong — you built the model it came from, and you believe the number quoted is from an earlier, superseded version. The client is writing it down.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Pass your MD a brief written note during the meeting flagging the figure",
+            "Say nothing in the meeting, then tell your MD immediately afterwards",
+            "Correct the figure out loud so the client has the right number",
+            "Say nothing and update the client yourself by email later"
+          ],
+          "answer": "Pass your MD a brief written note during the meeting flagging the figure",
+          "explanation": "Why this is best: it solves the real problem — the client is recording a wrong number right now — while leaving your MD in control of how it is handled in front of the client. A discreet note lets them correct it naturally, and it is the only option that is both timely and respectful of the hierarchy. This is a genuine dilemma rather than a clean case, and interviewers use it precisely because the two obvious options each fail for a different reason.\n\nWhy the others fail: waiting until afterwards is the instinctive junior answer and is too late — the client leaves with a wrong figure that may already be circulating internally, and correcting it a day later is far more damaging to the firm's credibility than a smooth in-meeting adjustment. Correcting your MD out loud undermines them in front of a client and, if you turn out to be the one who is wrong, does real harm on both counts. Emailing the client yourself is the worst option: it bypasses your MD entirely on client communication, which is not yours to own.\n\nThe underlying principle: when speed and hierarchy conflict, look for the response that preserves both — private channel, public outcome. Note also the hedge in the stem: you are \"almost certain\". A written note phrased as a question (\"is that the v3 figure?\") is appropriate to that confidence level, whereas an out-loud correction asserts a certainty you do not have."
+        },
+        {
+          "difficulty": "expert",
+          "context": "A colleague on your team has been consistently excellent, but you notice they have started reusing a client's confidential financial data in a template they share with other teams. The data is anonymised, but you recognise the client immediately because you worked on the account, and you suspect others could too.",
+          "prompt": "What is the MOST effective response?",
+          "options": [
+            "Raise it with the colleague directly and, if the template is already circulating, escalate to compliance regardless of their response",
+            "Raise it with the colleague privately and let them fix it themselves",
+            "Report it straight to compliance without speaking to the colleague",
+            "Do nothing — the data is anonymised, so no breach has occurred"
+          ],
+          "answer": "Raise it with the colleague directly and, if the template is already circulating, escalate to compliance regardless of their response",
+          "explanation": "Why this is best: it combines the two things this scenario requires. Speaking to the colleague first is right because they are competent and this looks like an error of judgement rather than bad faith. But escalating anyway once the template is circulating is also right, because anonymisation that fails — and it has failed, since you identified the client immediately — is a genuine confidentiality issue, and containment is no longer within your colleague's gift once the document is out.\n\nWhy the others fail: doing nothing rests on the anonymisation being effective, and the stem tells you it is not; \"technically anonymised\" is a standard rationalisation for a real breach. Letting them fix it themselves handles the relationship but not the risk — if the template has already spread, a quiet edit does not retrieve the copies. Going straight to compliance without a word is defensible but needlessly damaging to a colleague who has probably not realised, and firms consistently reward proportionate handling over maximal escalation where there is no bad faith.\n\nThe underlying principle: seniority of response should track the RISK, not your comfort. Where a colleague acted in good faith, speak to them; where the exposure has already left their control, escalate as well — these are not alternatives. The re-identification test is the substantive point: data is only anonymised if a reasonably informed reader cannot identify the subject, and your own immediate recognition is direct evidence that it is not."
+        }
+      ]
+    },
+    {
+      "id": "critical-thinking",
+      "title": "Watson Glaser Critical Thinking",
+      "icon": "🧭",
+      "color": "text-cyan-400",
+      "border": "border-cyan-500/30",
+      "description": "The proper 5-part critical thinking format: inference, assumptions, deduction, interpretation, argument evaluation.",
+      "secondsPerQuestion": 40,
+      "questionsPerAttempt": 10,
+      "tip": "Each of the five sub-types has ONE specific job. Answer the question type actually asked, not a generic \"is this true\" instinct — inference wants likelihood, deduction wants logical necessity, and they are not the same thing.",
+      "providers": "Watson Glaser II (Pearson) — the market-standard critical thinking test",
+      "requiredBy": "Magic/Silver Circle law firms, the Big 4 (audit, tax, advisory), consulting firms, and compliance/risk functions at investment banks. Also used in many training-contract and internship applications alongside finance ones.",
+      "whyUsed": "It measures whether you can reason carefully about information rather than jump to conclusions — the exact skill needed to read a term sheet, assess a client claim, or evaluate a deal argument without over- or under-reading the evidence.",
+      "improveTitle": "How to get better at Watson Glaser Critical Thinking",
+      "improveTips": [
+        "Learn what each of the five sub-types actually asks, because they are not interchangeable: Inference wants a likelihood rating, Assumptions wants whether something is silently required, Deduction wants pure logical necessity, Interpretation wants \"beyond reasonable doubt\", Evaluation of Arguments wants relevance plus importance to the specific question.",
+        "For Assumptions, always apply the negation test: negate the candidate assumption and check whether the argument still holds. If negating it destroys the argument, the assumption was being made; if the argument survives, it was not.",
+        "For Deduction, treat the premises as definitely true even if they contradict what you know about the real world, and reason ONLY from the stated structure — this is the one sub-test where being right about reality can make you wrong about the answer.",
+        "For Interpretation, ask whether a sceptical reader could construct a credible alternative explanation consistent with every stated fact. If yes, the conclusion does not clear the beyond-reasonable-doubt bar, however plausible the causal story sounds.",
+        "For Evaluation of Arguments, remember truth is not the test — relevance is. A completely true statement can still be a weak argument if it does not actually address the SPECIFIC question asked. Restate the exact question before judging any argument.",
+        "For Inference specifically, calibrate the five-point scale deliberately: ask first whether the evidence points a direction at all, then how strongly — do not collapse \"well-supported\" and \"proven\" into the same answer, and do not treat every unconfirmed pattern as automatically \"insufficient\".",
+        "This format rewards slow, deliberate reading far more than the other test types — resist the urge to speed through on instinct, since the traps are specifically built to catch fast, confident, real-world pattern-matching."
+      ],
+      "questions": [
+        {
+          "context": "INFERENCE — judge how likely a conclusion is GIVEN the facts, on a scale from definitely true to definitely false.\n\nStatement: \"Sales of the company's flagship product fell 15% this quarter, the third consecutive quarterly decline. The CFO resigned during the quarter, citing personal reasons.\"",
+          "prompt": "Inference: \"The CFO's resignation was linked to the declining sales.\"",
+          "options": [
+            "True",
+            "Probably True",
+            "Insufficient Data",
+            "Probably False",
+            "False"
+          ],
+          "answer": "Insufficient Data",
+          "explanation": "Working: an inference is a conclusion drawn beyond what is directly stated, and Watson Glaser asks you to rate how strongly the facts support it — not whether it feels plausible in the real world.\n\nWhy the wrong answers tempt: \"Probably True\" is the instinctive real-world read — CFOs resigning during a sales slump often ARE connected, and if you were reading this in the FT you would assume a link. But the passage gives an explicit alternative reason (\"personal reasons\") and no evidence tying the two events together beyond timing. \"Probably False\" over-corrects, treating the stated reason as proof of no link, when resignation announcements routinely cite \"personal reasons\" as a face-saving cover regardless of the truth. \"True\" and \"False\" are both too strong for a single, unconfirmed inference either way.\n\nTechnique: Watson Glaser deliberately builds inference items where real-world intuition and textual support diverge. Two unrelated facts appearing in the same paragraph is not evidence of a causal link — it is coincidence in timing, and coincidence is the single most common inference trap on this test. \"Insufficient Data\" is correct whenever the facts could support several different, contradictory explanations equally well, which is exactly the case here: sales fell for any number of reasons, and executives leave for any number of reasons, and the passage supplies no bridge between them."
+        },
+        {
+          "context": "INFERENCE\n\nStatement: \"In a survey of 500 graduate applicants, 82% said they had used AI tools to help prepare their CVs. Recruiters at three major banks reported a rise in CVs with near-identical phrasing this year.\"",
+          "prompt": "Inference: \"AI tools are causing some CVs to look similar to each other.\"",
+          "options": [
+            "True",
+            "Probably True",
+            "Insufficient Data",
+            "Probably False",
+            "False"
+          ],
+          "answer": "Probably True",
+          "explanation": "Working: two facts are given — heavy AI usage in CV writing, and recruiters independently noticing more similar phrasing. The two are consistent and mutually reinforcing, even though no formal causal study is cited, so the inference is well-supported without being proven.\n\nWhy the wrong answers tempt: \"True\" over-states the certainty — recruiter impressions are anecdotal, not a controlled study, so \"definitely\" is too strong a claim from this evidence. \"Insufficient Data\" undersells a genuinely strong circumstantial link — this is the mirror-image trap of the previous item: here the two facts DO point the same direction, and treating every unconfirmed pattern as \"insufficient\" is as much an error as reading causation into pure coincidence. \"Probably False\" and \"False\" both contradict the direction the evidence actually points.\n\nTechnique: the inference scale exists to force you to distinguish PROVEN from WELL-SUPPORTED from UNSUPPORTED from CONTRADICTED — five genuinely different positions, not a binary. Ask two questions: does the evidence point this way at all, and if so, how strongly? Here it points clearly one way (unlike the CFO item, where it could point either way), but falls short of proof because there is no controlled comparison — hence \"Probably True\" rather than \"True\". Comparing this item against the previous one is the fastest way to internalise the difference between \"insufficient\" and \"probable\"."
+        },
+        {
+          "context": "ASSUMPTIONS — decide whether an unstated assumption is actually being made in the argument.\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
+          "prompt": "Assumption made: \"The lower-cost location has staff capable of performing the work to the required standard.\"",
+          "options": [
+            "Assumption Made",
+            "Assumption Not Made"
+          ],
+          "answer": "Assumption Made",
+          "explanation": "Working: an assumption is something the speaker must be taking for granted for their argument to make sense, even though they never say it. The proposal only protects margins if the new location can actually do the work properly — if the staff there could not perform the work, moving would not protect margins, it would create losses through errors and rework. So the argument silently depends on this being true.\n\nWhy the wrong answer tempts: candidates who mark \"Assumption Not Made\" are usually reasoning that the statement never mentions staff quality at all, so how can it be assuming something about them? But that misunderstands what an assumption is — it is precisely the thing that is NOT said but MUST be true for the stated conclusion to follow. If you can construct a scenario where the stated premise is true but the assumption is false, and the argument then falls apart, the assumption is being made.\n\nTechnique: apply the negation test. Negate the candidate assumption (\"staff at the new location CANNOT perform the work to standard\") and ask whether the original argument still holds. Here it collapses instantly — cheap processing done badly does not protect margins, it destroys them through errors, rework and reputational cost. When negating a statement destroys the argument, the assumption was being made. When negating it leaves the argument standing, it was not — that second case is what the sister question below tests."
+        },
+        {
+          "context": "ASSUMPTIONS\n\nStatement: \"We should move our back-office processing to a lower-cost location to protect margins.\"",
+          "prompt": "Assumption made: \"The lower-cost location is outside the company's home country.\"",
+          "options": [
+            "Assumption Made",
+            "Assumption Not Made"
+          ],
+          "answer": "Assumption Not Made",
+          "explanation": "Working: apply the negation test again. Negate the candidate assumption — \"the lower-cost location is INSIDE the home country\" — and check whether the argument still works. It does: many countries have regions with materially lower costs than a head-office city, so relocating processing domestically could protect margins just as well as relocating it abroad.\n\nWhy the wrong answer tempts: \"offshoring\" is the almost automatic mental image that \"lower-cost location\" conjures for anyone who has read about outsourcing in the news, and it is very easy to import that assumption from real-world pattern-matching rather than from the actual text. The statement never says overseas, never says offshore, and the argument logic (lower cost protects margins) works identically whether the new location is in the next region over or a different continent.\n\nTechnique: this pair of questions is deliberately built to expose the difference between an assumption the ARGUMENT needs and a detail your BACKGROUND KNOWLEDGE fills in automatically. Real assumptions are structurally necessary — remove them and the logic breaks. Imported details are just the first mental picture that comes to mind and are usually not necessary at all. Whenever a candidate assumption feels obvious because that is usually how it works in practice, stop and run the negation test explicitly rather than trusting the feeling — the feeling is exactly what this sub-test is designed to catch out."
+        },
+        {
+          "context": "DEDUCTION — decide whether a conclusion follows with LOGICAL NECESSITY from the given statements, treating them as definitely true even if they seem odd.\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
+          "prompt": "Conclusion: \"None of the fund's top-five holdings has paid a dividend in the last three years.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Follows",
+          "explanation": "Working: this is a syllogism. Premise 1: top-five holdings sit inside technology companies. Premise 2: no technology company in the fund has paid a dividend. Combining them, every top-five holding is a technology company, and no technology company has paid a dividend — so no top-five holding has paid a dividend. The logic is airtight regardless of whether it happens to match reality.\n\nWhy the wrong answer tempts: some candidates hesitate because they know in real life that some large tech companies DO pay dividends, and that outside knowledge creates doubt. Deduction questions explicitly instruct you to treat the premises as true and reason ONLY from them — the test is measuring logical validity, not real-world accuracy, and bringing in outside facts is exactly the error this section is built to catch.\n\nTechnique: draw the sets. Top-five holdings sit entirely inside technology companies in the fund (premise 1). Technology companies in the fund sit entirely inside companies that have not paid a dividend (premise 2, restated). Therefore top-five holdings sit entirely inside not paid a dividend — the conclusion is forced. When a conclusion follows purely from the logical structure, mark it as following even if you personally doubt the premises; when it does not follow from the structure, mark it as not following even if you believe it is probably true in reality. Deduction is the one sub-test where being right about the world can make you wrong about the answer."
+        },
+        {
+          "context": "DEDUCTION\n\nPremises: \"All the fund's top-five holdings are technology companies. No technology company in the fund has paid a dividend in the last three years.\"",
+          "prompt": "Conclusion: \"The fund holds no dividend-paying companies at all.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Does Not Follow",
+          "explanation": "Working: the premises only describe the fund top-five holdings and technology companies within the fund. They say nothing about the fund other holdings, which could easily include non-technology, dividend-paying companies further down the portfolio. The conclusion generalises far beyond what the premises cover.\n\nWhy the wrong answer tempts: this is placed immediately after a nearly identical, correctly-following conclusion, and the surface similarity is deliberate — both conclusions are about dividends and the fund, and a candidate moving quickly can carry the follows verdict over from the previous item without re-checking the scope. The premises talk about a SUBSET (top-five holdings, technology companies) while this conclusion claims something about the WHOLE fund — a scope expansion that breaks the logical chain.\n\nTechnique: always check what the premises actually cover versus what the conclusion claims. A conclusion that stays within the scope of the premises can follow with necessity; a conclusion that quietly widens the scope — from top five to all, from technology companies to every company, from this quarter to always — almost never follows, however plausible it sounds. Pairing a valid and an invalid conclusion from the same premises, as this bank does deliberately, is the standard Watson Glaser construction, and re-reading the premises exact scope before each conclusion is the only reliable defence."
+        },
+        {
+          "context": "INTERPRETATION — decide whether a conclusion follows BEYOND REASONABLE DOUBT from the passage, treating \"beyond reasonable doubt\" as a stricter bar than \"plausible\" but not as strict as pure logical deduction.\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
+          "prompt": "Conclusion: \"The regulator's fine directly caused the compliance leadership changes.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Does Not Follow",
+          "explanation": "Working: the passage establishes a fine and, separately, leadership changes at two of the three banks. It never states a causal mechanism connecting them, and there are ordinary alternative explanations — the changes might reflect a broader reshuffle, planned succession, or reputational pressure from the underlying failures rather than the fine specifically. Beyond reasonable doubt requires the passage to rule out credible alternatives, which it does not.\n\nWhy the wrong answer tempts: causally connecting a fine to a subsequent leadership change is an entirely reasonable real-world inference and a journalist would likely frame the story that way — this is exactly why interpretation questions use financial-news-style passages, where causal narrative is the default reading style. But beyond reasonable doubt is a higher bar than reasonable interpretation, and the passage supplies correlation (fine, then changes) without ruling out alternative causes.\n\nTechnique: interpretation sits between inference (probabilistic) and deduction (logically forced), and the deciding question is: could a sceptical, careful reader construct a credible alternative explanation consistent with every stated fact? Here, yes — several alternative explanations survive the passage untouched, so the conclusion does not clear the beyond-reasonable-doubt bar. Only when the passage closes off realistic alternatives, typically through explicit causal language such as \"in response to the fine, the bank replaced...\", does an interpretation conclusion follow."
+        },
+        {
+          "context": "INTERPRETATION\n\nPassage: \"A regulator fined three banks a combined £340m for failures in anti-money-laundering controls. Two of the three banks have since replaced their heads of compliance.\"",
+          "prompt": "Conclusion: \"At least one of the three fined banks still has the same head of compliance as before the fine.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Follows",
+          "explanation": "Working: the passage states two of the three banks have replaced their heads of compliance. By straightforward arithmetic, the third bank has not been stated to have replaced theirs, meaning at least one of the three retains their pre-fine head of compliance (absent any information suggesting otherwise).\n\nWhy the wrong answer tempts: some candidates hesitate here purely on principle, having just marked the previous conclusion as does not follow and expecting a section to alternate or continue a pattern of doubt — a form of momentum error, not a reasoning error. Others mistakenly read two of the three as approximate or as implying at least two, possibly all three, which the wording does not support.\n\nTechnique: interpretation conclusions that are just precise restatements of a stated fact — including the simple arithmetic implication of a stated fact — clear the beyond-reasonable-doubt bar easily, because there is no room for a credible alternative reading. This is the counterpart to the previous item: do not let a run of does-not-follow answers create a false sense that the passage is generally unreliable — assess every conclusion strictly on its own relationship to the stated facts, including obvious arithmetic ones like two of three leaving one of three unaccounted for."
+        },
+        {
+          "context": "EVALUATION OF ARGUMENTS — judge whether an argument is STRONG (directly relevant and important to the issue) or WEAK (irrelevant, trivial, or based on unsupported assertion), for the stated question.\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"Yes, because analysts who cannot navigate Bloomberg efficiently take significantly longer to complete basic market data tasks, slowing down the whole team's output.\"",
+          "prompt": "Is this argument strong or weak?",
+          "options": [
+            "Strong",
+            "Weak"
+          ],
+          "answer": "Strong",
+          "explanation": "Working: a strong argument must be both relevant to the specific question asked and important, not merely true in passing. This one directly addresses whether certification should be REQUIRED, gives a concrete mechanism (slower task completion) and a real organisational cost (team-wide slowdown) — exactly the kind of practical, on-point reasoning the question calls for.\n\nWhy weak arguments get mistaken for strong ones (and vice versa here): the trap in this sub-test usually runs the other way — a TRUE but irrelevant or trivial statement gets mistaken for a strong argument because it sounds like an authoritative fact. This argument avoids that trap: it is not just true, it is directly load-bearing for the specific policy question (mandatory certification), which is what strong actually requires.\n\nTechnique: strength requires passing two tests, not one — relevance (does it actually address the specific question, not just the general topic) and importance (does it carry real practical weight, not a minor or already-obvious point). An argument can be completely true and still be weak if it is a triviality such as \"Bloomberg is widely used in finance\" or addresses a nearby but different question. Practise stating, in one sentence, exactly what the question is asking, then check whether the argument substance would actually move a reasonable decision-maker on that specific question."
+        },
+        {
+          "context": "EVALUATION OF ARGUMENTS\n\nQuestion: \"Should the firm require all analysts to complete a Bloomberg terminal certification within their first six months?\"\n\nArgument: \"No, because Bloomberg terminals are extremely expensive to license.\"",
+          "prompt": "Is this argument strong or weak?",
+          "options": [
+            "Strong",
+            "Weak"
+          ],
+          "answer": "Weak",
+          "explanation": "Working: the argument is factually true — Bloomberg terminal licences are genuinely expensive — but it is irrelevant to the specific question asked. The question is about REQUIRING CERTIFICATION for analysts, not about whether to license terminals at all; the firm has, by the question own framing, presumably already decided to have Bloomberg terminals in the office. The cost of the terminals themselves is a sunk consideration unrelated to whether staff should be certified to use them well.\n\nWhy the wrong answer tempts: this is the classic evaluation-of-arguments trap — a statement that is completely true and sounds like a serious, weighty business consideration such as cost gets waved through as strong simply because it is factual and financially framed. But truth is not the test; relevance to the SPECIFIC question is. \"Bloomberg is expensive\" is a strong argument against buying terminals in the first place, and a weak one against training staff to use terminals the firm already has.\n\nTechnique: build the habit of restating the exact question before judging any argument, and check whether the argument conclusion, if accepted, would actually change your answer to THAT question. Here, even a firm believer that Bloomberg is expensive gains nothing by refusing to certify staff — the terminals are being paid for either way, and certification only affects how well the existing investment is used. Any argument that would be equally true whether the specific proposal passed or failed is weak by definition, however true or serious it sounds."
+        },
+        {
+          "difficulty": "expert",
+          "context": "INFERENCE\n\nStatement: \"A fund's marketing material states it has beaten its benchmark in 9 of the last 10 years. Independent data confirms this is accurate, and also shows the fund changed which benchmark it measured itself against twice during that period.\"",
+          "prompt": "Inference: \"The fund's stated record is a reliable guide to the manager's skill.\"",
+          "options": [
+            "True",
+            "Probably True",
+            "Insufficient Data",
+            "Probably False",
+            "False"
+          ],
+          "answer": "Probably False",
+          "explanation": "Working: the claim is accurate as stated — it did beat the benchmark 9 times in 10. But the benchmark changed twice, so \"the benchmark\" is not one consistent yardstick; it is three different ones. A manager who can reset the target they are measured against can produce a strong record without skill, and the passage confirms this happened. That actively undermines reliability rather than merely leaving it unaddressed.\n\nWhy the wrong answers tempt: \"Insufficient Data\" is the most common choice and is genuinely defensible-sounding — we are not told the changes were self-serving, so why assume? Because the inference scale asks how likely the claim is given the facts, not whether it is disproven. A record built against a moving yardstick is less reliable evidence of skill than one against a fixed yardstick, and the passage supplies that fact deliberately. \"Probably True\" takes the 9-in-10 at face value and ignores the second sentence entirely, which exists only to qualify the first. \"False\" is too strong — benchmark changes can be legitimate (a fund's mandate genuinely shifting), so reliability is damaged, not eliminated.\n\nTechnique: on inference items, ask what each sentence is doing. When a passage states a favourable fact and then adds a qualifying one, the qualifier is the entire point of the item — examiners do not include it as scenery. The scale's middle option is for when evidence points nowhere; here it points somewhere, just not conclusively, which is precisely what \"Probably False\" exists to capture. This is also a real professional skill: benchmark changes, survivorship bias and selective time periods are the standard ways a track record flatters a manager."
+        },
+        {
+          "difficulty": "expert",
+          "context": "ASSUMPTIONS\n\nStatement: \"We should launch the new fund in Q1 to capture ISA season inflows.\"",
+          "prompt": "Assumption made: \"Investor inflows during ISA season are larger than at other times of year.\"",
+          "options": [
+            "Assumption Made",
+            "Assumption Not Made"
+          ],
+          "answer": "Assumption Made",
+          "explanation": "Working: apply the negation test. Negate it — \"ISA season inflows are NOT larger than at other times of year\" — and the argument collapses, because there would be no reason whatsoever to time the launch to Q1 rather than any other quarter. The whole recommendation rests on that period being unusually rich in inflows, even though the speaker never says so.\n\nWhy the wrong answer tempts: candidates mark \"Not Made\" because the statement never mentions comparing seasons — it just says \"capture ISA season inflows\", which sounds like a simple factual aim. But an assumption is by definition unstated; if it were stated it would be a premise. The word \"capture\" combined with a specific timing recommendation only makes sense if that window is materially better than the alternatives.\n\nTechnique: the negation test is the only reliable method on this sub-test, and the discipline is to negate the candidate assumption fully rather than partially. Ask: with this negated, does the recommendation still have any force? If it becomes arbitrary, the assumption was load-bearing. Note the contrast with its sister question on the same statement: an assumption the argument NEEDS is not the same as a detail you would find interesting or would want confirmed before acting."
+        },
+        {
+          "difficulty": "expert",
+          "context": "ASSUMPTIONS\n\nStatement: \"We should launch the new fund in Q1 to capture ISA season inflows.\"",
+          "prompt": "Assumption made: \"The new fund will outperform competing funds.\"",
+          "options": [
+            "Assumption Made",
+            "Assumption Not Made"
+          ],
+          "answer": "Assumption Not Made",
+          "explanation": "Working: negate it — \"the fund will NOT outperform competitors\" — and check whether the argument still stands. It does. The recommendation is purely about WHEN to launch in order to catch a seasonal flow of money; it makes no claim about how the fund will subsequently perform. A mediocre fund launched in Q1 still captures more ISA-season inflows than the same mediocre fund launched in Q3.\n\nWhy the wrong answer tempts: outperformance feels like something any fund launch obviously assumes, and in a broader commercial sense you would certainly hope for it. That is exactly the trap — this sub-test asks what THIS argument logically requires, not what a reasonable person launching a fund would also want to be true. Importing your own commercial common sense is the single biggest source of error here.\n\nTechnique: pair this with the previous question and the distinction becomes concrete. Seasonal inflows being larger is structurally necessary — remove it and the argument is arbitrary. Outperformance is desirable but severable — remove it and the timing logic is untouched. Test necessity, not desirability. A quick check: could the speaker consistently assert their recommendation AND deny the candidate assumption? If yes, as here, the assumption is not being made."
+        },
+        {
+          "difficulty": "expert",
+          "context": "DEDUCTION — treat the premises as definitely true and reason only from them.\n\nPremises: \"All companies that breach a loan covenant are placed on the credit watchlist. Company X is on the credit watchlist.\"",
+          "prompt": "Conclusion: \"Company X has breached a loan covenant.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Does Not Follow",
+          "explanation": "Working: premise 1 says every covenant breacher is on the watchlist. It does not say the watchlist contains ONLY covenant breachers. Companies could be added for a ratings downgrade, sector stress, an auditor change or any other reason. Knowing X is on the list therefore tells you nothing about why. This is the formal error of affirming the consequent: from \"if A then B\" and \"B\", you cannot conclude \"A\".\n\nWhy the wrong answer tempts: it feels airtight because the two statements share the watchlist term and slot together neatly. That surface fit is exactly what the error exploits — it is the most common invalid inference in everyday reasoning, and it is why this construction appears on essentially every critical-thinking test. The intuition \"breach means watchlist, X is watchlist, so X breached\" runs the implication backwards.\n\nTechnique: draw the sets. Covenant breachers sit INSIDE the watchlist circle, but the watchlist circle is larger. A point inside the larger circle need not be inside the smaller one. Formally, \"all A are B\" licenses only two moves: from A conclude B, and from not-B conclude not-A (the contrapositive). It never licenses from B concluding A. Train yourself to spot the direction the premise runs before answering — and note the sister question on these same premises, where the contrapositive version does follow."
+        },
+        {
+          "difficulty": "expert",
+          "context": "DEDUCTION\n\nPremises: \"All companies that breach a loan covenant are placed on the credit watchlist. Company X is on the credit watchlist.\"",
+          "prompt": "Conclusion: \"If Company Y is not on the credit watchlist, then Company Y has not breached a loan covenant.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Follows",
+          "explanation": "Working: this is the contrapositive of premise 1 and is always logically valid. If every covenant breacher is on the watchlist, then anything absent from the watchlist cannot be a covenant breacher — because if it had breached, it would necessarily be on the list. The information about Company X is irrelevant here and is included purely as a distraction.\n\nWhy the wrong answer tempts: candidates who correctly rejected the previous conclusion often reject this one too, on momentum — having just learned that the watchlist does not imply a breach, they over-generalise into treating any watchlist reasoning as unsafe. But the two are opposites: the previous item ran the implication backwards (invalid), this one runs it through the contrapositive (always valid). Others are thrown by the switch from Company X to Company Y and assume a fact about Y is required; none is, because the conclusion is conditional.\n\nTechnique: memorise the two valid moves from \"all A are B\" — A therefore B, and not-B therefore not-A — and the two invalid ones — B therefore A, and not-A therefore not-B. That single table resolves most deduction items in seconds. Note also that the contrapositive is genuinely useful in finance: covenant and compliance rules are usually written as \"all X must Y\", so the reliable inference is that anything not showing Y cannot be an X."
+        },
+        {
+          "difficulty": "expert",
+          "context": "INTERPRETATION — decide whether the conclusion follows beyond reasonable doubt.\n\nPassage: \"Of the firm's graduate hires last year, 60% came from six target universities. The firm attended careers events at 40 universities in total.\"",
+          "prompt": "Conclusion: \"Attending events at the six target universities is more effective per event than attending events elsewhere.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Does Not Follow",
+          "explanation": "Working: the passage gives hires by university group and the total number of universities attended. It does not say how many EVENTS were held at each. If the firm ran ten events at each target university and one at each of the others, the per-event yield could be identical or even worse at the targets. Per-event effectiveness requires an event count the passage never provides, so the conclusion cannot clear the beyond-reasonable-doubt bar.\n\nWhy the wrong answer tempts: 60% of hires from 6 of 40 universities is a striking concentration, and the causal story writes itself — targeting works. It may well be true. But the conclusion makes a specific claim about efficiency PER EVENT, and the passage supports only a claim about the distribution of outcomes. Substituting a plausible mechanism for the stated evidence is the defining interpretation error. There is also a selection issue: those universities may simply produce more applicants regardless of whether the firm attends at all.\n\nTechnique: read the precise unit of the claim — per event, per applicant, per pound, in total — and check the passage supplies a denominator for it. Concentration statistics are especially seductive because they look like efficiency evidence when they are really just distribution evidence. Any conclusion containing \"per\", \"more effective\", or \"better value\" needs both a numerator and a denominator in the text, and here only the numerator exists."
+        },
+        {
+          "difficulty": "expert",
+          "context": "INTERPRETATION\n\nPassage: \"Of the firm's graduate hires last year, 60% came from six target universities. The firm attended careers events at 40 universities in total.\"",
+          "prompt": "Conclusion: \"Fewer than half of the firm's graduate hires came from universities outside the six target institutions.\"",
+          "options": [
+            "Conclusion Follows",
+            "Conclusion Does Not Follow"
+          ],
+          "answer": "Conclusion Follows",
+          "explanation": "Working: if 60% came from the six target universities, the remaining 40% came from elsewhere. 40% is fewer than half. The conclusion is a direct arithmetic restatement of a stated fact, with no additional assumption required.\n\nWhy the wrong answer tempts: after correctly rejecting the per-event conclusion on the same passage, many candidates reject this one from momentum, treating the whole passage as too thin to support anything. Others overthink the boundary — wondering whether hires from a seventh, unlisted target university might complicate the split. They cannot: the passage divides hires into those from the six and those not, and 100% − 60% = 40% by definition.\n\nTechnique: interpretation conclusions that are pure arithmetic restatements of stated figures are the free marks on this sub-test, and they are frequently placed directly after a hard rejection precisely to catch candidates riding momentum. Reset for every conclusion and ask only: does this follow from what is written, on its own? Percentages of a defined whole always permit the complement, so \"60% from group A\" always licenses \"40% not from group A\" — a small but reliable pattern worth banking quickly so you can spend the time on genuinely ambiguous items."
+        },
+        {
+          "difficulty": "expert",
+          "context": "EVALUATION OF ARGUMENTS — judge whether the argument is strong (directly relevant and important) or weak (irrelevant, trivial, or unsupported) for the stated question.\n\nQuestion: \"Should the firm require all client-facing advisers to hold the CFA charter?\"\n\nArgument: \"No, because the CFA exams have notoriously low pass rates.\"",
+          "prompt": "Is this argument strong or weak?",
+          "options": [
+            "Strong",
+            "Weak"
+          ],
+          "answer": "Weak",
+          "explanation": "Working: the claim is true — CFA pass rates are genuinely low — but it does not address the question. Low pass rates establish that the qualification is difficult. Difficulty is not itself an argument against requiring it; if anything it cuts the other way, since a hard qualification is a more meaningful signal of competence, which is usually the point of requiring one. The argument would only have force with an added premise the speaker never supplies, such as that the firm would be unable to retain enough qualified advisers.\n\nWhy the wrong answer tempts: it sounds like a serious practical objection, and it is factually accurate, so it slips past as \"strong\". This is the central trap of the sub-test — truth and relevance are independent, and a true statement about the topic can still be a weak argument for the specific proposition. Difficulty is a real consideration for the individual sitting the exam; it is not a reason for the firm not to set the standard.\n\nTechnique: test relevance by asking whether accepting the argument's claim would actually change a reasonable decision-maker's answer to THIS question. Here, granting that the exams are hard leaves the case for requiring the charter essentially untouched, and arguably strengthens it. A sharper diagnostic: if a fact would be equally true whether the proposal passed or failed, and it does not bear on the proposal's consequences, it is weak — however authoritative it sounds."
+        },
+        {
+          "difficulty": "expert",
+          "context": "EVALUATION OF ARGUMENTS\n\nQuestion: \"Should the firm require all client-facing advisers to hold the CFA charter?\"\n\nArgument: \"Yes, because clients increasingly ask about adviser credentials and the firm's main competitors have already made the charter standard, so not requiring it puts the firm at a commercial disadvantage.\"",
+          "prompt": "Is this argument strong or weak?",
+          "options": [
+            "Strong",
+            "Weak"
+          ],
+          "answer": "Strong",
+          "explanation": "Working: this passes both tests a strong argument must pass. Relevance: it addresses precisely the decision at hand — whether to require the charter — rather than a neighbouring topic. Importance: it identifies a concrete, material consequence of not acting (losing business to competitors who have made it standard) and supports it with a stated mechanism (clients ask about credentials). It gives a decision-maker something that would genuinely move their answer.\n\nWhy this is not weak: unlike the low-pass-rates argument on the same question, this does not merely state a true fact about the CFA; it connects a fact to the specific consequence of the specific choice. The competitive-parity reasoning is exactly the kind of consideration a board would weigh, which is the practical definition of importance in this sub-test.\n\nTechnique: strong arguments almost always contain a link between a fact and a consequence for the decision — look for the connective, whether it is \"so\", \"therefore\" or \"which means\". A bare fact, however impressive, is usually weak; a fact plus a mechanism plus a stated consequence is usually strong. Also note what does NOT make an argument weak: it need not be conclusive, and it need not be the only consideration. It only has to be relevant and material, and this one clearly is."
+        }
+      ]
+    },
+    {
+      "id": "checking",
+      "title": "Checking & Attention to Detail",
+      "icon": "🔍",
+      "color": "text-pink-400",
+      "border": "border-pink-500/30",
+      "description": "Fast comparison and error-spotting tests — the format used to screen for operations, settlements and data-heavy junior roles.",
+      "secondsPerQuestion": 20,
+      "questionsPerAttempt": 10,
+      "tip": "Work systematically left to right or field by field — never eyeball the whole line at once and guess it \"looks the same\". These tests are won on method, not on being naturally observant.",
+      "providers": "SHL Checking Test, Talent Q Elements Checking, Cut-e/Aon scales cch, bespoke back-office screening tools",
+      "requiredBy": "Operations, settlements, trade support, fund administration, KYC/onboarding teams, and increasingly as a fast initial screen even for some analyst schemes at banks and asset managers.",
+      "whyUsed": "A single mistyped account number or transposed figure in a trade confirmation or client record can cause a real financial loss or a regulatory breach. Firms use checking tests because they are a direct, low-cost proxy for exactly that risk — can you reliably catch a small discrepancy under time pressure, again and again, without fatigue causing you to miss one.",
+      "improveTitle": "How to get better at Checking & Attention to Detail",
+      "improveTips": [
+        "Never compare two long strings by overall shape or \"does it look right\" — split every field into chunks (thousands/hundreds/tens/units for money, groups of 4 for IBANs, day/month/year for dates) and compare chunk by chunk.",
+        "Handle letters and digits as two separate passes on any alphanumeric code (passport numbers, references, SWIFT/BIC codes) — the eye tends to verify a distinctive letter prefix carefully while skimming the digit string, which is exactly where transposition errors hide.",
+        "For free-text fields (names, addresses), read for CHARACTERS, not meaning — your brain auto-corrects familiar words on sight, silently \"fixing\" a missing or swapped letter before you consciously notice it. Reading a word backwards, end to start, defeats this auto-correction.",
+        "Recompute percentage-based fields (VAT, fees, rates) independently from their base figure rather than only checking that the components sum correctly — a total can be internally consistent while still applying the wrong rate.",
+        "Expect roughly a third to half of real checking-test items to be genuine matches. Do not let a run of \"discrepancy found\" answers create momentum toward assuming every remaining item has an error too — false positives are graded as wrong, exactly like missed real errors.",
+        "Work at a fixed, sustainable pace rather than rushing the easy-looking items — these tests are usually scored on accuracy under a tight but even time budget, and fatigue-driven misses cluster in the last third of a long test far more than the first.",
+        "Practise on real numbers you have to actually compute, not just visual \"spot the difference\" puzzles — the highest-value checking questions (like the VAT-rate item in this bank) require you to verify a calculation is correct, not just that two records match."
+      ],
+      "questions": [
+        {
+          "context": "Compare the two records. They should be identical.",
+          "dataTable": {
+            "title": "Record A vs Record B",
+            "headers": [
+              "Field",
+              "Record A",
+              "Record B"
+            ],
+            "rows": [
+              [
+                "Account No.",
+                "GB29 NWBK 6016 1331 9268 19",
+                "GB29 NWBK 6016 1331 9268 19"
+              ],
+              [
+                "Sort Code",
+                "60-16-13",
+                "60-16-13"
+              ],
+              [
+                "Amount",
+                "£128,450.00",
+                "£128,405.00"
+              ],
+              [
+                "Value Date",
+                "14/03/2026",
+                "14/03/2026"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Account No.",
+            "Sort Code",
+            "Amount",
+            "Value Date"
+          ],
+          "answer": "Amount",
+          "explanation": "Working: check each field independently, character by character where the strings are long. Account No. and Sort Code match exactly on inspection. Value Date matches. Amount does not: Record A reads £128,450.00 and Record B reads £128,405.00 — the tens and units digits of the last three digits are transposed, \"50\" versus \"05\", so 450 becomes 405.\n\nWhy this specific error is the standard trap: a transposed pair of digits (450 vs 405) is the single most common real-world data entry error, because both numbers look right at a glance — the digit count matches, the surrounding text matches, and the eye tends to register \"starts with 128,4\" as a match without checking the final three digits individually. This is precisely the error type checking tests are designed around, because it is also the error type that causes real payment failures.\n\nTechnique: never compare two long strings by overall shape. Split any numeric field into chunks (thousands, hundreds, tens, units for money; groups of four for IBANs) and compare chunk by chunk, out loud or under your breath if you are practising alone. For account numbers and IBANs specifically, compare in groups of 4 characters as they are formatted — the space-separated groups exist for exactly this reason, to make transposition errors easier to catch."
+        },
+        {
+          "context": "Compare the two client name records. They should be identical.",
+          "dataTable": {
+            "title": "System A vs System B",
+            "headers": [
+              "Field",
+              "System A",
+              "System B"
+            ],
+            "rows": [
+              [
+                "Client Name",
+                "Fairweather Holdings Ltd",
+                "Fairweather Holdings Ltd"
+              ],
+              [
+                "Reference",
+                "FWH-2024-0091",
+                "FWH-2024-0091"
+              ],
+              [
+                "Address Line 1",
+                "14 Grosvenor Street",
+                "14 Grosvenor Steet"
+              ],
+              [
+                "Postcode",
+                "W1K 4QQ",
+                "W1K 4QQ"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Client Name",
+            "Reference",
+            "Address Line 1",
+            "Postcode"
+          ],
+          "answer": "Address Line 1",
+          "explanation": "Working: check each field. Client Name, Reference and Postcode all match exactly. Address Line 1 does not — System A reads \"Grosvenor Street\" and System B reads \"Grosvenor Steet\", missing the first \"r\" in Street.\n\nWhy this specific error is the standard trap: a single missing letter inside a long, familiar word is very hard to catch by pattern recognition, because the brain auto-corrects familiar words on sight — you read \"Steet\" and your brain silently supplies \"Street\" before you consciously register the missing letter. This is a well-documented reading phenomenon, and it is exactly why free-text fields (names, addresses) are more error-prone to check than structured numeric fields, despite feeling easier to read.\n\nTechnique: for free-text fields, do not read for MEANING — read for CHARACTERS. Slow down and trace the word letter by letter rather than recognising it as a whole, particularly for longer or less common words (street names, foreign company names, compound surnames). A practical trick: read the two versions in reverse, end to start; this defeats the brain tendency to auto-complete a familiar word from its first few letters, because reversed text has no learned pattern to pattern-match against."
+        },
+        {
+          "context": "Compare the two trade confirmation records. They should be identical.",
+          "dataTable": {
+            "title": "Confirmation A vs Confirmation B",
+            "headers": [
+              "Field",
+              "Confirmation A",
+              "Confirmation B"
+            ],
+            "rows": [
+              [
+                "ISIN",
+                "GB0007980591",
+                "GB0007980591"
+              ],
+              [
+                "Quantity",
+                "15,000",
+                "15,000"
+              ],
+              [
+                "Price",
+                "412.75",
+                "412.75"
+              ],
+              [
+                "Trade Date",
+                "11/03/2026",
+                "11/03/2026"
+              ],
+              [
+                "Settlement Date",
+                "13/03/2026",
+                "14/03/2026"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "ISIN",
+            "Quantity",
+            "Price",
+            "Settlement Date"
+          ],
+          "answer": "Settlement Date",
+          "explanation": "Working: ISIN, Quantity and Price all match on careful comparison. Settlement Date does not — Confirmation A reads 13/03/2026, Confirmation B reads 14/03/2026, a one-day difference.\n\nWhy this specific error is the standard trap: dates are compared casually far more often than numbers, because the format is familiar and short, so the eye tends to confirm \"yes, both are dates in March 2026\" without checking the day digit precisely. A one-day settlement discrepancy is also a realistic and consequential real-world error: standard equity settlement is T+2, so a one-day slip here would actually put one of the two records outside the normal settlement cycle entirely — exactly the kind of error a checking test is a proxy for catching before it reaches a real trade.\n\nTechnique: never let a field format familiarity substitute for checking its CONTENT. Dates, times and reference codes all look instantly comparable because you recognise the pattern (DD/MM/YYYY) at a glance, but recognising the pattern is not the same as verifying the digits. Isolate the day, month and year as three separate two-to-four digit checks, the same discipline you would apply to a long number, rather than treating \"it is a date, so it is probably fine\" as a shortcut."
+        },
+        {
+          "context": "Compare the two employee record entries. They should be identical.",
+          "dataTable": {
+            "title": "HR System vs Payroll System",
+            "headers": [
+              "Field",
+              "HR System",
+              "Payroll System"
+            ],
+            "rows": [
+              [
+                "Employee ID",
+                "EMP-88213",
+                "EMP-88213"
+              ],
+              [
+                "National Insurance No.",
+                "QQ 12 34 56 C",
+                "QQ 12 34 56 C"
+              ],
+              [
+                "Annual Salary",
+                "£42,500",
+                "£42,500"
+              ],
+              [
+                "Start Date",
+                "03/09/2025",
+                "03/09/2025"
+              ]
+            ]
+          },
+          "prompt": "Do these two records match exactly?",
+          "options": [
+            "Yes, they match exactly",
+            "No, there is a discrepancy"
+          ],
+          "answer": "Yes, they match exactly",
+          "explanation": "Working: check every field methodically — Employee ID, National Insurance number (in its 2-2-2-2-1 grouped format), Annual Salary, and Start Date. Every field is identical between the two systems.\n\nWhy this item matters: checking tests always include genuinely matching pairs, usually around a third to half of all items, and they exist specifically to test whether you will manufacture a discrepancy that is not there under time pressure. Candidates primed by several consecutive spot-the-error items sometimes talk themselves into seeing a difference that does not exist, especially in a long alphanumeric string like a National Insurance number, simply because they expect one to be there.\n\nTechnique: apply exactly the same rigour to confirming a match as to finding a discrepancy — a false positive (flagging an error that is not there) is graded as wrong just as a missed real error is. Do not let the item number or the run of previous questions bias your expectation. If you have checked every field methodically and found nothing, trust the process and answer that they match — resist the urge to search harder for something that must be there."
+        },
+        {
+          "context": "Compare the two fund pricing records. They should be identical.",
+          "dataTable": {
+            "title": "Custodian Feed vs Administrator Feed",
+            "headers": [
+              "Field",
+              "Custodian Feed",
+              "Administrator Feed"
+            ],
+            "rows": [
+              [
+                "Fund Code",
+                "FND-7734",
+                "FND-7734"
+              ],
+              [
+                "NAV per Share",
+                "1.2456",
+                "1.2465"
+              ],
+              [
+                "Total Fund Value",
+                "£184,320,000",
+                "£184,320,000"
+              ],
+              [
+                "Shares in Issue",
+                "147,981,342",
+                "147,981,342"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Fund Code",
+            "NAV per Share",
+            "Total Fund Value",
+            "Shares in Issue"
+          ],
+          "answer": "NAV per Share",
+          "explanation": "Working: Fund Code, Total Fund Value and Shares in Issue all match. NAV per Share does not — 1.2456 versus 1.2465, the same four digits (2, 4, 5, 6) in a different order, a transposition of the last two decimal places.\n\nWhy this specific error is the standard trap: this is the hardest variant of the discrepancy type, because the two numbers share every digit — nothing is added, removed or substituted, only reordered. A quick glance at digit COUNT and digit SET both pass, so any check less rigorous than position-by-position comparison will miss it. This exact error type is also a realistic and serious one: a NAV discrepancy of this size, uncaught, would misprice every unit of the fund traded that day, which is precisely why fund administrators run automated tolerance checks for exactly this scenario in practice.\n\nTechnique: for decimal numbers especially, compare position by position rather than as a whole value — first decimal place, second, third, fourth, treating each as an independent check. A useful test-day habit: cover one number with a finger or your other hand, read the visible number digits aloud in order, then reveal and check the other number digit by digit against what you just said, rather than trying to hold both numbers in view and compare them as gestalt shapes."
+        },
+        {
+          "context": "Compare the two invoice records. They should be identical.",
+          "dataTable": {
+            "title": "Invoice A vs Invoice B",
+            "headers": [
+              "Field",
+              "Invoice A",
+              "Invoice B"
+            ],
+            "rows": [
+              [
+                "Invoice No.",
+                "INV-2026-4471",
+                "INV-2026-4471"
+              ],
+              [
+                "Vendor",
+                "Hartley & Marsh Associates",
+                "Hartley & Marsh Associates"
+              ],
+              [
+                "Net Amount",
+                "£9,840.00",
+                "£9,840.00"
+              ],
+              [
+                "VAT (20%)",
+                "£1,868.00",
+                "£1,868.00"
+              ],
+              [
+                "Gross Amount",
+                "£11,708.00",
+                "£11,708.00"
+              ]
+            ]
+          },
+          "prompt": "Do these two records match exactly, or is there a discrepancy — and separately, is the arithmetic on the invoice itself correct?",
+          "options": [
+            "The two records match, and the arithmetic is correct",
+            "The two records match, but the arithmetic is wrong",
+            "The two records do not match"
+          ],
+          "answer": "The two records match, but the arithmetic is wrong",
+          "explanation": "Working: this question has two independent checks. First, do Invoice A and Invoice B match each other — yes, every field is identical between the two copies. Second, is the arithmetic on the invoice itself internally consistent — check the VAT rate against the net amount, not just whether the total adds up. 20% of £9,840.00 should be £1,968.00 (9,840 times 0.2 equals 1,968), but the invoice shows VAT of £1,868.00 — £100 short of what a genuine 20% charge would be. The addition itself is self-consistent (9,840 plus 1,868 equals 11,708, matching the stated gross), which is exactly what makes the error easy to miss: the invoice adds up while still charging the wrong rate.\n\nWhy this specific error is the standard trap: an invoice where the total is internally consistent feels checked once you have confirmed Net plus VAT equals Gross, which is the natural first thing anyone verifies. But that check only confirms the three numbers are consistent WITH EACH OTHER — it says nothing about whether the VAT was calculated correctly from the net amount in the first place. A candidate who stops at \"the sum adds up\" misses a genuine mispriced invoice.\n\nTechnique: when a question asks you to check both a cross-reference AND an internal calculation, do them as two fully separate passes — field matching first, arithmetic second — and within the arithmetic pass, independently recompute any percentage-based field from its base figure rather than only checking that the components sum correctly. A consistent-looking total can still hide an incorrectly applied rate, because addition consistency and rate correctness are two different facts that a single does-it-add-up glance conflates."
+        },
+        {
+          "context": "Compare the two counterparty records. They should be identical.",
+          "dataTable": {
+            "title": "Internal System vs SWIFT Message",
+            "headers": [
+              "Field",
+              "Internal System",
+              "SWIFT Message"
+            ],
+            "rows": [
+              [
+                "SWIFT/BIC",
+                "DEUTDEFF",
+                "DEUTDEFF"
+              ],
+              [
+                "Counterparty",
+                "Deutsche Bank AG",
+                "Deutsche Bank AG"
+              ],
+              [
+                "Currency",
+                "EUR",
+                "EUR"
+              ],
+              [
+                "Amount",
+                "2,450,000.00",
+                "2,540,000.00"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "SWIFT/BIC",
+            "Counterparty",
+            "Currency",
+            "Amount"
+          ],
+          "answer": "Amount",
+          "explanation": "Working: SWIFT/BIC, Counterparty and Currency all match exactly. Amount does not — 2,450,000.00 versus 2,540,000.00, a transposition of the 4 and 5 in the hundred-thousands and ten-thousands positions.\n\nWhy this specific error is the standard trap: this is a payments scenario, and a transposed pair of digits of this size (a swing of £90,000) is precisely the kind of error that causes real settlement failures and, in the worst case, funds being sent with a technically valid but wrong amount, triggering a costly unwind. Test writers use payments and SWIFT-style contexts specifically because the stakes make the format realistic, not decorative — this is close to the actual daily task of a payments or settlements analyst.\n\nTechnique: for any large numeric amount, mentally group digits in threes from the right (as the commas already do) and compare group by group: 2,450,000 breaks into 2 / 450 / 000; 2,540,000 breaks into 2 / 540 / 000. The millions group matches, the thousands group does not. This groups the comparison into small, verifiable chunks rather than one long unwieldy number, which is exactly how the comma formatting is designed to be read in the first place."
+        },
+        {
+          "context": "Compare the two client onboarding (KYC) records. They should be identical.",
+          "dataTable": {
+            "title": "Application Form vs System Record",
+            "headers": [
+              "Field",
+              "Application Form",
+              "System Record"
+            ],
+            "rows": [
+              [
+                "Full Legal Name",
+                "Alexander James Whitfield",
+                "Alexander James Whitfield"
+              ],
+              [
+                "Date of Birth",
+                "22/07/1991",
+                "22/07/1991"
+              ],
+              [
+                "Nationality",
+                "British",
+                "British"
+              ],
+              [
+                "Passport No.",
+                "PX4471983",
+                "PX4417983"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Full Legal Name",
+            "Date of Birth",
+            "Nationality",
+            "Passport No."
+          ],
+          "answer": "Passport No.",
+          "explanation": "Working: Full Legal Name, Date of Birth and Nationality all match. Passport No. does not — PX4471983 versus PX4417983, digits 7 and 1 transposed — the digit string reads 4-4-7-1-9-8-3 versus 4-4-1-7-9-8-3, with the third and fourth digits swapped.\n\nWhy this specific error is the standard trap: alphanumeric identifiers like passport numbers combine letters and digits, and the eye tends to verify the letter prefix carefully (because it looks distinctive) while skimming the digit string as \"a number, probably fine\" — the opposite of where the actual risk sits. In a real KYC context, a passport number mismatch is precisely the kind of error that causes a client onboarding to be flagged, delayed or, if uncaught, creates a compliance record that does not actually match the verified identity document.\n\nTechnique: for mixed alphanumeric codes, split the check into two separate passes — verify the letters as a group first, then verify the digits as a group, digit by digit, rather than reading the whole string as one unit. Long, unfamiliar digit strings (as opposed to numbers with real-world meaning like amounts or dates) are the ones most likely to be skimmed rather than checked, precisely because they carry no intuitive \"does this look right\" signal to catch you — which means they need the most mechanical, position-by-position discipline, not less."
+        },
+        {
+          "context": "Compare the two order records. They should be identical.",
+          "dataTable": {
+            "title": "Order Ticket vs Execution Report",
+            "headers": [
+              "Field",
+              "Order Ticket",
+              "Execution Report"
+            ],
+            "rows": [
+              [
+                "Ticker",
+                "BARC.L",
+                "BARC.L"
+              ],
+              [
+                "Side",
+                "BUY",
+                "BUY"
+              ],
+              [
+                "Quantity",
+                "25,000",
+                "25,000"
+              ],
+              [
+                "Limit Price",
+                "198.50p",
+                "198.50p"
+              ],
+              [
+                "Executed Price",
+                "198.42p",
+                "198.24p"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Ticker",
+            "Quantity",
+            "Limit Price",
+            "Executed Price"
+          ],
+          "answer": "Executed Price",
+          "explanation": "Working: Ticker, Side, Quantity and Limit Price all match. Executed Price does not — 198.42p versus 198.24p, a transposition of the two decimal digits.\n\nWhy this specific error is the standard trap: this item sits right next to a correctly matching Limit Price of 198.50p, and the visual similarity between 198.42, 198.24 and 198.50 — three numbers starting identically and differing only in the last two digits — is exactly the pattern that causes real trade breaks. It is also worth noting the executed price beats the limit on both readings (either is a valid buy fill below the 198.50p limit), so there is no logical inconsistency to alert you; only a direct digit-by-digit comparison catches it.\n\nTechnique: when several numbers in the same table share a long common prefix (here, all four prices start \"198.\"), do not rely on the prefix matching as reassurance — it is specifically the SUFFIX that test-writers vary, because that is where real transcription errors cluster (the start of a number is typically read and typed first and most carefully; the end is rushed). Always isolate and compare the final two or three digits of similar-looking numbers as their own explicit check, especially when, as here, multiple numbers in the same row family look almost identical."
+        },
+        {
+          "context": "Compare the two static data records. They should be identical.",
+          "dataTable": {
+            "title": "Trading System vs Risk System",
+            "headers": [
+              "Field",
+              "Trading System",
+              "Risk System"
+            ],
+            "rows": [
+              [
+                "Instrument",
+                "US Treasury 10Y",
+                "US Treasury 10Y"
+              ],
+              [
+                "CUSIP",
+                "912828YY0",
+                "912828YY0"
+              ],
+              [
+                "Coupon",
+                "4.125%",
+                "4.125%"
+              ],
+              [
+                "Maturity Date",
+                "15/08/2035",
+                "15/08/2035"
+              ],
+              [
+                "Currency",
+                "USD",
+                "USD"
+              ]
+            ]
+          },
+          "prompt": "Do these two records match exactly?",
+          "options": [
+            "Yes, they match exactly",
+            "No, there is a discrepancy"
+          ],
+          "answer": "Yes, they match exactly",
+          "explanation": "Working: check every field — Instrument, CUSIP (character by character), Coupon, Maturity Date, Currency. All five fields are identical between the two systems.\n\nWhy this item matters: this is the second true-match item in the bank, deliberately placed later once the pattern of \"there is always a discrepancy\" has had time to set in from the earlier items. Real checking tests are typically 30-50% genuine matches, precisely because a candidate who has learned to expect an error every time — and starts finding one whether it exists or not — fails the test just as surely as one who misses real discrepancies.\n\nTechnique: reset your expectation before every single item; do not let a run of discrepancy-found answers create momentum toward assuming the next one has an error too. Discipline here means finishing your full field-by-field check even when nothing has jumped out, and being willing to answer match with the same confidence as discrepancy when that is what the methodical check actually shows. If you find yourself inventing a reason something might be different without being able to point to the specific differing character, that is a signal you are pattern-matching against expectation rather than actually checking."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two payment instructions. They should be identical.",
+          "dataTable": {
+            "title": "Instruction A vs Instruction B",
+            "headers": [
+              "Field",
+              "Instruction A",
+              "Instruction B"
+            ],
+            "rows": [
+              [
+                "IBAN",
+                "GB29 NWBK 6016 1331 9268 19",
+                "GB29 NWBK 6016 1313 9268 19"
+              ],
+              [
+                "Beneficiary",
+                "Marchmont Capital Partners LLP",
+                "Marchmont Capital Partners LLP"
+              ],
+              [
+                "Currency",
+                "GBP",
+                "GBP"
+              ],
+              [
+                "Amount",
+                "845,200.00",
+                "845,200.00"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "IBAN",
+            "Beneficiary",
+            "Currency",
+            "Amount"
+          ],
+          "answer": "IBAN",
+          "explanation": "Working: compare the IBAN group by group as it is formatted. GB29 / NWBK / 6016 match. The fourth group differs: A reads 1331, B reads 1313 — the middle two digits are transposed. Every other field matches exactly.\n\nWhy this is expert-level: the transposition sits in the fourth of six groups, which is the hardest position to check — attention is highest at the start of a string and at the very end, and weakest in the middle. Both versions also share the same digit set (1, 3, 3, 1 versus 1, 3, 1, 3), so a digit-count check and a digit-set check both pass. Only strict position-by-position comparison catches it. The surrounding fields are all long and all match, which builds false confidence by the time you reach the number that matters.\n\nTechnique: IBANs are printed in four-character groups precisely so they can be checked group by group — use that structure rather than reading the string as one long number. Check the middle groups FIRST, deliberately inverting your natural attention curve, then the ends. In live payments systems the check-digit (the 29 here) would catch most single-character errors, but not all transpositions, and never at the manual-verification stage that a checking test is simulating."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two settlement records. They should be identical.",
+          "dataTable": {
+            "title": "Custodian record vs Broker record",
+            "headers": [
+              "Field",
+              "Custodian",
+              "Broker"
+            ],
+            "rows": [
+              [
+                "Security",
+                "Vodafone Group plc ORD 20 20/21p",
+                "Vodafone Group plc ORD 20 20/21p"
+              ],
+              [
+                "Trade Date",
+                "05/11/2026",
+                "05/11/2026"
+              ],
+              [
+                "Value Date",
+                "11/05/2026",
+                "05/11/2026"
+              ],
+              [
+                "Quantity",
+                "480,000",
+                "480,000"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Security",
+            "Trade Date",
+            "Value Date",
+            "Quantity"
+          ],
+          "answer": "Value Date",
+          "explanation": "Working: Security, Trade Date and Quantity all match. Value Date does not — the custodian shows 11/05/2026 and the broker shows 05/11/2026. Identical digits, opposite order: 11 May versus 5 November, six months apart.\n\nWhy this is expert-level: the two values contain exactly the same characters, so any check based on shape, length or digit set passes. Worse, the correct Trade Date directly above is 05/11/2026, which primes your eye to read 05/11 as normal and accept it. This is the single most consequential date error in real operations, because UK DD/MM and US MM/DD formats collide constantly across borders — a value date six months wrong is a failed settlement, not a cosmetic slip.\n\nTechnique: compare dates component by component in a fixed order — day, then month, then year — never as a whole string. When two records originate from different systems or jurisdictions, treat any date whose day and month are both 12 or below as ambiguous until you confirm the format convention, because those are the only dates where a format mix-up is undetectable from the value alone. Here 05/11 and 11/05 are both valid readable dates, which is exactly why the error survives."
+        },
+        {
+          "difficulty": "expert",
+          "context": "A single record — check the arithmetic, not a cross-reference.",
+          "dataTable": {
+            "title": "Loan interest accrual note",
+            "headers": [
+              "Field",
+              "Value"
+            ],
+            "rows": [
+              [
+                "Principal",
+                "£250,000.00"
+              ],
+              [
+                "Annual rate",
+                "6.40%"
+              ],
+              [
+                "Accrual period",
+                "90 days"
+              ],
+              [
+                "Day-count basis",
+                "Actual/365"
+              ],
+              [
+                "Accrued interest",
+                "£4,000.00"
+              ]
+            ]
+          },
+          "prompt": "Is the accrued interest figure correct?",
+          "options": [
+            "No — it should be £3,945.21",
+            "Yes — it is correct",
+            "No — it should be £4,109.59",
+            "No — it should be £16,000.00"
+          ],
+          "answer": "No — it should be £3,945.21",
+          "explanation": "Working: on an Actual/365 basis, accrued interest = principal × rate × days ÷ 365. That is £250,000 × 0.064 × 90 ÷ 365. Annual interest is £16,000; for 90 days that is £16,000 × 90/365 = £16,000 × 0.24658 = £3,945.21. The record shows £4,000.00, which is £54.79 too high — it implies a rate of about 6.49%, or a 360-day basis misapplied.\n\nWhy the wrong answers tempt: £4,000.00 looks deliberately plausible because it is a round number and roughly a quarter of the annual £16,000 — and 90 days is roughly a quarter of a year, so the eye accepts it. That approximation is exactly the trap: 90/365 is 0.2466, not 0.25. £16,000.00 is the full-year figure with the period ignored. £4,109.59 uses 95 days or a 360-day basis (£250,000 × 0.064 × 90/360 = £4,000 — note that Actual/360 would in fact give exactly £4,000, which is why specifying the basis matters so much).\n\nTechnique: never accept a round number in an accrual without testing it, because genuine day-count arithmetic almost never lands on one. Always read the day-count basis before calculating — Actual/365, Actual/360 and 30/360 give materially different answers on identical inputs, and here the difference between /365 and /360 is precisely the £54.79 discrepancy. Sanity-check by converting to a daily rate: £16,000 ÷ 365 = £43.84 per day, times 90 days = £3,945."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two trade confirmations, then check the arithmetic within them.",
+          "dataTable": {
+            "title": "Confirmation A vs Confirmation B",
+            "headers": [
+              "Field",
+              "Confirmation A",
+              "Confirmation B"
+            ],
+            "rows": [
+              [
+                "Quantity",
+                "15,000",
+                "15,000"
+              ],
+              [
+                "Price (p)",
+                "412.75",
+                "412.75"
+              ],
+              [
+                "Consideration",
+                "£6,911,250",
+                "£6,911,250"
+              ],
+              [
+                "Commission",
+                "£1,250",
+                "£1,250"
+              ]
+            ]
+          },
+          "prompt": "What is wrong with these records?",
+          "options": [
+            "The records match, but the consideration is miscalculated",
+            "The records match and everything is correct",
+            "The records do not match on Consideration",
+            "The records match, but the commission is miscalculated"
+          ],
+          "answer": "The records match, but the consideration is miscalculated",
+          "explanation": "Working: two separate checks. Cross-reference — every field is identical between A and B, so the records match. Internal arithmetic — consideration should be quantity × price = 15,000 × 412.75p = 6,191,250p = £6,191,250. Both records show £6,911,250. The digits 1 and 9 are transposed in the millions and hundred-thousands positions, an error of £720,000.\n\nWhy this is expert-level: the error is present in BOTH records identically, so any check that only compares A against B passes cleanly — and that is the check most people run. An error copied faithfully into both systems is invisible to reconciliation and can only be caught by independently recomputing the figure. This is exactly how real breaks survive: the same bad number propagates downstream from one source.\n\nTechnique: matching is not the same as correct. Where a record contains a derived field — consideration, VAT, a total, an accrual — recompute it from its inputs rather than only comparing it across sources. Estimate first to make the error obvious: 15,000 × 400p is £6.0m, so consideration must be a little over £6m, and £6.9m is immediately too big. That five-second approximation catches a transposition that character-by-character comparison never would."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two client records. They should be identical.",
+          "dataTable": {
+            "title": "Onboarding file vs Core system",
+            "headers": [
+              "Field",
+              "Onboarding file",
+              "Core system"
+            ],
+            "rows": [
+              [
+                "Entity name",
+                "Ashcombe Holdings (UK) Limited",
+                "Ashcombe Holdings (UK) Limited"
+              ],
+              [
+                "Company number",
+                "08472913",
+                "08472913"
+              ],
+              [
+                "LEI",
+                "213800QQZM7X9YHTQP41",
+                "213800QQZM7X9YHTQP41"
+              ],
+              [
+                "Registered address",
+                "12 Ardleigh Road, London N1 4HS",
+                "12 Ardleigh Road, London N1 4HS"
+              ],
+              [
+                "Jurisdiction",
+                "England & Wales",
+                "England & Wales"
+              ]
+            ]
+          },
+          "prompt": "Do these two records match exactly?",
+          "options": [
+            "Yes, they match exactly",
+            "No, the LEI differs",
+            "No, the company number differs",
+            "No, the address differs"
+          ],
+          "answer": "Yes, they match exactly",
+          "explanation": "Working: check every field character by character — entity name including the bracketed (UK), the eight-digit company number, the twenty-character LEI, the address including postcode, and the jurisdiction. All five fields are identical.\n\nWhy this is expert-level: this is the hardest kind of matching item, deliberately placed among discrepancy questions. It contains the two longest and least memorable strings in the whole bank — a 20-character alphanumeric LEI and an 8-digit company number — and under time pressure, with a run of genuine discrepancies behind you, the natural response is to keep hunting until you convince yourself you have found something. Manufacturing a difference that is not there is graded exactly as wrong as missing a real one.\n\nTechnique: decide in advance what constitutes a completed check — every field, compared positionally — and then trust it. If you have completed that process and found nothing, answer match, and move on without a second sweep. The tell that you have crossed from checking into pattern-matching is being unable to point at a specific differing character: a real discrepancy can always be named precisely, whereas a manufactured one is always a vague feeling that something looked off."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two records and count the differences.",
+          "dataTable": {
+            "title": "Fund factsheet vs Administrator report",
+            "headers": [
+              "Field",
+              "Factsheet",
+              "Administrator"
+            ],
+            "rows": [
+              [
+                "Fund name",
+                "Northbridge Global Equity Fund",
+                "Northbridge Global Equity Fund"
+              ],
+              [
+                "NAV per share",
+                "14.7382",
+                "14.7832"
+              ],
+              [
+                "Shares in issue",
+                "8,240,915",
+                "8,240,915"
+              ],
+              [
+                "Base currency",
+                "USD",
+                "USD"
+              ],
+              [
+                "Valuation point",
+                "13:00 GMT",
+                "13:00 GMT"
+              ],
+              [
+                "Total net assets",
+                "$121,447,000",
+                "$121,477,000"
+              ]
+            ]
+          },
+          "prompt": "How many fields differ between the two records?",
+          "options": [
+            "Two",
+            "One",
+            "Three",
+            "None"
+          ],
+          "answer": "Two",
+          "explanation": "Working: check all six fields. Fund name, shares in issue, base currency and valuation point all match. NAV per share differs — 14.7382 versus 14.7832, with the third and fourth decimals transposed. Total net assets differs — $121,447,000 versus $121,477,000, a 4 changed to a 7 in the ten-thousands position. That is two fields.\n\nWhy this is expert-level: most checking items contain exactly one discrepancy, which trains you to stop hunting the moment you find it. Here, stopping at the NAV gives the wrong answer. Both differences are also deep inside long numbers rather than at the start, and both preserve the digit count and overall magnitude, so nothing looks obviously wrong. The two errors are plausibly related in a real scenario — a wrong NAV would flow into total net assets — which makes it tempting to treat them as one issue rather than two differing fields.\n\nTechnique: when the question asks HOW MANY differences rather than WHICH field, complete the full sweep before answering, and resist the pull to stop at the first hit. Keep a running count rather than holding it in memory. More generally, never let finding one discrepancy end the check: in reconciliation work, one break frequently indicates a systematic problem that has produced several, and the second is often the more expensive one."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two instructions. They should be identical.",
+          "dataTable": {
+            "title": "Client instruction vs Booked order",
+            "headers": [
+              "Field",
+              "Client instruction",
+              "Booked order"
+            ],
+            "rows": [
+              [
+                "Security",
+                "US Treasury 4.25% 15/02/2035",
+                "US Treasury 4.25% 15/02/2035"
+              ],
+              [
+                "Direction",
+                "SELL",
+                "SELL"
+              ],
+              [
+                "Nominal",
+                "2,500,000",
+                "2,500,000"
+              ],
+              [
+                "Settlement currency",
+                "USD",
+                "GBP"
+              ],
+              [
+                "Settlement date",
+                "17/02/2026",
+                "17/02/2026"
+              ]
+            ]
+          },
+          "prompt": "Which field contains a discrepancy?",
+          "options": [
+            "Settlement currency",
+            "Security",
+            "Nominal",
+            "Settlement date"
+          ],
+          "answer": "Settlement currency",
+          "explanation": "Working: Security, Direction, Nominal and Settlement date all match. Settlement currency does not — the client instructed USD, the order was booked in GBP.\n\nWhy this is expert-level: the discrepancy is three characters long and sits between two of the longest fields on the record, which is where attention is weakest. Short codes are systematically under-checked because they carry no visual complexity — the eye registers \"a currency code is present\" and moves on to the harder-looking fields. In practice this is one of the most damaging possible errors: settling a $2.5m nominal Treasury trade in the wrong currency creates an unintended FX exposure of roughly the full trade value, far exceeding the impact of most digit errors that people check far more carefully.\n\nTechnique: give short fields — currency, direction, side, country code, account type — the same deliberate attention as long ones, and check them FIRST rather than last, because they are the quickest to verify and often the most consequential to get wrong. A useful discipline is to check fields in order of consequence rather than in the order they appear: currency and direction before nominal, because a wrong currency or a buy booked as a sell is unrecoverable in a way a mistyped digit usually is not."
+        },
+        {
+          "difficulty": "expert",
+          "context": "Compare the two corporate action notices. They should be identical.",
+          "dataTable": {
+            "title": "Registrar notice vs Internal record",
+            "headers": [
+              "Field",
+              "Registrar",
+              "Internal"
+            ],
+            "rows": [
+              [
+                "Event",
+                "Rights Issue",
+                "Rights Issue"
+              ],
+              [
+                "Ratio",
+                "3 for 7",
+                "3 for 7"
+              ],
+              [
+                "Subscription price",
+                "182p",
+                "182p"
+              ],
+              [
+                "Ex-date",
+                "04/03/2026",
+                "04/03/2026"
+              ],
+              [
+                "Record date",
+                "05/03/2026",
+                "05/03/2026"
+              ],
+              [
+                "Holding",
+                "1,400,000",
+                "1,400,000"
+              ]
+            ]
+          },
+          "prompt": "The records match. Based on the ratio and holding, how many new shares can be subscribed for?",
+          "options": [
+            "600,000",
+            "466,667",
+            "420,000",
+            "700,000"
+          ],
+          "answer": "600,000",
+          "explanation": "Working: a 3-for-7 rights issue means three new shares for every seven held. Entitlement = holding × 3 ÷ 7 = 1,400,000 × 3 ÷ 7. Since 1,400,000 ÷ 7 = 200,000, the entitlement is 200,000 × 3 = 600,000 new shares.\n\nWhy the wrong answers tempt: 466,667 inverts the ratio to 7-for-3 read backwards, or computes 1,400,000 × 3 ÷ 9. 420,000 applies 3/10 rather than 3/7, treating the ratio as \"3 new per 10 total\" — a genuine ambiguity in corporate action terminology, since some markets quote entitlements that way, but UK rights issues are quoted as new-for-existing. 700,000 halves the holding, applying a 1-for-2 mental shortcut.\n\nTechnique: this item deliberately pairs a clean matching check with a calculation, because in real operations confirming two records agree is only the first half of the job — the entitlement then has to be computed and booked correctly. Read the ratio convention explicitly: \"3 for 7\" means 3 NEW for every 7 EXISTING, so the multiplier is 3/7 of the holding, not 3/10. Sense-check the direction: a rights issue always increases your share count by less than the holding when the ratio is under 1:1, so an answer close to half the holding is right and anything near or above the full holding is wrong."
+        }
+      ]
+    }
+  ]
 
 type View = 'home' | 'test' | 'results'
 
@@ -2172,8 +3336,18 @@ export default function PracticeTests() {
     const pool = expertMode
       ? all.filter(item => item.tier === 'expert' || item.tier === 'hard')
       : all.filter(item => item.tier !== 'expert' && allowed.has(item.tier))
-    const usablePool = pool.length >= n ? pool : all
-    const sampled = weightedSample(SR_KEY, usablePool.map(p => ({ id: p.id, value: p })), n)
+
+    // Expert mode must never quietly serve easy questions. If the hard/expert
+    // pool is smaller than the usual session length, run a SHORTER session
+    // drawn entirely from that pool rather than padding it out with the full
+    // bank — otherwise "Expert" silently becomes the standard mix, which is
+    // exactly the failure this replaces.
+    const usablePool = expertMode
+      ? (pool.length > 0 ? pool : all)
+      : (pool.length >= n ? pool : all)
+    const count = Math.min(n, usablePool.length)
+
+    const sampled = weightedSample(SR_KEY, usablePool.map(p => ({ id: p.id, value: p })), count)
     return sampled.map(s => ({ q: s.q, id: s.id }))
   }
 
