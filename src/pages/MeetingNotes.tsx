@@ -38,75 +38,219 @@ function formatElapsed(seconds: number) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-function useVoiceRecorder(onFinalTranscript: (text: string) => void) {
+// Keeping the phone awake while recording.
+//
+// Mobile browsers sleep the screen after ~30s of no touch, which suspends the
+// page and kills speech recognition mid-meeting. The Screen Wake Lock API is
+// the supported fix. It is also released automatically whenever the page is
+// hidden, so it has to be re-acquired on every return to visibility, not just
+// once at the start.
+function useScreenWakeLock() {
+  const lockRef = useRef<any>(null)
+  const [active, setActive] = useState(false)
+  const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator
+
+  async function acquire() {
+    if (!supported) return false
+    try {
+      lockRef.current = await (navigator as any).wakeLock.request('screen')
+      setActive(true)
+      lockRef.current.addEventListener?.('release', () => setActive(false))
+      return true
+    } catch {
+      // Denied (e.g. low battery mode) — the UI tells the user to set screen
+      // timeout manually rather than silently pretending it worked.
+      setActive(false)
+      return false
+    }
+  }
+
+  async function release() {
+    try { await lockRef.current?.release() } catch { /* already gone */ }
+    lockRef.current = null
+    setActive(false)
+  }
+
+  return { supported, active, acquire, release, lockRef }
+}
+
+type SpeakerTag = 'Me' | 'Them'
+
+// How long a silence must be before the next speech is treated as a new
+// speaker turn. Browser speech APIs have no speaker diarisation at all, so
+// turns are inferred from pauses and the speaker is labelled by the user.
+const SPEAKER_GAP_MS = 2000
+
+function useVoiceRecorder(onFinalTranscript: (text: string, speaker: SpeakerTag, newTurn: boolean) => void) {
   const [recording, setRecording] = useState(false)
   const [interim, setInterim] = useState('')
   const [elapsed, setElapsed] = useState(0)
   const [error, setError] = useState<string | null>(null)
+  const [speaker, setSpeaker] = useState<SpeakerTag>('Them')
+  const [lang, setLang] = useState('en-GB')
+  const [recoveries, setRecoveries] = useState(0)
+
   const recRef = useRef<any>(null)
   const recordingRef = useRef(false)
+  const speakerRef = useRef<SpeakerTag>('Them')
+  const langRef = useRef('en-GB')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const watchdogRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const lastResultAtRef = useRef(0)
+  const lastFinalAtRef = useRef(0)
   const callbackRef = useRef(onFinalTranscript)
   callbackRef.current = onFinalTranscript
+  speakerRef.current = speaker
+  langRef.current = lang
 
+  const wakeLock = useScreenWakeLock()
   const supported = getSpeechRecognition() !== null
 
-  function stop() {
-    recordingRef.current = false
-    setRecording(false)
-    setInterim('')
-    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
-    if (recRef.current) { try { recRef.current.stop() } catch { /* already stopped */ } recRef.current = null }
+  function teardownRecogniser() {
+    const rec = recRef.current
+    recRef.current = null
+    if (!rec) return
+    // Detach handlers first so the teardown itself can't trigger a restart.
+    rec.onresult = null; rec.onerror = null; rec.onend = null
+    try { rec.stop() } catch { /* already stopped */ }
   }
 
-  function start() {
+  function buildRecogniser() {
     const SR = getSpeechRecognition()
-    if (!SR) {
-      setError('Voice capture is not supported in this browser — try Chrome or Edge.')
-      return
-    }
-    setError(null)
     const rec = new SR()
     rec.continuous = true
     rec.interimResults = true
-    rec.lang = 'en-GB'
+    rec.lang = langRef.current
+    rec.maxAlternatives = 1
+
     rec.onresult = (e: any) => {
+      lastResultAtRef.current = Date.now()
       let interimText = ''
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const res = e.results[i]
-        const text = res[0].transcript.trim()
         if (res.isFinal) {
-          if (text) callbackRef.current(text)
+          // Keep the engine's own spacing and punctuation — trimming each
+          // fragment and re-joining is what makes transcripts read badly.
+          const text = res[0].transcript.trim()
+          if (!text) continue
+          const now = Date.now()
+          const newTurn = lastFinalAtRef.current > 0 && now - lastFinalAtRef.current > SPEAKER_GAP_MS
+          lastFinalAtRef.current = now
+          callbackRef.current(text, speakerRef.current, newTurn)
         } else {
           interimText += res[0].transcript
         }
       }
       setInterim(interimText)
     }
+
     rec.onerror = (e: any) => {
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
         setError('Microphone access was blocked. Allow mic access in your browser settings and try again.')
         stop()
+        return
       }
-      // 'no-speech' and 'aborted' are harmless — onend will restart if still recording
+      if (e.error === 'audio-capture') {
+        setError('No microphone found. Check another app is not holding the mic.')
+        stop()
+        return
+      }
+      // 'no-speech', 'aborted' and 'network' are recoverable — onend restarts.
     }
-    // Chrome stops recognition after ~60s of speech or silence — restart to keep listening
+
     rec.onend = () => {
-      if (recordingRef.current) {
-        try { rec.start() } catch { /* restart race — ignore */ }
-      }
+      if (!recordingRef.current) return
+      // A short delay avoids an InvalidStateError restart race, and a fresh
+      // instance each cycle is more reliable than reusing a stopped one.
+      setTimeout(() => {
+        if (!recordingRef.current) return
+        try {
+          recRef.current = buildRecogniser()
+          recRef.current.start()
+        } catch {
+          // Try once more shortly; the watchdog is the final safety net.
+          setTimeout(() => {
+            if (!recordingRef.current) return
+            try { recRef.current = buildRecogniser(); recRef.current.start() } catch { /* watchdog */ }
+          }, 800)
+        }
+      }, 250)
     }
-    recRef.current = rec
+
+    return rec
+  }
+
+  function stop() {
+    recordingRef.current = false
+    setRecording(false)
+    setInterim('')
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
+    if (watchdogRef.current) { clearInterval(watchdogRef.current); watchdogRef.current = null }
+    teardownRecogniser()
+    wakeLock.release()
+  }
+
+  function start() {
+    if (!getSpeechRecognition()) {
+      setError('Voice capture is not supported in this browser — try Chrome, Edge or Safari 16.4+.')
+      return
+    }
+    setError(null)
+    setRecoveries(0)
     recordingRef.current = true
     setRecording(true)
     setElapsed(0)
+    lastResultAtRef.current = Date.now()
+    lastFinalAtRef.current = 0
+
+    wakeLock.acquire()
+
     timerRef.current = setInterval(() => setElapsed(s => s + 1), 1000)
-    try { rec.start() } catch { /* already started */ }
+
+    // Watchdog: if the engine has gone quiet for a long stretch without ending
+    // cleanly, it has usually died silently. Force a rebuild rather than
+    // letting the user discover at the end that nothing was captured.
+    watchdogRef.current = setInterval(() => {
+      if (!recordingRef.current) return
+      if (Date.now() - lastResultAtRef.current > 20000) {
+        lastResultAtRef.current = Date.now()
+        setRecoveries(n => n + 1)
+        teardownRecogniser()
+        try { recRef.current = buildRecogniser(); recRef.current.start() } catch { /* next tick */ }
+      }
+    }, 5000)
+
+    try {
+      recRef.current = buildRecogniser()
+      recRef.current.start()
+    } catch {
+      setError('Could not start the microphone. Close other tabs using it and try again.')
+      stop()
+    }
   }
+
+  // Re-acquire the wake lock and make sure the mic is alive whenever the user
+  // comes back to the tab — both are dropped by the browser while hidden.
+  useEffect(() => {
+    function onVisibility() {
+      if (document.visibilityState !== 'visible' || !recordingRef.current) return
+      wakeLock.acquire()
+      if (!recRef.current) {
+        try { recRef.current = buildRecogniser(); recRef.current.start() } catch { /* watchdog */ }
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => stop, [])
 
-  return { supported, recording, interim, elapsed, error, start, stop }
+  return {
+    supported, recording, interim, elapsed, error, start, stop,
+    speaker, setSpeaker, lang, setLang, recoveries,
+    wakeSupported: wakeLock.supported, wakeActive: wakeLock.active,
+  }
 }
 
 function VoiceButton({ voice }: { voice: ReturnType<typeof useVoiceRecorder> }) {
@@ -135,18 +279,66 @@ function VoiceStatus({ voice }: { voice: ReturnType<typeof useVoiceRecorder> }) 
   if (voice.error) {
     return <p className="text-red-400 text-xs mt-2">{voice.error}</p>
   }
-  if (voice.recording) {
+  if (!voice.recording) {
     return (
-      <div className="mt-2 bg-red-500/5 border border-red-500/20 rounded-lg px-3 py-2">
-        <p className="text-red-400 text-xs font-semibold flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          Listening — speak naturally, everything is transcribed into your notes
-        </p>
-        {voice.interim && <p className="text-gray-500 text-xs mt-1 italic">{voice.interim}…</p>}
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <span className="text-gray-600 text-xs">Accent</span>
+        {(['en-GB', 'en-US'] as const).map(l => (
+          <button
+            key={l}
+            onClick={() => voice.setLang(l)}
+            className={`px-2 py-1 rounded-md text-[11px] font-semibold transition-colors ${
+              voice.lang === l ? 'bg-brand-teal/15 text-brand-teal border border-brand-teal/30' : 'bg-white/5 text-gray-400 border border-white/10'
+            }`}
+          >
+            {l === 'en-GB' ? '🇬🇧 British' : '🇺🇸 American'}
+          </button>
+        ))}
+        <span className="text-gray-600 text-[11px]">— picking the right accent noticeably improves accuracy</span>
       </div>
     )
   }
-  return null
+  return (
+    <div className="mt-2 bg-red-500/5 border border-red-500/20 rounded-lg px-3 py-2.5">
+      <p className="text-red-400 text-xs font-semibold flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+        Listening — tap who is speaking so the transcript is labelled
+      </p>
+
+      {/* Speaker tagging. Browser speech APIs cannot tell voices apart, so the
+          speaker is set here and pauses are used to break turns. */}
+      <div className="flex items-center gap-2 mt-2">
+        {(['Them', 'Me'] as const).map(s => (
+          <button
+            key={s}
+            onClick={() => voice.setSpeaker(s)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              voice.speaker === s
+                ? s === 'Me' ? 'bg-brand-gold text-black' : 'bg-brand-teal text-black'
+                : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+            }`}
+          >
+            {s === 'Me' ? '🙋 Me' : '🗣 Them'}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
+        <span className={`text-[11px] font-semibold ${voice.wakeActive ? 'text-green-400' : 'text-yellow-400'}`}>
+          {voice.wakeActive
+            ? '🔆 Screen kept awake'
+            : voice.wakeSupported
+              ? '⚠️ Screen lock not granted — set screen timeout to Never'
+              : '⚠️ This browser cannot hold the screen awake — set screen timeout to Never'}
+        </span>
+        {voice.recoveries > 0 && (
+          <span className="text-gray-500 text-[11px]">🔄 mic auto-recovered {voice.recoveries}×</span>
+        )}
+      </div>
+
+      {voice.interim && <p className="text-gray-500 text-xs mt-1.5 italic">{voice.interim}…</p>}
+    </div>
+  )
 }
 
 const meetingTypeConfig: Record<MeetingType, { label: string; color: string; icon: string; promptHints: string[] }> = {
@@ -337,18 +529,26 @@ export default function MeetingNotes() {
   const selected = meetings.find(m => m.id === selectedId)
 
   // Route final voice transcripts into whichever notes field is on screen
-  const transcriptTarget = useRef<(text: string) => void>(() => {})
-  transcriptTarget.current = (text: string) => {
+  const transcriptTarget = useRef<(text: string, speaker: SpeakerTag, newTurn: boolean) => void>(() => {})
+  transcriptTarget.current = (text, speaker, newTurn) => {
     const line = text.charAt(0).toUpperCase() + text.slice(1)
+    // Start a new labelled turn after a pause or a speaker switch; otherwise
+    // continue the current speaker's paragraph so sentences are not fragmented.
+    const append = (existing: string) => {
+      const lastTurn = existing.split('\n').filter(Boolean).pop() || ''
+      const sameSpeaker = lastTurn.startsWith(`${speaker}:`)
+      if (existing && sameSpeaker && !newTurn) return `${existing} ${line}`
+      return (existing ? existing + '\n' : '') + `${speaker}: ${line}`
+    }
     if (view === 'new') {
-      setForm(f => ({ ...f, rawNotes: (f.rawNotes ? f.rawNotes + '\n' : '') + line }))
+      setForm(f => ({ ...f, rawNotes: append(f.rawNotes || '') }))
     } else if (view === 'detail' && selectedId) {
       setMeetings(prev => prev.map(m => m.id === selectedId
-        ? { ...m, rawNotes: (m.rawNotes ? m.rawNotes + '\n' : '') + line, enhancedNotes: null }
+        ? { ...m, rawNotes: append(m.rawNotes || ''), enhancedNotes: null }
         : m))
     }
   }
-  const voice = useVoiceRecorder(text => transcriptTarget.current(text))
+  const voice = useVoiceRecorder((text, speaker, newTurn) => transcriptTarget.current(text, speaker, newTurn))
 
   // Stop the mic when navigating between views
   useEffect(() => {
