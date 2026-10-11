@@ -23,6 +23,7 @@ const navItems: NavItem[] = [
   {
     label: 'Prepare',
     dropdown: [
+      { to: '/cv-coach', label: 'CV → Interview Coach', description: 'Your CV into answers, gaps, market sizing & SJTs' },
       { to: '/interview-guide', label: 'Interview Mastery', description: 'Technique, model answers & your year plan' },
       { to: '/interview-quiz', label: 'Interview Quiz', description: 'Practice real interview questions' },
       { to: '/video-practice', label: 'Video / HireVue Practice', description: 'Record timed answers to camera' },
